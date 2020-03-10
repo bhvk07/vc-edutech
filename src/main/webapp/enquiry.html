@@ -9,9 +9,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link href="css/style.css" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
 <!------ Include the above in your HEAD tag ---------->
 <title>Insert title here</title>
 </head>
@@ -55,53 +56,57 @@
                                         <input id="login-password" type="text" class="form-control" name="dob" placeholder="Date of Birth">
                                     </div>
                                  <div style="margin-bottom: 25px" class="input-group">
-                                        <!-- <span class="input-group-addon">Gender</span> -->
-                                        Gender:
-                                        <label class="radio-inline"><input type="radio" name="rad" value="opt1" checked>Male</label>
+                                         <span class="input-group-addon">Gender</span> 
+                                        <div class="form-control">
+                                        <label class="radio-inline" style=""><input type="radio" name="rad" value="opt1" checked>Male</label>
                                         <label class="radio-inline"><input type="radio" name="rad" value="opt2">Female</label>
+                                        </div>
                                     </div>
                                     
-                             
-									<div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="religion" id="rel" required >
+         
+								<div style="margin-bottom: 25px" class="input-group">	
+									 <span class="input-group-addon">Religion</span>
+<!--									 <div class="form-control">-->
+<!--                            <div class="select-list">-->
+                                <select name="religion" class="form-control" required>
                                     <option value="Bhuddism">Buddhism</option>
                                     <option value="hindu">Hindu</option>
                                     <option value="Christanity">Christanity</option>
                                     <option value="Muslim">Muslim</option>
                                     <option value="Sikhism">Sikhism</option>
                                 </select>
-                            </div>
-                        </div>
+<!--                            </div>-->
+<!--                        </div>-->
                         </div>
 								
 								 <div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="food" id="food" required>
+								  <span class="input-group-addon">Caste</span>
+									<!--  <div class="form-group"> -->
+                           <!--  <div class="select-list"> -->
+                                <select name="food" class="form-control" required>
                                     <option value="general">General</option>
                                     <option value="obc">OBC</option>
                                     <option value="SC">SC</option>
                                     <option value="ST">ST</option>
                                 </select>
-                            </div>
-                        </div>
+                          <!--   </div> -->
+                       <!--  </div> -->
                         </div>
                            
                            
                            				 <div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="food" id="food" required>
+                           				   <span class="input-group-addon">Medium</span>
+									<!--  <div class="form-group">
+                            <div class="select-list"> -->
+                                <select name="medium" class="form-control" required>
                                     <option value="eng">English</option>
                                     <option value="hin">Hindi</option>
                                 </select>
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
                         </div>
                         
-                        
+                      
                          
                          
 
@@ -121,12 +126,12 @@
        
        <!--   <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2"> -->                    
            <!--  <div class="panel panel-info" > -->
-                    <div class="panel-heading">
-                        <div class="panel-title">Contact Details</div>
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                    <div class="panel-heading cont">
+                        <div class="panel-title cont-t">Contact Details</div>
+                      
                     </div>     
 
-                   <!--  <div style="padding-top:30px" class="panel-body" > -->
+                  <div style="padding-top:10px" class="panel-body" > </div>
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
@@ -178,12 +183,12 @@
         
        <!--   <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2"> -->                    
          <!--    <div class="panel panel-info" > -->
-                    <div class="panel-heading">
-                        <div class="panel-title">Enquiry Details</div>
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                    <div class="panel-heading cont">
+                        <div class="panel-title cont-t">Enquiry Details</div>
+                       
                     </div>   
                     
-                     <!-- <div style="padding-top:30px" class="panel-body" > -->
+                      <div style="padding-top:10px" class="panel-body" > </div>
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
@@ -202,42 +207,53 @@
                            
                                     
                                      <div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="Enquiry-Taken" id="enq_taken" required>
+                                       <span class="input-group-addon">Enquiry taken by</span>
+									<!--  <div class="form-group">
+                            <div class="select-list"> -->
+                                <select name="Enquiry-Taken" class="form-control" id="enq_taken" required>
                                     <option value="Rajeshri">Rajeshri</option>
                                     <option value="Bhavik">Bhavik</option>
                                     <option value="Divyakant">DK</option>
                                     <option value="Akshaya">Akshaya</option>
                                 </select>
-                            </div>
-                        </div>
+                           <!--  </div>
+                        </div> -->
+                        
+                           <span class="input-group-addon" id="bhvk"> <button type="button" id="add-btn" data-toggle="modal" data-target="#myModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;">
+                      +
+                          </button></span>
                         </div>
                            
-                           <div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="Fees-package" id="fees" required>
+                           <div style="margin-bottom: 25px" class="input-group">
+                             <span class="input-group-addon">Fees package</span>	
+									 <!-- <div class="form-group">
+                            <div class="select-list"> -->
+                                <select name="Fees-package" class="form-control" id="fees" required>
                                     <option value="junior-vc-kids">23000</option>
                                     <option value="nursery-vc-kids">22300</option>
                                     <option value="playgroup-vc-kids">20000</option>
                              
                                 </select>
-                            </div>
-                        </div>
+                           <!--  </div>
+                        </div> -->
+                        
+                           <span class="input-group-addon" id="bhvk"> <button type="button" id="add-btn" data-toggle="modal" data-target="#myModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;">
+                      +
+                          </button></span>
                         </div>
                         
                          <div style="margin-bottom: 25px" class="input-group">	
-									 <div class="form-group">
-                            <div class="select-list">
-                                <select name="Lead-Source" id="lead" required>
+                           <span class="input-group-addon">Lead source</span>
+									 <!-- <div class="form-group">
+                            <div class="select-list"> -->
+                                <select name="Lead-Source" class="form-control" id="lead" required>
                                     <option value="test">VICE TEST</option>
                                     <option value="pamplete">PAMLETE</option>
                                    
                              
                                 </select>
-                            </div>
-                        </div>
+                           <!--  </div>
+                        </div> -->
                         </div>
                         
                          <div style="margin-bottom: 25px" class="input-group">
@@ -266,6 +282,31 @@
            </div>
            
             </div>    <!-- LOGINBOX -->
+            
+              <!-- modal-start -->
+                          <div id="myModal" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+							
+							    <!-- Modal content-->
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Modal Header</h4>
+							      </div>
+							      <div class="modal-body">
+							        <p>Some text in the modal.</p>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							
+							  </div>
+							</div>
+                        
+                        <!-- modal-end -->
+                        
+                        
        <!--  <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -334,8 +375,11 @@
                     </div>
          </div>  -->
     
-    
-</body>
-</html>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <script src="vendor/select2/select2.min.css"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="vendor/select2/select2.min.js"></script>
+
 </body>
 </html>
