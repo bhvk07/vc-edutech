@@ -1,7 +1,10 @@
 package org.VCERP.Education.VC.resource;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -66,5 +69,23 @@ public class EnquiryResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not Accepted.").build();
 	}
+	
+	@Path("/FetchAllEnquiryData")
+	@GET
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response FetchAllEnquiryData(){
+		try {
+			ArrayList<Enquiry> enq=new ArrayList<>();
+			EnquiryController controller=new EnquiryController();
+			enq=controller.FetchAllEnquiryData();
+			return Response.status(Status.OK).entity(enq).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
+
 
 }

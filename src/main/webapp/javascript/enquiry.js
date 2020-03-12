@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	$("#enq_data_submit").click(function(){
-	var token=$.session.get('token');
+	/*var token=$.session.get('token');
 	alert(token);
-	validateLogin(token);
+	validateLogin(token);*/
 	event.preventDefault();
 	EnquiryData();	
 	});
@@ -28,7 +28,7 @@ function EnquiryData(){
 	var httpMethod="POST";
 	var relativeUrl="/Enquiry/EnquiryData";
 
-	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
