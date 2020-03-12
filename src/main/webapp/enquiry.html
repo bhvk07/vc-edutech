@@ -5,13 +5,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!DOCTYPE html>
-<html>
 <head>
 <meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
+<script src="core/popper.min.js"></script>
+<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
+<script type="text/javascript" src="javascript/enquiry.js"></script>
+<script type="text/javascript" src="javascript/Helper.js"></script>
+<script type="text/javascript" src="core/jquerysession.js"></script>
 
 <!------ Include the above in your HEAD tag ---------->
 <title>Add new Enquiry</title>
@@ -36,21 +40,21 @@
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Student name">
-                                         <input id="login-username" type="text" class="form-control" name="surname" value="" placeholder="Surname">                                        
+                                        <input id="login-username" type="text" class="form-control" name="sname" value="" placeholder="Student name">
+                                         <input id="login-username" type="text" class="form-control" name="lname" value="" placeholder="Surname">                                        
                                     </div>
                                 
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-password" type="text" class="form-control" name="father" placeholder="Father's name">
+                                        <input id="login-password" type="text" class="form-control" name="fname" placeholder="Father's name">
                                     </div>
                               <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-password" type="text" class="form-control" name="mother" placeholder="Mother's name">
+                                        <input id="login-password" type="text" class="form-control" name="mname" placeholder="Mother's name">
                                     </div>
                               <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-password" type="text" class="form-control" name="aadhar" placeholder="UID/Aadhar">
+                                        <input id="login-password" type="text" class="form-control" name="uid" placeholder="UID/Aadhar">
                                     </div>
                                 <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -59,8 +63,8 @@
                                  <div style="margin-bottom: 25px" class="input-group">
                                          <span class="input-group-addon">Gender</span> 
                                         <div class="form-control">
-                                        <label class="radio-inline" style=""><input type="radio" name="rad" value="opt1" checked>Male</label>
-                                        <label class="radio-inline"><input type="radio" name="rad" value="opt2">Female</label>
+                                        <label class="radio-inline" style=""><input type="radio" name="gender" value="opt1" checked>Male</label>
+                                        <label class="radio-inline"><input type="radio" name="gender" value="opt2">Female</label>
                                         </div>
                                     </div>
                                     
@@ -69,7 +73,7 @@
 									 <span class="input-group-addon">Religion</span>
 <!--									 <div class="form-control">-->
 <!--                            <div class="select-list">-->
-                                <select name="religion" class="form-control" required>
+                                <select name="caste" class="form-control" required>
                                     <option value="Bhuddism">Buddhism</option>
                                     <option value="hindu">Hindu</option>
                                     <option value="Christanity">Christanity</option>
@@ -84,7 +88,7 @@
 								  <span class="input-group-addon">Caste</span>
 									<!--  <div class="form-group"> -->
                            <!--  <div class="select-list"> -->
-                                <select name="food" class="form-control" required>
+                                <select name="category" class="form-control" required>
                                     <option value="general">General</option>
                                     <option value="obc">OBC</option>
                                     <option value="SC">SC</option>
@@ -99,7 +103,7 @@
                            				   <span class="input-group-addon">Medium</span>
 									<!--  <div class="form-group">
                             <div class="select-list"> -->
-                                <select name="medium" class="form-control" required>
+                                <select name="lang" class="form-control" required>
                                     <option value="eng">English</option>
                                     <option value="hin">Hindi</option>
                                 </select>
@@ -140,17 +144,17 @@
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="number" class="form-control" name="stud_no" value="" placeholder="Student's number">                                        
+                                        <input id="login-username" type="number" class="form-control" name="stud_cont" value="" placeholder="Student's number">                                        
                                     </div>
                                     
                               <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="number" class="form-control" name="f_no" value="" placeholder="Father's number">                                        
+                                        <input id="login-username" type="number" class="form-control" name="father_cont" value="" placeholder="Father's number">                                        
                                     </div>
                                     
                                <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="number" class="form-control" name="m_no" value="" placeholder="Mother's number">                                        
+                                        <input id="login-username" type="number" class="form-control" name="mother_cont" value="" placeholder="Mother's number">                                        
                                     </div>
                                 
 <!--                             <div style="margin-bottom: 25px" class="input-group">
@@ -159,7 +163,7 @@
                                     </div> -->
                             <div style="margin-bottom: 25px" class="input-group">
                                        <span class="input-group-addon"><label for="txtarea">Address</label></span>
-                                        <textarea id="addr" class="form-control" rows="6" cols="52"></textarea>                                    
+                                        <textarea id="addr" class="form-control" name="address" rows="6" cols="52"></textarea>                                    
                                     </div>
                                     
                                     <div style="margin-bottom: 25px" class="input-group">
@@ -169,11 +173,11 @@
                                     
                                     <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="mail" value="" placeholder="Email id">                                        
+                                        <input id="login-username" type="text" class="form-control" name="email" value="" placeholder="Email id">                                        
                                     </div>
                                     <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="number" class="form-control" name="wp_no" value="" placeholder="Whatsapp number">                                        
+                                        <input id="login-username" type="number" class="form-control" name="w_app_no" value="" placeholder="Whatsapp number">                                        
                                     </div>
                           
 
@@ -197,12 +201,12 @@
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon">Enquiry Date</span>
-                                        <input id="login-username" type="number" class="form-control" name="Date" value="" placeholder=""> 
+                                        <input id="login-username" type="number" class="form-control" name="enq_date" value="" placeholder=""> 
                                                                    
                                     </div>
                                       <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon">Enquiry ID</span>
-                                        <input id="login-username" type="number" class="form-control" name="enq_id" value="" placeholder=""> 
+                                        <input id="login-username" type="number" class="form-control" name="enq_no" value="" placeholder=""> 
                                                                    
                                     </div>
                            
@@ -211,7 +215,7 @@
                                        <span class="input-group-addon">Enquiry taken by</span>
 									<!--  <div class="form-group">
                             <div class="select-list"> -->
-                                <select name="Enquiry-Taken" class="form-control" id="enq_taken" required>
+                                <select name="enq_taken_by" class="form-control" id="enq_taken" required>
                                     <option value="Rajeshri">Rajeshri</option>
                                     <option value="Bhavik">Bhavik</option>
                                     <option value="Divyakant">DK</option>
@@ -229,7 +233,7 @@
                              <span class="input-group-addon">Fees package</span>	
 									 <!-- <div class="form-group">
                             <div class="select-list"> -->
-                                <select name="Fees-package" class="form-control" id="fees" required>
+                                <select name="fees_pack" class="form-control" id="fees" required>
                                     <option value="junior-vc-kids">23000</option>
                                     <option value="nursery-vc-kids">22300</option>
                                     <option value="playgroup-vc-kids">20000</option>
@@ -247,7 +251,7 @@
                            <span class="input-group-addon">Lead source</span>
 									 <!-- <div class="form-group">
                             <div class="select-list"> -->
-                                <select name="Lead-Source" class="form-control" id="lead" required>
+                                <select name="lead_source" class="form-control" id="lead" required>
                                     <option value="test">VICE TEST</option>
                                     <option value="pamplete">PAMLETE</option>
                                    
@@ -259,14 +263,14 @@
                         
                          <div style="margin-bottom: 25px" class="input-group">
                                        <span class="input-group-addon"><label for="txtarea">Remark</label></span>
-                                        <textarea id="addr" class="form-control" rows="6" cols="52"></textarea>                                    
+                                        <textarea id="addr" class="form-control" name="remark" rows="6" cols="52"></textarea>                                    
                                     </div>
                                     
                                            <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="#" class="btn btn-success">Submit </a>
+                                      <a id="enq_data_submit" class="btn btn-success">Submit </a>
                                    
 
                                     </div>
@@ -327,7 +331,7 @@
 						<div class="form-group">
 							<label>DOB</label>
 							<div class='input-group date' id='datepicker'>
-							<input type="text" class="form-control" required>
+							<input type="date" class="form-control" required>
 							<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -337,7 +341,7 @@
 						<div class="form-group">
 							<label>Date Of Joining</label>
 							<div class='input-group date' id='datepicker'>
-							<input type="text" class="form-control" required>
+							<input type="date" class="form-control" required>
 							<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -440,20 +444,21 @@
                          </div>
                     </div>
          </div>  -->
-         
-          <script type="text/javascript">
+
+
+       <!--    <script type="text/javascript">
           $(function () {
         	  $("#datepicker").datepicker({ 
         	        autoclose: true, 
         	        todayHighlight: true
-        	  }).datepicker('update', new Date());
+        	  }).datepicker({ format: "yyyy/mm/dd" });;
         	});
-        </script>  
+        </script> -->  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
   <script src="vendor/select2/select2.min.css"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
   <script src="vendor/select2/select2.min.js"></script>
 
 </body>

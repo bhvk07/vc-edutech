@@ -33,7 +33,7 @@ function attemptLogin(){
 		showNotification("error",message);
 		alert(message);*/
 	}
-	var formData = $('#EnquiryForm').serialize();
+	var formData = $('#signin').serialize();
 	var httpMethod="POST";
 	var relativeUrl="/user/login";
 

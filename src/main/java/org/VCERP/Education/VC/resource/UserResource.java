@@ -1,5 +1,6 @@
 package org.VCERP.Education.VC.resource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,6 +10,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.model.User;
+import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
 import org.VCERP.Education.VC.controller.UserController;
 
@@ -27,10 +29,12 @@ public class UserResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		}else
 		{
+			SecureUtil secure=new SecureUtil();
+			String token=secure.issueToken(user);
 //		resource.getCompany(user.getCompany_name());
 //		String session=Util.randomStringGenerator(8);
 //		String token=SecureUtil.issueToken(user, "3QAy*bZn7jW%==LDKK$U", session);
-		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+"token").entity(user).build();
+		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+token).entity(user).build();
 		}
 	}
 }

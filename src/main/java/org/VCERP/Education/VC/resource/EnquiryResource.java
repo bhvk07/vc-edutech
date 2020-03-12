@@ -17,9 +17,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @Path("Enquiry")
 public class EnquiryResource {
 	
-	@POST
-	@PreAuthorize("hasRole('desk')")
 	@Path("/EnquiryData")
+	@POST
+	//@PreAuthorize("hasRole('desk')")
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EnquiryData(@FormParam("sname") String sname,@FormParam("lname") String lname,
@@ -32,6 +32,7 @@ public class EnquiryResource {
 			@FormParam("fees_pack") String fees_pack,@FormParam("lead_source") String lead_source,
 			@FormParam("remark") String remark){
 		try {
+			System.out.println("here");
 			Enquiry enquiry=new Enquiry();
 			enquiry.setSname(sname);
 			enquiry.setLname(lname);
