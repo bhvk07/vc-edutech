@@ -17,10 +17,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src=" https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>
-<script scr="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"></script>
+<script type="text/javascript" src="Datatables/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="Datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="Datatables/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="Datatables/bootstrap.css"></script>
 
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/enq-list.js"></script>
@@ -327,9 +327,9 @@ table.table .avatar {
 						</h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"
-							data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add
-								New Employee</span></a> <a href="#deleteEmployeeModal"
+						<a href="enquiry.html" class="btn btn-success"
+							><i class="material-icons">&#xE147;</i> <span>Add
+								New</span></a> <a href="#deleteEmployeeModal"
 							class="btn btn-danger" data-toggle="modal"><i
 							class="material-icons">&#xE15C;</i> <span>Delete</span></a>
 					</div>
@@ -339,22 +339,42 @@ table.table .avatar {
 				style="width: 100%">
 				<thead>
 					<tr>
-						<th>Sr.no</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Address</th>
+						<th>
+						<span class="custom-checkbox">
+							<input type="checkbox" id="selectAll" name="options[]" value="0">
+							<label for="checkbox1"></label>
+						</span>
+						</th>
+						<th>Enquiry Date</th>
+						<th>Enquiry Id</th>
+						<th>Student Name</th>
 						<th>Contact</th>
+						<th>Location</th>
+						<th>Enquiry Taken By</th>
+						<th>Lead Stage</th>
+						<th>Lead Source</th>
+						<th>Lead Source</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Office</th>
-						<th>Age</th>
-						<th>Start date</th>
-						<th>Salary</th>
+						<th>
+						<span class="custom-checkbox">
+							<input type="checkbox" id="selectAll" name="options[]" value="0">
+							<label for="checkbox1"></label>
+						</span>
+						</th>
+						<th>Enquiry Date</th>
+						<th>Enquiry Id</th>
+						<th>Student Name</th>
+						<th>Contact</th>
+						<th>Location</th>
+						<th>Enquiry Taken By</th>
+						<th>Lead Stage</th>
+						<th>Lead Source</th>
+						<th>Lead Source</th>
+						<th>Action</th>
 					</tr>
 				</tfoot>
 				<!-- <tbody>
@@ -457,13 +477,13 @@ table.table .avatar {
 		</div>
 	</div>
 	<!-- Edit Modal HTML -->
-	<div id="addEmployeeModal" class="modal fade">
+	<!-- <div id="addEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form>
 					<div class="modal-header">
 						<h4 class="modal-title">Add Employee</h4>
-						<button type="button" class="close" data-dismiss="modal"
+						<button type="button" class="close"data-dismiss="modal" 
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
@@ -492,7 +512,7 @@ table.table .avatar {
 				</form>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">

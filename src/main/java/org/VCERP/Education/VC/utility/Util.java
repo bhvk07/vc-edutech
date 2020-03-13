@@ -54,6 +54,11 @@ public class Util {
 		ErrorMessage error=new ErrorMessage(status.getStatusCode(),message);
 		return Response.status(status).entity(error).type(MediaType.APPLICATION_JSON);
 	}
+	public static ResponseBuilder generateResponse(Status status,String message)
+	{
+		ErrorMessage error=new ErrorMessage(status.getStatusCode(),message);
+		return Response.status(status).entity(error).type(MediaType.APPLICATION_JSON);
+	}
 	
 	public static String randomStringGenerator(int length)
 	{

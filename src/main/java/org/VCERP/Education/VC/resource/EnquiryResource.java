@@ -3,11 +3,13 @@ package org.VCERP.Education.VC.resource;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -86,6 +88,19 @@ public class EnquiryResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
-
+	
+	@Path("/DeleteEnquiryData")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response DeleteEnquiryData(@QueryParam("delete") String id){
+		try {
+			EnquiryController controller=new EnquiryController();
+			controller.DeleteEnquiryData(id);
+			return Util.generateResponse(Status.OK,"Data Deleted").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
 
 }

@@ -17,4 +17,9 @@ public class EnquiryController {
 		return dao.FetchAllEnquiryData();
 	}
 
+	 public void DeleteEnquiryData(String id) {
+		  EnquiryDAO dao=new EnquiryDAO();
+		  dao.DeleteEnquiryData(id);
+	}
+
 }
