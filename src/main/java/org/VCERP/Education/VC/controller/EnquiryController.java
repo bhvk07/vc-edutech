@@ -22,4 +22,9 @@ public class EnquiryController {
 		  dao.DeleteEnquiryData(id);
 	}
 
+	public void DeleteMultipleEnquiryData(Long id) {
+		EnquiryDAO dao=new EnquiryDAO();
+		dao.DeleteMultipleEnquiryData(id);
+	}
+
 }

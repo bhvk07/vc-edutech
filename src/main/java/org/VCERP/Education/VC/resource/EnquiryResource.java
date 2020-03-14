@@ -89,13 +89,15 @@ public class EnquiryResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 	
-	@Path("/DeleteEnquiryData")
+
+	@Path("/DeleteMultipleEnquiryData")
 	@DELETE
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response DeleteEnquiryData(@QueryParam("delete") String id){
+	public Response DeleteMultipleEnquiryData(@QueryParam("delete") Long id){
 		try {
 			EnquiryController controller=new EnquiryController();
-			controller.DeleteEnquiryData(id);
+			controller.DeleteMultipleEnquiryData(id);
 			return Util.generateResponse(Status.OK,"Data Deleted").build();
 		} catch (Exception e) {
 			e.printStackTrace();
