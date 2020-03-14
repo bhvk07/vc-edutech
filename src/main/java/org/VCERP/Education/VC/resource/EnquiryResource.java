@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.utility.Util;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 @Path("Enquiry")
 public class EnquiryResource {
@@ -37,7 +36,6 @@ public class EnquiryResource {
 			@FormParam("fees_pack") String fees_pack,@FormParam("lead_source") String lead_source,
 			@FormParam("remark") String remark){
 		try {
-			System.out.println("here");
 			Enquiry enquiry=new Enquiry();
 			enquiry.setSname(sname);
 			enquiry.setLname(lname);
@@ -72,8 +70,8 @@ public class EnquiryResource {
 		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not Accepted.").build();
 	}
 	
-	@Path("/FetchAllEnquiryData")
 	@GET
+	@Path("/FetchAllEnquiryData")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -89,9 +87,8 @@ public class EnquiryResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 	
-
-	@Path("/DeleteMultipleEnquiryData")
 	@DELETE
+	@Path("/DeleteMultipleEnquiryData")
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response DeleteMultipleEnquiryData(@QueryParam("delete") Long id){
