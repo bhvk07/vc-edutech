@@ -27,4 +27,9 @@ public class EnquiryController {
 		dao.DeleteMultipleEnquiryData(id);
 	}
 
+	public void Admission(Long id) {
+		EnquiryDAO dao=new EnquiryDAO();
+		dao.Admission(id);	
+	}
+
 }

@@ -2,8 +2,11 @@ package org.VCERP.Education.VC.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Employee;
+import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.utility.Util;
 
 public class EmployeeDAO {
@@ -34,6 +37,33 @@ public class EmployeeDAO {
 			Util.closeConnection(null, ps, con);
 		}
 		return emp;
+	}
+
+	public ArrayList<Employee> FetchAllEmployee() {
+			Connection con=null;
+			PreparedStatement st=null;
+			ResultSet rs=null;
+			ArrayList<Employee> employee=new ArrayList<>();
+			try {
+				con=Util.getDBConnection();
+				String query="select `id`,`emp_name` from employee";
+				st=con.prepareStatement(query);
+				rs=st.executeQuery();
+				while(rs.next())
+				{
+					Employee emp=new Employee();
+					emp.setId(rs.getLong(1));
+					emp.setEmp_name(rs.getString(2));
+					employee.add(emp);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println(e);
+			}
+			finally {
+				Util.closeConnection(rs, st, con);
+			}
+			return employee;
 	}
 
 }

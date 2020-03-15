@@ -1,15 +1,21 @@
 package org.VCERP.Education.VC.resource;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.EmployeeController;
+import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.model.Employee;
+import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("Employee")
@@ -18,14 +24,13 @@ public class EmployeeResource {
 	@Path("/NewEmployee")
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	private Response addEmployee(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
+	public Response addEmployee(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
 			,@FormParam("emp_name") String emp_name,@FormParam("emp_unq_code") String emp_unq_code
 			,@FormParam("address") String address,@FormParam("contact") String contact,
 			@FormParam("dob") String dob,@FormParam("join_date") String join_date,
 			@FormParam("design") String design){
 		Employee emp=null;
 		EmployeeController controller=null;
-		System.out.println(emp_type);
 		try {
 			emp=new Employee();
 			controller=new EmployeeController();
@@ -46,4 +51,23 @@ public class EmployeeResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
 	}
+	
+	@GET
+	@Path("/FetchAllEmployee")
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response FetchAllEmployee(){
+		try {
+			ArrayList<Employee> emp=new ArrayList<>();
+			EmployeeController controller=new EmployeeController();
+			emp=controller.FetchAllEmployee();
+			return Response.status(Status.OK).entity(emp).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
+	
+	
 }

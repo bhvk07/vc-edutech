@@ -32,6 +32,7 @@ public class Enquiry {
 	private String fees_pack;
 	private String lead_source;
 	private String remark;
+	private String status;
 	public long getId() {
 		return id;
 	}
@@ -176,6 +177,13 @@ public class Enquiry {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 
 }

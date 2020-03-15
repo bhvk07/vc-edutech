@@ -7,6 +7,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -100,6 +101,21 @@ public class EnquiryResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
+	
+	@PUT
+	@Path("/Admission")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Admission(@FormParam("id") Long id){
+		try {
+			EnquiryController controller=new EnquiryController();
+			controller.Admission(id);
+			return Util.generateResponse(Status.OK,"Admission done.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST,"Admission not done.").build();
 	}
 
 }

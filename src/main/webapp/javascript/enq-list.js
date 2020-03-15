@@ -12,6 +12,11 @@ $(document).ready(function(){
 		  });
 		
 	});
+	$("#admission").click(function(){
+		$("input:checkbox[name=type]:checked").each(function() {
+			  Admission($(this).val());
+		  });
+	})
 	showDashboard();
 });
 function showDashboard(){
@@ -29,7 +34,15 @@ function showDashboard(){
 		var enq_taken_by=responseData[i].enq_taken_by;
 		var lead_stage="";
 		var lead_source=responseData[i].lead_source;
-		var status="";
+		var status=responseData[i].status;
+		if(status==0)
+			{
+				status="Not Admittede"
+			}
+		if(status==1)
+			{
+			status="Admitted";
+		}
 		var delbutton='<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 		table.row.add(
 				[ srno, enq_date,enq_no,sname,stud_cont,address,enq_taken_by,lead_stage,lead_source,status,delbutton]).draw();
@@ -69,7 +82,6 @@ function deleterow(){
 }
 
 function deletemultiplerow(id){
-	alert(id);
 	function callback(responseData,textStatus,request){
 		alert("data deleted");
 		}
@@ -82,6 +94,23 @@ function deletemultiplerow(id){
 	var httpMethod="DELETE";
 	var relativeUrl="/Enquiry/DeleteMultipleEnquiryData?delete="+id;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	errorCallback);
+	return false;
+}
+
+function Admission(id){
+	function callback(responseData,textStatus,request)
+	{
+		alert("admission done");
+	}
+	function errorCallback(responseData,textStatus,request)
+	{
+		alert("admission not done");
+	}
+	var formData={id:id};
+	var httpMethod="PUT";
+	var relativeUrl="/Enquiry/Admission";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 	errorCallback);
 	return false;
 }

@@ -17,8 +17,8 @@ public class EnquiryDAO {
 			String query="insert into `enquiry`(`sname`,`lname`,`fname`,`mname`,`uid`,"
 					+ "`dob`,`gender`,`caste`,`category`,`lang`,`stud_cont`,`father_cont`,"
 					+ "`mother_cont`,`address`,`pin`,`email`,`w_app_no`,`enq_date`,`enq_no`,"
-					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`,`status`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
 			st=con.prepareStatement(query);
 			st.setString(1, enquiry.getSname());
 			st.setString(2, enquiry.getLname());
@@ -91,6 +91,7 @@ public class EnquiryDAO {
 				enquiry.setFees_pack(rs.getString(22));
 				enquiry.setLead_source(rs.getString(23));
 				enquiry.setRemark(rs.getString(24));
+				enquiry.setStatus(rs.getString(25));
 				enq.add(enquiry);
 			}
 		}catch(Exception e){
@@ -125,6 +126,21 @@ public class EnquiryDAO {
 		try {
 			con=Util.getDBConnection();
 			String query="delete from enquiry where id=?";
+			st=con.prepareStatement(query);
+			st.setLong(1, id);
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+	}
+
+	public void Admission(Long id) {
+		Connection con=null;
+		PreparedStatement st=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update enquiry set status=1 where id=?";
 			st=con.prepareStatement(query);
 			st.setLong(1, id);
 			st.executeUpdate();
