@@ -75,7 +75,6 @@ public class EnquiryResource {
 	@Path("/FetchAllEnquiryData")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response FetchAllEnquiryData(){
 		try {
 			ArrayList<Enquiry> enq=new ArrayList<>();
