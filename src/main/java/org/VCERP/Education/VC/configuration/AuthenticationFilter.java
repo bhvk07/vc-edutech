@@ -36,7 +36,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     private ResourceInfo resourceInfo;
      
     private static final String AUTHORIZATION_PROPERTY = "X-Authorization";
-    private static final String AUTHENTICATION_SCHEME = "Basic";
+    private static final String AUTHENTICATION_SCHEME = "Bearer";
       
     @Override
     public void filter(ContainerRequestContext requestContext)

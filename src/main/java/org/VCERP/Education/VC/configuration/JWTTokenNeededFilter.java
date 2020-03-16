@@ -14,6 +14,8 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.ext.Provider;
 
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
+import org.VCERP.Education.VC.utility.SecureUtil;
+import org.VCERP.Education.VC.utility.Util;
 
 import io.jsonwebtoken.Jwts;
 
@@ -21,29 +23,35 @@ import io.jsonwebtoken.Jwts;
 @JWTTokenNeeded
 @Priority(Priorities.AUTHENTICATION)
 public class JWTTokenNeededFilter implements ContainerRequestFilter {
-
-	    @Inject
-	    private KeyGenerator keyGenerator;
-	 
+	private static final String AUTHORIZATION_PROPERTY = "X-Authorization";
 	    @Override
 	    public void filter(ContainerRequestContext requestContext) throws IOException {
 	 
 	        // Get the HTTP Authorization header from the request
-	        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+	        String authorizationHeader = requestContext.getHeaderString(AUTHORIZATION_PROPERTY);
 	 
 	        // Extract the token from the HTTP Authorization header
 	        String token = authorizationHeader.substring("Bearer".length()).trim();
-	 
+	        System.out.println(token);
+	        if(!token.isEmpty()){
 	        try {
 	 
 	            // Validate the token
-	            Key key = keyGenerator.generateKey();
+	            SecureUtil secure=new SecureUtil();
+	            String key=secure.key;
+	            System.out.println(key);
 	            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
 	            //logger.info("#### valid token : " + token);
 	 
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	            //logger.severe("#### invalid token : " + token);
-	            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+	            
 	        }
+	        }else
+	        {
+	        	requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+	        }
+	        
 	    }
 	}

@@ -2,6 +2,7 @@ package org.VCERP.Education.VC.resource;
 
 import java.util.ArrayList;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.EnquiryController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -72,8 +74,9 @@ public class EnquiryResource {
 	}
 	
 	@GET
+	@PermitAll
+	@JWTTokenNeeded
 	@Path("/FetchAllEnquiryData")
-	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response FetchAllEnquiryData(){
 		try {

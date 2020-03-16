@@ -9,11 +9,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class SecureUtil {
-	 
+	 public static String key=null;
 	public String issueToken(User login) {
 		Calendar tommorow=Calendar.getInstance();
 		tommorow.add(Calendar.DATE, 1);
-        String key=Util.randomStringGenerator(15);
+        key=Util.randomStringGenerator(15);
         String jwtToken = Jwts.builder()
                 .setSubject("Auth").claim("name", login.getName())
                 .claim("contact number", login.getCont_no())

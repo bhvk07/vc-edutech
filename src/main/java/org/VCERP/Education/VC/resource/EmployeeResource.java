@@ -2,6 +2,7 @@ package org.VCERP.Education.VC.resource;
 
 import java.util.ArrayList;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -53,6 +54,7 @@ public class EmployeeResource {
 	}
 	
 	@GET
+	@PermitAll
 	@Path("/FetchAllEmployee")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
