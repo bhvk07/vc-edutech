@@ -1,5 +1,7 @@
 package org.VCERP.Education.VC.resource;
 
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -18,6 +20,7 @@ import org.VCERP.Education.VC.controller.UserController;
 public class UserResource {
 	
 	@POST
+	@PermitAll
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@FormParam("userid") String userid,
