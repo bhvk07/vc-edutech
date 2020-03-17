@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.EmployeeController;
 import org.VCERP.Education.VC.controller.EnquiryController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.utility.Util;
@@ -22,8 +23,10 @@ import org.VCERP.Education.VC.utility.Util;
 @Path("Employee")
 public class EmployeeResource {
 
-	@Path("/NewEmployee")
 	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/NewEmployee")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addEmployee(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
 			,@FormParam("emp_name") String emp_name,@FormParam("emp_unq_code") String emp_unq_code
@@ -55,6 +58,7 @@ public class EmployeeResource {
 	
 	@GET
 	@PermitAll
+	//@JWTTokenNeeded
 	@Path("/FetchAllEmployee")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)

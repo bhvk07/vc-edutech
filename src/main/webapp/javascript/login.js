@@ -9,7 +9,6 @@ function attemptLogin(){
 	function callback(responseData,textStatus,request){
 		var token=request.getResponseHeader('X-Authorization');
 		$.session.set("token",token);
-		alert(token);
 		var role = responseData.role;
 		if(role==DESK)
 			{

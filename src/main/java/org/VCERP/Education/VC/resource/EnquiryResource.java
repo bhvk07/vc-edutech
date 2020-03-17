@@ -26,6 +26,8 @@ public class EnquiryResource {
 	
 	@Path("/EnquiryData")
 	@POST
+	@PermitAll
+	//@JWTTokenNeeded
 	//@PreAuthorize("hasRole('desk')")
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -75,7 +77,7 @@ public class EnquiryResource {
 	
 	@GET
 	@PermitAll
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@Path("/FetchAllEnquiryData")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response FetchAllEnquiryData(){
@@ -91,6 +93,8 @@ public class EnquiryResource {
 	}
 	
 	@DELETE
+	@PermitAll
+	//@JWTTokenNeeded
 	@Path("/DeleteMultipleEnquiryData")
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -106,6 +110,8 @@ public class EnquiryResource {
 	}
 	
 	@PUT
+	@PermitAll
+	//@JWTTokenNeeded
 	@Path("/Admission")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)

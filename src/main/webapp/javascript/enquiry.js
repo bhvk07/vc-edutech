@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	FetchAllEmployee();
+	//getCurrentDate();
 	$("#enq_data_submit").click(function() {
 		/*
 		 * var token=$.session.get('token'); alert(token); validateLogin(token);
@@ -79,3 +80,11 @@ function FetchAllEmployee() {
 			errorCallback);
 	return false;
 }
+
+//function getCurrentDate() {
+//	var today = new Date();
+//	var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-'
+//			+ today.getDate();
+//	alert(date);
+//	document.getElementById('enq_date').value = date;
+//}
