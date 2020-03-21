@@ -8,6 +8,25 @@ import org.VCERP.Education.VC.utility.Util;
 
 public class ReceiptDetailsDAO {
 
+	public ReceiptDetails StudentDetails(ReceiptDetails receipt) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="insert into receipt_details(`stud_name`) values(?)";
+			ps=con.prepareStatement(query);
+			ps.setString(1, receipt.getStud_name());
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return receipt;
+	}
+	
 	public ReceiptDetails ReceiptDetailsForm(ReceiptDetails details) {
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -36,5 +55,7 @@ public class ReceiptDetailsDAO {
 		}
 		return details;
 	}
+
+	
 
 }
