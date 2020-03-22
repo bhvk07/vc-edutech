@@ -50,7 +50,7 @@ public class AdmissionDAO {
 		Enquiry eq=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select id,sname,mname,lname,status from enquiry where status=0";
+			String query="select id,sname,lname,status from enquiry where status=0";
 			ps=con.prepareStatement(query);
 			rs=ps.executeQuery();
 			while(rs.next())
@@ -58,9 +58,8 @@ public class AdmissionDAO {
 				eq=new Enquiry();
 				eq.setId(rs.getLong(1));
 				eq.setSname(rs.getString(2));
-				eq.setMname(rs.getString(3));
-				eq.setLname(rs.getString(4));
-				eq.setStatus(rs.getString(5));
+				eq.setLname(rs.getString(3));
+				eq.setStatus(rs.getString(4));
 				admission.add(eq);
 			}
 			

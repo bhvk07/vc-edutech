@@ -75,7 +75,7 @@ public class AdmissionResource {
 			admission=new ArrayList<>();
 			controller=new AdmissionController();
 			controller.getNonAdmittedStudent(admission);
-			return Response.status(Status.FOUND).entity(admission).build();
+			return Response.status(Status.ACCEPTED).entity(admission).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -94,7 +94,7 @@ public class AdmissionResource {
 			admission=new ArrayList<>();
 			controller=new AdmissionController();
 			controller.fetchAllAdmittedStudent(admission);
-			return Response.status(Status.FOUND).entity(admission).build();
+			return Response.status(Status.ACCEPTED).entity(admission).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
