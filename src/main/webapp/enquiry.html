@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
@@ -644,7 +644,7 @@ FEES DETAILS
    
          <td>
 <!--  Amount Field       -->
-         <input type="number" class="form-control amt" id="amount" placeholder="0.00" >
+         <input type="number" class="form-control amt" id="amount" value="" placeholder="0.00" >
      </td>
      
           <td>
@@ -666,7 +666,7 @@ FEES DETAILS
    
      <td>
 <!--      Total field      -->
-        <input type="text" class="form-control totala" id="total-amt" value="" disabled>
+        <input type="text" class="form-control totala" name="price" id="total-amt" value="" disabled>
      </td>
       <td>
          <div class="w3-padding w3-xlarge w3-teal">
@@ -821,89 +821,63 @@ FEES DETAILS
 <!-- royalty fees package-->
 
 
+<script>
 
-<script type="text/javascript">
-    var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype"><option value="ActivityFees">Activity Fees</option><option value="AdmissionForm">Admission Form</option><option value="AnnualDayFees">AnnualDayFees</option> <option value="BoardExamFees">BoardExamFees</option><option value="BooksFees">BooksFees</option> <option value="ComputerFees">ComputerFees</option><option value="DonationFees">DonationFees</option>  <option value="Downpayment">Downpayment</option> <option value="EducationalTripFees">EducationalTripFees</option>   <option value="ExamFees">ExamFees</option><option value="ID_Calendar_Form">ID_Calendar_Form</option><option value="Installments">Installments</option><option value="LateFees">LateFees</option><option value="LumpsumForm">LumpsumForm</option><option value="MiscellaneousFees">MiscellaneousFees</option><option value="MonthlyFees">MonthlyFees</option><option value="NewAdmission">NewAdmission</option><option value="PartyCharges">PartyCharges</option> <option value="Re-AdmissionFees">Re-AdmissionFees</option><option value="StudentKit">StudentKit</option> <option value="TermFees">TermFees</option><option value="TransportationFees">TransportationFees</option><option value="TutionFees">TutionFees</option></select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
- 
+var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype"><option value="ActivityFees">Activity Fees</option><option value="AdmissionForm">Admission Form</option><option value="AnnualDayFees">AnnualDayFees</option> <option value="BoardExamFees">BoardExamFees</option><option value="BooksFees">BooksFees</option> <option value="ComputerFees">ComputerFees</option><option value="DonationFees">DonationFees</option>  <option value="Downpayment">Downpayment</option> <option value="EducationalTripFees">EducationalTripFees</option>   <option value="ExamFees">ExamFees</option><option value="ID_Calendar_Form">ID_Calendar_Form</option><option value="Installments">Installments</option><option value="LateFees">LateFees</option><option value="LumpsumForm">LumpsumForm</option><option value="MiscellaneousFees">MiscellaneousFees</option><option value="MonthlyFees">MonthlyFees</option><option value="NewAdmission">NewAdmission</option><option value="PartyCharges">PartyCharges</option> <option value="Re-AdmissionFees">Re-AdmissionFees</option><option value="StudentKit">StudentKit</option> <option value="TermFees">TermFees</option><option value="TransportationFees">TransportationFees</option><option value="TutionFees">TutionFees</option></select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+
+   $("#feestypetable").on('change', '.amt,.discount', function(){
+      //alert("1");
+       var discount= 0;
+       var amount = 0;
+       var r = document.getElementById('feestypetable');
+       var noof = r.rows.length-1;
+      // var val = this.value;
+       var $trr = this.closest('tr');
+       amount = parseInt($(".amt",$trr).val());
+       discount = parseInt($(".discount",$trr).val());
+       if(amount.value!=NaN){
+    	   alert("1");
+           $(".totala",$trr).val(amount);
+       }
+      
+       if($(".totala",$trr).val()>0 && discount>=0){
+             var cal = amount - discount;
+           if(cal<0){
+           alert("Profit cannot be Negative");
+                $(".totala",$trr).val(0);
+                }
+           else{
+               $(".totala",$trr).val(cal);
+           }
+       }
+       else if($(".totala",$trr).val()<0){
+           alert("Input positive amount value");
+           $(".totala",$trr).val(0);
+           
+       }
+       getTotalPrice();
+
+              });
+       
+
+    function getTotalPrice() {
+  var total = 0; 
+  $(".totala").each(function() { 
+    var val = $(this).val();
+    total += isNaN(val) || $.trim(val)=="" ? 0 : parseFloat(val); 
+  });
+  $("#grand-t").val(total.toFixed(2)); 
+}
+        
     $(function () {
     $("#addrow").click(function(){
-        var r = document.getElementById('feestypetable');
-        show = r.rows.length-1; //number of rows
-         var grand;
-        result = [] ;
-        dis = [];
-        for(i=0 ; i<show ; i++)
-        {
-            result.push($('.amt').eq(i).val()); //push value in array , .amt is class name
-            dis.push($('.discount').eq(i).val());
-            if(dis != 0 || dis != null)
-            {
-                  var calc = result[result.length-1] - dis[dis.length-1];
-            }
-         }
-        if(calc < 0){
-               
-                document.getElementsByClassName('discount')[show-1].setAttribute("value","");
-                alert("Fees cannot be negative");
-               
-            }
-        else{
-            grand = parseInt(calc); //total field value is calc
-         
-        //document.getElementsByClassName('totala')[show-1].setAttribute("value",result[result.length-1]);
-            document.getElementsByClassName('totala')[show-1].setAttribute("value",calc);
-             var totalf = document.getElementById('grand-t').value;
-            var grand = parseInt(totalf) + parseInt(grand);
-             
-              document.getElementById('grand-t').setAttribute("value",parseInt(grand));
-              $("table #fee-details").append(html);
-           
-                //grand + document.getElementsByClassName('totala')[show-1].getAttribute("value")
-            }
-     
-           
-  });  
-   
-//var amts = document.getElementsByClassName('amt').value;
-        //document.getElementsByClassName('totala').value = amt;
- 
-   
-     });
-       $(function () {
-           $("#feestypetable").on('click', '#remove-row', function() {
-        	  var amt=$(this).closest('tr').find('.totala').val();
-        	  var grandtotal=document.getElementById('grand-t').value;
-        	  grandtotal=grandtotal-amt;
-        	  document.getElementById('grand-t').setAttribute("value",parseInt(grandtotal));
-              $(this).closest('tr').remove();
-           });
-       });
-   
-    function getandset()
-    {
-        var r = document.getElementById('feestypetable');
-        var show = r.rows.length-1;
-        alert(show);
-        //var amt = document.getElementById('amount').value;
-        //document.getElementById('total-amt').value = amt;
-    }
-
-                       
-    </script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<!--
-<script type="text/javascript">
-    $(function () {
-        $("#chkRoyalty").click(function () {
-            if ($(this).is(":checked")) {
-                $("#dvRoyalty").show();
-            } else {
-                $("#dvRoyalty").hide();
-            }
-        });
+        $("table #fee-details").append(html);
     });
+    });
+    
+    
 </script>
--->
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
