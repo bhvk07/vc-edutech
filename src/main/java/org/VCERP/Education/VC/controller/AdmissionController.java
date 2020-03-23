@@ -9,21 +9,27 @@ import org.VCERP.Education.VC.model.ReceiptDetails;
 
 public class AdmissionController {
 
-	public Admission StudentAdmission(Admission admission, ReceiptDetails receipt) {
+	public Admission StudentAdmission(Admission admission) {
 		AdmissionDAO dao=new AdmissionDAO();
-		ReceiptDetailsController controller=new ReceiptDetailsController();
-		controller.StudentDetails(receipt);
+//		ReceiptDetailsController controller=new ReceiptDetailsController();
+//		controller.StudentDetails(receipt);
 		return dao.StudentAdmission(admission);
 	}
 
-	public ArrayList<Enquiry> getNonAdmittedStudent(ArrayList<Enquiry> admission) {
+/*	public ArrayList<Enquiry> getNonAdmittedStudent(ArrayList<Enquiry> admission) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getNonAdmittedStudent(admission);
 	}
-
+*/
 	public ArrayList<Admission> fetchAllAdmittedStudent(ArrayList<Admission> admission) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.fetchAllAdmittedStudent(admission);
+	}
+
+	public Enquiry searchStudent(long enq_stud) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.searchStudent(enq_stud);
+		
 	}
 
 }

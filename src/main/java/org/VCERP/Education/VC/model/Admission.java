@@ -10,6 +10,7 @@ public class Admission {
 
 	private long id;
 	private String student_name;
+	private String contact;
 	private String enq_taken_by;
 	private String adm_fees_pack;
 	private String status;
@@ -20,6 +21,7 @@ public class Admission {
 	private String admission_date;
 	private String acad_year;
 	private String join_date;
+	private long fees;
 	public long getId() {
 		return id;
 	}
@@ -91,6 +93,18 @@ public class Admission {
 	}
 	public void setJoin_date(String join_date) {
 		this.join_date = join_date;
+	}
+	public long getFees() {
+		return fees;
+	}
+	public void setFees(long fees) {
+		this.fees = fees;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 	
 	

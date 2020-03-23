@@ -37,12 +37,6 @@ function showDashboard() {
 			var lead_stage = "";
 			var lead_source = responseData[i].lead_source;
 			var status = responseData[i].status;
-			if (status == 0) {
-				status = "Not Admittede"
-			}
-			if (status == 1) {
-				status = "Admitted";
-			}
 			var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 			table.row.add(
 					[ srno, enq_date, enq_no, sname, stud_cont, address,

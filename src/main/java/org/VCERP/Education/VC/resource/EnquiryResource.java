@@ -115,7 +115,7 @@ public class EnquiryResource {
 	@Path("/Admission")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response Admission(@FormParam("id") Long id){
+	public Response Admission(@FormParam("id") long id){
 		try {
 			EnquiryController controller=new EnquiryController();
 			controller.Admission(id);

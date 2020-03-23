@@ -1,25 +1,28 @@
 $(document).ready(function(){
-	NonAdmittedStudent();
 	admissionDetails();
 	//getCurrentDate();
+	$("#search_student").click(function() {
+		var id=parseInt(document.getElementById('enq_stud').value);
+		event.preventDefault();
+		SearchStudent(id);
+	});
 	$("#admission-form").submit(function() {
-		alert("here");
 		event.preventDefault();
 		StudentAdmission();
 	});
 });
 
 
-function NonAdmittedStudent(){
+function SearchStudent(id){
 	function callback(responseData,textStatus,request)
 	{
-		for (var i in responseData)
-			{
-			var htmlCode = '<option value="' + responseData[i].sname +
-			responseData[i].lname+'" >'
-			+ responseData[i].id +" | "+responseData[i].sname +" "+responseData[i].lname+ " | "+"Non Admitted"+'</option>';
-			$('#stud_name').append(htmlCode);
-		}
+		var id=responseData.id;
+		var name=responseData.sname +" "+responseData.lname;
+		var contact=responseData.stud_cont;
+		var status=responseData.status;
+		var stud_details=id +" | "+name+ " | "+contact+ " | "+status;
+			document.getElementById('stud_details').value=stud_details;
+			//alert(document.getElementById('stud_details').value);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		alert("Data not Found");
@@ -27,7 +30,7 @@ function NonAdmittedStudent(){
 			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Admission/NonAdmittedStudent";
+	var relativeUrl = "/Admission/SearchStudent?id="+id;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

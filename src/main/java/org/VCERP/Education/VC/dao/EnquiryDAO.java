@@ -18,7 +18,7 @@ public class EnquiryDAO {
 					+ "`dob`,`gender`,`caste`,`category`,`lang`,`stud_cont`,`father_cont`,"
 					+ "`mother_cont`,`address`,`pin`,`email`,`w_app_no`,`enq_date`,`enq_no`,"
 					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`,`status`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,Non Admitted)";
 			st=con.prepareStatement(query);
 			st.setString(1, enquiry.getSname());
 			st.setString(2, enquiry.getLname());
@@ -135,12 +135,12 @@ public class EnquiryDAO {
 		}
 	}
 
-	public void Admission(Long id) {
+	public void Admission(long id) {
 		Connection con=null;
 		PreparedStatement st=null;
 		try {
 			con=Util.getDBConnection();
-			String query="update enquiry set status=1 where id=?";
+			String query="update enquiry set status='Admitted' where id=?";
 			st=con.prepareStatement(query);
 			st.setLong(1, id);
 			st.executeUpdate();

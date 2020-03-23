@@ -3,170 +3,209 @@
 <title>Admission/Invoice</title>
 <head>
 <meta charset="ISO-8859-1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!--<link href="style.css" rel="stylesheet" type="text/css">-->
 <link rel="stylesheet" href="css/admission-style.css" type="text/css">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet"
+	href="font-awesome-4.7.0/css/font-awesome.min.css">
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
 <script src="core/popper.min.js"></script>
-<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
+<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
 <script type="text/javascript" src="javascript/admission.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <title>Admission</title>
 </head>
-    <body>
+<body>
 
- <div class="container">
-    <form id="admission-form" class="horizontal-form" method="post" action="">
-     <div class="row">
-      <div class="col-md-12">
-      <section class="panel">
-     
-                    <header class="panel-heading">
-        <h5 class="panel-title">1. Student Details</h5>
-          </header>
-          <div class="panel-body">
-              <div class="form-group">
-                 
-                  <label class="col-md-2 control-label">Select Student for Admission<span class="text-red">*</span></label>
-                  <div class="col-md-4">
-                    <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                      <select name="student_name" class="form-control" id="stud_name" required>
-						</select>
-                  </div>
-                  </div>
-                  <label class="col-md-2 control-label">Enquiry Taken By<span class="text-red">*</span></label>
-                  <div class="col-md-4">
-                      <div class="input-group">
-                               <select name="enq_taken_by" class="form-control" id="enq_taken" required>
-                                    <option value="Rajeshri">Rajeshri</option>
-                                    <option value="Bhavik">Bhavik</option>
-                                    <option value="Divyakant">DK</option>
-                                    <option value="Akshaya">Akshaya</option>
-                                </select>
-                            </div>
-                  </div>
-              </div>
-          </div>
-          </section>
-     </div>
-     
-     <div class="col-md-6">
-         <section class="panel">
-                    <div class="panel-heading">
-        <h5 class="panel-title">2. Course Details</h5>
-          </div>
-          <div class="panel-body">
-             <div class="form-group">
-              <label class="col-sm-5 control-label">
-                  Admission Fees Package
-                  <span class="text-red">*</span>
-              </label> 
-              <div class="col-sm-7">
-                  <div class="input-group">
-                      <select name="adm_fees_pack" class="form-control" id="fees" required>
-                                    <option value="junior-vc-kids">Junior vc kids 23000</option>
-                                    <option value="nursery-vc-kids">nursery-vc-kids 22300</option>
-                                    <option value="playgroup-vc-kids">playgroup-vc-kids 20000</option>
-                             
-                                </select>
-<!--
+	<div class="container">
+		<form id="admission-form" class="horizontal-form" method="post"
+			action="">
+			<div class="row">
+				<div class="col-md-12">
+					<section class="panel">
+
+						<header class="panel-heading">
+							<h5 class="panel-title">1. Student Details</h5>
+						</header>
+						<div class="panel-body">
+							<div class="form-group">
+
+								<label class="col-md-2 control-label">Select Student for
+									Admission<span class="text-red">*</span>
+								</label>
+								<div class="col-md-4">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-search"></i></span>
+										<input type="text" id="enq_stud" name="enq_stud" /> <input
+											type="button" id="search_student" value="search">
+									</div>
+								</div>
+								<label class="col-md-2 control-label">Enquiry Taken By<span
+									class="text-red">*</span></label>
+								<div class="col-md-4">
+									<div class="input-group">
+										<select name="enq_taken_by" class="form-control"
+											id="enq_taken" required>
+											<option value="Rajeshri">Rajeshri</option>
+											<option value="Bhavik">Bhavik</option>
+											<option value="Divyakant">DK</option>
+											<option value="Akshaya">Akshaya</option>
+										</select>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-md-6">
+					<section class="panel">
+						<div class="panel-heading">
+							<h5 class="panel-title">2. Course Details</h5>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+							
+								<label class="col-sm-5 control-label">Student Details<span
+									class="text-red" id="stud_details">*</span></label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="stud_details"
+										name="stud_details">
+								</div>
+							
+
+								<label class="col-sm-5 control-label"> Admission Fees
+									Package <span class="text-red">*</span>
+								</label>
+								<div class="col-sm-7">
+									<div class="input-group">
+										<select name="adm_fees_pack" class="form-control" id="fees"
+											required>
+											<option value="junior-vc-kids|23000">Junior vc kids 23000</option>
+											<option value="nursery-vc-kids|22300">nursery-vc-kids
+												22300</option>
+											<option value="playgroup-vc-kids|20000">playgroup-vc-kids
+												20000</option>
+
+										</select>
+										<!--
                       <span class="input-group-addon">
                           <button type="button">+</button>
                       </span>
 -->
-                  </div>
-              </div>
-              </div>
-              
-              <div class="form-group">
-              <label class="col-sm-5 control-label">
-                  Admission Status
-                  <span class="text-red">*</span>
-              </label> 
-              <div class="col-sm-7">
-                  <div class="input-group">
-                     <select name="status" class="form-control" id="status"required>
-                         <option value="active">Active</option>
-                          <option value="closed">Closed</option>
-                     </select>
-<!--
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-5 control-label"> Admission Status
+									<span class="text-red">*</span>
+								</label>
+								<div class="col-sm-7">
+									<div class="input-group">
+										<select name="status" class="form-control" id="status"
+											required>
+											<option value="active">Active</option>
+											<option value="closed">Closed</option>
+										</select>
+										<!--
                       <span class="input-group-addon">
                           <button type="button">+</button>
                       </span>
 -->
-                  
-                  </div>
-                  <div class="input-group">
-                      <input type="date" id="current_date"class="form-control" name="date" value="30-07-1998" style="margin-top:15px;">
-                  </div>
-                  </div>
-              </div>
-             </div>
-         </section>
-         </div>
-              
-     <div class="col-md-6">
-         <section class="panel">
-            <div class="panel-heading">
-        <h5 class="panel-title">3. Admission Details</h5>
-          </div> 
-          <div class="panel-body">
-              <div class="form-group">
-                  <label class="col-sm-6 control-label">ID Card/Roll No<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="text" class="form-control" id="ID_no" name="Rollno"placeholder="ex ID001">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-sm-6 control-label">Registeration No<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="text" class="form-control" id="reg_no" name="regno" placeholder="ex 11">
-                  </div>
-              </div>
-               <div class="form-group">
-                  <label class="col-sm-6 control-label">Invoice No.#<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="text" class="form-control" id="invoice_no" name="invoice_no"placeholder="ex IN102">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-sm-6 control-label">Admission date<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="date" id="admission_date" name="admission_date"class="form-control">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-sm-6 control-label">Academic Year<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="text" class="form-control" id="acad_year" name="acad_year"placeholder="ex 2020-21">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-sm-6 control-label">Joining Date<span class="text-red" id="spIdCard" style="display: none">*</span></label>
-                  <div class="col-sm-6">
-                      <input type="date" class="form-control"id="join_date" name="join_date" placeholder="ex IN102">
-                  </div>
-              </div>
-              <input type="submit" id="admission"class="btn btn-success" value="Submit">
-          </div>
-         </section>
-     </div>
-     </div>
-     </form>
- </div>
+
+									</div>
+									<div class="input-group">
+										<input type="date" id="current_date" class="form-control"
+											name="date" value="30-07-1998" style="margin-top: 15px;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-md-6">
+					<section class="panel">
+						<div class="panel-heading">
+							<h5 class="panel-title">3. Admission Details</h5>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">ID Card/Roll No<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="ID_no"
+										name="Rollno" placeholder="ex ID001">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Registeration No<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="reg_no"
+										name="regno" placeholder="ex 11">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Invoice No.#<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="invoice_no"
+										name="invoice_no" placeholder="ex IN102">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Admission date<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="date" id="admission_date" name="admission_date"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Academic Year<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="acad_year"
+										name="acad_year" placeholder="ex 2020-21">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Joining Date<span
+									class="text-red" id="spIdCard" style="display: none">*</span></label>
+								<div class="col-sm-6">
+									<input type="date" class="form-control" id="join_date"
+										name="join_date" placeholder="ex IN102">
+								</div>
+							</div>
+							<input type="submit" id="admission" class="btn btn-success"
+								value="Submit">
+						</div>
+					</section>
+				</div>
+			</div>
+		</form>
+	</div>
 
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-  <script src="vendor/select2/select2.min.css"></script>
-  <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
-  <script src="vendor/select2/select2.min.js"></script>
+	<script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.css"></script>
+	<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+	<script src="vendor/select2/select2.min.js"></script>
 
 </body>
 </html>
