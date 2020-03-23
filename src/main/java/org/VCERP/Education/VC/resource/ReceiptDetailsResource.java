@@ -1,20 +1,64 @@
 package org.VCERP.Education.VC.resource;
 
+import java.util.ArrayList;
+
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.ReceiptDetailsController;
+import org.VCERP.Education.VC.model.Admission;
+import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("Receipt")
 public class ReceiptDetailsResource {
+	
+	@Path("/SearchStudent")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchStudent(@QueryParam("id") long enq_stud){
+		 Admission admission=new Admission();
+			ReceiptDetailsController controller=new ReceiptDetailsController();
+			admission=controller.searchStudent(enq_stud);
+			if(admission!=null)
+			{
+				return Response.status(Status.ACCEPTED).entity(admission).build();
+			}
+			else{
+				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+			}
+	}
+	
+	@PermitAll
+	@GET
+	@Path("/FetchAllReceiptDetails")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response FetchAllReceiptDetails(){
+		ArrayList<ReceiptDetails> receipt=null;
+		ReceiptDetailsController controller=null;
+		try {
+			receipt=new ArrayList<>();
+			controller=new ReceiptDetailsController();
+			controller.FetchAllReceiptDetails(receipt);
+			return Response.status(Status.ACCEPTED).entity(receipt).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
 	
 	@PermitAll
 	@POST
