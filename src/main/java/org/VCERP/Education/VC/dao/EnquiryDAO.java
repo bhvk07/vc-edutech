@@ -18,7 +18,7 @@ public class EnquiryDAO {
 					+ "`dob`,`gender`,`caste`,`category`,`lang`,`stud_cont`,`father_cont`,"
 					+ "`mother_cont`,`address`,`pin`,`email`,`w_app_no`,`enq_date`,`enq_no`,"
 					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`,`status`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,Non Admitted)";
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Non Admitted')";
 			st=con.prepareStatement(query);
 			st.setString(1, enquiry.getSname());
 			st.setString(2, enquiry.getLname());

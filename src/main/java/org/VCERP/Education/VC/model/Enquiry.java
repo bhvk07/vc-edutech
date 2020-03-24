@@ -1,5 +1,8 @@
 package org.VCERP.Education.VC.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,30 +12,80 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Enquiry {
 	
 	private long id;
+	
+	@NotNull(message="student name must not be null.")
+	@NotBlank(message="student name must not be Blank.")
+	@FormParam("sname")
 	private String sname;
+	
+	@FormParam("lname")
 	private String lname;
+	
+	@FormParam("fname")
 	private String fname;
+	
+	@FormParam("mname")
 	private String mname;
+	
+	@FormParam("uid")
 	private String uid;
+	
+	@FormParam("dob")
 	private String dob;
+	
+	@FormParam("gender")
 	private String gender;
+	
+	@FormParam("caste")
 	private String caste;
+	
+	@FormParam("category")
 	private String category;
+	
+	@FormParam("lang")
 	private String lang;
+	
+	@FormParam("stud_cont")
 	private String stud_cont;
+	
+	@FormParam("father_cont")
 	private String father_cont;
+	
+	@FormParam("mother_cont")
 	private String mother_cont;
+	
+	@FormParam("address")
 	private String address;
+	
+	@FormParam("pin")
 	private String pin;
+	
+	@FormParam("email")
 	private String email;
+	
+	@FormParam("w_app_no")
 	private String w_app_no;
+	
+	@FormParam("enq_date")
 	private String enq_date;
+	
+	@FormParam("enq_no")
 	private String enq_no;
+	
+	@FormParam("enq_taken_by")
 	private String enq_taken_by;
+	
+	@FormParam("fees_pack")
 	private String fees_pack;
+	
+	@FormParam("lead_source")
 	private String lead_source;
+	
+	@FormParam("remark")
 	private String remark;
+	
 	private String status;
+	
 	public long getId() {
 		return id;
 	}
