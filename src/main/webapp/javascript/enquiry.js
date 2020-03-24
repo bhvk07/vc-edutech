@@ -51,6 +51,7 @@ function AddEmployee() {
 		// alert(message);
 	}
 	var formData = $("#add_employee").serialize();
+	alert(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/Employee/NewEmployee";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
