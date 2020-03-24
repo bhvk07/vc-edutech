@@ -6,10 +6,10 @@ $(document).ready(function(){
 		event.preventDefault();
 		SearchStudent(id);
 	});
-	/*$("#admission-form").submit(function() {
+	$("#receipt").click(function() {
 		event.preventDefault();
-		StudentAdmission();
-	});*/
+		StudentReceipt();
+	});
 });
 
 function SearchStudent(id){
@@ -58,6 +58,24 @@ function receiptNumber(){
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/FetchAllReceiptDetails";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function StudentReceipt(){
+	alert("here");
+	function callback(responseData,textStatus,request)
+	{
+		alert("data submitted");
+	}
+	function errorCallback(responseData, textStatus, request) {
+		alert("Data not Found");
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "POST";
+	var formData=$("#receipt-form").serialize();
+	var relativeUrl = "/Receipt/ReceiptDetails";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }

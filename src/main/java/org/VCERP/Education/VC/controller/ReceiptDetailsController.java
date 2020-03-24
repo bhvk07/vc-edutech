@@ -30,6 +30,12 @@ public class ReceiptDetailsController {
 		
 	}
 
+	public ReceiptDetails updateRemainingAmount(String id) {
+		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
+		return dao.updateRemainingAmount(id);
+		
+	}
+
 	
 
 }

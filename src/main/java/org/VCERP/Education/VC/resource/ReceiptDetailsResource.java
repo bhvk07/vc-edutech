@@ -64,28 +64,43 @@ public class ReceiptDetailsResource {
 	@POST
 	@Path("/ReceiptDetails")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response ReceiptDetailsForm(@FormParam("stud_name") String stud_name,
+	public Response ReceiptDetailsForm(@FormParam("stud_details") String stud_name,
 			@FormParam("receipt_date") String receipt_date,@FormParam("receipt_no") String receipt_no,
 			@FormParam("received_amt") long received_amt,@FormParam("pay_mode") String pay_mode
 			,@FormParam("trans_status") String trans_status,@FormParam("trans_date") String trans_date
-			,@FormParam("trans_no") String trans_no,@FormParam("received_by") String received_by)
+			,@FormParam("received_by") String received_by)
 	{
+		String[] stud_details=Util.symbolSeperatedString(stud_name);
 		ReceiptDetails details=null;
+		ReceiptDetails r_amt=null;
 		ReceiptDetailsController controller=null;
+		long remainAmount=0;
 		try {
 			details=new ReceiptDetails();
-			details.setStud_name(stud_name);
+			details.setStud_name(stud_details[1]);
+			details.setRollno(stud_details[0]);
+			details.setContact(stud_details[2]);
 			details.setReceipt_date(receipt_date);
 			details.setReceipt_no(receipt_no);
-			details.setReceived_amt(received_amt);
 			details.setPay_mode(pay_mode);
 			details.setTrans_status(trans_status);
 			details.setTrans_date(trans_date);
-			details.setTrans_no(trans_no);
 			details.setReceived_by(received_by);
-			
+			details.setTotal_amt(Long.parseLong(stud_details[3]));
+			details.setReceived_amt(received_amt);		
 			controller=new ReceiptDetailsController();
+			r_amt=controller.updateRemainingAmount(stud_details[0]);
+			if(r_amt==null)
+			{
+				remainAmount=Long.parseLong(stud_details[3])-received_amt;
+				details.setAmount(remainAmount);
+			}
+			else{
+				remainAmount=r_amt.getAmount()-received_amt;
+				details.setAmount(remainAmount);
+			}
 			controller.ReceiptDetailsForm(details);
+			
 			return Util.generateResponse(Status.ACCEPTED, "Data Inserted").build();
 		} catch (Exception e) {
 			e.printStackTrace();

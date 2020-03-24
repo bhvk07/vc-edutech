@@ -4,14 +4,17 @@ public class ReceiptDetails {
 
 	private long id;
 	private String stud_name;
+	private String Rollno;
+	private String contact;
 	private String receipt_date;
 	private String receipt_no;
-	private long received_amt;
 	private String pay_mode;
 	private String trans_status;
 	private String trans_date;
-	private String trans_no;
 	private String received_by;
+	private long total_amt;
+	private long received_amt;
+	private long amount;
 	
 	public long getId() {
 		return id;
@@ -24,6 +27,13 @@ public class ReceiptDetails {
 	}
 	public void setStud_name(String stud_name) {
 		this.stud_name = stud_name;
+	}
+	
+	public String getRollno() {
+		return Rollno;
+	}
+	public void setRollno(String rollno) {
+		Rollno = rollno;
 	}
 	public String getReceipt_date() {
 		return receipt_date;
@@ -61,17 +71,29 @@ public class ReceiptDetails {
 	public void setTrans_date(String trans_date) {
 		this.trans_date = trans_date;
 	}
-	public String getTrans_no() {
-		return trans_no;
-	}
-	public void setTrans_no(String trans_no) {
-		this.trans_no = trans_no;
-	}
 	public String getReceived_by() {
 		return received_by;
 	}
 	public void setReceived_by(String received_by) {
 		this.received_by = received_by;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public long getTotal_amt() {
+		return total_amt;
+	}
+	public void setTotal_amt(long total_amt) {
+		this.total_amt = total_amt;
+	}
+	public long getAmount() {
+		return amount;
+	}
+	public void setAmount(long amount) {
+		this.amount = amount;
 	}
 	
 	

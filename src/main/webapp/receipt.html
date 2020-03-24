@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="container">
-		<form id="receipt-form" class="horizontal-form">
+		<form id="receipt-form" class="horizontal-form" method="post">
 			<div class="row">
 				<div class="col-md-12">
 					<section class="panel">
@@ -36,9 +36,9 @@
 								</label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="text" class="form-control" name="search" id="stud_id"
-											placeholder="Search student by ID"> <a href=""
-											id="stud_id_search" class="input-group-addon"><i
+										<input type="text" class="form-control" name="search"
+											id="stud_id" placeholder="Search student by ID"> <a
+											href="" id="stud_id_search" class="input-group-addon"><i
 											class="fa fa-search"></i></a>
 									</div>
 								</div>
@@ -51,8 +51,8 @@
 									class="text-red">*</span>
 								</label>
 								<div class="col-sm-3">
-									<input type="text" id="stud_details" name="stud_details" class="form-control"
-										style="width: 196px;">
+									<input type="text" id="stud_details" name="stud_details"
+										class="form-control" style="width: 196px;">
 
 								</div>
 							</div>
@@ -63,7 +63,7 @@
 									class="text-red">*</span>
 								</label>
 								<div class="col-sm-3">
-									<input type="date" name="r-date" class="form-control"
+									<input type="date" name="receipt_date" class="form-control"
 										style="width: 196px;">
 
 								</div>
@@ -74,8 +74,8 @@
 									class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<input type="text" name="receipt_no" id="receipt_no" class="form-control"
-											style="width: 196px;">
+										<input type="text" name="receipt_no" id="receipt_no"
+											class="form-control" style="width: 196px;">
 									</div>
 								</div>
 							</div>
@@ -85,7 +85,7 @@
 									class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<input type="number" name="r-amt" class="form-control"
+										<input type="number" name="received_amt" class="form-control"
 											style="width: 196px;">
 									</div>
 								</div>
@@ -96,7 +96,7 @@
 									class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<select name="r-in" class="form-control" id="received-in"
+										<select name="pay_mode" class="form-control" id="received-in"
 											required style="width: 196px;">
 											<option value="Cheque">Cheque</option>
 											<option value="Cash">Cash</option>
@@ -111,8 +111,8 @@
 								</label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<select name="t-status" class="form-control" id="trans-status"
-											required style="width: 196px;">
+										<select name="trans_status" class="form-control"
+											id="trans-status" required style="width: 196px;">
 											<option value="Cleared">Cleared</option>
 											<option value="deposited">Deposited</option>
 										</select>
@@ -126,7 +126,7 @@
 								</label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<input type="date" name="t-date" class="form-control"
+										<input type="date" name="trans_date" class="form-control"
 											style="width: 196px;">
 									</div>
 								</div>
@@ -137,8 +137,8 @@
 									class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<select name="enq_taken_by" class="form-control"
-											id="enq_taken" required style="width: 196px;">
+										<select name="received_by" class="form-control" id="enq_taken"
+											required style="width: 196px;">
 											<option value="Rajeshri">Rajeshri</option>
 											<option value="Bhavik">Bhavik</option>
 											<option value="Divyakant">DK</option>
@@ -147,7 +147,8 @@
 									</div>
 								</div>
 							</div>
-							<br>
+							<br> <input type="submit" id="receipt"
+								class="btn btn-success" value="Submit">
 						</div>
 					</section>
 				</div>
