@@ -8,7 +8,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		EnquiryData();
 	});
-	$("#add_employee").submit(function() {
+	$("#Add_employee").click(function() {
 		alert("here");
 		event.preventDefault();
 		AddEmployee();

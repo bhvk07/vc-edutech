@@ -106,4 +106,5 @@ public class AdmissionResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
+
 }

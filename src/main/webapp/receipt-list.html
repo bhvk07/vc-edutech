@@ -23,8 +23,8 @@
 <script type="text/javascript" src="Datatables/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="Datatables/bootstrap.css"></script>
 
-<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
-<script type="text/javascript" src="javascript/enq-list.js"></script>
+<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
+<script type="text/javascript" src="javascript/receipt-list.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <style type="text/css">
@@ -339,7 +339,7 @@ table.table .avatar {
 					</div>
 				</div>
 			</div>
-			<table id="enq_table" class="table table-striped table-bordered"
+			<table id="receipt_table" class="table table-striped table-bordered"
 				style="width: 100%">
 				<thead>
 					<tr>
@@ -356,15 +356,14 @@ table.table .avatar {
 						<th>ID CARD number</th>
 						<th>PAYMENT MODE</th>
 						<th>AMOUNT</th>
-						<th>DEPOSIT TO</th>
 						<th>RECEIVED BY</th>
 						<th>CHEQUE DATE/CLEAR DATE</th>
-						<th>TRANS./CHEQUE NUMBER</th>
-						<th>NARRATION</th>
 						<th>STATUS</th>
+						<th>PAYMENT</th>
+						<th>REMAINING AMOUNT</th>
 					</tr>
 				</thead>
-				<!--  <tfoot>
+				 <tfoot>
 					<tr>
 						<th>
 						<span class="custom-checkbox">
@@ -372,100 +371,21 @@ table.table .avatar {
 							<label for="checkbox1"></label>
 						</span>
 						</th>
-						<th>Enquiry Date</th>
-						<th>Enquiry Id</th>
-						<th>Student Name</th>
-						<th>Contact</th>
-						<th>Location</th>
-						<th>Enquiry Taken By</th>
-						<th>Lead Stage</th>
-						<th>Lead Source</th>
-						<th>Status</th>
-						<th>Action</th>
+						<th>RECEIPT DATE</th>
+						<th>RECEIPT NO</th>
+						<th>STUDENT NAME</th>
+						<th>MOBILE</th>
+						<th>ID CARD number</th>
+						<th>PAYMENT MODE</th>
+						<th>AMOUNT</th>
+						<th>RECEIVED BY</th>
+						<th>CHEQUE DATE/CLEAR DATE</th>
+						<th>STATUS</th>
+						<th>PAYMENT</th>
+						<th>REMAINING AMOUNT</th>
 					</tr>
-				</tfoot>-->
-				<!-- <tbody>
-                    <tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
-								<label for="checkbox1"></label>
-							</span>
-						</td>
-                        <td>Thomas Hardy</td>
-                        <td>thomashardy@mail.com</td>
-						<td>89 Chiaroscuro Rd, Portland, USA</td>
-                        <td>(171) 555-2222</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-						</td>
-                        <td>Dominique Perrier</td>
-                        <td>dominiqueperrier@mail.com</td>
-						<td>Obere Str. 57, Berlin, Germany</td>
-                        <td>(313) 555-5735</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3" name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-						</td>
-                        <td>Maria Anders</td>
-                        <td>mariaanders@mail.com</td>
-						<td>25, rue Lauriston, Paris, France</td>
-                        <td>(503) 555-9931</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-						</td>
-                        <td>Fran Wilson</td>
-                        <td>franwilson@mail.com</td>
-						<td>C/ Araquil, 67, Madrid, Spain</td>
-                        <td>(204) 619-5731</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr>					
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-						</td>
-                        <td>Martin Blank</td>
-                        <td>martinblank@mail.com</td>
-						<td>Via Monte Bianco 34, Turin, Italy</td>
-                        <td>(480) 631-2097</td>
-                        <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr> 
-                </tbody> -->
+				</tfoot>
+
 			</table>
 			<!-- <div class="clearfix">
 				<div class="hint-text">

@@ -22,6 +22,7 @@ public class Admission {
 	private String acad_year;
 	private String join_date;
 	private long fees;
+
 	public long getId() {
 		return id;
 	}
@@ -106,6 +107,5 @@ public class Admission {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	
 	
 }

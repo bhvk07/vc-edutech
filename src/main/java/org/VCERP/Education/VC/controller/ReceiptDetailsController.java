@@ -24,9 +24,9 @@ public class ReceiptDetailsController {
 		return dao.searchStudent(enq_stud);
 	}
 
-	public ArrayList<ReceiptDetails> FetchAllReceiptDetails(ArrayList<ReceiptDetails> receipt) {
+	public ArrayList<ReceiptDetails> FetchAllReceiptDetails() {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
-		return dao.FetchAllReceiptDetails(receipt);
+		return dao.FetchAllReceiptDetails();
 		
 	}
 
@@ -35,7 +35,5 @@ public class ReceiptDetailsController {
 		return dao.updateRemainingAmount(id);
 		
 	}
-
-	
 
 }

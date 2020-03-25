@@ -51,7 +51,7 @@ public class ReceiptDetailsResource {
 		try {
 			receipt=new ArrayList<>();
 			controller=new ReceiptDetailsController();
-			controller.FetchAllReceiptDetails(receipt);
+			receipt=controller.FetchAllReceiptDetails();
 			return Response.status(Status.ACCEPTED).entity(receipt).build();
 		} catch (Exception e) {
 			e.printStackTrace();

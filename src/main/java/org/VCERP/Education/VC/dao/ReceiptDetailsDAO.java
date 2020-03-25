@@ -93,11 +93,12 @@ public class ReceiptDetailsDAO {
 		return admission;
 	}
 
-	public ArrayList<ReceiptDetails> FetchAllReceiptDetails(ArrayList<ReceiptDetails> receipt) {
+	public ArrayList<ReceiptDetails> FetchAllReceiptDetails() {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		ReceiptDetails rec=null;
+		ArrayList<ReceiptDetails> receipt=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
 			String query="select * from receipt_details";
@@ -108,13 +109,17 @@ public class ReceiptDetailsDAO {
 				rec=new ReceiptDetails();
 				rec.setId(rs.getLong(1));
 				rec.setStud_name(rs.getString(2));
-				rec.setReceipt_date(rs.getString(3));
-				rec.setReceipt_no(rs.getString(4));
-				rec.setReceived_amt(rs.getLong(5));
-				rec.setPay_mode(rs.getString(6));
-				rec.setTrans_status(rs.getString(7));
-				rec.setTrans_date(rs.getString(8));
-				rec.setReceived_by(rs.getString(9));
+				rec.setRollno(rs.getString(3));
+				rec.setContact(rs.getString(4));
+				rec.setReceipt_date(rs.getString(5));
+				rec.setReceipt_no(rs.getString(6));
+				rec.setPay_mode(rs.getString(7));
+				rec.setTrans_status(rs.getString(8));
+				rec.setTrans_date(rs.getString(9));
+				rec.setReceived_by(rs.getString(10));
+				rec.setTotal_amt(rs.getLong(11));
+				rec.setReceived_amt(rs.getLong(12));
+				rec.setAmount(rs.getLong(13));
 				receipt.add(rec);
 			}
 			
@@ -153,8 +158,5 @@ public class ReceiptDetailsDAO {
 		}
 		return remainAmount;
 
-	}
-
-	
-
+	}	
 }
