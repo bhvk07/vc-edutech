@@ -1,10 +1,13 @@
 $(document).ready(function(){
 	receiptNumber();
 	//getCurrentDate();
-	$("#stud_id_search").click(function() {
+	$("#stud_id").keyup(function() {
 		var id=parseInt(document.getElementById('stud_id').value);
 		event.preventDefault();
 		SearchStudent(id);
+	});
+	$("#stud_id").keydown(function() {
+		document.getElementById('stud_id').value="";
 	});
 	$("#receipt").click(function() {
 		event.preventDefault();
@@ -15,11 +18,11 @@ $(document).ready(function(){
 function SearchStudent(id){
 	function callback(responseData,textStatus,request)
 	{
-		var id=responseData.id;
+		var Rollno=responseData.Rollno;
 		var name=responseData.student_name;
 		var contact=responseData.contact;
 		var fees=responseData.fees;
-		var stud_details=id +" | "+name+ " | "+contact+ " | "+fees;
+		var stud_details=Rollno +" | "+name+ " | "+contact+ " | "+fees;
 			document.getElementById('stud_details').value=stud_details;
 	}
 	function errorCallback(responseData, textStatus, request) {

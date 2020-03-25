@@ -2,7 +2,7 @@ $(document).ready(function(){
 	admissionDetails();
 	FetchAllEmployee();
 	//getCurrentDate();
-	$("#search_student").click(function() {
+	$("#enq_stud").keyup(function() {
 		var id=parseInt(document.getElementById('enq_stud').value);
 		event.preventDefault();
 		SearchStudent(id);

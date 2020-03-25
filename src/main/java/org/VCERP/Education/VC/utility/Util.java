@@ -88,7 +88,7 @@ public class Util {
 	}
 	public static String[] symbolSeperatedString(String str)
 	{
-		String seperated[] = str.split("[|]");
+		String seperated[] = str.replaceAll("\\s+", "").split("[|]");
 		return seperated;
 	}
 

@@ -90,16 +90,18 @@ public class AdmissionDAO {
 				ad=new Admission();
 				ad.setId(rs.getLong(1));
 				ad.setStudent_name(rs.getString(2));
-				ad.setEnq_taken_by(rs.getString(3));
-				ad.setAdm_fees_pack(rs.getString(4));
-				ad.setStatus(rs.getString(5));
-				ad.setDate(rs.getString(6));
-				ad.setRollno(rs.getString(7));
-				ad.setRegno(rs.getString(8));
-				ad.setInvoice_no(rs.getString(9));
-				ad.setAdmission_date(rs.getString(10));
-				ad.setAcad_year(rs.getString(11));
-				ad.setJoin_date(rs.getString(12));
+				ad.setContact(rs.getString(3));
+				ad.setEnq_taken_by(rs.getString(4));
+				ad.setAdm_fees_pack(rs.getString(5));
+				ad.setStatus(rs.getString(6));
+				ad.setDate(rs.getString(7));
+				ad.setRollno(rs.getString(8));
+				ad.setRegno(rs.getString(9));
+				ad.setInvoice_no(rs.getString(10));
+				ad.setAdmission_date(rs.getString(11));
+				ad.setAcad_year(rs.getString(12));
+				ad.setJoin_date(rs.getString(13));
+				ad.setFees(rs.getLong(14));
 				admission.add(ad);
 			}
 			

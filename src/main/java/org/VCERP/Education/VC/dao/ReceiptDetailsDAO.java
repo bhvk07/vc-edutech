@@ -70,7 +70,7 @@ public class ReceiptDetailsDAO {
 		Admission admission=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select Rollno,student_name,contact,fees from receipt_details where id=?";
+			String query="select Rollno,student_name,contact,fees from admission where id=?";
 			ps=con.prepareStatement(query);
 			ps.setLong(1, enq_stud);
 			rs=ps.executeQuery();
