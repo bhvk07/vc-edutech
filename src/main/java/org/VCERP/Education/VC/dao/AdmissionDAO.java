@@ -73,6 +73,8 @@ public class AdmissionDAO {
 				ad.setAcad_year(rs.getString(12));
 				ad.setJoin_date(rs.getString(13));
 				ad.setFees(rs.getLong(14));
+				ad.setPaid_fees(rs.getLong(15));
+				ad.setRemain_fees(rs.getLong(16));
 				admission.add(ad);
 			}
 			
@@ -115,6 +117,26 @@ public class AdmissionDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return eq;
+	}
+
+	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update admission set paid_fees=? , remain_fees=? where Rollno=?";
+			ps=con.prepareStatement(query);
+			ps.setLong(1, fees_paid);
+			ps.setLong(2, fees_remain);
+			ps.setString(3, rollno);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 		
 }

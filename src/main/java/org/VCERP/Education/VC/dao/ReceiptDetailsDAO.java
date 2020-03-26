@@ -70,7 +70,7 @@ public class ReceiptDetailsDAO {
 		Admission admission=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select Rollno,student_name,contact,fees from admission where id=?";
+			String query="select Rollno,student_name,contact,fees from admission where Rollno=?";
 			ps=con.prepareStatement(query);
 			ps.setLong(1, enq_stud);
 			rs=ps.executeQuery();
@@ -158,5 +158,30 @@ public class ReceiptDetailsDAO {
 		}
 		return remainAmount;
 
+	}
+
+	public long calcupateTotalFeesPaid(String rollno) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		long paid_amount=0;
+		try {
+			con=Util.getDBConnection();
+			String query="select payment from receipt_details where RollNO=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, rollno);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				paid_amount+=rs.getLong(1);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return paid_amount;
 	}	
 }

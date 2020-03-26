@@ -22,6 +22,8 @@ public class Admission {
 	private String acad_year;
 	private String join_date;
 	private long fees;
+	private long paid_fees;
+	private long remain_fees;
 
 	public long getId() {
 		return id;
@@ -106,6 +108,18 @@ public class Admission {
 	}
 	public void setContact(String contact) {
 		this.contact = contact;
+	}
+	public long getPaid_fees() {
+		return paid_fees;
+	}
+	public void setPaid_fees(long paid_fees) {
+		this.paid_fees = paid_fees;
+	}
+	public long getRemain_fees() {
+		return remain_fees;
+	}
+	public void setRemain_fees(long remain_fees) {
+		this.remain_fees = remain_fees;
 	}
 	
 }

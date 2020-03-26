@@ -23,5 +23,9 @@ public class AdmissionController {
 		return dao.searchStudent(enq_stud);
 		
 	}
+	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
+		AdmissionDAO dao=new AdmissionDAO();
+		dao.updateTotalFeesPaid(rollno,fees_paid,fees_remain);
+	}
 
 }

@@ -73,6 +73,7 @@ public class ReceiptDetailsResource {
 		String[] stud_details=Util.symbolSeperatedString(stud_name);
 		ReceiptDetails details=null;
 		ReceiptDetails r_amt=null;
+		AdmissionController adcontroller=null;
 		ReceiptDetailsController controller=null;
 		long remainAmount=0;
 		try {
@@ -100,7 +101,11 @@ public class ReceiptDetailsResource {
 				details.setAmount(remainAmount);
 			}
 			controller.ReceiptDetailsForm(details);
-			
+			long fees_paid=controller.calcupateTotalFeesPaid(details.getRollno());
+			long fees_remain=details.getTotal_amt()-fees_paid;
+			System.out.println(fees_paid+"   "+fees_remain);
+			adcontroller=new AdmissionController();
+			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain);
 			return Util.generateResponse(Status.ACCEPTED, "Data Inserted").build();
 		} catch (Exception e) {
 			e.printStackTrace();
