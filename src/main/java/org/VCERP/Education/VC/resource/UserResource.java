@@ -3,6 +3,8 @@ package org.VCERP.Education.VC.resource;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,7 +25,7 @@ public class UserResource {
 	@PermitAll
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response authenticateUser(@FormParam("userid") String userid,
+	public Response authenticateUser(@NotNull(message="username must not be null") @NotBlank(message="username must not be blank") @FormParam("userid") String userid,
 			@FormParam("password") String password){
 		User user=new User();
 		UserController controller=new UserController();
