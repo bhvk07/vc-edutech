@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function(){
 	$("#btn-login").click(function(){
 	event.preventDefault();
@@ -21,16 +22,13 @@ function attemptLogin(){
 			}
 		else
 			{
-			alert("role not assign");
+			mesasge="Role Not Assign.";
 			}
 	}
 	
 	function errorCallback(responseData,textStatus,request){
-		alert("Invalid Username or Password");
-		/*alert("in error");
-		var message=responseData.responseJSON.message;
-		showNotification("error",message);
-		alert(message);*/
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var formData = $('#signin').serialize();
 	var httpMethod="POST";

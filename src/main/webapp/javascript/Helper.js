@@ -2,21 +2,21 @@
  * 
  */
 var host="http://localhost";
-var port="8085";
+var port="8080";
 
 var DESK="desk";
 var ADMIN="ADMIN";
 function fetchBaseUrl(){
 	return host+":"+port;
 }
-/*function showNotification(type, message) {
+function showNotification(type, message) {
 	new Noty({
 		type : type,
 		layout : 'topRight',
 		text : message,
 		timeout : 3000,
 	}).show();
-}*/
+}
 
 function ajaxUnauthenticatedRequest(httpMethod,relativeUrl,data
 		,responseFunction,errorResponseFunction){
