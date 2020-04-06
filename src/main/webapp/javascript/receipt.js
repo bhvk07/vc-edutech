@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function(){
 	receiptNumber();
 	//getCurrentDate();
@@ -26,7 +27,9 @@ function SearchStudent(id){
 			document.getElementById('stud_details').value=stud_details;
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not Found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
 			// var message=responseData.response.JSON.message;
 			// alert(message);
 	}
@@ -54,7 +57,8 @@ function receiptNumber(){
 		
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not Found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 			// var message=responseData.response.JSON.message;
 			// alert(message);
 	}
@@ -68,10 +72,12 @@ function StudentReceipt(){
 	alert("here");
 	function callback(responseData,textStatus,request)
 	{
-		alert("data submitted");
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not Found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 			// var message=responseData.response.JSON.message;
 			// alert(message);
 	}

@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function(){
 	$('#receipt_table').DataTable({
 		"pageLength" : 40
@@ -36,7 +37,8 @@ function showReceiptTable(){
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		alert("failed to load");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/FetchAllReceiptDetails";

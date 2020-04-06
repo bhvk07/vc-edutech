@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function() {
 	var selected = new Array();
 /*	var token=$.session.get('token'); 
@@ -50,7 +51,8 @@ function showDashboard() {
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		alert("failed to load");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Enquiry/FetchAllEnquiryData";
@@ -72,7 +74,8 @@ function deleterow() {
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		alert("failed to delete");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "DELETE";
 	var relativeUrl = "/Enquiry/DeleteEnquiryData?delete=" + id;
@@ -91,7 +94,8 @@ function deletemultiplerow(id) {
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		alert("failed to delete");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "DELETE";
 	var relativeUrl = "/Enquiry/DeleteMultipleEnquiryData?delete=" + id;

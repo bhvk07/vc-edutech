@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function() {
 	FetchAllEmployee();
 	//getCurrentDate();
@@ -19,11 +20,13 @@ $(document).ready(function() {
 function EnquiryData() {
 
 	function callback(responseData, textStatus, request) {
-		alert("Data successfully inserted");
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not successfully inserted");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 		/*
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message); alert(message);
@@ -41,12 +44,14 @@ function EnquiryData() {
 
 function AddEmployee() {
 	function callback(responseData, textStatus, request) {
-		alert("Data successfully inserted");
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not successfully inserted");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
@@ -71,7 +76,8 @@ function FetchAllEmployee() {
 		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not Found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}

@@ -1,3 +1,4 @@
+var mes;
 $(document).ready(function(){
 	$('#admission_table').DataTable({
 		"pageLength" : 40
@@ -40,7 +41,8 @@ function showAdmissionTable(){
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		alert("failed to load");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/FetchAllAdmittedStudent";
