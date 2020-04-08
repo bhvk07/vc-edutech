@@ -1,14 +1,25 @@
-var mes;
+receipt-list.js
 $(document).ready(function(){
 	$('#receipt_table').DataTable({
 		"pageLength" : 40
 	});
+	var val;
+	   var r_date;
+	   var r_no;
+	   var r_stud;
+	   var r_mob;
+	   var r_amt;
+	
 	showReceiptTable();
+	
+	showdat();
 });
 
 function showReceiptTable(){
+	var table;
+	
 	function callback(responseData, textStatus, request) {
-		var table = $("#receipt_table").DataTable();
+	    table = $("#receipt_table").DataTable();
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
@@ -29,16 +40,22 @@ function showReceiptTable(){
 			table.row.add(
 					[ srno, receipt_date, receipt_no, stud_name, contact, Rollno,
 						pay_mode, received_amt, received_by, trans_date,trans_status]).draw();
+			
 		}
 	}
+	
+	
+	
+
+
+	
 
 	function errorCallback(responseData, textStatus, request) {
 		/*
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message);
 		 */
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
+		alert("failed to load");
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/FetchAllReceiptDetails";
@@ -47,3 +64,38 @@ function showReceiptTable(){
 			errorCallback);
 	return false;
 }
+
+function showdat(){
+	 /*alert("hell");*/
+	
+$('#receipt_table tbody tr').on('click', '.cbCheck', function(){
+   
+	var table = $('#receipt_table').DataTable();
+	if(this.checked==true){
+		val = table.row(this.closest('tr')).data();
+		r_date = val[1];
+		r_no = val[2];
+		r_stud = val[3];
+		r_mob = val[4];
+		r_in = val[6];
+	    r_amt = val[7];
+	}
+	alert(r_amt);
+	
+	
+});
+$("#btn-view").click(function(){
+	/*alert("btn");*/
+	localStorage.setItem("amount", r_amt);
+	localStorage.setItem("rec_no1", r_no);
+	localStorage.setItem("stud_name", r_stud);
+	localStorage.setItem("rec_date", r_date);
+	localStorage.setItem("rec_in", r_in);
+});
+
+}
+
+
+
+	
+	
