@@ -14,11 +14,11 @@ function attemptLogin(){
 		if(role==DESK)
 			{
 			
-			window.location.href="enq-list.html";
+			window.location.href="dashboard.html";
 			}
 		else if(role==ADMIN)
 			{
-			window.location.href="enquiry.html";
+			window.location.href="dashboard.html";
 			}
 		else
 			{
