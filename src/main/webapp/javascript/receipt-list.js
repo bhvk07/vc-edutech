@@ -1,9 +1,9 @@
-receipt-list.js
+//receipt-list.js
 $(document).ready(function(){
 	$('#receipt_table').DataTable({
 		"pageLength" : 40
 	});
-	var val;
+	   var val;
 	   var r_date;
 	   var r_no;
 	   var r_stud;
@@ -12,7 +12,28 @@ $(document).ready(function(){
 	
 	showReceiptTable();
 	
-	showdat();
+	$('#receipt_table tbody tr').on('click', '.cbCheck', function(){
+		   
+		var table = $('#receipt_table').DataTable();
+		if(this.checked==true){
+			val = table.row(this.closest('tr')).data();
+			r_date = val[1];
+			r_no = val[2];
+			r_stud = val[3];
+			r_mob = val[4];
+			r_in = val[6];
+		    r_amt = val[7];
+		}
+		
+	});
+	$("#btn-view").click(function(){
+		/*alert("btn");*/
+		localStorage.setItem("amount", r_amt);
+		localStorage.setItem("rec_no1", r_no);
+		localStorage.setItem("stud_name", r_stud);
+		localStorage.setItem("rec_date", r_date);
+		localStorage.setItem("rec_in", r_in);
+	});
 });
 
 function showReceiptTable(){
@@ -43,12 +64,6 @@ function showReceiptTable(){
 			
 		}
 	}
-	
-	
-	
-
-
-	
 
 	function errorCallback(responseData, textStatus, request) {
 		/*
@@ -63,36 +78,6 @@ function showReceiptTable(){
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
-}
-
-function showdat(){
-	 /*alert("hell");*/
-	
-$('#receipt_table tbody tr').on('click', '.cbCheck', function(){
-   
-	var table = $('#receipt_table').DataTable();
-	if(this.checked==true){
-		val = table.row(this.closest('tr')).data();
-		r_date = val[1];
-		r_no = val[2];
-		r_stud = val[3];
-		r_mob = val[4];
-		r_in = val[6];
-	    r_amt = val[7];
-	}
-	alert(r_amt);
-	
-	
-});
-$("#btn-view").click(function(){
-	/*alert("btn");*/
-	localStorage.setItem("amount", r_amt);
-	localStorage.setItem("rec_no1", r_no);
-	localStorage.setItem("stud_name", r_stud);
-	localStorage.setItem("rec_date", r_date);
-	localStorage.setItem("rec_in", r_in);
-});
-
 }
 
 
