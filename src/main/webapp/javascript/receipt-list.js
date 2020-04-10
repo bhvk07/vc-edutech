@@ -3,37 +3,39 @@ $(document).ready(function(){
 	$('#receipt_table').DataTable({
 		"pageLength" : 40
 	});
-	   var val;
+	  /* var val;
 	   var r_date;
 	   var r_no;
 	   var r_stud;
 	   var r_mob;
-	   var r_amt;
+	   var r_amt;*/
 	
 	showReceiptTable();
 	
 	$('#receipt_table tbody tr').on('click', '.cbCheck', function(){
-		   
 		var table = $('#receipt_table').DataTable();
 		if(this.checked==true){
 			val = table.row(this.closest('tr')).data();
-			r_date = val[1];
+			var rno=val[5];
+			var receiptno=val[2];
+			getVeiwReceiptData(rno,receiptno);
+			/*r_date = val[1];
 			r_no = val[2];
 			r_stud = val[3];
 			r_mob = val[4];
 			r_in = val[6];
-		    r_amt = val[7];
+		    r_amt = val[7];*/
 		}
 		
 	});
-	$("#btn-view").click(function(){
-		/*alert("btn");*/
+	/*$("#btn-view").click(function(){
+		alert("btn");
 		localStorage.setItem("amount", r_amt);
 		localStorage.setItem("rec_no1", r_no);
 		localStorage.setItem("stud_name", r_stud);
 		localStorage.setItem("rec_date", r_date);
 		localStorage.setItem("rec_in", r_in);
-	});
+	});*/
 });
 
 function showReceiptTable(){
@@ -75,6 +77,45 @@ function showReceiptTable(){
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/FetchAllReceiptDetails";
 
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function getVeiwReceiptData(rno,receiptno){
+	var table;
+	
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var stud_name = responseData[i].stud_name;
+			var receipt_no = responseData[i].receipt_no;
+			var received_by = responseData[i].received_by;
+			var total_amt = responseData[i].total_amt;
+			var received_amt = responseData[i].received_amt;
+			var pay_mode = responseData[i].pay_mode;
+			alert(pay_mode);
+			var admission = responseData[i].admission;
+			for (var j in admission)
+				{
+				var invoice_no = admission[j].invoice_no;
+				alert(invoice_no);
+				var course = admission[j].adm_fees_pack;
+				var total_paid_fees = admission[j].paid_fees;
+				var admission = admission[j].admission;
+				var remain_amt = admission[j].remain_fees;
+				}
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		alert("failed to load");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Receipt/getReceiptAdmissionData?id="+rno+"&receiptno="+receiptno;
+alert(relativeUrl);
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
