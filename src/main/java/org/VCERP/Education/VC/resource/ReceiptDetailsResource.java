@@ -101,7 +101,7 @@ public class ReceiptDetailsResource {
 				details.setAmount(remainAmount);
 			}
 			controller.ReceiptDetailsForm(details);
-			long fees_paid=controller.calcupateTotalFeesPaid(details.getRollno());
+			long fees_paid=controller.calculateTotalFeesPaid(details.getRollno());
 			long fees_remain=details.getTotal_amt()-fees_paid;
 			System.out.println(fees_paid+"   "+fees_remain);
 			adcontroller=new AdmissionController();
@@ -112,6 +112,23 @@ public class ReceiptDetailsResource {
 			System.out.println(e);
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "not Inserted").build();
+	}
+	
+	@Path("/getReceiptAdmissionData")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getReceiptAdmissionData(@QueryParam("id") long rollno,@QueryParam("receiptno") String receiptno){
+		 ArrayList<ReceiptDetails> admission=new ArrayList<>();
+			ReceiptDetailsController controller=new ReceiptDetailsController();
+			admission=controller.getReceiptAdmissionData(rollno,receiptno);
+			if(admission!=null)
+			{
+				return Response.status(Status.ACCEPTED).entity(admission).build();
+			}
+			else{
+				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+			}
 	}
 
 }

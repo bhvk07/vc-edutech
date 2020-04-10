@@ -1,5 +1,7 @@
 package org.VCERP.Education.VC.model;
 
+import java.util.ArrayList;
+
 public class ReceiptDetails {
 
 	private long id;
@@ -15,6 +17,7 @@ public class ReceiptDetails {
 	private long total_amt;
 	private long received_amt;
 	private long amount;
+	private Admission admission;
 	
 	public long getId() {
 		return id;
@@ -94,6 +97,12 @@ public class ReceiptDetails {
 	}
 	public void setAmount(long amount) {
 		this.amount = amount;
+	}
+	public Admission getAdmission() {
+		return admission;
+	}
+	public void setAdmission(Admission admission) {
+		this.admission = admission;
 	}
 	
 	

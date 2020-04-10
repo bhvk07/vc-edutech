@@ -160,7 +160,7 @@ public class ReceiptDetailsDAO {
 
 	}
 
-	public long calcupateTotalFeesPaid(String rollno) {
+	public long calculateTotalFeesPaid(String rollno) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -183,5 +183,91 @@ public class ReceiptDetailsDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return paid_amount;
+	}
+
+	public ArrayList<ReceiptDetails> getReceiptAdmissionData(long rollno, String receiptno) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ReceiptDetails receipt=null;
+		Admission ad=null;
+		ArrayList<ReceiptDetails> receiptData=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select * from receipt_details where RollNO=? and receipt_no=?";
+			ps=con.prepareStatement(query);
+			ps.setLong(1, rollno);
+			ps.setString(2, receiptno);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				receipt=new ReceiptDetails();
+				receipt.setId(rs.getLong(1));
+				receipt.setStud_name(rs.getString(2));
+				receipt.setRollno(rs.getString(3));
+				receipt.setContact(rs.getString(4));
+				receipt.setReceipt_date(rs.getString(5));
+				receipt.setReceipt_no(rs.getString(6));
+				receipt.setPay_mode(rs.getString(7));
+				receipt.setTrans_status(rs.getString(8));
+				receipt.setTrans_date(rs.getString(9));
+				receipt.setReceived_by(rs.getString(10));
+				receipt.setTotal_amt(rs.getLong(11));
+				receipt.setReceived_amt(rs.getLong(12));
+				receipt.setAmount(rs.getLong(13));
+				
+				ad=getAdmissionData(rollno);
+				receipt.setAdmission(ad);
+				receiptData.add(receipt);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return receiptData;
 	}	
+	
+	private Admission getAdmissionData(long rollno) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Admission ad=null;
+		try {
+			con=Util.getDBConnection();
+			String query="select * from admission where RollNo=?";
+			ps=con.prepareStatement(query);
+			ps.setLong(1, rollno);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{	
+				ad=new Admission();
+				ad.setId(rs.getLong(1));
+				ad.setStudent_name(rs.getString(2));
+				ad.setContact(rs.getString(3));
+				ad.setEnq_taken_by(rs.getString(4));
+				ad.setAdm_fees_pack(rs.getString(5));
+				ad.setStatus(rs.getString(6));
+				ad.setDate(rs.getString(7));
+				ad.setRollno(rs.getString(8));
+				ad.setRegno(rs.getString(9));
+				ad.setInvoice_no(rs.getString(10));
+				ad.setAdmission_date(rs.getString(11));
+				ad.setAcad_year(rs.getString(12));
+				ad.setJoin_date(rs.getString(13));
+				ad.setFees(rs.getLong(14));
+				ad.setPaid_fees(rs.getLong(15));
+				ad.setRemain_fees(rs.getLong(16));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return ad;
+	}
 }
