@@ -84,7 +84,7 @@ position: fixed;
 }
 #page-wrapper {
   position: relative;
-  top: 55px;
+/*  top: 55px;*/
   box-shadow: 0 0 10px #757575;
   -moz-box-shadow: 0 0 10px #757575;
   -webkit-box-shadow: 0 0 10px #757575;
@@ -539,9 +539,12 @@ padding-top: 4px;
 ul.nav.nav-second-level.collapse.in {background: #131212;}
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
-	 outline:0;
-	 background: #575757;
-	 color: #F36A5A;
+	 
+outline:0;
+	 
+background: #575757;
+	 
+color: #F36A5A;
 }
  
 .navbar-side {
@@ -619,7 +622,7 @@ line-height: 1.428571429;
  
  @media(min-width:768px) {
      #page-wrapper{
-               margin: 0 0 0 260px;
+/*               margin: 0 0 0 260px;*/
                padding: 0;
                min-height: 1200px;
     }

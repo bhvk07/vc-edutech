@@ -11,14 +11,19 @@ function attemptLogin(){
 		var token=request.getResponseHeader('X-Authorization');
 		$.session.set("token",token);
 		var role = responseData.role;
+		var name = responseData.name;
+		
 		if(role==DESK)
 			{
 			
 			window.location.href="dashboard.html";
+			localStorage.setItem("user",name);
 			}
 		else if(role==ADMIN)
 			{
+			
 			window.location.href="dashboard.html";
+			localstorage.setItem("user",name);
 			}
 		else
 			{
