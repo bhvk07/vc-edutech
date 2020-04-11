@@ -2,6 +2,8 @@ package org.VCERP.Education.VC.configuration;
 
 import java.io.IOException;
 import java.security.Key;
+import java.security.PrivateKey;
+import java.util.Base64;
 
 import javax.annotation.Priority;
 import javax.crypto.KeyGenerator;
@@ -35,8 +37,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 	        try {
 	 
 	            // Validate the token
-	            SecureUtil secure=new SecureUtil();
-	            String key=secure.key;
+	            String key=SecureUtil.signingKey;
 	            System.out.println(key);
 	            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
 	            //logger.info("#### valid token : " + token);

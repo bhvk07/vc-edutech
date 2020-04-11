@@ -3,10 +3,8 @@ $(document).ready(function() {
 	FetchAllEmployee();
 	//getCurrentDate();
 	$("#enq_data_submit").click(function() {
-		alert("tok = "+sessionStorage.getItem("tok"));
-		 /* var token=$.session.get('token'); */
-		
-		  /*validateLogin(token);*/
+		var token=sessionStorage.getItem("token");
+		validateLogin(token);
 		 
 		event.preventDefault();
 		EnquiryData();
@@ -22,14 +20,16 @@ $(document).ready(function() {
 function EnquiryData() {
 
 	function callback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("success",mes);
+		alert("suc")
+		/*var mes=responseData.responseJSON.message;
+		showNotification("success",mes);*/
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
+		alert("f");
+		/*var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-		/*
+*/		/*
 		 * var message=responseData.responseJSON.message;
 		 * showNotification("error",message); alert(message);
 		 */
@@ -39,21 +39,20 @@ function EnquiryData() {
 	var httpMethod = "POST";
 	var relativeUrl = "/Enquiry/EnquiryData";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
 function AddEmployee() {
 	function callback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("success",mes);
+		
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
+		/*var mes=responseData.responseJSON.message;
+		showNotification("error",mes);*/
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
@@ -61,7 +60,7 @@ function AddEmployee() {
 	alert(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/Employee/NewEmployee";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -78,14 +77,14 @@ function FetchAllEmployee() {
 		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
+		/*var mes=responseData.responseJSON.message;
+		showNotification("error",mes);*/
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Employee/FetchAllEmployee";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

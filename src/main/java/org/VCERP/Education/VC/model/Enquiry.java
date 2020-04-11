@@ -1,5 +1,6 @@
 package org.VCERP.Education.VC.model;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
@@ -60,6 +61,7 @@ public class Enquiry {
 	@FormParam("pin")
 	private String pin;
 	
+	@Email(message="valid form")
 	@FormParam("email")
 	private String email;
 	

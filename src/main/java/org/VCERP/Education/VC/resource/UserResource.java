@@ -1,5 +1,9 @@
 package org.VCERP.Education.VC.resource;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.util.Base64;
+
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -16,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.model.User;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
+import org.VCERP.Education.VC.configuration.SigningKeyGenerator;
 import org.VCERP.Education.VC.controller.UserController;
 
 @Path("user")
@@ -26,7 +31,7 @@ public class UserResource {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@NotNull(message="username must not be null") @NotBlank(message="username must not be blank") @FormParam("userid") String userid,
-			@FormParam("password") String password){
+			@FormParam("password") String password) throws NoSuchAlgorithmException{
 		User user=new User();
 		UserController controller=new UserController();
 		user=controller.authenticateUser(userid,password);
@@ -34,10 +39,12 @@ public class UserResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		}else
 		{
+			PrivateKey  key=SigningKeyGenerator.signKey();
+			String session=Util.randomStringGenerator(8);
 			SecureUtil secure=new SecureUtil();
-			String token=secure.issueToken(user);
+			String token=secure.issueToken(user,key,session);
 //		resource.getCompany(user.getCompany_name());
-//		String session=Util.randomStringGenerator(8);
+//		
 //		String token=SecureUtil.issueToken(user, "3QAy*bZn7jW%==LDKK$U", session);
 		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+token).entity(user).build();
 		}

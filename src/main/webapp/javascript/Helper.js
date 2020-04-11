@@ -2,7 +2,7 @@
  * 
  */
 var host="http://localhost";
-var port="10080";
+var port="8080";
 
 var DESK="desk";
 var ADMIN="ADMIN";
@@ -73,9 +73,9 @@ function ajaxAuthenticatedRequest(httpMethod, relativeUrl, data,
 		responseFunction, errorResponseFunction) {
 	var url = "";
 	var baseUrl = fetchBaseUrl();
-	url = baseUrl + "/joat/webapi";
+	url = baseUrl + "/VC/webapi";
 	url = url + relativeUrl;
-	var token = $.session.get('token');
+	var token = sessionStorage.getItem("token");
 	if (httpMethod == "GET" || httpMethod == "DELETE") {
 		$.ajax({
 			url : url,
