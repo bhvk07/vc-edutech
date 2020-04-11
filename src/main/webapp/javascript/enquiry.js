@@ -3,9 +3,11 @@ $(document).ready(function() {
 	FetchAllEmployee();
 	//getCurrentDate();
 	$("#enq_data_submit").click(function() {
-		/*
-		 * var token=$.session.get('token'); alert(token); validateLogin(token);
-		 */
+		alert("tok = "+sessionStorage.getItem("tok"));
+		 /* var token=$.session.get('token'); */
+		
+		  /*validateLogin(token);*/
+		 
 		event.preventDefault();
 		EnquiryData();
 	});
