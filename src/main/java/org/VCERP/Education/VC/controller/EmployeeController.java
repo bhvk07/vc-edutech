@@ -17,4 +17,9 @@ public class EmployeeController {
 		return dao.FetchAllEmployee();
 	}
 
+	public Employee createEmployeeAccount(Employee emp) {
+		EmployeeDAO dao=new EmployeeDAO();
+		return dao.createEmployeeAccount(emp);
+	}
+
 }

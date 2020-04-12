@@ -32,7 +32,7 @@ public class EmployeeResource {
 			,@FormParam("emp_name") String emp_name,@FormParam("emp_unq_code") String emp_unq_code
 			,@FormParam("address") String address,@FormParam("contact") String contact,
 			@FormParam("dob") String dob,@FormParam("join_date") String join_date,
-			@FormParam("design") String design){
+			@FormParam("design") String design,@FormParam("email") String email){
 		Employee emp=null;
 		EmployeeController controller=null;
 		try {
@@ -42,6 +42,7 @@ public class EmployeeResource {
 			emp.setBranch(branch);
 			emp.setEmp_name(emp_name);
 			emp.setEmp_unq_code(emp_unq_code);
+			emp.setEmail(email);
 			emp.setAddress(address);
 			emp.setContact(contact);
 			emp.setDob(dob);
@@ -53,8 +54,37 @@ public class EmployeeResource {
 			e.printStackTrace();
 			System.out.println(e);
 		}
+		
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
 	}
+	
+	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/createEmployeeAccount")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response createEmployeeAccount(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
+			,@FormParam("role") String role,@FormParam("emp_name") String emp_name,
+			@FormParam("userid") String userid,@FormParam("password") String password){
+		Employee emp=null;
+		EmployeeController controller=null;
+		try {
+			emp=new Employee();
+			controller=new EmployeeController();
+			emp.setEmp_type(emp_type);
+			emp.setBranch(branch);
+			emp.setRole(role);
+			emp.setEmp_name(emp_name);
+			emp.setUserid(userid);
+			emp.setPassword(password);
+			controller.createEmployeeAccount(emp);
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+}
 	
 	@GET
 	@PermitAll

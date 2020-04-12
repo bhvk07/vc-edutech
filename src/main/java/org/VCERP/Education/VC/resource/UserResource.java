@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
@@ -32,21 +33,21 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@NotNull(message="username must not be null") @NotBlank(message="username must not be blank") @FormParam("userid") String userid,
 			@FormParam("password") String password) throws NoSuchAlgorithmException{
-		User user=new User();
+		Employee emp=new Employee();
 		UserController controller=new UserController();
-		user=controller.authenticateUser(userid,password);
-		if(user==null){
+		emp=controller.authenticateUser(userid,password);
+		if(emp==null){
 		return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		}else
 		{
 			PrivateKey  key=SigningKeyGenerator.signKey();
 			String session=Util.randomStringGenerator(8);
 			SecureUtil secure=new SecureUtil();
-			String token=secure.issueToken(user,key,session);
+			String token=secure.issueToken(emp,key,session);
 //		resource.getCompany(user.getCompany_name());
 //		
 //		String token=SecureUtil.issueToken(user, "3QAy*bZn7jW%==LDKK$U", session);
-		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+token).entity(user).build();
+		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+token).entity(emp).build();
 		}
 	}
 }
