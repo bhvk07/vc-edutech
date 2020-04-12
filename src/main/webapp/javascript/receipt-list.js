@@ -1,11 +1,28 @@
 //receipt-list.js
 $(document).ready(function() {
-	$('#receipt_table').DataTable({
-		"pageLength" : 40
+	var table = $('#receipt_table').DataTable({
+		"pageLength" : 40,
+		dom: 'Bfrtip',
+	    buttons: [
+	    	{extend: 'pdf', className: 'btn btn-info glyphicon glyphicon-file pdf-b'},
+	    	{extend: 'print', className: 'btn btn-warning glyphicon glyphicon-print'},
+	    ],
+	    "order": [],
+	    "columnDefs": [ {
+	    "targets"  : 'no-sort',
+	    "orderable": false,
+	    }],
+	   
 	});
-	/*
-	 * var val; var r_date; var r_no; var r_stud; var r_mob; var r_amt;
-	 */
+	 table.buttons().container()
+     .appendTo( '#table-style .col-sm-6:eq(1)' );
+
+	$('.pdf-b').css({
+		"font-size" : "13px",
+		"padding": "6px 12px",
+		"margin-left": "10px"
+	});
+
 
 	showReceiptTable();
 
