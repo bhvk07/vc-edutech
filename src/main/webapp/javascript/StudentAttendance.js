@@ -25,6 +25,14 @@ function attendanceList(){
 			table.row.add(
 					[date, Rollno, student_name,attendance]).draw();
 		}
+		
+		var checkbox = $('table tbody input[type="checkbox"]');
+		checkbox.click(function() {
+			if (!this.checked) {
+				$("#selectAll").prop("checked", false);
+			}
+		});
+
 	}
 
 	function errorCallback(responseData, textStatus, request) {

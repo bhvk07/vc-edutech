@@ -299,23 +299,26 @@ table.table .avatar {
 		$('[data-toggle="tooltip"]').tooltip();
 
 		// Select/Deselect checkboxes
-		var checkbox = $('table tbody input[type="checkbox"]');
+		//var checkbox = $('table tbody input[type="checkbox"]');
 		$("#selectAll").click(function() {
 			if (this.checked) {
-				checkbox.each(function() {
+				$("input.cbCheck").prop('checked', true);
+				/* checkbox.each(function() {
 					this.checked = true;
-				});
+				}); */
 			} else {
-				checkbox.each(function() {
+				$("input.cbCheck").prop('checked', false);
+				/* checkbox.each(function() {
 					this.checked = false;
-				});
+				}); */
 			}
 		});
-		checkbox.click(function() {
-			if (!this.checked) {
+		/* $('input[type="checkbox"]').click(function() {
+			alert("hey");
+			if ($("input.cbCheck").prop('checked', false)) {
 				$("#selectAll").prop("checked", false);
 			}
-		});
+		}); */
 	});
 </script>
 </head>
@@ -372,10 +375,11 @@ table.table .avatar {
 										<th>DATE</th>
 										<th>ROLLNO</th>
 										<th>STUDENT NAME</th>
-										<th>MARK ATTENDANCE<span class="custom-checkbox"> <input
+										<th><span class="custom-checkbox"> <input
 												type="checkbox" id="selectAll" name="options[]" value="0">
 												<label for="checkbox1"></label>
-										</span></th>
+										</span>
+										</th>
 									</tr>
 								</thead>
 							</table>
