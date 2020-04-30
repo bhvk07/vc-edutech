@@ -12,4 +12,11 @@ public class AttendanceController {
 		return dao.getAttendanceList(acad_year,courses);
 	}
 
+	public void studentAttendance(String acad_year, String courses, ArrayList<String> rollno,
+			ArrayList<String> attend) {
+		AttendanceDAO dao=new AttendanceDAO();
+		dao.studentAttendance(acad_year,courses,rollno,attend);
+		
+	}
+
 }

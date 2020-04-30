@@ -43,4 +43,36 @@ public class AttendanceDAO {
 		return attendance;
 	}
 
+	public void studentAttendance(String acad_year, String courses, ArrayList<String> rollno,
+			ArrayList<String> attend) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		int index=0;
+		String createColumnName="";/*"`"+rollno.indexOf(0)+"`";*/
+		String createParameterList="?"; 
+		try {
+		con=Util.getDBConnection();
+		for (int i=0;i<rollno.size();i++)
+		{
+		createColumnName+=",`"+rollno.get(i)+"`";
+		createParameterList+=",?";
+		}
+		String query="insert into attendance(`date`,`acad_year`,`course`"+createColumnName+") values(?,?,"+createParameterList+")";
+		
+		System.out.println(query);
+		ps=con.prepareStatement(query);
+		ps.setString(index+=1, Util.currentDate());
+		ps.setString(index+=1, acad_year);
+		ps.setString(index+=1, courses);
+		for (int i=0;i<attend.size();i++)
+		{
+		ps.setString(index+=1, attend.get(i));
+		System.out.println(attend.get(i));
+		}
+		ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -91,5 +91,10 @@ public class Util {
 		String seperated[] = str.replaceAll("\\s+", "").split("[|]");
 		return seperated;
 	}
+	public static String[] commaSeperatedString(String str)
+	{
+		String seperated[] = str.replaceAll("\\s+", "").split("[,]");
+		return seperated;
+	}
 
 }
