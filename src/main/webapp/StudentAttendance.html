@@ -333,7 +333,9 @@ table.table .avatar {
 				</div>
 				<div class="col-sm-6">
 					<a href="enquiry.html" class="btn btn-success"><i
-						class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
+						class="material-icons">&#xE147;</i> <span>Add New</span></a>
+						<button class="btn btn-success" id="saveAttendance" onclick="getAttendance()"><i
+						class="material-icons">&#xE147;</i> <span>Save</span></button> <a
 						href="" class="btn btn-success" id="admission"><i
 						class="material-icons">&#xE147;</i> <span>Addmission </span></a> <a
 						href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
@@ -376,7 +378,7 @@ table.table .avatar {
 										<th>ROLLNO</th>
 										<th>STUDENT NAME</th>
 										<th><span class="custom-checkbox"> <input
-												type="checkbox" id="selectAll" name="options[]" value="0">
+												type="checkbox" class="check" id="selectAll" name="options[]" value="0">
 												<label for="checkbox1"></label>
 										</span>
 										</th>

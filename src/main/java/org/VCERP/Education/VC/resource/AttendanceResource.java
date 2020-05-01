@@ -47,7 +47,7 @@ public class AttendanceResource {
 		String[] commaSeperatedAttendance=Util.commaSeperatedString(attendance);
 		ArrayList<String> rollno=new ArrayList<>();
 		ArrayList<String> attend=new ArrayList<>();
-		for(int i=0;i<commaSeperatedAttendance.length;i++){
+		for(int i=1;i<commaSeperatedAttendance.length;i++){
 		String a=commaSeperatedAttendance[i];
 		String[] symbolSeperatedAttendance=Util.symbolSeperatedString(a);
 		rollno.add(symbolSeperatedAttendance[0]);

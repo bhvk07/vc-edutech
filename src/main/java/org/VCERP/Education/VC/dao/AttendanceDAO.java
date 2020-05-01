@@ -58,8 +58,6 @@ public class AttendanceDAO {
 		createParameterList+=",?";
 		}
 		String query="insert into attendance(`date`,`acad_year`,`course`"+createColumnName+") values(?,?,"+createParameterList+")";
-		
-		System.out.println(query);
 		ps=con.prepareStatement(query);
 		ps.setString(index+=1, Util.currentDate());
 		ps.setString(index+=1, acad_year);
@@ -67,7 +65,6 @@ public class AttendanceDAO {
 		for (int i=0;i<attend.size();i++)
 		{
 		ps.setString(index+=1, attend.get(i));
-		System.out.println(attend.get(i));
 		}
 		ps.executeUpdate();
 		} catch (Exception e) {
