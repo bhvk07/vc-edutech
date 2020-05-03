@@ -244,13 +244,139 @@
 					</section>
 				</div>
 
+<!-- fees-details start -->
+<div class="col-md-12">
+					<section class="panel">
+
+						<header class="panel-heading">
+							<h5 class="panel-title">4. Fees Details</h5>
+						</header>
+						<div class="panel-body">
+<table class="table" id="feestypetable">
+  <thead>
+    <tr style="font-size: small;">
+      <th scope="col">FEES TYPE<font color="red"> * </font></th>
+      <th scope="col">AMOUNT <font color="red"> * </font></th>
+      <th scope="col">DISCOUNT</th>
+      <th scope="col">DISCOUNT TYPE</th>
+ <th scope="col">Tax</th>
+      <th scope="col">TOTAL</th>
+      <th scope="col">REMOVE</th>
+    </tr>
+  </thead>
+  <tbody id="fee-details">
+    <tr>
+ <td>
+ 
+ <div class="form-group">
+     <div class="input-group">
+            <select name="feestype" class="form-control" id="feestype">
+                <option value="ActivityFees">Activity Fees</option>
+                <option value="AdmissionForm">Admission Form</option>
+                <option value="AnnualDayFees">AnnualDayFees</option>
+                <option value="BoardExamFees">BoardExamFees</option>
+                <option value="BooksFees">BooksFees</option>
+                <option value="ComputerFees">ComputerFees</option>
+                <option value="DonationFees">DonationFees</option>
+                <option value="Downpayment">Downpayment</option>
+                <option value="EducationalTripFees">EducationalTripFees</option>
+                <option value="ExamFees">ExamFees</option>
+                <option value="ID_Calendar_Form">ID_Calendar_Form</option>
+                <option value="Installments">Installments</option>
+                <option value="LateFees">LateFees</option>
+                <option value="LumpsumForm">LumpsumForm</option>
+                <option value="MiscellaneousFees">MiscellaneousFees</option>
+                <option value="MonthlyFees">MonthlyFees</option>
+                <option value="NewAdmission">NewAdmission</option>
+                <option value="PartyCharges">PartyCharges</option>
+                <option value="Re-AdmissionFees">Re-AdmissionFees</option>
+                <option value="StudentKit">StudentKit</option>
+                <option value="TermFees">TermFees</option>
+                <option value="TransportationFees">TransportationFees</option>
+                <option value="TutionFees">TutionFees</option>
+            </select>
+   
+          <span class="input-group-addon" id="bhvk">
+                <button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +
+                 </button>
+          </span>
+           </div>
+</div>
+</td>
+   
+         <td>
+<!--  Amount Field       -->
+         <input type="number" class="form-control amt" id="amount" value="" placeholder="0.00" >
+     </td>
+     
+          <td>
+<!--          discount field     -->
+          <input type="number" class="form-control discount" value="">
+      </td>
+     
+         <td>
+          <div class="form-group">
+            <select name="distype" class="form-control">
+                <option value="INR">INR</option>
+            </select>
+        </div>
+     </td>
+   
+      <td>
+       <input type="text" class="form-control" placeholder="NONE" >
+   </td>
+   
+     <td>
+<!--      Total field      -->
+        <input type="text" class="form-control totala" name="price" id="total-amt" value="" disabled>
+     </td>
+      <td>
+         <div class="w3-padding w3-xlarge w3-teal">
+          <button type="button" id="remove-row">
+            <i class="glyphicon glyphicon-trash"></i>
+          </button>
+      </div>
+    </td>
+    </tr>
+   
+<!--
+     <tr>
+    <th>Total</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <div class="form-group">
+        <div class="input-group">
+           <td style="text-align:center;">
+-->
+<!--                <input type="number" class="form-control" id="grand-t" value="" disabled>-->
+<!--
+            </td>  
+        </div>
+    </div>    
+  </tr>
+ 
+-->
+  </tbody>
+ 
+</table>
+</div>
+</section>
+</div>
+
+
+
+<!-- fees details end -->
+
+
 
 				<!--  installment details start -->
 				<div class="col-md-12">
 					<section class="panel">
 
 						<header class="panel-heading">
-							<h5 class="panel-title">4. Installment Details</h5>
+							<h5 class="panel-title">5. Installment Details</h5>
 						</header>
 						<div class="panel-body">
 
