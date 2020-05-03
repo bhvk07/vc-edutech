@@ -19,13 +19,14 @@ import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
 
 @Path("Admission") 
 public class AdmissionResource {
-	
+	Admission admission=new Admission();
 	@PermitAll
 	@POST
 	@Path("/StudentAdmission")
@@ -35,11 +36,11 @@ public class AdmissionResource {
 			@FormParam("status") String status,@FormParam("date") String date,
 			@FormParam("Rollno") String Rollno,@FormParam("regno") String regno,
 			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
-			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date)
+			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date,
+			@FormParam("installment") String installment)
 	{
 		String[] name=Util.symbolSeperatedString(student_name);
 		String[] f_pack=Util.symbolSeperatedString(adm_fees_pack);
-		Admission admission=null;
 		EnquiryController eqcontroller=null;
 		AdmissionController controller=null;
 		try {
@@ -58,16 +59,64 @@ public class AdmissionResource {
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
 			admission.setFees(Integer.parseInt(f_pack[1]));
-			eqcontroller=new EnquiryController();
-			eqcontroller.Admission(Long.parseLong(name[0]));
+			
+//			admission.setPaid_fees(getPaidFees(installment));
+//			admission.setRemain_fees(Integer.parseInt(f_pack[1])-admission.getPaid_fees());
+			String[] commaSeperated=Util.commaSeperatedString(installment);
+			if(commaSeperated.length>2){
+				saveInstallment(commaSeperated);
+			}
 			controller=new AdmissionController();
 			controller.StudentAdmission(admission);
+			
+			eqcontroller=new EnquiryController();
+			eqcontroller.Admission(Long.parseLong(name[0]));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not save").build();
+	}
+	
+	/*public int getPaidFees(String Installment){
+		String[] commaSeperated=Util.commaSeperatedString(Installment);
+		String a=commaSeperated[1];
+		String[] symbolSeperated=Util.symbolSeperatedString(a);
+		int paidAmt=Integer.parseInt(symbolSeperated[2]);
+		if(commaSeperated.length>2){
+		saveInstallment(commaSeperated);
+		}
+		return paidAmt;
+	}*/
+	public Response saveInstallment(String[] commaSeperated){
+		ArrayList<String> installDate=new ArrayList<>();
+		ArrayList<String> fees_title=new ArrayList<>();
+		ArrayList<Integer> amt=new ArrayList<>();
+		for(int i=2;i<commaSeperated.length;i++){
+			String a=commaSeperated[i];
+			String[] symbolSeperated=Util.symbolSeperatedString(a);
+			installDate.add(symbolSeperated[0]);
+			fees_title.add(symbolSeperated[1]);
+			amt.add(Integer.parseInt(symbolSeperated[2]));
+		}
+		AdmissionController controller=null;
+		Installment installment=null;
+		try {
+			installment=new Installment();
+			installment.setRollno(admission.getRollno());
+			installment.setStud_name(admission.getStudent_name());
+			installment.setTotal_fees(admission.getFees());
+			installment.setMonthly_pay(amt);
+			installment.setDue_date(installDate);
+			installment.setFees_title(fees_title);
+			controller=new AdmissionController();
+			controller.saveInstallment(installment);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not Save").build();
 	}
 	
 	@Path("/SearchStudent")

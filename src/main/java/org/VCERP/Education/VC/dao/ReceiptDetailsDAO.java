@@ -160,7 +160,7 @@ public class ReceiptDetailsDAO {
 
 	}
 
-	public long calculateTotalFeesPaid(String rollno) {
+	public long calculateTotalFeesPaid(String rollno, String name) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;

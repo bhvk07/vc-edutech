@@ -1,5 +1,6 @@
 //receipt-list.js
 $(document).ready(function() {
+	showReceiptTable();
 	var table = $('#receipt_table').DataTable({
 		"pageLength" : 40,
 		dom: 'Bfrtip',
@@ -24,21 +25,31 @@ $(document).ready(function() {
 	});
 
 
-	showReceiptTable();
-
+	
+	var myArray = new Array();
 	$('#receipt_table tbody tr').on('click', '.cbCheck', function() {
+		
 		var table = $('#receipt_table').DataTable();
 		if (this.checked == true) {
 			val = table.row(this.closest('tr')).data();
+//			myArray.push(val);
 			var rno = val[5];
+			
 			var receiptno = val[2];
+//			myArray.push(rno+"|"+receiptno);
 			getVeiwReceiptData(rno, receiptno);
 			/*
 			 * r_date = val[1]; r_no = val[2]; r_stud = val[3]; r_mob = val[4];
 			 * r_in = val[6]; r_amt = val[7];
 			 */
 		}
-
+//		ReceiptData(myArray);
+//		var iterator = myArray.values(); 
+//		  
+//		// Here all the elements of the array is being printed. 
+//		for (let elements of iterator) { 
+//		  console.log(elements); 
+//		} 
 	});
 	/*
 	 * $("#btn-view").click(function(){ alert("btn");
@@ -129,3 +140,38 @@ function getVeiwReceiptData(rno, receiptno) {
 			errorCallback);
 	return false;
 }
+/*function ReceiptData(myArray) {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var stud_name = responseData[i].stud_name;
+			var receipt_no = responseData[i].receipt_no;
+			var received_by = responseData[i].received_by;
+			var total_amt = responseData[i].total_amt;
+			var received_amt = responseData[i].received_amt;
+			var pay_mode = responseData[i].pay_mode;
+			var admission = responseData[i].admission;
+			var invoice_no = admission.invoice_no;
+			var course = admission.adm_fees_pack;
+			var total_paid_fees = admission.paid_fees;
+			var remain_amt = admission.remain_fees;
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 
+		alert("failed to load");
+	}
+	var httpMethod = "GET";
+	var formData=myArray;
+	console.log(formData);
+//	var relativeUrl = "/Receipt/getReceiptAdmissionData?id=" + rno
+//			+ "&receiptno=" + receiptno;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+*/

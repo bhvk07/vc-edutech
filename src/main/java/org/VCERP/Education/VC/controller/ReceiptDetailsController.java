@@ -36,9 +36,9 @@ public class ReceiptDetailsController {
 		
 	}
 
-	public long calculateTotalFeesPaid(String rollno) {
+	public long calculateTotalFeesPaid(String rollno, String name) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
-		return dao.calculateTotalFeesPaid(rollno);
+		return dao.calculateTotalFeesPaid(rollno,name);
 	}
 
 	public ArrayList<ReceiptDetails> getReceiptAdmissionData(long rollno, String receiptno) {

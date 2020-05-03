@@ -36,8 +36,8 @@ function SearchStudent(id){
 	}
 	function errorCallback(responseData, textStatus, request) {
 		
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
 		
 			// var message=responseData.response.JSON.message;
 			// alert(message);
@@ -84,6 +84,27 @@ function admissionDetails(){
 }
 
 function StudentAdmission(){
+	var stud_details=document.getElementById("stud_details");
+	var enq_taken=document.getElementById("enq_taken");
+	var fees=document.getElementById("fees");
+	var status=document.getElementById("status");
+	var date=document.getElementById("date");
+	var ID_no=document.getElementById("ID_no");
+	var reg_no=document.getElementById("reg_no");
+	var invoice_no=document.getElementById("invoice_no");
+	var admission_date=document.getElementById("admission_date");
+	var acad_year=document.getElementById("acad_year");
+	var join_date=document.getElementById("join_date");
+	var table=document.getElementById("installment_table");
+	var rowCount=$('#installment_table tr').length;
+	var installment="installment details";
+	for (var i = 1; i < rowCount-1; i++) {
+        var date = $(table.rows.item(i).cells[0]).find('input').val();
+        var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
+        var amt = $(table.rows.item(i).cells[2]).find('input').val();
+        installment=installment+","+date+"|"+fees_title+"|"+amt;   
+	}
+	
 	function callback(responseData,textStatus,request)
 	{
 		var mes=responseData.responseJSON.message;
@@ -96,8 +117,8 @@ function StudentAdmission(){
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData=$('#admission-form').serialize();
-	alert(formData);
+	var formData=$('#admission-form').serialize()+"&installment="+installment;
+	console.log(formData);
 	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);

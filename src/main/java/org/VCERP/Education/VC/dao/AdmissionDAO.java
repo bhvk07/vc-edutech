@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -18,8 +19,9 @@ public class AdmissionDAO {
 		try {
 			con=Util.getDBConnection();
 			String query="insert into admission(`student_name`,`contact`,`enq_taken_by`,`adm_fees_pack`,"
-					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`,"
+					+ "`paid_fees`,`remain_fees`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,0)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
 			ps.setString(2, admission.getContact());
@@ -137,6 +139,34 @@ public class AdmissionDAO {
 		finally {
 			Util.closeConnection(null, ps, con);
 		}
+	}
+
+	public Installment saveInstallment(Installment installment) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="insert into installment(`rollno`,`stud_name`,`total_fees`,`monthly_payment`,"
+					+ "`due_date`,`fees_title`)"
+					+ "values(?,?,?,?,?,?)";
+			ps=con.prepareStatement(query);
+			for(int i=0;i<installment.getDue_date().size();i++){
+			ps.setString(1, installment.getRollno());
+			ps.setString(2, installment.getStud_name());
+			ps.setLong(3, installment.getTotal_fees());
+			ps.setLong(4, installment.getMonthly_pay().get(i));
+			ps.setString(5, installment.getDue_date().get(i));
+			ps.setString(6, installment.getFees_title().get(i));
+			ps.executeUpdate();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return installment;
 	}
 		
 }
