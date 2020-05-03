@@ -20,6 +20,22 @@ $(document).ready(function(){
 		event.preventDefault();
 		AddEmployee();
 	});
+	var select = document.getElementById('fees');
+	var outputElem = document.getElementById('amount');
+
+	select.addEventListener('change', function() {
+		var newValue = !this.selectedIndex ? ""
+				: this.options[this.selectedIndex].value;
+		var fees_amt=newValue.split("|");
+		outputElem.value = fees_amt[1];
+	});
+	$("#discount").focusout(function() {
+		var amount = document.getElementById('amount').value;
+		var discount = document.getElementById('discount').value;
+		var final_amt=amount-discount;
+		document.getElementById('total-amt').value=final_amt;
+		document.getElementById('amt_installment').value=final_amt;
+	});
 });
 
 
@@ -84,17 +100,7 @@ function admissionDetails(){
 }
 
 function StudentAdmission(){
-	var stud_details=document.getElementById("stud_details");
-	var enq_taken=document.getElementById("enq_taken");
-	var fees=document.getElementById("fees");
-	var status=document.getElementById("status");
-	var date=document.getElementById("date");
-	var ID_no=document.getElementById("ID_no");
-	var reg_no=document.getElementById("reg_no");
-	var invoice_no=document.getElementById("invoice_no");
-	var admission_date=document.getElementById("admission_date");
-	var acad_year=document.getElementById("acad_year");
-	var join_date=document.getElementById("join_date");
+
 	var table=document.getElementById("installment_table");
 	var rowCount=$('#installment_table tr').length;
 	var installment="installment details";
@@ -103,6 +109,16 @@ function StudentAdmission(){
         var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
         var amt = $(table.rows.item(i).cells[2]).find('input').val();
         installment=installment+","+date+"|"+fees_title+"|"+amt;   
+	}
+	var table=document.getElementById("feestypetable");
+	var rowCount=$('#feestypetable tr').length;
+	var newAmt="0";
+	for (var i = 1; i < rowCount-2; i++) {
+        var discount = $(table.rows.item(i).cells[2]).find('input').val();
+        if(discount!=0){
+        total = $(table.rows.item(i).cells[5]).find('input').val();
+        newAmt=newAmt+","+discount+"|"+total;
+        } 
 	}
 	
 	function callback(responseData,textStatus,request)
@@ -117,11 +133,10 @@ function StudentAdmission(){
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData=$('#admission-form').serialize()+"&installment="+installment;
-	console.log(formData);
+	var formData=$('#admission-form').serialize()+"&installment="+installment+"&newAmt="+newAmt;
+	
 	var relativeUrl = "/Admission/StudentAdmission";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
-			errorCallback);
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 }
 

@@ -20,8 +20,8 @@ public class AdmissionDAO {
 			con=Util.getDBConnection();
 			String query="insert into admission(`student_name`,`contact`,`enq_taken_by`,`adm_fees_pack`,"
 					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`,"
-					+ "`paid_fees`,`remain_fees`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,0)";
+					+ "`discount`,`paid_fees`,`remain_fees`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
 			ps.setString(2, admission.getContact());
@@ -36,6 +36,7 @@ public class AdmissionDAO {
 			ps.setString(11, admission.getAcad_year());
 			ps.setString(12, admission.getJoin_date());
 			ps.setLong(13, admission.getFees());
+			ps.setLong(14, admission.getDisccount());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();

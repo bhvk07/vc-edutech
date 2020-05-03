@@ -37,7 +37,7 @@ public class AdmissionResource {
 			@FormParam("Rollno") String Rollno,@FormParam("regno") String regno,
 			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
 			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date,
-			@FormParam("installment") String installment)
+			@FormParam("installment") String installment,@FormParam("newAmt") String newAmt)
 	{
 		String[] name=Util.symbolSeperatedString(student_name);
 		String[] f_pack=Util.symbolSeperatedString(adm_fees_pack);
@@ -58,8 +58,24 @@ public class AdmissionResource {
 			admission.setAdmission_date(admission_date);
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
-			admission.setFees(Integer.parseInt(f_pack[1]));
-			
+
+			if(!newAmt.equals("0"))
+			{
+				String[] commaSeperated=Util.commaSeperatedString(newAmt);
+				
+				for(int i=1;i<commaSeperated.length;i++)
+				{	String a=commaSeperated[i];
+					String[] symbolSeperated=Util.symbolSeperatedString(a);
+					
+					admission.setDisccount(Integer.parseInt(symbolSeperated[0]));
+					admission.setFees(Integer.parseInt(symbolSeperated[1]));
+				}
+				
+			}
+			else{
+				admission.setDisccount(0);
+				admission.setFees(Integer.parseInt(f_pack[1]));
+			}
 //			admission.setPaid_fees(getPaidFees(installment));
 //			admission.setRemain_fees(Integer.parseInt(f_pack[1])-admission.getPaid_fees());
 			String[] commaSeperated=Util.commaSeperatedString(installment);

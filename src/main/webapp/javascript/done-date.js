@@ -15,7 +15,7 @@ $(document)
 					// var dt = $("#demo").datetimepicker('getDate',new Date());
 
 					function add() {
-						var fees=document.getElementById("fees").value;
+						//var fees=document.getElementById("fees").value;
 						
 						dayValue = document.querySelector('#day');
 						output1 = dayValue.value;
@@ -23,8 +23,17 @@ $(document)
 						noiValue = document.querySelector('#numofInstallment');
 						output2 = noiValue.value;
 						
-						var fees=document.getElementById("fees").value;
-						var output3=fees.split("|");
+						var fees;
+						fees=document.getElementById("total-amt").value;
+						console.log(fees);
+						if(fees=="0.00")
+							{
+							fees=document.getElementById("fees").value;
+							fees=fees.split("|");
+							fees=fees[1];
+							console.log(fees);
+							}
+						//var output3=fees.split("|");
 
 						// dValue = document.querySelector('#datetimepicker4');
 						// // var idate =
@@ -34,7 +43,7 @@ $(document)
 						amtValue = document.querySelector('#amt_installment');
 						output4 = amtValue.value;
 
-						var res = (output3[1] - output4) / output2;
+						var res = (fees- output4) / output2;
 
 						// alert(output4);
 

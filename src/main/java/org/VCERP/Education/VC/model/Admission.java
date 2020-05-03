@@ -22,6 +22,7 @@ public class Admission {
 	private String acad_year;
 	private String join_date;
 	private long fees;
+	private long disccount;
 	private long paid_fees;
 	private long remain_fees;
 
@@ -108,6 +109,13 @@ public class Admission {
 	}
 	public void setContact(String contact) {
 		this.contact = contact;
+	}
+	
+	public long getDisccount() {
+		return disccount;
+	}
+	public void setDisccount(long disccount) {
+		this.disccount = disccount;
 	}
 	public long getPaid_fees() {
 		return paid_fees;
