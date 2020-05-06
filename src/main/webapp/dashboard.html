@@ -8,14 +8,25 @@ Website: http://www.webthemez.com/
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta content="" name="description" />
     <meta content="webthemez" name="author" />
     <title>Dashoard</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+    <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="assets/js/dataTables/dataTables.bootstrap.css"
+	rel="stylesheet" />
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- <script src="assets/js/dataTables/jquery.dataTables.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap.js"></script>
     <!-- Bootstrap Styles-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- FontAwesome Styles-->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <!-- Morris Chart Styles-->
@@ -23,8 +34,15 @@ Website: http://www.webthemez.com/
     <!-- Custom Styles-->
     <link href="assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
+   
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css"> 
+    
+     <!--  <script src="javascript/admission.js"></script>  -->
+       <script src="javascript/Helper.js"></script>
+    <!--   <script src="javascript/admission.js"></script> -->
+       <script type="text/javascript" src="core/jquerysession.js"></script>
 <script>
 $(function() {
 	$("#navbar").load("side-nav.html");
@@ -204,6 +222,7 @@ $(function() {
                                 </div>
                             </div>
                         </div>
+                        <!--  Experimenting		-->
                         <div class="col-sm-6 col-xs-12">
                             <div class="panel panel-default chartJs">
                                 <div class="panel-heading">
@@ -216,7 +235,7 @@ $(function() {
                                 </div>
                             </div>
                         </div>
-                         
+                        <!--  --> 
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-xs-12">
@@ -227,7 +246,7 @@ $(function() {
                                     </div>
                                 </div>
                                 <div class="panel-body">
-                                    <canvas id="bar-chart" class="chart"></canvas>
+                                    <canvas id="mychart" class="chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -354,11 +373,12 @@ $(function() {
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src ="javascript/user-profile.js"></script>
-    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- <script src="assets/js/jquery-1.10.2.js"></script> -->
     <!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
+   <!--  <script src="assets/js/bootstrap.min.js"></script> -->
 	 
     <!-- Metis Menu Js -->
+   
     <script src="assets/js/jquery.metisMenu.js"></script>
     <!-- Morris Chart Js -->
     <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
@@ -372,12 +392,20 @@ $(function() {
 	
     <!-- Custom Js -->
     <script src="assets/js/custom-scripts.js"></script>
-
+   <canvas id="mychart1" class="chart"></canvas>
       
     <!-- Chart Js -->
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script type="text/javascript" src="assets/js/chart.min.js"></script>  
+    
+     
+     
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script> -->
+  <!-- <script src="javascript/admission-list.js"></script>  -->
+     <script src="javascript/financial.js"></script> 
     <script type="text/javascript" src="assets/js/chartjs.js"></script> 
-
 </body>
 
 </html>
