@@ -3,7 +3,7 @@ var paymentValue=new Array();
 var title="payment";
 $(document).ready(function(){
 	getChartData();
-	BuildChart(payDate,paymentValue,title)
+    //BuildChart(payDate,paymentValue,title);
 });
 /*
  * function show_rows1(){ var table = $("#admission_table").DataTable(); headers =
@@ -33,7 +33,10 @@ $(document).ready(function(){
  * //sessionStorage.setItem("chartData",labels+"|"+values);
  * console.log(labels+"|"+values); return labels+"|"+values; //var chart =
  * BuildChart(labels,values,"Payments"); }
- */    	   
+ */  
+
+
+
 function getChartData(){
 	function callback(responseData, textStatus, request){
 		for ( var i in responseData) {
@@ -52,17 +55,17 @@ function getChartData(){
 	return false;
 }
 
-          function BuildChart(labels,values,chartTitle){
+        /*  function BuildChart(labels,values,chartTitle){
         	  alert(labels+"     "+values+"    ");
-        	  var ctx = document.getElementById("mychart1").getContext('2d');
+        	  var ctx = $('#mychart').get(0).getContext('2d');
         	  var mychart = new Chart(ctx,{
         		  type: 'bar',
         		  data:{
         			  labels:labels,
         			  datasets: [{
-        				  label: chartTitle, /* Name the series */
-        			        data: values,  /* Our values */
-        			        backgroundColor: [  /* Specify custom colors */
+        				  label: chartTitle,  Name the series 
+        			        data: values,   Our values 
+        			        backgroundColor: [   Specify custom colors 
         			          'rgba(255, 99, 132, 0.2)',
         			          'rgba(54, 162, 235, 0.2)',
         			          'rgba(255, 206, 86, 0.2)',
@@ -70,7 +73,7 @@ function getChartData(){
         			          'rgba(153, 102, 255, 0.2)',
         			          'rgba(255, 159, 64, 0.2)'
         			        ],
-        			        borderColor: [  /* Add custom color borders */
+        			        borderColor: [   Add custom color borders 
         			            'rgba(255,99,132,1)',
         			            'rgba(54, 162, 235, 1)',
         			            'rgba(255, 206, 86, 1)',
@@ -78,7 +81,7 @@ function getChartData(){
         			            'rgba(153, 102, 255, 1)',
         			            'rgba(255, 159, 64, 1)'
         			        ],
-        			        borderWidth: 1  /* Specify bar border width */
+        			        borderWidth: 1   Specify bar border width 
         			  }]
         		  },
         		  options:{
@@ -90,8 +93,60 @@ function getChartData(){
         	  return mychart;
           }
           
- 
+ */
       
+
+
+//
+
+$(function() {
+	  var ctx, data, myBarChart, option_bars;
+	  Chart.defaults.global.responsive = true;
+	  ctx = $('#mychart').get(0).getContext('2d'); //done
+	  option_bars = {
+	    scaleBeginAtZero: true,
+	    scaleShowGridLines: true,
+	    scaleGridLineColor: "rgba(0,0,0,.05)",
+	    scaleGridLineWidth: 1,
+	    scaleShowHorizontalLines: true,
+	    scaleShowVerticalLines: false,
+	    barShowStroke: true,
+	    barStrokeWidth: 1,
+	    barValueSpacing: 5,
+	    barDatasetSpacing: 3,
+	    //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	  };
+	  data = {
+	    labels: payDate,
+	    datasets: [
+	      {
+	        label: "My First dataset",
+	        fillColor: "rgba(26, 188, 156,0.6)",
+	        strokeColor: "#1ABC9C",
+	        pointColor: "#1ABC9C",
+	        pointStrokeColor: "#fff",
+	        pointHighlightFill: "#fff",
+	        pointHighlightStroke: "#1ABC9C",
+	        data: paymentValue
+	      }, 
+	     /* {
+	        label: "My Second dataset",
+	        fillColor: "rgba(34, 167, 240,0.6)",
+	        strokeColor: "#22A7F0",
+	        pointColor: "#22A7F0",
+	        pointStrokeColor: "#fff",
+	        pointHighlightFill: "#fff",
+	        pointHighlightStroke: "#22A7F0",
+	        data: [28, 48, 40, 19, 86, 27, 90]
+	      }*/
+	    ]
+	  };
+	  myBarChart = new Chart(ctx).Bar(data, option_bars);
+	});
+
+
+
+//
 
 /*
  * $(document).ready(function(){ //var table =
