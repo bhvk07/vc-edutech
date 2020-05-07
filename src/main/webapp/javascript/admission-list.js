@@ -11,14 +11,14 @@ $(document).ready(function(){
 	});
 	showAdmissionTable();
 	
-	show_rows1();
+	//show_rows1();
 	
 	
 });
 
 function showAdmissionTable(){
 	function callback(responseData, textStatus, request) {
-	    table = $("#admission_table").DataTable();
+	    var table = $("#admission_table").DataTable();
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
@@ -43,10 +43,8 @@ function showAdmissionTable(){
 					[srno,date, student_name, invoice_no, Rollno, regno, contact,
 						adm_fees_pack, acad_year, status, enq_taken_by,fees,
 						paid_fees,remain_fees]).draw();
-			
 		}
-		
-		
+		//console.log(table.row(0).data());
 	}
 
 	function errorCallback(responseData, textStatus, request) {
@@ -65,55 +63,7 @@ function showAdmissionTable(){
 	return false;
 }
 
-function show_rows1(){
-	headers = [];
-	d= [];
-	json = [];
-	var cell_count = table.columns().header().length; //14
-	var ro = table.rows().data().length; //8
-	var ro_data = table.rows().data();
-	//var dat = table.rows().indexes();
-		 table.columns().every( function () {  
-		 headers.push(this.header().innerHTML); //working
-             //alert(this.header().innerHTML);
- });
-		 ro_data.each(function(value,index){
-				d.push(value); 
-			});
-			//alert("data"+d[3]);
 
-
-	
-	
-	 for (var i = 0; i < ro; i++) {
-		  var tableRow = d[i];
-		  //alert(tableRow);
-		  var rowData = {};
-		  for (var j = 0; j < cell_count; j++) {
-			//alert(tableRow[j].value[1]);
-		    rowData[headers[j+1]] = tableRow[j+1];
-		    
-		  }
-		  json.push(rowData);
-	 }
-
-	 final_json = JSON.stringify(json);
-//alert(JSON.stringify(json)); //working
-	
-var labels = json.map(function(e){
-	return e.DATE;
-});
-var label_list = JSON.stringify(labels);
-localStorage.setItem("lab",label_list);
-alert("labels"+JSON.stringify(labels)); //working (converted to get " ")
-
-var values = json.map(function(e){
-	return e.PAYMENT;
-});
-JSON.stringify(values);
-
-var chart = BuildChart(labels,values,"Payments");
-}
 
 /*function show_rows(){
 	var ro = table.rows();
