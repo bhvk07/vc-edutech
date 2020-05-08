@@ -14,13 +14,13 @@ function attemptLogin(){
 		var role = responseData.role;
 		var name = responseData.name;
 		
-		if(role==DESK)
+		if(role=="fd")
 			{
 			
 			window.location.href="dashboard.html";
 			localStorage.setItem("user",name);
 			}
-		else if(role==ADMIN)
+		else if(role=="fd")
 			{
 			
 			window.location.href="dashboard.html";
