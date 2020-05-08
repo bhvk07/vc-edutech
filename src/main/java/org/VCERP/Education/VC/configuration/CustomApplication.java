@@ -2,6 +2,7 @@ package org.VCERP.Education.VC.configuration;
 
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 
 public class CustomApplication extends ResourceConfig{
 	public CustomApplication() 
@@ -9,7 +10,6 @@ public class CustomApplication extends ResourceConfig{
         packages("org.VCERP.Education.VC.configuration");
         register(LoggingFilter.class);
         register(GsonMessageBodyHandler.class);
- 
         //Register Auth Filter here
         register(AuthenticationFilter.class);
     }
