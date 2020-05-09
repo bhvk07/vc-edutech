@@ -716,7 +716,7 @@ FEES DETAILS
        </div>
       </div>
 <button type="button" id="addrow">Add new line</button>
-<!--<button type="button" id="copy" onclick="getandset();">Copy</button>-->
+
 
 
 
@@ -853,6 +853,62 @@ FEES DETAILS
 		</div>
 	</div>
 
+<script>
+
+var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype"><option value="ActivityFees">Activity Fees</option><option value="AdmissionForm">Admission Form</option><option value="AnnualDayFees">AnnualDayFees</option> <option value="BoardExamFees">BoardExamFees</option><option value="BooksFees">BooksFees</option> <option value="ComputerFees">ComputerFees</option><option value="DonationFees">DonationFees</option>  <option value="Downpayment">Downpayment</option> <option value="EducationalTripFees">EducationalTripFees</option>   <option value="ExamFees">ExamFees</option><option value="ID_Calendar_Form">ID_Calendar_Form</option><option value="Installments">Installments</option><option value="LateFees">LateFees</option><option value="LumpsumForm">LumpsumForm</option><option value="MiscellaneousFees">MiscellaneousFees</option><option value="MonthlyFees">MonthlyFees</option><option value="NewAdmission">NewAdmission</option><option value="PartyCharges">PartyCharges</option> <option value="Re-AdmissionFees">Re-AdmissionFees</option><option value="StudentKit">StudentKit</option> <option value="TermFees">TermFees</option><option value="TransportationFees">TransportationFees</option><option value="TutionFees">TutionFees</option></select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+
+   $("#feestypetable").on('change', '.amt,.discount', function(){
+      //alert("1");
+       var discount= 0;
+       var amount = 0;
+       var r = document.getElementById('feestypetable');
+       var noof = r.rows.length-1;
+      // var val = this.value;
+       var $trr = this.closest('tr');
+       amount = parseInt($(".amt",$trr).val());
+       discount = parseInt($(".discount",$trr).val());
+       if(amount.value!=NaN){
+    	   alert("1");
+           $(".totala",$trr).val(amount);
+       }
+      
+       if($(".totala",$trr).val()>0 && discount>=0){
+             var cal = amount - discount;
+           if(cal<0){
+           alert("Profit cannot be Negative");
+                $(".totala",$trr).val(0);
+                }
+           else{
+               $(".totala",$trr).val(cal);
+           }
+       }
+       else if($(".totala",$trr).val()<0){
+           alert("Input positive amount value");
+           $(".totala",$trr).val(0);
+           
+       }
+       getTotalPrice();
+
+              });
+       
+
+    function getTotalPrice() {
+  var total = 0; 
+  $(".totala").each(function() { 
+    var val = $(this).val();
+    total += isNaN(val) || $.trim(val)=="" ? 0 : parseFloat(val); 
+  });
+  $("#grand-t").val(total.toFixed(2)); 
+}
+        
+    $(function () {
+    $("#addrow").click(function(){
+        $("table #fee-details").append(html);
+    });
+    });
+    
+    
+</script>
 
 
 </body>
