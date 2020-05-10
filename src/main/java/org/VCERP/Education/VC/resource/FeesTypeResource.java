@@ -16,10 +16,14 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.controller.FeesTypeController;
 import org.VCERP.Education.VC.model.FeesType;
 import org.VCERP.Education.VC.utility.Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Path("feesType")
 public class FeesTypeResource {
 
+	//private static final Logger LOGGER = LogManager.getLogger(FeesTypeResource.class);
+	
 	@POST
 	@Path("/addNewFeesType")
 	@PermitAll
