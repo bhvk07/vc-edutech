@@ -21,6 +21,7 @@ public class Employee {
 	private String userid;
 	private String password;
 	private String design;
+	private String created_date;
 	public long getId() {
 		return id;
 	}
@@ -104,6 +105,12 @@ public class Employee {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
 	}
 	
 	

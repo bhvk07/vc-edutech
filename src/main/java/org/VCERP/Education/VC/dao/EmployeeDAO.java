@@ -17,7 +17,7 @@ public class EmployeeDAO {
 		try {
 			con=Util.getDBConnection();
 			String query="insert into employee(`emp_type`,`branch`,`emp_name`,`emp_unq_code`,"
-					+ "`email`,`address`,`contact`,`dob`,`join_date`,`design`)values(?,?,?,?,?,?,?,?,?,?)";
+					+ "`email`,`address`,`contact`,`dob`,`join_date`,`design`,`created_date`)values(?,?,?,?,?,?,?,?,?,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, emp.getEmp_type());
 			ps.setString(2, emp.getBranch());
@@ -29,6 +29,7 @@ public class EmployeeDAO {
 			ps.setString(8, emp.getDob());
 			ps.setString(9, emp.getJoin_date());
 			ps.setString(10, emp.getDesign());
+			ps.setString(11, Util.currentDate());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,14 +48,17 @@ public class EmployeeDAO {
 			ArrayList<Employee> employee=new ArrayList<>();
 			try {
 				con=Util.getDBConnection();
-				String query="select `id`,`emp_name` from employee";
+				String query="select `id`,`username`,`role`,`branch`,`created_date` from employee";
 				st=con.prepareStatement(query);
 				rs=st.executeQuery();
 				while(rs.next())
 				{
 					Employee emp=new Employee();
 					emp.setId(rs.getLong(1));
-					emp.setEmp_name(rs.getString(2));
+					emp.setUserid(rs.getString(2));
+					emp.setRole(rs.getString(3));
+					emp.setBranch(rs.getString(4));
+					emp.setCreated_date(rs.getString(5));
 					employee.add(emp);
 				}
 			}catch(Exception e){
