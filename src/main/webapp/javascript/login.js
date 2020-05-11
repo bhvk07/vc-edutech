@@ -1,10 +1,29 @@
 var mes;
 $(document).ready(function(){
-	$("#btn-login").click(function(){
-	event.preventDefault();
-	attemptLogin();	
+	$('form[id="signin"]').validate({
+		  rules: {
+		    userid: {
+		    	required:true
+		    },
+		    password: {
+		      required: true
+		    }
+		  },
+		  messages: {
+			userid: {
+				required:'This field is required'
+			},
+			password: {
+				required:'This field is required'
+		    }
+		  },
 	});
+		  $("#btn-login").click(function(){
+			  event.preventDefault();
+			  attemptLogin();
+		  });
 });
+
 
 function attemptLogin(){
 	function callback(responseData,textStatus,request){
