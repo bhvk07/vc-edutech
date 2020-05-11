@@ -1,0 +1,105 @@
+.page-header {
+    left: 0px;
+    margin: 0;
+    position: fixed;
+    right: 0;
+    top: 60px;
+    z-index: 1001;
+    background: white;
+    border-bottom: none;
+    border-left: 1px solid #3A3A3A;
+    box-shadow: 1px 3px 0 1px #CCCCCC;
+    height: 50px;
+}
+
+.page-header h2{
+    border-bottom-color: #53b700;
+    border-bottom: 4px solid #CCC;
+    box-sizing: content-box;
+    display: inline-block;
+    float: left;
+    height: 50px;
+    font-size: 2rem;
+    letter-spacing: normal;
+    line-height: 50px;
+    margin: 0 0 0 -1px;
+    padding: 0 22px 0 20px;
+}
+.btn{
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    margin: 0;
+}
+
+.inner-wrapper{
+    padding-top: 110px;
+    display: block;
+    min-height: 100vh;
+    table-layout: fixed;
+    overflow: hidden;
+    width: 100%;
+}
+
+fieldset{
+    min-width: 0;
+    padding:0;
+    margin: 0;
+    border: 0;
+}
+#new-user-info .form-group {
+    line-height: 1.42857143;
+    padding:6px 24px 26px 12px;
+    
+}
+/*
+#new-user-info select{
+     line-height: 1.42857143;
+    padding: 6px 24px 6px 12px;
+    
+    
+}
+*/
+
+.dotted{
+    height: 0;
+    border-bottom: 1px dotted #ddd;
+}
+.tall{
+    margin: 44px 0 44px 0;
+}
+
+.simple-card-list{
+    list-style: none;
+    padding: 0;
+}
+.mb-xlg{
+    margin-bottom: 30px; !important;
+}
+.simple-card-list .primary{
+    background: #53b700;
+    color: #FFF;
+    border-radius: 0;
+}
+
+.simple-card-list li{
+    padding:10px 15px;
+    margin: 15px 0;
+}
+
+.simple-card-list li h3{
+    font-size: 2.6rem;
+    font-weight: 600;
+    margin :0;
+    
+}
+.simple-card-list li p{
+    margin: 0;
+    opacity: .7;
+}
