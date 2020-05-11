@@ -42,4 +42,31 @@ public class EmployeeAttendanceDAO {
 		}
 		return employee;
 	}
+
+	public void employeeAttendance(ArrayList<String> empcode, ArrayList<String> intime, ArrayList<String> outtime,
+			ArrayList<String> attend) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="insert into empattendance(`emp_code`,`attendance`,`start_time`,`end_time`,`date`)"
+					+ "values(?,?,?,?,?)";
+			ps=con.prepareStatement(query);
+			for(int i=0;i<empcode.size();i++){
+			ps.setString(1, empcode.get(i));
+			ps.setString(2, attend.get(i));
+			ps.setString(3, intime.get(i));
+			ps.setString(4, outtime.get(i));
+			ps.setString(5, Util.currentDate());
+			ps.executeUpdate();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	
+	}
 }

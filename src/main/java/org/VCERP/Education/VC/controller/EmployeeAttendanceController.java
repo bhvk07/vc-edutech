@@ -13,11 +13,10 @@ public class EmployeeAttendanceController{
 		return dao.getEmployeeAttendanceList();
 	}
 
-/*	public void studentAttendance(String acad_year, String courses, ArrayList<String> rollno,
+	public void employeeAttendance(ArrayList<String> empcode, ArrayList<String> intime, ArrayList<String> outtime,
 			ArrayList<String> attend) {
-		AttendanceDAO dao=new AttendanceDAO();
-		dao.studentAttendance(acad_year,courses,rollno,attend);
-		
-	}*/
+		EmployeeAttendanceDAO dao=new EmployeeAttendanceDAO();
+		dao.employeeAttendance(empcode,intime,outtime,attend);
+	}
 
 }

@@ -45,30 +45,32 @@ public class EmpAttendanceResource {
 	}
 	
 	
-	/*@Path("/employeeAttendance")
+	@Path("/employeeAttendance")
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response studentAttendance(@FormParam("acad_year") String acad_year,@FormParam("courses") String courses
-			,@FormParam("Attendance") String attendance){
-		
+	public Response employeeAttendance(@FormParam("Attendance") String attendance)
+	{		
 		String[] commaSeperatedAttendance=Util.commaSeperatedString(attendance);
-		ArrayList<String> rollno=new ArrayList<>();
+		ArrayList<String> empcode=new ArrayList<>();
+		ArrayList<String> intime=new ArrayList<>();
+		ArrayList<String> outtime=new ArrayList<>();
 		ArrayList<String> attend=new ArrayList<>();
-		for(int i=1;i<commaSeperatedAttendance.length;i++){
+		for(int i=0;i<commaSeperatedAttendance.length;i++){
 		String a=commaSeperatedAttendance[i];
 		String[] symbolSeperatedAttendance=Util.symbolSeperatedString(a);
-		rollno.add(symbolSeperatedAttendance[0]);
-		attend.add(symbolSeperatedAttendance[1]);
+		empcode.add(symbolSeperatedAttendance[0]);
+		intime.add(symbolSeperatedAttendance[1]);
+		outtime.add(symbolSeperatedAttendance[2]);
+		attend.add(symbolSeperatedAttendance[3]);
 		}
 		try {
-			AttendanceController controller=new AttendanceController();
-			controller.studentAttendance(acad_year,courses,rollno,attend);
+			EmployeeAttendanceController controller=new EmployeeAttendanceController();
+			controller.employeeAttendance(empcode,intime,outtime,attend);
 			return Response.status(Status.ACCEPTED).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return Response.status(Status.NOT_FOUND).build();
-	}*/
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not save.").build();
+	}
 }

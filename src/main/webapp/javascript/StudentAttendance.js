@@ -76,13 +76,13 @@ function getAttendance(){
 	var attendance="0|0";
 	  $('table .cbCheck').each(function(i, chk) {
 		    if (chk.checked==true) {
-		    	 var data = table.rows(i).data();
-		    	 var rollno=i+1;
+		    	var rollno = table.rows( { selected: true } ).column(1).data()[i];
+		    	 //var rollno=i+1;
 		    	 attendance=attendance+","+rollno+"|"+chk.value;
 		    }
 		    if (!chk.checked) {
-			    	 var data = table.rows(i).data();
-			    	 var rollno=i+1;
+		    	var rollno = table.rows( { selected: false } ).column(1).data()[i];
+			    	 //var rollno=i+1;
 			    	 attendance=attendance+","+rollno+"|A";
 //			    	 myArray.push(rollno+"|"+"A");
 			    }
@@ -109,6 +109,7 @@ function saveAttendance(acad_year,course,attendance){
 		 */
 	}
 	var httpMethod = "POST";
+	console.log(attendance);
 	var formData = {acad_year:acad_year,courses:course,Attendance:attendance}
 	console.log(formData);
 	var relativeUrl = "/Attendance/studentAttendance";
