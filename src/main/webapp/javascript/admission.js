@@ -2,6 +2,7 @@ var mes;
 $(document).ready(function(){
 	admissionDetails();
 	FetchAllEmployee();
+	getFeesPackage();
 	//getCurrentDate();
 	$("#enq_stud").keyup(function() {
 		var id=parseInt(document.getElementById('enq_stud').value);
@@ -204,6 +205,24 @@ function FetchAllEmployee() {
 	var httpMethod = "GET";
 	var relativeUrl = "/Employee/FetchAllEmployee";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function getFeesPackage() {
+
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode=('<option value="' + responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >'
+					+ responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
+			$('#fees').append(htmlCode);
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/FeesPackage/getFeesPackage";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.FeesPackageController;
 import org.VCERP.Education.VC.model.FeesPackage;
@@ -41,12 +43,29 @@ public class FeesPackageResource {
 		pack.setTotal_amt(finalamt);
 		pack.setFees_details(fees_details);
 		FeesPackageController controller=new FeesPackageController();
-		controller.addaddNewFeesPackage(pack);
+		controller.addNewFeesPackage(pack);
+		return Util.generateResponse(Status.ACCEPTED, "DATA save").build();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
 	}
 	
-
+	@Path("/getFeesPackage")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFeesPackage()
+	{
+		try{
+		ArrayList<FeesPackage> pack=new ArrayList<>();
+		FeesPackageController controller=new FeesPackageController();
+		pack=controller.getFeesPackage();
+		if(pack!=null){
+		return Response.status(Status.ACCEPTED).entity(pack).build();
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
+	}
 }

@@ -282,9 +282,9 @@
 							<!-- <div class="form-group">
                             <div class="select-list"> -->
 							<select name="fees_pack" class="form-control" id="fees" required>
-								<option value="junior-vc-kids">23000</option>
+								<!-- <option value="junior-vc-kids">23000</option>
 								<option value="nursery-vc-kids">22300</option>
-								<option value="playgroup-vc-kids">20000</option>
+								<option value="playgroup-vc-kids">20000</option> -->
 
 							</select>
 							<!--  </div>
@@ -446,7 +446,7 @@
 
 
 
-				<form id="feespackage" method="post" enctype="application/x-www-form-urlencoded" action="">
+				<form id="feespackage" enctype="application/x-www-form-urlencoded" action="">
 
 
 					<div class="modal-header"
@@ -774,7 +774,6 @@
 
 		function callback(responseData, textStatus, request) {
 			for ( var i in responseData) {
-				console.log(responseData[i].feesType);
 				htmlCode.push('<option value="' + responseData[i].feesType + '" >'
 						+ responseData[i].feesType + '</option>');
 			}
@@ -804,7 +803,6 @@
 			amount = parseInt($(".amt", $trr).val());
 			discount = parseInt($(".discount", $trr).val());
 			if (amount.value != NaN) {
-				alert("1");
 				$(".totala", $trr).val(amount);
 			}
 

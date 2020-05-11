@@ -29,7 +29,7 @@ public class EnquiryResource {
 	@Path("/EnquiryData")
 	@POST
 	@PermitAll
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	//@PreAuthorize("hasRole('desk')")
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
