@@ -320,7 +320,7 @@ table.table .avatar {
 </script>
 </head>
 <body>
-	<form id="form1" style="display: show;">
+	
 		<div class="container" style="width: AUTO">
 			<div class="table-wrapper">
 				<div class="table-title">
@@ -361,6 +361,7 @@ table.table .avatar {
 						</div>
 					</div>
 				</div>
+				<form id="form1" style="display: show;">
 				<div class="row">
 					<div class="col-md-12">
 						<!-- Advanced Tables -->
@@ -392,6 +393,7 @@ table.table .avatar {
 					</div>
 
 				</div>
+</form>
 
 
 
@@ -421,15 +423,22 @@ table.table .avatar {
 
 			</div>
 		</div>
-	</form>
-
+	
 	<form id="form2" style="display: none;">
-		<div class="modal-header"
+		<div class="modal-header">
+		<div align="right">
+			<input type="button" id="close" class="btn btn-default"
+				data-dismiss="modal" value="Cancel"> <input type="submit"
+				class="btn btn-success" value="Add">
+				</div>
+		</div>
+	
+	<!-- 	<div class="modal-header"
 			style="background-color: #8F7A0A; color: white">
 			<h4 class="modal-title">Add Fees package</h4>
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">&times;</button>
-		</div>
+		</div> -->
 		<div class="modal-body">
 
 			<div class="form-group">
@@ -551,7 +560,7 @@ OR
 
 			<div class="form-group">
 				<button type="button" class="btn btn-default"
-					style="background-color: #8F7A0A; color: white">
+					style="background-color: #53b700; color: white">
 					<b>Load Branch >></b>
 				</button>
 			</div>
@@ -732,12 +741,7 @@ OR
 
 
 		</div>
-		<div class="modal-footer">
-			<input type="button" id="close" class="btn btn-default"
-				data-dismiss="modal" value="Cancel"> <input type="submit"
-				class="btn btn-success" value="Add">
-		</div>
-
+	
 
 
 	</form>
