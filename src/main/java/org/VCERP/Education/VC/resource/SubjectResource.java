@@ -13,8 +13,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.VCERP.Education.VC.controller.EmployeeController;
 import org.VCERP.Education.VC.controller.SubjectController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
+import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.Subject;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -43,4 +45,26 @@ public class SubjectResource {
 	}
 	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
 	}
+	
+	@GET
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/FetchAllSubject")
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response FetchAllSubject(){
+		try {
+			ArrayList<Subject> sub=new ArrayList<>();
+			SubjectController controller=new SubjectController();
+			sub=controller.FetchAllSubject();
+			return Response.status(Status.OK).entity(sub).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
+	
+	
+	
 }
