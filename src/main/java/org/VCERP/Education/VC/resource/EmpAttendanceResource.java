@@ -56,7 +56,7 @@ public class EmpAttendanceResource {
 		ArrayList<String> intime=new ArrayList<>();
 		ArrayList<String> outtime=new ArrayList<>();
 		ArrayList<String> attend=new ArrayList<>();
-		for(int i=0;i<commaSeperatedAttendance.length;i++){
+		for(int i=1;i<commaSeperatedAttendance.length;i++){
 		String a=commaSeperatedAttendance[i];
 		String[] symbolSeperatedAttendance=Util.symbolSeperatedString(a);
 		empcode.add(symbolSeperatedAttendance[0]);

@@ -310,26 +310,20 @@ table.table .avatar {
 		$('[data-toggle="tooltip"]').tooltip();
 
 		// Select/Deselect checkboxes
-		//var checkbox = $('table tbody input[type="checkbox"]');
 		$("#selectAll").click(function() {
 			if (this.checked) {
 				$("input.cbCheck").prop('checked', true);
-				/* checkbox.each(function() {
-					this.checked = true;
-				}); */
 			} else {
 				$("input.cbCheck").prop('checked', false);
-				/* checkbox.each(function() {
-					this.checked = false;
-				}); */
 			}
 		});
-		/* $('input[type="checkbox"]').click(function() {
-			alert("hey");
-			if ($("input.cbCheck").prop('checked', false)) {
-				$("#selectAll").prop("checked", false);
+		$("#selectAllAbsent").click(function() {
+			if (this.checked) {
+				$("input.cbCheckAbs").prop('checked', true);
+			} else {
+				$("input.cbCheckAbs").prop('checked', false);
 			}
-		}); */
+		});
 	});
 </script>
 </head>
@@ -373,6 +367,12 @@ table.table .avatar {
 												<label for="checkbox1"></label>
 										</span>
 										Present
+										</th>
+										<th><span class="custom-checkbox"> <input
+												type="checkbox" class="check" id="selectAllAbsent" name="options[]" value="0">
+												<label for="checkbox1"></label>
+										</span>
+										Absent
 										</th>
 										<th>In Time</th>
 										<th>Out Time</th>
