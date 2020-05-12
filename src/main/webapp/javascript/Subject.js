@@ -11,7 +11,10 @@ $(document).ready(function(){
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	createSubject();
+	$("#subject").submit(function(){
+		createSubject();	
+	});
+	
 });
 
 
