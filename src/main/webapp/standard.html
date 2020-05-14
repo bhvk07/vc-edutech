@@ -343,8 +343,8 @@ table.table .avatar {
 
 						<a href="#subjectModal" data-toggle="modal"
 							data-target="#subjectModal" class="btn btn-success"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
-							href="#deleteEmployeeModal" class="btn btn-danger"
+							class="material-icons">&#xE147;</i> <span>Add New</span></a>
+							 <a	href="#deleteEmployeeModal" class="btn btn-danger"
 							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a>
 					</div>
@@ -410,26 +410,141 @@ table.table .avatar {
 
 	<!-- subjectModal Modal HTML -->
 	<div id="subjectModal" class="modal fade">
-		<div class="modal-dialog">
+		<div class="modal-body">
 			<div class="modal-content">
 				<form id="subject" method="post">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Subject</h4>
+						<h4 class="modal-title">STANDARD</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Subject<font color="red">*</font></label>
+							<label>Standard<font color="red">*</font></label>
 							<input type="text" class="form-control" id="subjectname" name="s_name"required>
 						</div>
 
                         <div class="form-group">
-							<label>Timeline in hours</label>
-							<input type="text" class="form-control" id="timeline" name="timeline"required>
+							<label>Standard Fees Amount<font color="red">*</font></label>
+							<input type="number" class="form-control" id="subjectname" name="s_name"required>
 						</div>
+					
+						<div class="form-group">
+							<label>Subject<font color="red">*</font></label>
+							<div class="col-sm-12">
+								<div class="col-sm-6">
+							<div class="form-group has-search" >
+								<div class="input-group">
+									 <input	type="text" class="form-control"
+										placeholder="Search">
+										
+										<span>
+<!-- kimti code -->
+						
+<select id="mySelect" onchange="GetSelectedTextValue(this)" size="8" style="width: 100%;">
+  
+    <option>Biology</option>
+    <option>Chemistry</option>
+    <option>English</option>
+    <option>Geography</option>
+    <option>Hindi</option>
+    <option>History</option>
+    <option>Marathi</option>
+    <option>Maths</option>
+  </select>
+</span>
+								</div>
+							</div>
+							</div>
+							
+							<div class="col-sm-6">
+							<div class="form-group has-search">
+								<div class="input-group">
+									 <input	type="text" class="form-control"
+										placeholder="Search">
+										<span>
+										
+   <select id="mySelect2" size="8" onchange="GetSelectedTextValue2(this)"  style="width: 100%;">
+  
+
+  </select>
+										
+										</span>
+								</div>
+							</div>
+							</div>
+							<div class="col-sm-8">
+							<div class="form-group">
+                                
+                                <label class="control-label">Branch<span class="text-red">*</span></label>
+                                
+                                <table id="BranchTable" style="width: 70%;" class="table table-bordered table-hover table-condensed table-lg">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                      <div class="checkbox-custom checkbox-default checkbox-inline style" style="margin-top:0px!important;">
+                                      <input type="checkbox"id="selectall">
+                                      <label for="SelectAllBranch"></label>
+                                      </div>
+                                            </th>
+                                            <th>Branch
+                                            </th>
+                                            <th>Amount
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                    <td>
+                                    <div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px;">
+                                    <input type="checkbox" id="select1" >
+                                   
+                                    </div>
+                                    </td>
+                                    <td>02-VC CLASSES</td>
+                                    <td><input type="text" id="Amount0" class="form-control text" value="0"></td>
+                                    </tr>
+                                    <tr>
+                                    <td><div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px;">
+                                    <input type="checkbox" id="select2" class="styled">
+                                    </div></td>
+                                    <td>03-VC KIDZ - VASAI</td>
+                                    <td><input type="text" id="Amount1" class="form-control text" value="0" ></td></tr>
+                                    <tr><td>
+                                    <div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px!important;">
+                                    <input type="checkbox" id="select3" class="styled"></div></td>
+                                    <td>First_01-VC KIDZ</td><td><input type="text" id="Amount2" class="form-control text" value="0">
+                                    </td></tr></tbody>
+                                </table>
+                             
+                            </div>
+							
+							</div>
+							</div>
+							</div>
+						
+						
 					</div>
+						<!----code for selecting all check boxes---->
+						<script type="text/javascript">
+				$('#selectall').click(
+						function(event) { //on click
+
+							var checkboxes = $(this).closest('#BranchTable')
+									.find(':checkbox');
+							if ($(this).is(':checked')) {
+								checkboxes.prop('checked', true);
+								CheckSelection();
+
+							} else {
+								checkboxes.prop('checked', false);
+								CheckSelection();
+							}
+						});
+			</script>
+					
+					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
 							value="Cancel"> <input type="submit"
@@ -440,6 +555,34 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
+	<script>
+
+
+ function GetSelectedTextValue(mySelect) {
+        var selectedText = mySelect.options[mySelect.selectedIndex].innerHTML;
+     
+     
+  var x = document.getElementById("mySelect2");
+  var option = document.createElement("option");
+  option.text = selectedText;
+  x.add(option);
+  var x1 = document.getElementById("mySelect");
+  x1.remove(x1.selectedIndex); 
+}
+ 
+ function GetSelectedTextValue2(mySelect2) {
+	 var selectedText1 = mySelect2.options[mySelect2.selectedIndex].innerHTML;
+	  var x2 = document.getElementById("mySelect2");
+	  x2.remove(x2.selectedIndex);
+	  
+
+	  var x3 = document.getElementById("mySelect");
+	  var option1 = document.createElement("option");
+	  option1.text = selectedText1;
+	  x3.add(option1);
+	  
+	  }    
+</script>
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
