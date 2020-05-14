@@ -48,17 +48,18 @@ public class EmployeeDAO {
 			ArrayList<Employee> employee=new ArrayList<>();
 			try {
 				con=Util.getDBConnection();
-				String query="select `id`,`username`,`role`,`branch`,`created_date` from employee";
+				String query="select `id`,`emp_name`,`username`,`role`,`branch`,`created_date` from employee";
 				st=con.prepareStatement(query);
 				rs=st.executeQuery();
 				while(rs.next())
 				{
 					Employee emp=new Employee();
 					emp.setId(rs.getLong(1));
-					emp.setUserid(rs.getString(2));
-					emp.setRole(rs.getString(3));
-					emp.setBranch(rs.getString(4));
-					emp.setCreated_date(rs.getString(5));
+					emp.setEmp_name(rs.getString(2));
+					emp.setUserid(rs.getString(3));
+					emp.setRole(rs.getString(4));
+					emp.setBranch(rs.getString(5));
+					emp.setCreated_date(rs.getString(6));
 					employee.add(emp);
 				}
 			}catch(Exception e){

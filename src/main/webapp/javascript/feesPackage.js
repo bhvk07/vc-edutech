@@ -2,6 +2,7 @@ var standardData = new Array();
 var branchData = new Array();
 $(document).ready(function() {
 	loadFeesType();
+	loadFeesPackage();
 	getFeesPackage();
 	$("#feespackage").submit(function() {
 		var a = getStandardData();
@@ -90,13 +91,41 @@ function addNewFeesPackage(standardData, branchData) {
 }
 
 
-function getFeesPackage() {
+function loadFeesPackage() {
 
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
 			var htmlCode=('<option value="' + responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >'
 					+ responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
 			$('#fees').append(htmlCode);
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/FeesPackage/getFeesPackage";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function getFeesPackage() {
+
+	function callback(responseData, textStatus, request) {
+		var table = $("#form1").DataTable();
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			
+			var date = responseData[i].created_date;
+			var feesPackage = responseData[i].feesPackage;
+			var branch = responseData[i].branch;
+			var srno = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'
+				+ responseData[i].id
+				+ '"><label for="checkbox1"></label></span>';
+			
+			table.row.add(
+					[date, feesPackage, branch, srno]).draw();
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {

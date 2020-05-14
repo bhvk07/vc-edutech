@@ -17,11 +17,14 @@ $(document).ready(function(){
 				required:'This field is required'
 		    }
 		  },
-	});
-		  $("#btn-login").click(function(){
+		  submitHandler:function(form){
 			  event.preventDefault();
 			  attemptLogin();
-		  });
+		  }
+	});
+		 /* $("#btn-login").click(function(){
+			  
+		  });*/
 });
 
 

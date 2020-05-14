@@ -2,6 +2,7 @@ package org.VCERP.Education.VC.resource;
 
 import java.util.ArrayList;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import org.VCERP.Education.VC.utility.Util;
 public class FeesPackageResource {
 	
 	@Path("/addNewFeesPackage")
+	@PermitAll
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addNewFeesPackage(@FormParam("fees-pack") String fees_pack,
@@ -53,6 +55,7 @@ public class FeesPackageResource {
 	
 	@Path("/getFeesPackage")
 	@GET
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFeesPackage()
 	{
