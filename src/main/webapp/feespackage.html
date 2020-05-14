@@ -361,7 +361,7 @@ table.table .avatar {
 						</div>
 					</div>
 				</div>
-				<form id="form1" style="display: show;">
+				<form id="form1">
 				<div class="row">
 					<div class="col-md-12">
 						<!-- Advanced Tables -->
@@ -424,7 +424,7 @@ table.table .avatar {
 			</div>
 		</div>
 	
-	<form id="form2" style="display: none;">
+	<form id="form2">
 		<div class="modal-header">
 		<div align="right">
 			<input type="button" id="close" class="btn btn-default"
@@ -609,7 +609,7 @@ OR
 
 				<br>
 
-				<table class="table" id="feestypetable">
+				<table class="table" id="feespackage">
 					<thead>
 						<tr style="font-size: small;">
 							<th scope="col">FEES TYPE<font color="red"> * </font></th>
@@ -662,13 +662,13 @@ OR
 							</td>
 
 							<td>
-								<!--  Amount Field       --> <input type="number"
-								class="form-control amt" id="amount" value="" placeholder="0.00">
+								<!--  Amount Field       --> 
+								<input type="number" class="form-control amt" id="amount" value="" placeholder="0.00">
 							</td>
 
 							<td>
-								<!--          discount field     --> <input type="number"
-								class="form-control discount" value="">
+								<!--          discount field     -->
+								 <input type="number" class="form-control discount" value="">
 							</td>
 
 							<td>
@@ -679,12 +679,11 @@ OR
 								</div>
 							</td>
 
-							<td><input type="text" class="form-control"
-								placeholder="NONE"></td>
+							<td><input type="text" class="form-control" placeholder="NONE"></td>
 
 							<td>
-								<!--      Total field      --> <input type="text"
-								class="form-control totala" name="price" id="total-amt" value=""
+								<!--      Total field      --> 
+								<input type="text" class="form-control totala" name="price" id="total-amt" value=""
 								disabled>
 							</td>
 							<td>
@@ -696,25 +695,8 @@ OR
 							</td>
 						</tr>
 
-						<!--
-     <tr>
-    <th>Total</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <div class="form-group">
-        <div class="input-group">
-           <td style="text-align:center;">
--->
-						<!--                <input type="number" class="form-control" id="grand-t" value="" disabled>-->
-						<!--
-            </td>  
-        </div>
-    </div>    
-  </tr>
- 
--->
+
+
 					</tbody>
 
 				</table>
@@ -748,25 +730,7 @@ OR
 
 
 
-	<script type="text/javascript">
-		$('#btnMarkAdd').click(function(event) { //on click
-
-			document.getElementById("form1").style.display = "none";
-			document.getElementById("form2").style.display = "block";
-
-		});
-	</script>
-
-
-
-	<script type="text/javascript">
-		$('#close').click(function(event) { //on click
-
-			document.getElementById("form1").style.display = "block";
-			document.getElementById("form2").style.display = "none";
-
-		});
-	</script>
+	
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
@@ -829,15 +793,45 @@ OR
 			</div>
 		</div>
 	</div>
+
+
+
+	
+    <script type="text/javascript">
+        document.getElementById("form2").style.display = "none";
+
+		$('#btnMarkAdd').on('click',function(event) { //on click
+
+			document.getElementById("form1").style.display = "none";
+			document.getElementById("form2").style.display = "block";
+
+		});
+    </script>
+
+
+
+<script type="text/javascript">
+	
+		$('#close').on('click',function(event) { //on click
+
+			document.getElementById("form1").style.display = "block";
+			document.getElementById("form2").style.display = "none";
+
+		});
+    </script>
+
+
+		
+  
 <script>
 alert("2");
 var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype"><option value="ActivityFees">Activity Fees</option><option value="AdmissionForm">Admission Form</option><option value="AnnualDayFees">AnnualDayFees</option> <option value="BoardExamFees">BoardExamFees</option><option value="BooksFees">BooksFees</option> <option value="ComputerFees">ComputerFees</option><option value="DonationFees">DonationFees</option>  <option value="Downpayment">Downpayment</option> <option value="EducationalTripFees">EducationalTripFees</option>   <option value="ExamFees">ExamFees</option><option value="ID_Calendar_Form">ID_Calendar_Form</option><option value="Installments">Installments</option><option value="LateFees">LateFees</option><option value="LumpsumForm">LumpsumForm</option><option value="MiscellaneousFees">MiscellaneousFees</option><option value="MonthlyFees">MonthlyFees</option><option value="NewAdmission">NewAdmission</option><option value="PartyCharges">PartyCharges</option> <option value="Re-AdmissionFees">Re-AdmissionFees</option><option value="StudentKit">StudentKit</option> <option value="TermFees">TermFees</option><option value="TransportationFees">TransportationFees</option><option value="TutionFees">TutionFees</option></select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
-   $("#feestypetable").on('change', '.amt,.discount', function(){
-      alert("1");
+   $("#feespackage").on('change','.amt, .discount', function(){
+     // alert("1");
        var discount= 0;
        var amount = 0;
-       var r = document.getElementById('feestypetable');
+       var r = document.getElementById('feespackage');
        var noof = r.rows.length-1;
       // var val = this.value;
        var $trr = this.closest('tr');
