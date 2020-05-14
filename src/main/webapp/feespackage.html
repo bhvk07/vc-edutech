@@ -340,11 +340,17 @@ table.table .avatar {
 									class="label-xs hidden-xs hidden-sm p5">edit</span>
 							</button>
 
+				<div align="right" id="demo">
+			<input type="button" id="close" style="background-color:#d9534f;" class="btn btn-default"
+				data-dismiss="modal" value="Cancel"> 
+				<input type="submit"
+				class="btn btn-success" value="Add">
+				</div>
 
-
-							<button type="button" id="btnMarkAdd"
+							<div id="demo2">
+							<button type="button" id="btnMarkAdd"  style="background-color:#53b700;"
 								class="btn btn-danger popconfirm  margin-right-sm ladda-button"
-								style="background-color: #53b700;">
+								>
 								<b><i class=" padding-right-sm fs14"></i></b><span>Add
 									New</span>
 							</button>
@@ -358,6 +364,7 @@ table.table .avatar {
 							<a href="#deleteEmployeeModal" class="btn btn-danger"
 								id="btn-danger" data-toggle="modal"><i
 								class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -420,11 +427,12 @@ table.table .avatar {
 	
 	<form id="form2">
 		<div class="modal-header">
-		<div align="right">
+		<!-- <div align="right">
 			<input type="button" id="close" class="btn btn-default"
-				data-dismiss="modal" value="Cancel"> <input type="submit"
+				data-dismiss="modal" value="Cancel"> 
+				<input type="submit"
 				class="btn btn-success" value="Add">
-				</div>
+				</div> -->
 		</div>
 	
 	<!-- 	<div class="modal-header"
@@ -682,11 +690,16 @@ table.table .avatar {
 
     <script type="text/javascript">
         document.getElementById("form2").style.display = "none";
+        document.getElementById("demo").style.display = "none";
 
 		$('#btnMarkAdd').on('click',function(event) { //on click
 
+			document.getElementById("demo2").style.display = "none";
+			document.getElementById("demo").style.display = "block";
+		
 			document.getElementById("form1").style.display = "none";
 			document.getElementById("form2").style.display = "block";
+			
 
 		});
     </script>
@@ -697,8 +710,11 @@ table.table .avatar {
 	
 		$('#close').on('click',function(event) { //on click
 
+			document.getElementById("demo").style.display = "none";
+			document.getElementById("demo2").style.display = "block";
 			document.getElementById("form1").style.display = "block";
 			document.getElementById("form2").style.display = "none";
+	
 
 		});
     </script>
