@@ -318,9 +318,30 @@ table.table .avatar {
 		});
 	});
 </script>
+
+				<script type="text/javascript">
+					$('#selectall').click(
+							function(event) { //on click
+
+								var checkboxes = $(this).closest(
+										'#FeesTypeList').find(':checkbox');
+								if ($(this).is(':checked')) {
+									checkboxes.prop('checked', true);
+									CheckSelection();
+
+								} else {
+									checkboxes.prop('checked', false);
+									CheckSelection();
+								}
+							});
+				</script>
 </head>
 <body>
-	
+	<section class="body">
+	    <section role="main" class="content-body">
+       
+               <section class="panel" id="datatable-view">
+                   	
 		<div class="container" style="width: AUTO">
 			<div class="table-wrapper">
 				<div class="table-title">
@@ -332,6 +353,7 @@ table.table .avatar {
 						</div>
 						<div class="col-sm-6">
 
+<!--
 							<button type="button" id="btnMarkDelete" onclick="DeleteData();"
 								data-style="zoom-out" style="display: none;" title=""
 								class="btn btn-danger popconfirm  margin-right-sm ladda-button"
@@ -339,18 +361,20 @@ table.table .avatar {
 								<b><i class=" padding-right-sm fs14"></i></b><span
 									class="label-xs hidden-xs hidden-sm p5">edit</span>
 							</button>
+-->
 
+<!--
 				<div align="right" id="demo">
 			<input type="button" id="close" style="background-color:#d9534f;" class="btn btn-default"
 				data-dismiss="modal" value="Cancel"> 
 				<input type="submit"
 				class="btn btn-success" value="Add">
 				</div>
+-->
 
-							<div id="demo2">
-							<button type="button" id="btnMarkAdd"  style="background-color:#53b700;"
-								class="btn btn-danger popconfirm  margin-right-sm ladda-button"
-								>
+<!--							<div id="demo2">-->
+							<button type="button" style="background-color:#53b700;"
+								class="btn btn-danger popconfirm  margin-right-sm ladda-button add-b">
 								<b><i class=" padding-right-sm fs14"></i></b><span>Add
 									New</span>
 							</button>
@@ -361,14 +385,16 @@ table.table .avatar {
 							data-target="#feestypeModal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a> -->
 
+<!--
 							<a href="#deleteEmployeeModal" class="btn btn-danger"
 								id="btn-danger" data-toggle="modal"><i
 								class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-								</div>
+-->
+<!--								</div>-->
 						</div>
 					</div>
 				</div>
-				<form id="form1">
+<!--				<form id="form1">-->
 				<div class="row">
 					<div class="col-md-12">
 						<!-- Advanced Tables -->
@@ -400,41 +426,50 @@ table.table .avatar {
 					</div>
 
 				</div>
-</form>
+<!--</form>-->
+	<!----code for selecting all check boxes---->
 
-
-
-
-				<!----code for selecting all check boxes---->
-				<script type="text/javascript">
-					$('#selectall').click(
-							function(event) { //on click
-
-								var checkboxes = $(this).closest(
-										'#FeesTypeList').find(':checkbox');
-								if ($(this).is(':checked')) {
-									checkboxes.prop('checked', true);
-									CheckSelection();
-
-								} else {
-									checkboxes.prop('checked', false);
-									CheckSelection();
-								}
-							});
-				</script>
 			</div>
 		</div>
-			<div class="container" style="width: 60%">
+               
+               
+               
+            </section>
+        <section class="panel" id="datatable-view-2">
+                     <div class="table-wrapper" id="table-style">
+                     		<div class="table-title">
+			<div class="row">
+				<div class="col-sm-6">
+					<h2>
+						<b>Fees Package</b>
+					</h2>
+				</div>
+				<div class="col-sm-6">
+					<button class="btn btn-success cancel-b"><i
+						class="material-icons">&#xE147;</i> 
+						<span>Cancel</span>
+                    </button>
+                    <button class="btn btn-success save-b"><i
+						class="material-icons">&#xE147;</i> 
+						<span>Save</span>
+                    </button>
+				</div>
+			</div>
+		</div>
+            
+
+          <div class="row">
+<!--			<div class="container" style="width: 60%">-->
 	
 	<form id="form2">
-		<div class="modal-header">
+<!--		<div class="modal-header">-->
 		<!-- <div align="right">
 			<input type="button" id="close" class="btn btn-default"
 				data-dismiss="modal" value="Cancel"> 
 				<input type="submit"
 				class="btn btn-success" value="Add">
 				</div> -->
-		</div>
+<!--		</div>-->
 	
 	<!-- 	<div class="modal-header"
 			style="background-color: #8F7A0A; color: white">
@@ -688,7 +723,38 @@ table.table .avatar {
 
 	</form>
 </div>
+<!--          End of table wrapper below-->
+           </div> 
+            </section>
 
+        </section>
+    </section>
+	
+<!--
+
+			<div class="container" style="width: 60%">
+	
+	
+</div>
+-->
+
+<script>
+    $(document).ready(function(){
+        $("#datatable-view-2").hide();
+         $(".add-b").on('click',function(){
+             $("#datatable-view").hide();
+             $("#datatable-view-2").show();
+         });
+        $(".cancel-b").on('click',function(){
+             $("#datatable-view").show();
+             $("#datatable-view-2").hide();
+         });
+    });
+   
+</script>
+
+
+<!--
     <script type="text/javascript">
         document.getElementById("form2").style.display = "none";
         document.getElementById("demo").style.display = "none";
@@ -704,9 +770,11 @@ table.table .avatar {
 
 		});
     </script>
+-->
 
 
 
+<!--
 <script type="text/javascript">
 	
 		$('#close').on('click',function(event) { //on click
@@ -719,11 +787,13 @@ table.table .avatar {
 
 		});
     </script>
+-->
 
 
 		
   
 <script>
+ 
 var htmlCode=new Array();
 loadFeesType();
 function loadFeesType() {
@@ -745,58 +815,59 @@ function loadFeesType() {
 			errorCallback);
 	return false;
 } 
-var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
-   $("#feespackage").on('change','.amt, .discount', function(){
-     // alert("1");
-       var discount= 0;
-       var amount = 0;
-       var r = document.getElementById('feespackage');
-       var noof = r.rows.length-1;
-      // var val = this.value;
-       var $trr = this.closest('tr');
-       amount = parseInt($(".amt",$trr).val());
-       discount = parseInt($(".discount",$trr).val());
-       if(amount.value!=NaN){
-           $(".totala",$trr).val(amount);
-       }
-      
-       if($(".totala",$trr).val()>0 && discount>=0){
-             var cal = amount - discount;
-           if(cal<0){
-           alert("Profit cannot be Negative");
-                $(".totala",$trr).val(0);
-                }
-           else{
-               $(".totala",$trr).val(cal);
-           }
-       }
-       else if($(".totala",$trr).val()<0){
-           alert("Input positive amount value");
-           $(".totala",$trr).val(0);
-           
-       }
-       getTotalPrice();
+var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+//var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
-              });
+$("#feestypetable").on('change','.amt, .discount', function(){
+  alert("1");
+   var discount= 0;
+   var amount = 0;
+   var r = document.getElementById('feespackage');
+   var noof = r.rows.length-1;
+  // var val = this.value;
+   var $trr = this.closest('tr');
+   amount = parseInt($(".amt",$trr).val());
+   discount = parseInt($(".discount",$trr).val());
+   if(amount.value!=NaN){
+       $(".totala",$trr).val(amount);
+   }
+  
+   if($(".totala",$trr).val()>0 && discount>=0){
+         var cal = amount - discount;
+       if(cal<0){
+       alert("Profit cannot be Negative");
+            $(".totala",$trr).val(0);
+            }
+       else{
+           $(".totala",$trr).val(cal);
+       }
+   }
+   else if($(".totala",$trr).val()<0){
+       alert("Input positive amount value");
+       $(".totala",$trr).val(0);
        
+   }
+   getTotalPrice();
 
-    function getTotalPrice() {
-  var total = 0; 
-  $(".totala").each(function() { 
-    var val = $(this).val();
-    total += isNaN(val) || $.trim(val)=="" ? 0 : parseFloat(val); 
-  });
-  $("#grand-t").val(total.toFixed(2)); 
+          });
+   
+
+function getTotalPrice() {
+var total = 0; 
+$(".totala").each(function() { 
+var val = $(this).val();
+total += isNaN(val) || $.trim(val)=="" ? 0 : parseFloat(val); 
+});
+$("#grand-t").val(total.toFixed(2)); 
 }
-        
-    $(function () {
-    $("#addrow").click(function(){
-        $("table #fee-details").append(html);
-    });
-    });
     
-    
+$(function () {
+$("#addrow").click(function(){
+    $("table #fee-details").append(html);
+});
+});
+
 </script>
 </body>
 </html>
