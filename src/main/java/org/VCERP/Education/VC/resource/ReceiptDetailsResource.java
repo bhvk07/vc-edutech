@@ -28,10 +28,10 @@ public class ReceiptDetailsResource {
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchStudent(@QueryParam("id") long enq_stud){
+	public Response searchStudent(@QueryParam("id") long enq_stud,@QueryParam("branch") String branch){
 		 Admission admission=new Admission();
 			ReceiptDetailsController controller=new ReceiptDetailsController();
-			admission=controller.searchStudent(enq_stud);
+			admission=controller.searchStudent(enq_stud,branch);
 			if(admission!=null)
 			{
 				return Response.status(Status.ACCEPTED).entity(admission).build();

@@ -18,25 +18,45 @@ public class AdmissionDAO {
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
-			String query="insert into admission(`student_name`,`contact`,`enq_taken_by`,`adm_fees_pack`,"
+			String query="insert into admission(`student_name`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`,`caste`"
+					+ ",`category`,`language`,"
+					+ "`contact`,`father_cont`,`mother_cont`,`address`,`pin`"
+					+ ",`email`,`w_app_no`,`enq_taken_by`,`adm_fees_pack`,"
 					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`,"
-					+ "`discount`,`paid_fees`,`remain_fees`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0)";
+					+ "`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
-			ps.setString(2, admission.getContact());
-			ps.setString(3, admission.getEnq_taken_by());
-			ps.setString(4, admission.getAdm_fees_pack());
-			ps.setString(5, admission.getStatus());
-			ps.setString(6, admission.getDate());
-			ps.setString(7, admission.getRollno());
-			ps.setString(8, admission.getRegno());
-			ps.setString(9, admission.getInvoice_no());
-			ps.setString(10, admission.getAdmission_date());
-			ps.setString(11, admission.getAcad_year());
-			ps.setString(12, admission.getJoin_date());
-			ps.setLong(13, admission.getFees());
-			ps.setLong(14, admission.getDisccount());
+			ps.setString(2, admission.getLname());
+			ps.setString(3, admission.getFname());
+			ps.setString(4, admission.getMname());
+			ps.setString(5, admission.getUid());
+			ps.setString(6, admission.getDob());
+			ps.setString(7, admission.getGender());
+			ps.setString(8, admission.getCaste());
+			ps.setString(9, admission.getCategory());
+			ps.setString(10, admission.getLanguage());
+			ps.setString(11, admission.getContact());
+			ps.setString(12, admission.getFather_cont());
+			ps.setString(13, admission.getMother_cont());
+			ps.setString(14, admission.getAddress());
+			ps.setString(15, admission.getPin());
+			ps.setString(16, admission.getEmail());
+			ps.setString(17, admission.getW_app_no());
+			ps.setString(18, admission.getEnq_taken_by());
+			ps.setString(19, admission.getAdm_fees_pack());
+			ps.setString(20, admission.getStatus());
+			ps.setString(21, admission.getDate());
+			ps.setString(22, admission.getRollno());
+			ps.setString(23, admission.getRegno());
+			ps.setString(24, admission.getInvoice_no());
+			ps.setString(25, admission.getAdmission_date());
+			ps.setString(26, admission.getAcad_year());
+			ps.setString(27, admission.getJoin_date());
+			ps.setLong(28, admission.getFees());
+			ps.setLong(29, admission.getDisccount());
+			ps.setString(30, Util.currentDate());
+			ps.setString(31, admission.getBranch());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -91,16 +111,24 @@ public class AdmissionDAO {
 		return admission;
 	}
 
-	public Enquiry searchStudent(long enq_stud) {
+	public Enquiry searchStudent(String enq_stud,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Enquiry eq=null;
+		String query="";
 		try {
 			con=Util.getDBConnection();
-			String query="select id,sname,lname,stud_cont,status from enquiry where id=?";
+			query="select `id`,`sname`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`"
+					+ ",`caste`,`category`,`lang`,`stud_cont`,`father_cont`,`mother_cont`"
+					+ ",`address`,`pin`,`email`,`w_app_no`,`fees_pack`,`status` from enquiry "
+					+ "where id=? or sname=? or lname=? or fname=? and branch=?";
 			ps=con.prepareStatement(query);
-			ps.setLong(1, enq_stud);
+			ps.setString(1, enq_stud);
+			ps.setString(2, enq_stud);
+			ps.setString(3, enq_stud);
+			ps.setString(4, enq_stud);
+			ps.setString(5, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -108,8 +136,75 @@ public class AdmissionDAO {
 				eq.setId(rs.getLong(1));
 				eq.setSname(rs.getString(2));
 				eq.setLname(rs.getString(3));
-				eq.setStud_cont(rs.getString(4));
-				eq.setStatus(rs.getString(5));
+				eq.setFname(rs.getString(4));
+				eq.setMname(rs.getString(5));
+				eq.setUid(rs.getString(6));
+				eq.setDob(rs.getString(7));
+				eq.setGender(rs.getString(8));
+				eq.setCaste(rs.getString(9));
+				eq.setCategory(rs.getString(10));
+				eq.setLang(rs.getString(11));
+				eq.setStud_cont(rs.getString(12));
+				eq.setFather_cont(rs.getString(13));
+				eq.setMother_cont(rs.getString(14));
+				eq.setAddress(rs.getString(15));
+				eq.setPin(rs.getString(16));
+				eq.setEmail(rs.getString(17));
+				eq.setW_app_no(rs.getString(18));
+				eq.setFees_pack(rs.getString(19));
+				eq.setStatus(rs.getString(20));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return eq;
+	}
+	public Enquiry searchStudentFromAdmission(String enq_stud,String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Enquiry admission=null;
+		String query="";
+		System.out.println(enq_stud);
+		try {
+			con=Util.getDBConnection();
+			query="select `id`,`student_name`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`"
+					+ ",`caste`,`category`,`language`,`contact`,`father_cont`,`mother_cont`"
+					+ ",`address`,`pin`,`email`,`w_app_no`,`adm_fees_pack`,`status` from"
+					+ " admission where Rollno=? or student_name=? or lname=? or fname=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, enq_stud);
+			ps.setString(2, enq_stud);
+			ps.setString(3, enq_stud);
+			ps.setString(4, enq_stud);
+			ps.setString(5, branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				admission=new Enquiry();
+				admission.setId(rs.getLong(1));
+				admission.setSname(rs.getString(2));
+				admission.setLname(rs.getString(3));
+				admission.setFname(rs.getString(4));
+				admission.setMname(rs.getString(5));
+				admission.setUid(rs.getString(6));
+				admission.setDob(rs.getString(7));
+				admission.setGender(rs.getString(8));
+				admission.setCaste(rs.getString(9));
+				admission.setCategory(rs.getString(10));
+				admission.setStud_cont(rs.getString(12));
+				admission.setFather_cont(rs.getString(13));
+				admission.setMother_cont(rs.getString(14));
+				admission.setAddress(rs.getString(15));
+				admission.setPin(rs.getString(16));
+				admission.setEmail(rs.getString(17));
+				admission.setW_app_no(rs.getString(18));
+				admission.setFees_pack(rs.getString(19));
+				admission.setStatus(rs.getString(20));
 			}
 			
 		}catch (Exception e) {
@@ -119,7 +214,7 @@ public class AdmissionDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return eq;
+		return admission;
 	}
 
 	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {

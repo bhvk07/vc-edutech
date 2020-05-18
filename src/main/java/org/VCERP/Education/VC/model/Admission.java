@@ -10,7 +10,22 @@ public class Admission {
 
 	private long id;
 	private String student_name;
+	private String lname;
+	private String fname;
+	private String mname;
+	private String uid;
+	private String dob;
+	private String gender;
+	private String caste;
+	private String category;
+	private String language;
 	private String contact;
+	private String father_cont;
+	private String mother_cont;
+	private String address;
+	private String pin;
+	private String email;
+	private String w_app_no;
 	private String enq_taken_by;
 	private String adm_fees_pack;
 	private String status;
@@ -25,7 +40,8 @@ public class Admission {
 	private long disccount;
 	private long paid_fees;
 	private long remain_fees;
-
+	private String created_date;
+	private String Branch;
 	public long getId() {
 		return id;
 	}
@@ -37,6 +53,19 @@ public class Admission {
 	}
 	public void setStudent_name(String student_name) {
 		this.student_name = student_name;
+	}
+	
+	public String getLname() {
+		return lname;
+	}
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
 	public String getEnq_taken_by() {
 		return enq_taken_by;
@@ -129,5 +158,96 @@ public class Admission {
 	public void setRemain_fees(long remain_fees) {
 		this.remain_fees = remain_fees;
 	}
+	public String getMname() {
+		return mname;
+	}
+	public void setMname(String mname) {
+		this.mname = mname;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getCaste() {
+		return caste;
+	}
+	public void setCaste(String caste) {
+		this.caste = caste;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getFather_cont() {
+		return father_cont;
+	}
+	public void setFather_cont(String father_cont) {
+		this.father_cont = father_cont;
+	}
+	public String getMother_cont() {
+		return mother_cont;
+	}
+	public void setMother_cont(String mother_cont) {
+		this.mother_cont = mother_cont;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getPin() {
+		return pin;
+	}
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getW_app_no() {
+		return w_app_no;
+	}
+	public void setW_app_no(String w_app_no) {
+		this.w_app_no = w_app_no;
+	}
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
+	}
+	public String getBranch() {
+		return Branch;
+	}
+	public void setBranch(String branch) {
+		Branch = branch;
+	}
+	
 	
 }

@@ -261,10 +261,10 @@
                             <div class="select-list"> -->
 							<select name="enq_taken_by" class="form-control" id="enq_taken"
 								required>
-								<option value="Rajeshri">Rajeshri</option>
+								<!-- <option value="Rajeshri">Rajeshri</option>
 								<option value="Bhavik">Bhavik</option>
 								<option value="Divyakant">DK</option>
-								<option value="Akshaya">Akshaya</option>
+								<option value="Akshaya">Akshaya</option> -->
 							</select>
 							<!--  </div>
                         </div> -->
@@ -357,16 +357,17 @@
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Employee-Type</label> <select name="emp_type"
-								id="emp_type" class="form-control" required>
-								<option value="eng">Branch Level Employee</option>
-								<option value="hin"></option>
+								id="emp_type" class="form-control" required disabled="disabled">
+								<option value="Branch Level Employee" selected>Branch
+									Level Employee</option>
 							</select>
 						</div>
 						<div class="form-group">
 							<label>Branch</label> <select name="branch" id="branch"
-								class="form-control" required>
-								<option value="eng">English</option>
-								<option value="hin">Hindi</option>
+								class="form-control" required disabled="disabled">
+								<option value="VC KIDZ">VC KIDZ</option>
+								<option value="VC CLASSES">VC CLASSES</option>
+								<option value="VC KIDZ - VASAI">VC KIDZ - VASAI</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -377,6 +378,10 @@
 							<label>Employee Code Unique:</label> <input type="number"
 								name="emp_unq_code" id="emp_unq_code" class="form-control"
 								required>
+						</div>
+						<div class="form-group">
+							<label>Email:</label> <input type="email" name="email" id="email"
+								class="form-control" required>
 						</div>
 						<div class="form-group">
 							<label>Address:</label>
@@ -446,7 +451,8 @@
 
 
 
-				<form id="feespackage" enctype="application/x-www-form-urlencoded" action="">
+				<form id="feespackage" enctype="application/x-www-form-urlencoded"
+					action="">
 
 
 					<div class="modal-header"
@@ -459,14 +465,15 @@
 
 						<div class="form-group">
 							<label>Fees package <font color="red"> * </font>
-							</label> <input type="text" name="fees-pack" class="form-control" id="fees-pack"required>
+							</label> <input type="text" name="fees-pack" class="form-control"
+								id="fees-pack" required>
 						</div>
 
 						<!-- Default input -->
 						<div class="form-group">
 							<label for="inputDisabledEx2" class="disabled">Amount <font
-								color="red"> * </font></label> <input type="text" name="finalamt" id="inputDisabledAmt" 
-								class="form-control" readonly>
+								color="red"> * </font></label> <input type="text" name="finalamt"
+								id="inputDisabledAmt" class="form-control" readonly>
 						</div>
 						<hr
 							style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
@@ -496,29 +503,6 @@
 
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<th scope="row"><input type="checkbox"
-											class="form-check-input stdcheck"></th>
-										<td>Play Group</td>
-										<td>0</td>
-
-									</tr>
-									<tr>
-										<th scope="row"><input type="checkbox"
-											class="form-check-input stdcheck"></th>
-										<td>Nursery</td>
-										<td>0</td>
-
-									</tr>
-									<tr>
-										<th scope="row"><input type="checkbox"
-											class="form-check-input stdcheck"></th>
-										<td>Jr. Kg.</td>
-										<td>0</td>
-
-									</tr>
-								</tbody>
 							</table>
 						</div>
 						<br> <br> <br>
@@ -526,7 +510,7 @@
 							style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
 
 						<div class="form-group">
-							<button type="button" class="btn btn-default"
+							<button type="button" id="loadBranch" class="btn btn-default"
 								style="background-color: #8F7A0A; color: white">
 								<b>Load Branch >></b>
 							</button>
@@ -544,25 +528,25 @@
 							</div>
 							<br>
 
-							<table class="table table-bordered" id="branch" name="branch">
+							<table class="table table-bordered" id="branchTable" name="branch">
 								<thead>
 									<tr>
 										<th scope="col">SELECT</th>
 										<th scope="col">BRANCH</th>
 									</tr>
 								</thead>
-								<tbody>
+								 <!-- <tbody>
 									<tr>
 										<th scope="row"><input type="checkbox"
-											class="form-check-input stdcheck" disabled></th>
+											class="form-check-input stdcheck"></th>
 										<td>VC KIDZ</td>
 									</tr>
 									<tr>
 										<th scope="row"><input type="checkbox"
-											class="form-check-input stdcheck" checked></th>
+											class="form-check-input stdcheck" ></th>
 										<td>VC KIDZ vasai</td>
 									</tr>
-								</tbody>
+								</tbody>  -->
 							</table>
 						</div>
 
@@ -635,7 +619,8 @@
 
 										<td>
 											<!--          discount field     --> <input type="number"
-											class="form-control discount" value="0" id="discount" name="discount">
+											class="form-control discount" value="0" id="discount"
+											name="discount">
 										</td>
 
 										<td>
@@ -768,29 +753,32 @@
 
 	</div>
 	<script>
-	 var htmlCode=new Array();
-	loadFeesType();
-	function loadFeesType() {
+		var htmlCode = new Array();
+		loadFeesType();
+		function loadFeesType() {
 
-		function callback(responseData, textStatus, request) {
-			for ( var i in responseData) {
-				htmlCode.push('<option value="' + responseData[i].feesType + '" >'
-						+ responseData[i].feesType + '</option>');
+			function callback(responseData, textStatus, request) {
+				for ( var i in responseData) {
+					htmlCode
+							.push('<option value="' + responseData[i].feesType + '" >'
+									+ responseData[i].feesType + '</option>');
+				}
 			}
-		}
-		$('#feestype').append(htmlCode);
-		function errorCallback(responseData, textStatus, request) {
+			$('#feestype').append(htmlCode);
+			function errorCallback(responseData, textStatus, request) {
 
-		}
+			}
 
-		var httpMethod = "GET";
-		var relativeUrl = "/feesType/getFeesType";
-		ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
-				errorCallback);
-		return false;
-	} 
-	//console.log(htmlCode);
-		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+			var httpMethod = "GET";
+			var relativeUrl = "/feesType/getFeesType";
+			ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+					errorCallback);
+			return false;
+		}
+		//console.log(htmlCode);
+		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'
+				+ htmlCode
+				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
 		$("#feestypetable").on('change', '.amt,.discount', function() {
 			//alert("1");
@@ -832,7 +820,7 @@
 			$("#grand-t").val(total.toFixed(2));
 			$("#inputDisabledAmt").val(total.toFixed(2));
 		}
-		
+
 		$(function() {
 			$("#addrow").click(function() {
 				$("table #fee-details").append(html);

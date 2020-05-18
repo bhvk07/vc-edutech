@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -93,11 +94,11 @@ public class EmployeeResource {
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response FetchAllEmployee(){
+	public Response FetchAllEmployee(@QueryParam("branch") String branch){
 		try {
 			ArrayList<Employee> emp=new ArrayList<>();
 			EmployeeController controller=new EmployeeController();
-			emp=controller.FetchAllEmployee();
+			emp=controller.FetchAllEmployee(branch);
 			return Response.status(Status.OK).entity(emp).build();
 		} catch (Exception e) {
 			e.printStackTrace();

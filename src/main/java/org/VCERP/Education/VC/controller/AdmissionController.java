@@ -19,9 +19,9 @@ public class AdmissionController {
 		return dao.fetchAllAdmittedStudent(admission);
 	}
 
-	public Enquiry searchStudent(long enq_stud) {
+	public Enquiry searchStudent(String enq_stud,String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
-		return dao.searchStudent(enq_stud);
+		return dao.searchStudent(enq_stud,branch);
 		
 	}
 	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
@@ -31,6 +31,10 @@ public class AdmissionController {
 	public Installment saveInstallment(Installment installment) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.saveInstallment(installment);
+	}
+	public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.searchStudentFromAdmission(enq_stud,branch);
 	}
 
 }

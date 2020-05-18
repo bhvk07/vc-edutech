@@ -1,63 +1,35 @@
 var standardData = new Array();
 var branchData = new Array();
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function() {
 	loadFeesType();
 	loadFeesPackage();
+	loadBranchSpecificStandard();
 	getFeesPackage();
 	$("#feespackage").submit(function() {
-		var a = getStandardData();
-		var b = getBranchData();
-		$('#standard .stdcheck').each(function(i, chk) {
-
-			if (chk.checked) {
-				var standard = a.split(",");
-				standardData.push(standard[i]);
-			}
+		$('#standard input:checked').each(function () {
+			   var std=$(this).closest('tr').find('td:nth-child(2)').text();
+			   standardData.push(std);
 		});
-
-		$('#branch .stdcheck').each(function(i, chk) {
-			if (chk.checked) {
-				var branch = b.split(",");
-				branchData.push(branch[i])
-			}
+		$('#branchTable input:checked').each(function () {
+			   var branch=$(this).closest('tr').find('td:nth-child(2)').text();
+			   branchData.push(branch);
 		});
-
 		addNewFeesPackage(standardData, branchData);
 	});
+	$("#loadBranch").click(function(){
+		var stdamt=0;
+		$('input:checked').each(function () {
+		   var std=$(this).closest('tr').find('td:nth-child(2)').text();
+		   stdamt=stdamt+Number($(this).closest('tr').find('td:nth-child(3)').text());
+		   document.getElementById("amount").value=stdamt;
+		   document.getElementById("total-amt").value=stdamt;
+		   document.getElementById("grand-t").value=stdamt;
+		   document.getElementById("inputDisabledAmt").value=stdamt;
+		   loadBranch(std);
+	    });
+	});
 });
-function getStandardData() {
-	var html_table_data = "";
-	var bRowStarted = true;
-	$('#standard tbody>tr').each(function() {
-		$('td', this).each(function() {
-			if (html_table_data.length == 0 || bRowStarted == true) {
-				html_table_data += $(this).text();
-				bRowStarted = false;
-			} else
-				html_table_data += " | " + $(this).text();
-		});
-		html_table_data += ",";
-		bRowStarted = true;
-	});
-	return html_table_data;
-}
-function getBranchData() {
-	var html_table_data = "";
-	var bRowStarted = true;
-	$('#branch tbody>tr').each(function() {
-		$('td', this).each(function() {
-			if (html_table_data.length == 0 || bRowStarted == true) {
-				html_table_data += $(this).text();
-				bRowStarted = false;
-			} else
-				html_table_data += " | " + $(this).text();
-		});
-		html_table_data += ",";
-		bRowStarted = true;
-	});
-	return html_table_data;
-}
-
 function addNewFeesPackage(standardData, branchData) {
 	var table = document.getElementById("feestypetable");
 	var rowCount = $('#feestypetable tr').length;
@@ -104,12 +76,70 @@ function loadFeesPackage() {
 		console.log("not found");
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/FeesPackage/getFeesPackage";
+	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
 
+function loadBranchSpecificStandard(){
+	var table = document.getElementById("standard");
+	function callback(responseData, textStatus, request) {
+		for(var i in responseData){
+			
+		var standardData=responseData[i];
+		var standardData=standardData.split("|");
+		var std=standardData[0];
+		var stdamt=standardData[1];
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck">';
+
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = std;
+
+        var cell3 = row.insertCell(2);
+        cell3.innerHTML = stdamt;
+		}
+		
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/FeesPackage/getBranchSpecificStandard?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function loadBranch(std){
+	var table = document.getElementById("branchTable");
+	function callback(responseData, textStatus, request) {
+		for(var i in responseData){		
+		var Branch=responseData[i];
+		var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck">';
+
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = Branch;
+		}
+		
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/FeesPackage/loadBranch?std="+std;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
 function getFeesPackage() {
 
 	function callback(responseData, textStatus, request) {

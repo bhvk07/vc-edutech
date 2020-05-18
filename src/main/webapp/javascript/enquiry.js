@@ -1,4 +1,5 @@
 var mes;
+var branch=sessionStorage.getItem("branch");
 $(document).ready(function() {
 	FetchAllEmployee();
 	//getCurrentDate();
@@ -10,11 +11,10 @@ $(document).ready(function() {
 		EnquiryData();
 	});
 	$("#Add_employee").click(function() {
-		alert("here");
 		event.preventDefault();
 		AddEmployee();
 	});
-
+	$("#branch").val(branch);
 });
 
 function EnquiryData() {
@@ -34,8 +34,7 @@ function EnquiryData() {
 		 * showNotification("error",message); alert(message);
 		 */
 	}
-	var formData = $('#EnquiryForm').serialize();
-	alert(formData);
+	var formData = $('#EnquiryForm').serialize()+"&branch="+branch;
 	var httpMethod = "POST";
 	var relativeUrl = "/Enquiry/EnquiryData";
 
@@ -45,10 +44,14 @@ function EnquiryData() {
 }
 
 function AddEmployee() {
+	document.getElementById('emp_type').disabled = false;
+	document.getElementById('branch').disabled = false;
 	function callback(responseData, textStatus, request) {
 		
 		// var message=responseData.response.JSON.message;
 		// alert(message);
+		document.getElementById('emp_type').disabled = true;
+		document.getElementById('branch').disabled = true;
 	}
 	function errorCallback(responseData, textStatus, request) {
 		/*var mes=responseData.responseJSON.message;
@@ -57,7 +60,7 @@ function AddEmployee() {
 		// alert(message);
 	}
 	var formData = $("#add_employee").serialize();
-	alert(formData);
+	console.log(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/Employee/NewEmployee";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
@@ -83,7 +86,7 @@ function FetchAllEmployee() {
 		// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Employee/FetchAllEmployee";
+	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branch;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

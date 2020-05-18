@@ -48,14 +48,14 @@ public class EnquiryResource {
 	
 	@GET
 	@PermitAll
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@Path("/FetchAllEnquiryData")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response FetchAllEnquiryData(){
+	public Response FetchAllEnquiryData(@QueryParam("branch") String branch){
 		try {
 			ArrayList<Enquiry> enq=new ArrayList<>();
 			EnquiryController controller=new EnquiryController();
-			enq=controller.FetchAllEnquiryData();
+			enq=controller.FetchAllEnquiryData(branch);
 			return Response.status(Status.OK).entity(enq).build();
 		} catch (Exception e) {
 			e.printStackTrace();

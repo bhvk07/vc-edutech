@@ -87,6 +87,8 @@ public class Enquiry {
 	private String remark;
 	
 	private String status;
+	@FormParam("branch")
+	private String branch;
 	
 	public long getId() {
 		return id;
@@ -237,6 +239,12 @@ public class Enquiry {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 	

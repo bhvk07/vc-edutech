@@ -5,19 +5,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admission-List</title>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="jquery/jquery-3.3.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 
@@ -25,7 +27,7 @@
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
-<script type="text/javascript" src="javascript/FeesType.js"></script>
+<script type="text/javascript" src="javascript/standard.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <style type="text/css">
@@ -343,8 +345,8 @@ table.table .avatar {
 
 						<a href="#subjectModal" data-toggle="modal"
 							data-target="#subjectModal" class="btn btn-success"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a>
-							 <a	href="#deleteEmployeeModal" class="btn btn-danger"
+							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
+							href="#deleteEmployeeModal" class="btn btn-danger"
 							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a>
 					</div>
@@ -364,8 +366,8 @@ table.table .avatar {
 
 											<th>CREATED DATE</th>
 											<th>STANDARD</th>
-                                            <th>BRANCH(ES)</th>
-                                            <th>STANDARD FEES AMOUNT</th>
+											<th>BRANCH(ES)</th>
+											<th>STANDARD FEES AMOUNT</th>
 											<th class="no-sort"><span class="custom-checkbox">
 													<input type="checkbox" id="selectAll" name="options[]"
 													value="0"> <label for="checkbox1"></label>
@@ -379,7 +381,7 @@ table.table .avatar {
 						<!-- </div> -->
 						<!--End Advanced Tables -->
 					</div>
-				</div> 
+				</div>
 
 			</div>
 
@@ -395,11 +397,11 @@ table.table .avatar {
 									.find(':checkbox');
 							if ($(this).is(':checked')) {
 								checkboxes.prop('checked', true);
-								CheckSelection();
+								//CheckSelection();
 
 							} else {
 								checkboxes.prop('checked', false);
-								CheckSelection();
+								//CheckSelection();
 							}
 						});
 			</script>
@@ -412,7 +414,7 @@ table.table .avatar {
 	<div id="subjectModal" class="modal fade">
 		<div class="modal-body">
 			<div class="modal-content">
-				<form id="subject" method="post">
+				<form id="standard">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">STANDARD</h4>
@@ -421,133 +423,124 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Standard<font color="red">*</font></label>
-							<input type="text" class="form-control" id="subjectname" name="s_name"required>
+							<label>Standard<font color="red">*</font></label> <input
+								type="text" class="form-control" id="stdtname" name="stdname"
+								required>
 						</div>
 
-                        <div class="form-group">
-							<label>Standard Fees Amount<font color="red">*</font></label>
-							<input type="number" class="form-control" id="subjectname" name="s_name"required>
-						</div>
-					
 						<div class="form-group">
-							<label>Subject<font color="red">*</font></label>
+							<label>Standard Fees Amount<font color="red">*</font></label> <input
+								type="number" class="form-control" id="stdamt" name="stdamt"
+								required>
+						</div>
+
+						<div class="form-group">
+							
 							<div class="col-sm-12">
 								<div class="col-sm-6">
-							<div class="form-group has-search" >
-								<div class="input-group">
-									 <input	type="text" class="form-control"
-										placeholder="Search">
-										
-										<span>
-<!-- kimti code -->
-						
-<select id="mySelect" onchange="GetSelectedTextValue(this)" size="8" style="width: 100%;">
-  
-    <option>Biology</option>
-    <option>Chemistry</option>
-    <option>English</option>
-    <option>Geography</option>
-    <option>Hindi</option>
-    <option>History</option>
-    <option>Marathi</option>
-    <option>Maths</option>
-  </select>
-</span>
-								</div>
-							</div>
-							</div>
-							
-							<div class="col-sm-6">
-							<div class="form-group has-search">
-								<div class="input-group">
-									 <input	type="text" class="form-control"
-										placeholder="Search">
-										<span>
-										
-   <select id="mySelect2" size="8" onchange="GetSelectedTextValue2(this)"  style="width: 100%;">
-  
+									<div class="form-group has-search">
+										<div class="input-group">
+											<!-- <input type="text" class="form-control" placeholder="Search"> -->
+											<label>Subject<font color="red">*</font></label>
+											<select id="multiple-checkboxes" name="subject" multiple="multiple">
+												
+											</select>
 
-  </select>
-										
-										</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-8">
+									<div class="form-group">
+
+										<label class="control-label">Branch<span
+											class="text-red">*</span></label>
+
+										<table id="BranchTable" style="width: 70%;"
+											class="table table-bordered table-hover table-condensed table-lg">
+											<thead>
+												<tr>
+													<th>
+														<div
+															class="checkbox-custom checkbox-default checkbox-inline style"
+															style="margin-top: 0px !important;">
+															<input type="checkbox" id="selectall" class="allstdcheck">
+															<label for="SelectAllBranch"></label>
+														</div>
+													</th>
+													<th>Branch</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<div
+															class="checkbox-custom checkbox-default checkbox-inline styled"
+															style="margin-top: 0px;">
+															<input type="checkbox" id="select1" class="stdcheck">
+
+														</div>
+													</td>
+													<td>VC CLASSES</td>
+													<td><input type="text" id="Amount"
+														class="form-control text" value="0"></td>
+												</tr>
+												<tr>
+													<td><div
+															class="checkbox-custom checkbox-default checkbox-inline styled"
+															style="margin-top: 0px;">
+															<input type="checkbox" id="select2" class="stdcheck">
+														</div></td>
+													<td>VC KIDZ - VASAI</td>
+													<td><input type="text" id="Amount1"
+														class="form-control text" value="0"></td>
+												</tr>
+												<tr>
+													<td>
+														<div
+															class="checkbox-custom checkbox-default checkbox-inline styled"
+															style="margin-top: 0px !important;">
+															<input type="checkbox" id="select3" class="stdcheck">
+														</div>
+													</td>
+													<td>VC KIDZ</td>
+													<td><input type="text" id="Amount2"
+														class="form-control text" value="0"></td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+
 								</div>
 							</div>
-							</div>
-							<div class="col-sm-8">
-							<div class="form-group">
-                                
-                                <label class="control-label">Branch<span class="text-red">*</span></label>
-                                
-                                <table id="BranchTable" style="width: 70%;" class="table table-bordered table-hover table-condensed table-lg">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                      <div class="checkbox-custom checkbox-default checkbox-inline style" style="margin-top:0px!important;">
-                                      <input type="checkbox"id="selectall">
-                                      <label for="SelectAllBranch"></label>
-                                      </div>
-                                            </th>
-                                            <th>Branch
-                                            </th>
-                                            <th>Amount
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                    <td>
-                                    <div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px;">
-                                    <input type="checkbox" id="select1" >
-                                   
-                                    </div>
-                                    </td>
-                                    <td>02-VC CLASSES</td>
-                                    <td><input type="text" id="Amount0" class="form-control text" value="0"></td>
-                                    </tr>
-                                    <tr>
-                                    <td><div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px;">
-                                    <input type="checkbox" id="select2" class="styled">
-                                    </div></td>
-                                    <td>03-VC KIDZ - VASAI</td>
-                                    <td><input type="text" id="Amount1" class="form-control text" value="0" ></td></tr>
-                                    <tr><td>
-                                    <div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top:0px!important;">
-                                    <input type="checkbox" id="select3" class="styled"></div></td>
-                                    <td>First_01-VC KIDZ</td><td><input type="text" id="Amount2" class="form-control text" value="0">
-                                    </td></tr></tbody>
-                                </table>
-                             
-                            </div>
-							
-							</div>
-							</div>
-							</div>
-						
-						
+						</div>
+
+
 					</div>
-						<!----code for selecting all check boxes---->
-						<script type="text/javascript">
-				$('#selectall').click(
-						function(event) { //on click
+					<!----code for selecting all check boxes---->
+					<script type="text/javascript">
+					 
+						$('#selectall').click(
+								function(event) { //on click
 
-							var checkboxes = $(this).closest('#BranchTable')
-									.find(':checkbox');
-							if ($(this).is(':checked')) {
-								checkboxes.prop('checked', true);
-								CheckSelection();
+									var checkboxes = $(this).closest(
+											'#BranchTable').find(':checkbox');
+									if ($(this).is(':checked')) {
+										checkboxes.prop('checked', true);
+										//CheckSelection();
 
-							} else {
-								checkboxes.prop('checked', false);
-								CheckSelection();
-							}
-						});
-			</script>
-					
-					
+									} else {
+										checkboxes.prop('checked', false);
+										//CheckSelection();
+									}
+								});
+					</script>
+
+
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit"
+							value="Cancel"> <input type="submit" id="savestd"
 							class="btn btn-success" value="Save"
 							style="background-color: #53b700; color: aliceblue">
 					</div>
@@ -555,98 +548,29 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
-	<script>
+	<!-- <script>
+		function GetSelectedTextValue(mySelect) {
+			var selectedText = mySelect.options[mySelect.selectedIndex].innerHTML;
 
+			var x = document.getElementById("mySelect2");
+			var option = document.createElement("option");
+			option.text = selectedText;
+			x.add(option);
+			var x1 = document.getElementById("mySelect");
+			x1.remove(x1.selectedIndex);
+		}
 
- function GetSelectedTextValue(mySelect) {
-        var selectedText = mySelect.options[mySelect.selectedIndex].innerHTML;
-     
-     
-  var x = document.getElementById("mySelect2");
-  var option = document.createElement("option");
-  option.text = selectedText;
-  x.add(option);
-  var x1 = document.getElementById("mySelect");
-  x1.remove(x1.selectedIndex); 
-}
- 
- function GetSelectedTextValue2(mySelect2) {
-	 var selectedText1 = mySelect2.options[mySelect2.selectedIndex].innerHTML;
-	  var x2 = document.getElementById("mySelect2");
-	  x2.remove(x2.selectedIndex);
-	  
+		function GetSelectedTextValue2(mySelect2) {
+			var selectedText1 = mySelect2.options[mySelect2.selectedIndex].innerHTML;
+			var x2 = document.getElementById("mySelect2");
+			x2.remove(x2.selectedIndex);
 
-	  var x3 = document.getElementById("mySelect");
-	  var option1 = document.createElement("option");
-	  option1.text = selectedText1;
-	  x3.add(option1);
-	  
-	  }    
-</script>
-	<!-- Edit Modal HTML -->
-	<div id="editEmployeeModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form>
-					<div class="modal-header">
-						<h4 class="modal-title">Edit Employee</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Name</label> <input type="text" class="form-control"
-								required>
-						</div>
-						<div class="form-group">
-							<label>Email</label> <input type="email" class="form-control"
-								required>
-						</div>
-						<div class="form-group">
-							<label>Address</label>
-							<textarea class="form-control" required></textarea>
-						</div>
-						<div class="form-group">
-							<label>Phone</label> <input type="text" class="form-control"
-								required>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit" class="btn btn-info"
-							value="Save">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- Delete Modal HTML -->
-	<div id="deleteEmployeeModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form>
-					<div class="modal-header">
-						<h4 class="modal-title">Delete Employee</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">
-						<p>Are you sure you want to delete these Records?</p>
-						<p class="text-warning">
-							<small>This action cannot be undone.</small>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit"
-							class="btn btn-danger" value="Delete">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+			var x3 = document.getElementById("mySelect");
+			var option1 = document.createElement("option");
+			option1.text = selectedText1;
+			x3.add(option1);
 
-
-
+		}
+	</script> -->
 </body>
 </html>

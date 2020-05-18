@@ -41,15 +41,16 @@ public class EmployeeDAO {
 		return emp;
 	}
 
-	public ArrayList<Employee> FetchAllEmployee() {
+	public ArrayList<Employee> FetchAllEmployee(String branch) {
 			Connection con=null;
 			PreparedStatement st=null;
 			ResultSet rs=null;
 			ArrayList<Employee> employee=new ArrayList<>();
 			try {
 				con=Util.getDBConnection();
-				String query="select `id`,`emp_name`,`username`,`role`,`branch`,`created_date` from employee";
+				String query="select `id`,`emp_name`,`username`,`role`,`branch`,`created_date` from employee where branch=?";
 				st=con.prepareStatement(query);
+				st.setString(1, branch);
 				rs=st.executeQuery();
 				while(rs.next())
 				{

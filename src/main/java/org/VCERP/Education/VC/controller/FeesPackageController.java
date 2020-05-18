@@ -12,9 +12,19 @@ public class FeesPackageController {
 		dao.addNewFeesPackage(pack);
 	}
 
-	public ArrayList<FeesPackage> getFeesPackage() {
+	public ArrayList<FeesPackage> getFeesPackage(String branch) {
 		FeesPackageDAO dao=new FeesPackageDAO();
-		return dao.getFeesPackage();
+		return dao.getFeesPackage(branch);
+	}
+
+	public ArrayList<String> getBranchSpecificStandard(String branch) {
+		FeesPackageDAO dao=new FeesPackageDAO();
+		return dao.getBranchSpecificStandard(branch);
+	}
+
+	public ArrayList<String> loadBranch(String std) {
+		FeesPackageDAO dao=new FeesPackageDAO();
+		return dao.loadBranch(std);
 	}
 
 }

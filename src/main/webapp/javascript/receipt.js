@@ -1,4 +1,5 @@
 var mes;
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
 	receiptNumber();
 	//getCurrentDate();
@@ -34,7 +35,7 @@ function SearchStudent(id){
 			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Receipt/SearchStudent?id="+id;
+	var relativeUrl = "/Receipt/SearchStudent?id="+id+"&branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
@@ -83,6 +84,7 @@ function StudentReceipt(){
 	}
 	var httpMethod = "POST";
 	var formData=$("#receipt-form").serialize();
+	console.log(formData);
 	var relativeUrl = "/Receipt/ReceiptDetails";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);

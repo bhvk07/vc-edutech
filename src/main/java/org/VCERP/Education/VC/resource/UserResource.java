@@ -20,6 +20,7 @@ import org.VCERP.Education.VC.controller.UserController;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
+import org.VCERP.Education.VC.validation.UserResourceValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,12 +32,18 @@ public class UserResource {
 	@PermitAll
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response authenticateUser(@NotNull(message="username must not be null")
-	@NotBlank(message="username must not be Blank") @NotEmpty(message="username must not be Empty") @FormParam("userid") String userid,
+	public Response authenticateUser(@FormParam("userid") String userid,
 			@FormParam("password") String password) throws NoSuchAlgorithmException{
+//		System.out.println(userid+""+password);
+//		String message=UserResourceValidation.validateAuthenticateUser(userid,password);
+		
 		Employee emp=new Employee();
+//		if(message=="accepted"){
 		UserController controller=new UserController();
 		emp=controller.authenticateUser(userid,password);
+//		}else{
+//			return Response.status(Status.BAD_REQUEST).entity(message).build();
+//		}
 		if(emp==null){
 		return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		}else
@@ -45,10 +52,7 @@ public class UserResource {
 			String session=Util.randomStringGenerator(8);
 			SecureUtil secure=new SecureUtil();
 			String token=secure.issueToken(emp,key,session);
-//		resource.getCompany(user.getCompany_name());
-//		
-//		String token=SecureUtil.issueToken(user, "3QAy*bZn7jW%==LDKK$U", session);
 		return Response.status(Status.ACCEPTED).header("X-Authorization", "Bearer "+token).entity(emp).build();
 		}
-	}
+}
 }

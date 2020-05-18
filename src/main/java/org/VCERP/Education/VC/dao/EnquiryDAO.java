@@ -17,8 +17,8 @@ public class EnquiryDAO {
 			String query="insert into `enquiry`(`sname`,`lname`,`fname`,`mname`,`uid`,"
 					+ "`dob`,`gender`,`caste`,`category`,`lang`,`stud_cont`,`father_cont`,"
 					+ "`mother_cont`,`address`,`pin`,`email`,`w_app_no`,`enq_date`,`enq_no`,"
-					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`,`status`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Non Admitted')";
+					+ "`enq_taken`,`fees_pack`,`lead_source`,`remark`,`status`,`branch`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'Non Admitted',?)";
 			st=con.prepareStatement(query);
 			st.setString(1, enquiry.getSname());
 			st.setString(2, enquiry.getLname());
@@ -43,6 +43,8 @@ public class EnquiryDAO {
 			st.setString(21, enquiry.getFees_pack());
 			st.setString(22, enquiry.getLead_source());
 			st.setString(23, enquiry.getRemark());
+			st.setString(23, enquiry.getRemark());
+			st.setString(24, enquiry.getBranch());
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,15 +56,16 @@ public class EnquiryDAO {
 		return enquiry;
 	}
 
-	public ArrayList<Enquiry> FetchAllEnquiryData() {
+	public ArrayList<Enquiry> FetchAllEnquiryData(String branch) {
 		Connection con=null;
 		PreparedStatement st=null;
 		ResultSet rs=null;
 		ArrayList<Enquiry> enq=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select * from enquiry";
+			String query="select * from enquiry where branch=?";
 			st=con.prepareStatement(query);
+			st.setString(1, branch);
 			rs=st.executeQuery();
 			while(rs.next())
 			{

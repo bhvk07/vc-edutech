@@ -19,9 +19,9 @@ public class ReceiptDetailsController {
 		return dao.ReceiptDetailsForm(details);	
 	}
 
-	public Admission searchStudent(long enq_stud) {
+	public Admission searchStudent(long enq_stud, String branch) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
-		return dao.searchStudent(enq_stud);
+		return dao.searchStudent(enq_stud,branch);
 	}
 
 	public ArrayList<ReceiptDetails> FetchAllReceiptDetails() {

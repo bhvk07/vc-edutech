@@ -12,9 +12,9 @@ public class EnquiryController {
 		return dao.EnquiryData(enquiry);		
 	}
 
-	public ArrayList<Enquiry> FetchAllEnquiryData() {
+	public ArrayList<Enquiry> FetchAllEnquiryData(String branch) {
 		EnquiryDAO dao=new EnquiryDAO();
-		return dao.FetchAllEnquiryData();
+		return dao.FetchAllEnquiryData(branch);
 	}
 
 	 public void DeleteEnquiryData(String id) {

@@ -12,9 +12,9 @@ public class EmployeeController {
 		return dao.addEmployee(emp);
 	}
 
-	public ArrayList<Employee> FetchAllEmployee() {
+	public ArrayList<Employee> FetchAllEmployee(String branch) {
 		EmployeeDAO dao=new EmployeeDAO();
-		return dao.FetchAllEmployee();
+		return dao.FetchAllEmployee(branch);
 	}
 
 	public Employee createEmployeeAccount(Employee emp) {

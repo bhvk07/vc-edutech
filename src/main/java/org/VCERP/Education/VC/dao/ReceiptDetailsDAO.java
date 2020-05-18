@@ -63,16 +63,17 @@ public class ReceiptDetailsDAO {
 		return details;
 	}
 
-	public Admission searchStudent(long enq_stud) {
+	public Admission searchStudent(long enq_stud, String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Admission admission=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select Rollno,student_name,contact,fees from admission where Rollno=?";
+			String query="select Rollno,student_name,contact,fees from admission where Rollno=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setLong(1, enq_stud);
+			ps.setString(2, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{

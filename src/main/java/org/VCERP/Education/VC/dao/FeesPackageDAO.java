@@ -35,15 +35,16 @@ public class FeesPackageDAO {
 		}
 	}
 
-	public ArrayList<FeesPackage> getFeesPackage() {
+	public ArrayList<FeesPackage> getFeesPackage(String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		ArrayList<FeesPackage> pack=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select * from fees_package";
+			String query="select * from fees_package where branch=?";
 			ps=con.prepareStatement(query);
+			ps.setString(1, branch);
 			rs=ps.executeQuery();
 			while(rs.next()){
 			FeesPackage fees=new FeesPackage();
@@ -67,4 +68,53 @@ public class FeesPackageDAO {
 		return pack;
 	}
 
+	public ArrayList<String> getBranchSpecificStandard(String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<String> std=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select `standard`,`standard_fees` from standard_master where branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, branch);
+			rs=ps.executeQuery();
+			while(rs.next()){
+			String standard=rs.getString(1)+"|"+rs.getString(2);
+			std.add(standard);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return std;
+	}
+
+	public ArrayList<String> loadBranch(String std) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<String> branch=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select `branch` from standard_master where standard=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, std);
+			rs=ps.executeQuery();
+			while(rs.next()){
+			String standard=rs.getString(1);
+			branch.add(standard);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return branch;
+	}
 }

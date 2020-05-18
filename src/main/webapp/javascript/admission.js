@@ -1,12 +1,16 @@
 var mes;
+var enqData;
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
 	admissionDetails();
 	FetchAllEmployee();
 	getFeesPackage();
+	$("#enq_taken").val(localStorage.getItem("user"));
 	//getCurrentDate();
 	$("#enq_stud").keyup(function() {
-		var id=parseInt(document.getElementById('enq_stud').value);
+		var id=document.getElementById('enq_stud').value;
 		event.preventDefault();
+		console.log(id);
 		SearchStudent(id);
 	});
 	$("#admission-form").submit(function() {
@@ -23,12 +27,11 @@ $(document).ready(function(){
 	});
 	var select = document.getElementById('fees');
 	var outputElem = document.getElementById('amount');
-
 	select.addEventListener('change', function() {
-		var newValue = !this.selectedIndex ? ""
-				: this.options[this.selectedIndex].value;
-		var fees_amt=newValue.split("|");
+		var fees_amt=select.value.split("|");
 		outputElem.value = fees_amt[1];
+		document.getElementById('total-amt').value=fees_amt[1];
+		document.getElementById('amt_installment').value=fees_amt[1];
 	});
 	$("#discount").focusout(function() {
 		var amount = document.getElementById('amount').value;
@@ -44,11 +47,34 @@ function SearchStudent(id){
 	function callback(responseData,textStatus,request)
 	{
 		var id=responseData.id;
-		var name=responseData.sname +" "+responseData.lname;
+		var name=responseData.sname +" "+responseData.fname+" "+responseData.lname;
 		var contact=responseData.stud_cont;
 		var status=responseData.status;
 		var stud_details=id +" | "+name+ " | "+contact+ " | "+status;
-			document.getElementById('stud_details').value=stud_details;
+		document.getElementById('stud_details').value=stud_details;
+		enqData=new Array();
+		enqData.push(responseData.fname);
+		enqData.push(responseData.lname);
+		enqData.push(responseData.mname);
+		enqData.push(responseData.uid);
+		enqData.push(responseData.dob);
+		enqData.push(responseData.gender);
+		enqData.push(responseData.caste);
+		enqData.push(responseData.category);
+		enqData.push(responseData.lang);
+		enqData.push(responseData.father_cont);
+		enqData.push(responseData.mother_cont);
+		enqData.push(responseData.address);
+		enqData.push(responseData.pin);
+		enqData.push(responseData.email);
+		enqData.push(responseData.w_app_no);
+		$("#fees").val(responseData.fees_pack);
+		var fees=responseData.fees_pack.split("|");
+		var fees=fees[1];
+		document.getElementById('amount').value=fees;
+		document.getElementById('total-amt').value=fees;
+		document.getElementById('amt_installment').value=fees;
+
 			//alert(document.getElementById('stud_details').value);
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -60,7 +86,7 @@ function SearchStudent(id){
 			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Admission/SearchStudent?id="+id;
+	var relativeUrl = "/Admission/SearchStudent?id="+id+"&branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
@@ -134,7 +160,7 @@ function StudentAdmission(){
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData=$('#admission-form').serialize()+"&installment="+installment+"&newAmt="+newAmt;
+	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
 	
 	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
@@ -203,7 +229,7 @@ function FetchAllEmployee() {
 		// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Employee/FetchAllEmployee";
+	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
@@ -221,7 +247,7 @@ function getFeesPackage() {
 		console.log("not found");
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/FeesPackage/getFeesPackage";
+	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

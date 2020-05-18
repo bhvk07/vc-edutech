@@ -1,4 +1,5 @@
 var mes;
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function() {
 	var selected = new Array();
 /*	var token=$.session.get('token'); 
@@ -55,7 +56,7 @@ function showDashboard() {
 		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Enquiry/FetchAllEnquiryData";
+	var relativeUrl = "/Enquiry/FetchAllEnquiryData?branch="+branchSession;
 
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);

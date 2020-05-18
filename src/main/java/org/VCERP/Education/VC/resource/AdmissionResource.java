@@ -37,17 +37,35 @@ public class AdmissionResource {
 			@FormParam("Rollno") String Rollno,@FormParam("regno") String regno,
 			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
 			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date,
-			@FormParam("installment") String installment,@FormParam("newAmt") String newAmt)
+			@FormParam("personalDetails") String personalDetails,
+			@FormParam("installment") String installment,@FormParam("newAmt") String newAmt
+			,@FormParam("branch") String branch)
 	{
 		String[] name=Util.symbolSeperatedString(student_name);
 		String[] f_pack=Util.symbolSeperatedString(adm_fees_pack);
+		String[] personal=Util.commaSeperatedString(personalDetails);
 		EnquiryController eqcontroller=null;
 		AdmissionController controller=null;
 		try {
 			admission=new Admission();
-			admission.setId(Integer.parseInt(name[0]));
+//			admission.setId(Integer.parseInt(name[0]));
 			admission.setStudent_name(name[1]);
+			admission.setFname(personal[0]);
+			admission.setLname(personal[1]);
+			admission.setMname(personal[2]);
+			admission.setUid(personal[3]);
+			admission.setDob(personal[4]);
+			admission.setGender(personal[5]);
+			admission.setCaste(personal[6]);
+			admission.setCategory(personal[7]);
+			admission.setLanguage(personal[8]);
 			admission.setContact(name[2]);
+			admission.setFather_cont(personal[9]);
+			admission.setMother_cont(personal[10]);
+			admission.setAddress(personal[11]);
+			admission.setPin(personal[12]);
+			admission.setEmail(personal[13]);
+			admission.setW_app_no(personal[14]);
 			admission.setEnq_taken_by(enq_taken_by);
 			admission.setAdm_fees_pack(f_pack[0]);
 			admission.setStatus(status);
@@ -58,6 +76,7 @@ public class AdmissionResource {
 			admission.setAdmission_date(admission_date);
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
+			admission.setBranch(branch);
 
 			if(!newAmt.equals("0"))
 			{
@@ -139,18 +158,23 @@ public class AdmissionResource {
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchStudent(@QueryParam("id") long enq_stud){
-		System.out.println(enq_stud);
+	public Response searchStudent(@QueryParam("id") String enq_stud,@QueryParam("branch") String branch){
 		 Enquiry enquiry=new Enquiry();
 			AdmissionController controller=new AdmissionController();
-			enquiry=controller.searchStudent(enq_stud);
-			if(enquiry!=null)
-			{
+			enquiry=controller.searchStudent(enq_stud,branch);
+			if(enquiry==null)
+			{ 
+			
+				enquiry=controller.searchStudentFromAdmission(enq_stud,branch);
+				if(enquiry!=null){
 				return Response.status(Status.ACCEPTED).entity(enquiry).build();
+				}	
 			}
 			else{
-				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+				return Response.status(Status.ACCEPTED).entity(enquiry).build();
+				
 			}
+			return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
 	
 	@PermitAll

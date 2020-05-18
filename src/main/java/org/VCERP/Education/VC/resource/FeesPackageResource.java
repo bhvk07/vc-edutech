@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -52,17 +53,54 @@ public class FeesPackageResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
 	}
+	@Path("/getBranchSpecificStandard")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBranchSpecificStandard(@QueryParam("branch") String branch)
+	{
+		try{
+		ArrayList<String> std=new ArrayList<>();
+		FeesPackageController controller=new FeesPackageController();
+		std=controller.getBranchSpecificStandard(branch);
+		if(std!=null){
+		return Response.status(Status.ACCEPTED).entity(std).build();
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+	}
+	
+	@Path("/loadBranch")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response loadBranch(@QueryParam("std") String std)
+	{
+		try{
+		ArrayList<String> branch=new ArrayList<>();
+		FeesPackageController controller=new FeesPackageController();
+		branch=controller.loadBranch(std);
+		if(branch!=null){
+		return Response.status(Status.ACCEPTED).entity(branch).build();
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+	}
 	
 	@Path("/getFeesPackage")
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFeesPackage()
+	public Response getFeesPackage(@QueryParam("branch") String branch)
 	{
 		try{
 		ArrayList<FeesPackage> pack=new ArrayList<>();
 		FeesPackageController controller=new FeesPackageController();
-		pack=controller.getFeesPackage();
+		pack=controller.getFeesPackage(branch);
 		if(pack!=null){
 		return Response.status(Status.ACCEPTED).entity(pack).build();
 		}
