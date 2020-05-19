@@ -6,7 +6,7 @@ $(document).ready(function() {
 	loadFeesPackage();
 	loadBranchSpecificStandard();
 	getFeesPackage();
-	$("#feespackage").submit(function() {
+	$("#submit").click(function() {
 		$('#standard input:checked').each(function () {
 			   var std=$(this).closest('tr').find('td:nth-child(2)').text();
 			   standardData.push(std);
@@ -33,7 +33,6 @@ $(document).ready(function() {
 function addNewFeesPackage(standardData, branchData) {
 	var table = document.getElementById("feestypetable");
 	var rowCount = $('#feestypetable tr').length;
-	console.log(rowCount);
 	var fees_details = new Array;
 	for (var i = 1; i <= rowCount - 1; i++) {
 		var feesType = $(table.rows.item(i).cells[0]).find('select').val();
@@ -50,7 +49,6 @@ function addNewFeesPackage(standardData, branchData) {
 	function errorCallback(responseData, textStatus, request) {
 		console.log("not save");
 	}
-	// $('#inputDisabledAmt').removeAttr('readonly');
 	var formData = $("#feespackage").serialize() + "&standardData="
 			+ standardData + "&branchData=" + branchData + "&fees_details="
 			+ fees_details;
@@ -143,7 +141,7 @@ function loadBranch(std){
 function getFeesPackage() {
 
 	function callback(responseData, textStatus, request) {
-		var table = $("#form1").DataTable();
+		var table = $("#feespackage").DataTable();
 		table.rows().remove().draw();
 		for ( var i in responseData) {
 			
@@ -162,7 +160,7 @@ function getFeesPackage() {
 		console.log("not found");
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/FeesPackage/getFeesPackage";
+	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

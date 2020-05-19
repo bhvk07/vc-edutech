@@ -7,9 +7,9 @@ import org.VCERP.Education.VC.model.Standard;
 
 public class StandardController {
 
-	public ArrayList<Standard> getAllStandard() {
+	public ArrayList<Standard> getAllStandard(String branch) {
 		StandardDAO dao=new StandardDAO();
-		return dao.getAllStandard();
+		return dao.getAllStandard(branch);
 		
 	}
 	

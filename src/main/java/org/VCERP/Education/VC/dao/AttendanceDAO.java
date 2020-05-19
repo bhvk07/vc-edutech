@@ -10,7 +10,7 @@ import org.VCERP.Education.VC.utility.Util;
 
 public class AttendanceDAO {
 
-	public ArrayList<Attendance> getAttendanceList(String acad_year, String courses) {
+	public ArrayList<Attendance> getAttendanceList(String standard, String acad_year, String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -18,10 +18,11 @@ public class AttendanceDAO {
 		ArrayList<Attendance> attendance=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select id,Rollno,student_name from admission where acad_year=? and adm_fees_pack=?";
+			String query="select id,Rollno,student_name from admission where standard=? and acad_year=? and branch=?";
 			ps=con.prepareStatement(query);
-			ps.setString(1, acad_year);
-			ps.setString(2, courses);
+			ps.setString(1, standard);
+			ps.setString(2, acad_year);
+			ps.setString(3, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -43,7 +44,7 @@ public class AttendanceDAO {
 		return attendance;
 	}
 
-	public void studentAttendance(String acad_year, String courses, ArrayList<String> rollno,
+	public void studentAttendance(String standard, String acad_year, String branch, ArrayList<String> rollno,
 			ArrayList<String> attend) {
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -57,15 +58,16 @@ public class AttendanceDAO {
 		createColumnName+=",`"+rollno.get(i)+"`";
 		createParameterList+=",?";
 		}
-		String query="insert into attendance(`date`,`acad_year`,`course`"+createColumnName+") values(?,?,"+createParameterList+")";
+		String query="insert into attendance(`date`,`acad_year`,`standard`"+createColumnName+",`branch`) values(?,?,"+createParameterList+",?)";
 		ps=con.prepareStatement(query);
 		ps.setString(index+=1, Util.currentDate());
 		ps.setString(index+=1, acad_year);
-		ps.setString(index+=1, courses);
+		ps.setString(index+=1, standard);
 		for (int i=0;i<attend.size();i++)
 		{
 		ps.setString(index+=1, attend.get(i));
 		}
+		ps.setString(index+=1, branch);
 		ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -11,7 +11,7 @@ import org.VCERP.Education.VC.utility.Util;
 
 public class StandardDAO {
 
-	public ArrayList<Standard> getAllStandard() {
+	public ArrayList<Standard> getAllStandard(String branch) {
 			Connection conn=null;
 			PreparedStatement ps=null;
 			ResultSet rs=null;
@@ -19,8 +19,9 @@ public class StandardDAO {
 			Standard standard=null;
 			try {
 				conn=Util.getDBConnection();
-				String query="select * from standard_master";
+				String query="select * from standard_master where branch=?";
 				ps=conn.prepareStatement(query);
+				ps.setString(1, branch);
 				rs=ps.executeQuery();
 				while(rs.next())
 				{

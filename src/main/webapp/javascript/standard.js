@@ -1,3 +1,4 @@
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
 	loadSubject();
 	getAllStandard();
@@ -41,7 +42,7 @@ function getAllStandard() {
 		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/standard/getAllStandard";
+	var relativeUrl = "/standard/getAllStandard?branch="+branchSession;
 
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);

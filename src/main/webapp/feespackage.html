@@ -8,17 +8,12 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css" />
+
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 
@@ -445,11 +440,11 @@ table.table .avatar {
 					</h2>
 				</div>
 				<div class="col-sm-6">
-					<button class="btn btn-success cancel-b"><i
+					<button class="btn btn-success cancel-b" ><i
 						class="material-icons">&#xE147;</i> 
 						<span>Cancel</span>
                     </button>
-                    <button class="btn btn-success save-b"><i
+                    <button class="btn btn-success save-b" id="submit"><i
 						class="material-icons">&#xE147;</i> 
 						<span>Save</span>
                     </button>
@@ -461,27 +456,12 @@ table.table .avatar {
           <div class="row">
 <!--			<div class="container" style="width: 60%">-->
 	
-	<form id="form2">
-<!--		<div class="modal-header">-->
-		<!-- <div align="right">
-			<input type="button" id="close" class="btn btn-default"
-				data-dismiss="modal" value="Cancel"> 
-				<input type="submit"
-				class="btn btn-success" value="Add">
-				</div> -->
-<!--		</div>-->
-	
-	<!-- 	<div class="modal-header"
-			style="background-color: #8F7A0A; color: white">
-			<h4 class="modal-title">Add Fees package</h4>
-			<button type="button" class="close" data-dismiss="modal"
-				aria-hidden="true">&times;</button>
-		</div> -->
+	<form id="feespackage" method="post">
 		<div class="modal-body">
 
 			<div class="form-group">
 				<label>Fees package <font color="red"> * </font>
-				</label> <input type="text" name="fees-pack" id="fees-pack" class="form-control" required>
+				</label> <input type="text" name="fees-pack" class="form-control" id="fees-pack" required>
 			</div>
 
 
@@ -522,30 +502,7 @@ table.table .avatar {
 
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"><input type="checkbox"
-								class="form-check-input"></th>
-							<td>Play Group</td>
-							<td>0</td>
-
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox"
-								class="form-check-input"></th>
-							<td>Nursery</td>
-							<td>0</td>
-
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox"
-								class="form-check-input"></th>
-							<td>Jr. Kg.</td>
-							<td>0</td>
-
-						</tr>
-					</tbody>
-				</table>
+									</table>
 			</div>
 			<br>
 			<br>
@@ -554,7 +511,7 @@ table.table .avatar {
 				style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
 
 			<div class="form-group">
-				<button type="button" class="btn btn-default"
+				<button type="button" id="loadBranch" class="btn btn-default"
 					style="background-color: #53b700; color: white">
 					<b>Load Branch >></b>
 				</button>
@@ -571,25 +528,13 @@ table.table .avatar {
 				</div>
 				<br>
 
-				<table class="table table-bordered" id="branch">
+				<table class="table table-bordered" id="branchTable">
 					<thead>
 						<tr>
 							<th scope="col">SELECT</th>
 							<th scope="col">BRANCH</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"><input type="checkbox"
-								class="form-check-input" disabled></th>
-							<td>VC KIDZ</td>
-						</tr>
-						<tr>
-							<th scope="row"><input type="checkbox"
-								class="form-check-input" checked></th>
-							<td>VC KIDZ vasai</td>
-						</tr>
-					</tbody>
 				</table>
 			</div>
 
@@ -663,7 +608,7 @@ table.table .avatar {
 
 							<td>
 								<!--          discount field     -->
-								 <input type="number" class="form-control discount" id="discount" name="discount" value="">
+								 <input type="number" class="form-control discount" id="discount" name="discount" value="0">
 							</td>
 
 							<td>
@@ -816,7 +761,7 @@ function loadFeesType() {
 	return false;
 } 
 
-var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 //var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
 $("#feestypetable").on('change','.amt, .discount', function(){
@@ -857,9 +802,11 @@ function getTotalPrice() {
 var total = 0; 
 $(".totala").each(function() { 
 var val = $(this).val();
-total += isNaN(val) || $.trim(val)=="" ? 0 : val; 
+total += isNaN(val) || $.trim(val)=="" ? 0 : parseInt(val); 
 });
-$("#grand-t").val(total); 
+$("#grand-t").val(total);
+$("#inputDisabledAmt").val(total);
+
 }
     
 $(function () {

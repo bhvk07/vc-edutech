@@ -25,10 +25,11 @@ public class AttendanceResource {
 	@POST
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAttendaceList(@FormParam("acad_year") String acad_year,@FormParam("courses") String courses){
+	public Response getAttendaceList(@FormParam("standard") String standard,@FormParam("acad_year") String acad_year
+			,@FormParam("branch") String branch){
 		ArrayList<Attendance> attendance=new ArrayList<>();
 		AttendanceController controller=new AttendanceController();
-		attendance=controller.getAttendanceList(acad_year,courses);
+		attendance=controller.getAttendanceList(standard,acad_year,branch);
 		if(attendance!=null)
 		{
 			return Response.status(Status.ACCEPTED).entity(attendance).build();
@@ -41,8 +42,8 @@ public class AttendanceResource {
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response studentAttendance(@FormParam("acad_year") String acad_year,@FormParam("courses") String courses
-			,@FormParam("Attendance") String attendance){
+	public Response studentAttendance(@FormParam("standard") String standard,@FormParam("acad_year") String acad_year
+			,@FormParam("Attendance") String attendance,@FormParam("branch") String branch){
 		
 		String[] commaSeperatedAttendance=Util.commaSeperatedString(attendance);
 		ArrayList<String> rollno=new ArrayList<>();
@@ -55,7 +56,7 @@ public class AttendanceResource {
 		}
 		try {
 			AttendanceController controller=new AttendanceController();
-			controller.studentAttendance(acad_year,courses,rollno,attend);
+			controller.studentAttendance(standard,acad_year,branch,rollno,attend);
 			return Response.status(Status.ACCEPTED).build();
 		} catch (Exception e) {
 			e.printStackTrace();
