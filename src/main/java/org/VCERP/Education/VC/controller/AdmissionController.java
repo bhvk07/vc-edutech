@@ -14,9 +14,9 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.StudentAdmission(admission);
 	}
-	public ArrayList<Admission> fetchAllAdmittedStudent(ArrayList<Admission> admission) {
+	public ArrayList<Admission> fetchAllAdmittedStudent(ArrayList<Admission> admission, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
-		return dao.fetchAllAdmittedStudent(admission);
+		return dao.fetchAllAdmittedStudent(admission,branch);
 	}
 
 	public Enquiry searchStudent(String enq_stud,String branch) {
@@ -35,6 +35,10 @@ public class AdmissionController {
 	public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.searchStudentFromAdmission(enq_stud,branch);
+	}
+	public String getStandard(String fees_pack, String branch) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.getStandard(fees_pack,branch);
 	}
 
 }

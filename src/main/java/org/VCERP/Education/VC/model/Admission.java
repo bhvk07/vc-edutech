@@ -32,6 +32,7 @@ public class Admission {
 	private String date;
 	private String Rollno;
 	private String regno;
+	private String standard;
 	private String invoice_no;
 	private String admission_date;
 	private String acad_year;
@@ -247,6 +248,12 @@ public class Admission {
 	}
 	public void setBranch(String branch) {
 		Branch = branch;
+	}
+	public String getStandard() {
+		return standard;
+	}
+	public void setStandard(String standard) {
+		this.standard = standard;
 	}
 	
 	

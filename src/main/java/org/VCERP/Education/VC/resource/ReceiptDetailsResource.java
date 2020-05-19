@@ -45,13 +45,14 @@ public class ReceiptDetailsResource {
 	@GET
 	@Path("/FetchAllReceiptDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response FetchAllReceiptDetails(){
+	public Response FetchAllReceiptDetails(@QueryParam("branch") String branch){
 		ArrayList<ReceiptDetails> receipt=null;
 		ReceiptDetailsController controller=null;
 		try {
+			System.out.println(branch);
 			receipt=new ArrayList<>();
 			controller=new ReceiptDetailsController();
-			receipt=controller.FetchAllReceiptDetails();
+			receipt=controller.FetchAllReceiptDetails(branch);
 			return Response.status(Status.ACCEPTED).entity(receipt).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +69,7 @@ public class ReceiptDetailsResource {
 			@FormParam("receipt_date") String receipt_date,@FormParam("receipt_no") String receipt_no,
 			@FormParam("received_amt") long received_amt,@FormParam("pay_mode") String pay_mode
 			,@FormParam("trans_status") String trans_status,@FormParam("trans_date") String trans_date
-			,@FormParam("received_by") String received_by)
+			,@FormParam("received_by") String received_by,@FormParam("branch") String branch)
 	{
 		String[] stud_details=Util.symbolSeperatedString(stud_name);
 		ReceiptDetails details=null;
@@ -89,6 +90,7 @@ public class ReceiptDetailsResource {
 			details.setReceived_by(received_by);
 			details.setTotal_amt(Long.parseLong(stud_details[3]));
 			details.setReceived_amt(received_amt);		
+			details.setBranch(branch);
 			controller=new ReceiptDetailsController();
 			r_amt=controller.updateRemainingAmount(stud_details[0]);
 			if(r_amt==null)

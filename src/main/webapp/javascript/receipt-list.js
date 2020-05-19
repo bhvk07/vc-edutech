@@ -1,4 +1,6 @@
 //receipt-list.js
+var branchSession=sessionStorage.getItem("branch");
+
 $(document).ready(function() {
 	showReceiptTable();
 	var table = $('#receipt_table').DataTable({
@@ -62,7 +64,6 @@ $(document).ready(function() {
 
 function showReceiptTable() {
 	var table;
-
 	function callback(responseData, textStatus, request) {
 		table = $("#receipt_table").DataTable();
 		var value = 0;
@@ -103,7 +104,7 @@ function showReceiptTable() {
 		alert("failed to load");
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Receipt/FetchAllReceiptDetails";
+	var relativeUrl = "/Receipt/FetchAllReceiptDetails?branch="+branchSession;
 
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);

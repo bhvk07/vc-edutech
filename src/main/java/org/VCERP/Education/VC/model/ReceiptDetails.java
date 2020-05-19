@@ -17,6 +17,7 @@ public class ReceiptDetails {
 	private long total_amt;
 	private long received_amt;
 	private long amount;
+	private String branch;
 	private Admission admission;
 	
 	public long getId() {
@@ -103,6 +104,12 @@ public class ReceiptDetails {
 	}
 	public void setAdmission(Admission admission) {
 		this.admission = admission;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 	

@@ -1,4 +1,5 @@
 var mes;
+var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
 	var info;
     $('#admission_table').DataTable({
@@ -56,7 +57,7 @@ function showAdmissionTable(){
 		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Admission/FetchAllAdmittedStudent";
+	var relativeUrl = "/Admission/FetchAllAdmittedStudent?branch="+branchSession;
 
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);

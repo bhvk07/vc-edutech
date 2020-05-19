@@ -24,9 +24,9 @@ public class ReceiptDetailsController {
 		return dao.searchStudent(enq_stud,branch);
 	}
 
-	public ArrayList<ReceiptDetails> FetchAllReceiptDetails() {
+	public ArrayList<ReceiptDetails> FetchAllReceiptDetails(String branch) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
-		return dao.FetchAllReceiptDetails();
+		return dao.FetchAllReceiptDetails(branch);
 		
 	}
 

@@ -77,7 +77,7 @@ public class AdmissionResource {
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
 			admission.setBranch(branch);
-
+			admission.setStandard(getStandard(f_pack[0],branch));
 			if(!newAmt.equals("0"))
 			{
 				String[] commaSeperated=Util.commaSeperatedString(newAmt);
@@ -124,6 +124,15 @@ public class AdmissionResource {
 		}
 		return paidAmt;
 	}*/
+	
+	public String getStandard(String fees_pack,String branch){
+		System.out.println(fees_pack+"  "+branch);
+		AdmissionController controller=new AdmissionController();
+		String std=controller.getStandard(fees_pack,branch);
+		System.out.println(std);
+		return std;
+	}
+	
 	public Response saveInstallment(String[] commaSeperated){
 		ArrayList<String> installDate=new ArrayList<>();
 		ArrayList<String> fees_title=new ArrayList<>();
@@ -181,13 +190,13 @@ public class AdmissionResource {
 	@GET
 	@Path("/FetchAllAdmittedStudent")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response fetchAllAdmittedStudent(){
+	public Response fetchAllAdmittedStudent(@QueryParam("branch") String branch){
 		ArrayList<Admission> admission=null;
 		AdmissionController controller=null;
 		try {
 			admission=new ArrayList<>();
 			controller=new AdmissionController();
-			controller.fetchAllAdmittedStudent(admission);
+			controller.fetchAllAdmittedStudent(admission,branch);
 			return Response.status(Status.ACCEPTED).entity(admission).build();
 		} catch (Exception e) {
 			e.printStackTrace();

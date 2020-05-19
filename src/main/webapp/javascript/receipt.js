@@ -8,9 +8,9 @@ $(document).ready(function(){
 		event.preventDefault();
 		SearchStudent(id);
 	});
-	$("#stud_id").keydown(function() {
+/*	$("#stud_id").keydown(function() {
 		document.getElementById('stud_id').value="";
-	});
+	});*/
 	$("#receipt").click(function() {
 		event.preventDefault();
 		StudentReceipt();
@@ -46,7 +46,7 @@ function receiptNumber(){
 	{
 		if(responseData==null||responseData=="")
 			{
-			document.getElementById('receipt_no').value=parseInt(initial_rno);
+			document.getElementById('receipt_no').value=parseInt(receipt_no);
 			}
 		else{
 			for (var i in responseData)
@@ -83,7 +83,7 @@ function StudentReceipt(){
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData=$("#receipt-form").serialize();
+	var formData=$("#receipt-form").serialize()+"&branch="+branchSession;
 	console.log(formData);
 	var relativeUrl = "/Receipt/ReceiptDetails";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,

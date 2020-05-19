@@ -37,8 +37,8 @@ public class ReceiptDetailsDAO {
 		try {
 			con=Util.getDBConnection();
 			String query="insert into receipt_details(`stud_name`,`RollNO`,`contact`,`receipt_date`,`receipt_no`,"
-					+ "`pay_mode`,`trans_status`,`trans_date`,`received_by`,`total_fees`,`payment`,`amount`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "`pay_mode`,`trans_status`,`trans_date`,`received_by`,`total_fees`,`payment`,`amount`,`branch`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, details.getStud_name());
 			ps.setString(2, details.getRollno());
@@ -52,6 +52,7 @@ public class ReceiptDetailsDAO {
 			ps.setLong(10, details.getTotal_amt());
 			ps.setLong(11, details.getReceived_amt());
 			ps.setLong(12, details.getAmount());
+			ps.setString(13,details.getBranch());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +95,7 @@ public class ReceiptDetailsDAO {
 		return admission;
 	}
 
-	public ArrayList<ReceiptDetails> FetchAllReceiptDetails() {
+	public ArrayList<ReceiptDetails> FetchAllReceiptDetails(String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -102,8 +103,9 @@ public class ReceiptDetailsDAO {
 		ArrayList<ReceiptDetails> receipt=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select * from receipt_details";
+			String query="select * from receipt_details where branch=?";
 			ps=con.prepareStatement(query);
+			ps.setString(1, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{

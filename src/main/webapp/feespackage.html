@@ -857,9 +857,9 @@ function getTotalPrice() {
 var total = 0; 
 $(".totala").each(function() { 
 var val = $(this).val();
-total += isNaN(val) || $.trim(val)=="" ? 0 : parseFloat(val); 
+total += isNaN(val) || $.trim(val)=="" ? 0 : val; 
 });
-$("#grand-t").val(total.toFixed(2)); 
+$("#grand-t").val(total); 
 }
     
 $(function () {

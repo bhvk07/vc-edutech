@@ -22,9 +22,9 @@ public class AdmissionDAO {
 					+ ",`category`,`language`,"
 					+ "`contact`,`father_cont`,`mother_cont`,`address`,`pin`"
 					+ ",`email`,`w_app_no`,`enq_taken_by`,`adm_fees_pack`,"
-					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`,"
+					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`standard`,`admission_date`,`acad_year`,`join_date`,`fees`,"
 					+ "`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?,?)";
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
 			ps.setString(2, admission.getLname());
@@ -50,13 +50,14 @@ public class AdmissionDAO {
 			ps.setString(22, admission.getRollno());
 			ps.setString(23, admission.getRegno());
 			ps.setString(24, admission.getInvoice_no());
-			ps.setString(25, admission.getAdmission_date());
-			ps.setString(26, admission.getAcad_year());
-			ps.setString(27, admission.getJoin_date());
-			ps.setLong(28, admission.getFees());
-			ps.setLong(29, admission.getDisccount());
-			ps.setString(30, Util.currentDate());
-			ps.setString(31, admission.getBranch());
+			ps.setString(25, admission.getStandard());
+			ps.setString(26, admission.getAdmission_date());
+			ps.setString(27, admission.getAcad_year());
+			ps.setString(28, admission.getJoin_date());
+			ps.setLong(29, admission.getFees());
+			ps.setLong(30, admission.getDisccount());
+			ps.setString(31, Util.currentDate());
+			ps.setString(32, admission.getBranch());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -69,15 +70,18 @@ public class AdmissionDAO {
 		
 	}
 
-	public ArrayList<Admission> fetchAllAdmittedStudent(ArrayList<Admission> admission) {
+	public ArrayList<Admission> fetchAllAdmittedStudent(ArrayList<Admission> admission, String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Admission ad=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select * from admission";
+			String query="select `id`,`student_name`,`contact`,`address`,`enq_taken_by`,`adm_fees_pack`,`status`,`date`"
+					+ ",`Rollno`,`regno`,`invoice_no`,`admission_date`,`acad_year`,`join_date`,`fees`,`paid_fees`"
+					+ ",`remain_fees` from admission where branch=?";
 			ps=con.prepareStatement(query);
+			ps.setString(1,branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -85,19 +89,20 @@ public class AdmissionDAO {
 				ad.setId(rs.getLong(1));
 				ad.setStudent_name(rs.getString(2));
 				ad.setContact(rs.getString(3));
-				ad.setEnq_taken_by(rs.getString(4));
-				ad.setAdm_fees_pack(rs.getString(5));
-				ad.setStatus(rs.getString(6));
-				ad.setDate(rs.getString(7));
-				ad.setRollno(rs.getString(8));
-				ad.setRegno(rs.getString(9));
-				ad.setInvoice_no(rs.getString(10));
-				ad.setAdmission_date(rs.getString(11));
-				ad.setAcad_year(rs.getString(12));
-				ad.setJoin_date(rs.getString(13));
-				ad.setFees(rs.getLong(14));
-				ad.setPaid_fees(rs.getLong(15));
-				ad.setRemain_fees(rs.getLong(16));
+				ad.setAddress(rs.getString(4));
+				ad.setEnq_taken_by(rs.getString(5));
+				ad.setAdm_fees_pack(rs.getString(6));
+				ad.setStatus(rs.getString(7));
+				ad.setDate(rs.getString(8));
+				ad.setRollno(rs.getString(9));
+				ad.setRegno(rs.getString(10));
+				ad.setInvoice_no(rs.getString(11));
+				ad.setAdmission_date(rs.getString(12));
+				ad.setAcad_year(rs.getString(13));
+				ad.setJoin_date(rs.getString(14));
+				ad.setFees(rs.getLong(15));
+				ad.setPaid_fees(rs.getLong(16));
+				ad.setRemain_fees(rs.getLong(17));
 				admission.add(ad);
 			}
 			
@@ -263,6 +268,33 @@ public class AdmissionDAO {
 			Util.closeConnection(null, ps, con);
 		}
 		return installment;
+	}
+
+	public String getStandard(String fees_pack, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String std="";
+		try {
+			con=Util.getDBConnection();
+			String query="select `standard` from fees_package where fees_pack=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, fees_pack);
+			ps.setString(2, branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				std=rs.getString(1);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return std;
 	}
 		
 }
