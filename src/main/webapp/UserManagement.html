@@ -24,7 +24,7 @@
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
-	<link rel="stylesheet" href="css/um.css">
+<link rel="stylesheet" href="css/um.css">
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
@@ -33,8 +33,6 @@
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <style type="text/css">
-
-
 body {
 	color: #566787;
 	background: #f5f5f5;
@@ -325,12 +323,12 @@ table.table .avatar {
 </script>
 </head>
 <body>
-<section class="body">
-    
-<!--    <div class="inner-wrapper">-->
-        <section role="main" class="content-body">
-            
-<!--
+	<section class="body">
+
+		<!--    <div class="inner-wrapper">-->
+		<section role="main" class="content-body">
+
+			<!--
             <header class="page-header">
     <h2>User</h2>
     <div class="right-wrapper pull-right">
@@ -341,51 +339,52 @@ table.table .avatar {
 </header>
 -->
 
-    
 
-<section class="panel" id="datatable-view">
-	<div class="table-wrapper" id="table-style">
-		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-6">
-					<h2>
-						<b>User</b>
-					</h2>
-				</div>
-				<div class="col-sm-6">
-					<button class="btn btn-success add-b"><i
-						class="material-icons">&#xE147;</i> <span>Add New</span>
-				  </button> 
-						<a href="" class="btn btn-success" id="admission"><i
-						class="material-icons">&#xE147;</i> <span>Edit </span></a> 
-						<a href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
-						data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-					<a href="" class="btn btn-success" id="btn-view">
-					<i class="material-icons">&#xE15C;</i> <span>View</span>
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<!-- Advanced Tables -->
-				<div class="panel panel-default">
-					<!-- <div class="panel-heading">Advanced Tables</div> -->
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-striped table-bordered table-hover"
-								id="UserMgmt_table">
-								<thead>
-									<tr>
-										<th class="no-sort"><span class="custom-checkbox"> <input
-												type="checkbox" id="selectAll" name="options[]" value="0">
-												<label for="checkbox1"></label>
-										</span></th>
-										<th>Created Date</th>
-										<th>Username</th>
-										<th class="no-sort">Role Name</th>
-										<th class="no-sort">Branch Name</th>
-<!--
+
+			<section class="panel" id="datatable-view">
+				<div class="table-wrapper" id="table-style">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>
+									<b>User</b>
+								</h2>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-success add-b">
+									<i class="material-icons">&#xE147;</i> <span>Add New</span>
+								</button>
+								<a href="" class="btn btn-success" id="admission"><i
+									class="material-icons">&#xE147;</i> <span>Edit </span></a> <a
+									href="#deleteEmployeeModal" class="btn btn-danger"
+									id="btn-danger" data-toggle="modal"><i
+									class="material-icons">&#xE15C;</i> <span>Delete</span></a> <a
+									href="" class="btn btn-success" id="btn-view"> <i
+									class="material-icons">&#xE15C;</i> <span>View</span>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<!-- Advanced Tables -->
+							<div class="panel panel-default">
+								<!-- <div class="panel-heading">Advanced Tables</div> -->
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped table-bordered table-hover"
+											id="UserMgmt_table">
+											<thead>
+												<tr>
+													<th class="no-sort"><span class="custom-checkbox">
+															<input type="checkbox" id="selectAll" name="options[]"
+															value="0"> <label for="checkbox1"></label>
+													</span></th>
+													<th>Created Date</th>
+													<th>Username</th>
+													<th class="no-sort">Role Name</th>
+													<th class="no-sort">Branch Name</th>
+													<!--
 										<th>ID CARD number</th>
 										<th class="no-sort">PAYMENT MODE</th>
 										<th>AMOUNT</th>
@@ -394,54 +393,52 @@ table.table .avatar {
 										<th class="no-sort">STATUS</th>
 -->
 
-									</tr>
-								</thead>
-							</table>
+												</tr>
+											</thead>
+										</table>
+									</div>
+
+								</div>
+								<!-- </div> -->
+								<!--End Advanced Tables -->
+							</div>
 						</div>
 
 					</div>
-				<!-- </div> -->
-				<!--End Advanced Tables -->
-			</div>
-		</div>
-
-	</div>
-    </div>
-    </section>
-            <section class="panel" id="datatable-view-2">
-            <div class="table-wrapper" id="table-style">
-<!--	<div class=col-sm-12>-->
-		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-6">
-					<h2>
-						<b>User</b>
-					</h2>
 				</div>
-				<div class="col-sm-6">
-					<button class="btn btn-success cancel-b"><i
-						class="material-icons">&#xE147;</i> 
-						<span>Cancel</span>
-                    </button>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-7">
-				<!-- Advanced Tables -->
-<!--				<div class="panel panel-default">-->
-					<!-- <div class="panel-heading">Advanced Tables</div> -->
-<!--					<div class="panel-body">-->
-                    <div class="tabs">
-                             <ul class="nav nav-tabs tabs-primary">
-                              <div class="nav nav-tabs tabs-primary">
-                                  <li class="active">
-                                      <a href="#edit" data-toggle="tab" onclick="showEdit();">New User</a>
-                                  </li>
-                              </div>
-                              </ul>
-                   </div>
-<!--
+			</section>
+			<section class="panel" id="datatable-view-2">
+				<div class="table-wrapper" id="table-style">
+					<!--	<div class=col-sm-12>-->
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>
+									<b>User</b>
+								</h2>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-success cancel-b">
+									<i class="material-icons">&#xE147;</i> <span>Cancel</span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-7">
+							<!-- Advanced Tables -->
+							<!--				<div class="panel panel-default">-->
+							<!-- <div class="panel-heading">Advanced Tables</div> -->
+							<!--					<div class="panel-body">-->
+							<div class="tabs">
+								<ul class="nav nav-tabs tabs-primary">
+									<div class="nav nav-tabs tabs-primary">
+										<li class="active"><a href="#edit" data-toggle="tab"
+											onclick="showEdit();">New User</a></li>
+									</div>
+								</ul>
+							</div>
+							<!--
                     <div class="tab-content">
                         <div id="overview" class="tab-pane">
                             <div class="row">
@@ -456,171 +453,263 @@ table.table .avatar {
                         </div>
                     </div>
 -->
-                           
-                        <div id="edit" class="tab-pane active">
-                           <h4 class="mb-xlg">
-                               Personal Information
-                           </h4>
-                           <fieldset id="new-user-info">
-                               <div class="form-group">
-                                   <label class="control-label col-md-4">
-                                       User Type
-                                   </label>
-                                   <div class="col-md-8">
-                                      <div class="input-group" style="width:100%;">
-                                       <select class="form-control" disabled tabindex="-1" aria-hidden="true">
-                                           <option value="0">Organization Level user</option>
-                                           <option value="1">Branch Level User</option>
-                                       </select>
-                                    
-                                       </div>
-                                   </div>
-                               </div>
-                               <div class="form-group" id="branch">
-                                    <label class="control-label col-md-4">Branch
-                                         <span class="text-danger">*</span>
-                                   </label>
-                                 <div class="col-md-8">
-                                     <div class="input-group" style="width:100%;">
-                                         <select class="form-control" disabled tabindex="-1"
-                                         aria-hidden="true">
-                                             <option value="1">VC Classes</option>
-                                             <option value="2">VC Kids-Vasai</option>
-                                         </select>
-                                          
-                                     </div>
-                                 </div>
-                               </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Role
-                                    <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-md-8">
-                                        <div class="input-group" style="width:100%;">
-                                        <select class="form-control">
-                                            <option value="1">Administrator</option>
-                                        </select>
-                                        
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="form-group">
-                                  <label class="control-label col-md-4">Employee
-                                    <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                             <select class="form-control">
-                                         <option value="1">Administrator</option>
-                                    </select>
-<!--
+
+							<div id="edit" class="tab-pane active">
+								<h4 class="mb-xlg">Personal Information</h4>
+								<form id="createAc">
+									<fieldset id="new-user-info">
+										<div class="form-group">
+											<label class="control-label col-md-4"> User Type </label>
+											<div class="col-md-8">
+												<div class="input-group" style="width: 100%;">
+													<select class="form-control" id="emp_type" name="emp_type"
+														disabled tabindex="-1" aria-hidden="true">
+														<option value="Branch Level Employee">Branch Level User</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group" id="branch">
+											<label class="control-label col-md-4">Branch <span
+												class="text-danger">*</span>
+											</label>
+											<div class="col-md-8">
+												<div class="input-group" style="width: 100%;">
+													<select class="form-control" id="ebranch" name="branch"
+														disabled tabindex="-1" aria-hidden="true">
+														<option value="VC KIDZ">VC KIDZ</option>
+														<option value="VC CLASSES">VC CLASSES</option>
+														<option value="VC KIDZ - VASAI">VC KIDZ - VASAI</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4">Role <span
+												class="text-danger">*</span>
+											</label>
+											<div class="col-md-8">
+												<div class="input-group" style="width: 100%;">
+													<select class="form-control" id="role" name="role">
+														<option value="1">Administrator</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4">Employee <span
+												class="text-danger">*</span>
+											</label>
+											<div class="col-md-8">
+												<div class="input-group">
+													<select class="form-control" id="emp_name" name="emp_name">
+
+													</select>
+													<!--
                                     <span class="input-group-addon" id="bhvk"> <button type="button" id="add-btn" data-toggle="modal" data-target="#addEmployeeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;">
                       +
                           </button></span>
 -->
-                                       <span class="input-group-btn">
-                                           <button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addEmployeeModal">
-                                               <span class="glyphicon glyphicon-plus"> </span>
-                                           </button>
-                                       </span>
-                                        </div>
-                                    </div>
-                                   
-                                 </div>
-                           </fieldset>
-                           <hr class="dotted tall">
-                           <h4 class="mb-xlg">Login Info</h4>
-                               <fieldset id="new-user-info">
-                                   <div class="form-group">
-                                    <label class="control-label col-md-4">Username
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                   </div>
-                                       <div class="form-group">
-                                        <label class="control-label col-md-4">Password
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" required>
-                                       </div>
-                                   </div>
-                               </fieldset>
-                               <div class="panel-footer">
-                                   <div class="row">
-                                       <div class="col-md-12">
-                                           <div class="pull-right">
-                                               <button type="button" id="btnSave" class="btn btn-success ladda-button"> 
-                                                   <b>
-                                                       <i class="fa fa-check margin-right-10"></i>
-                                                   </b>
-                                                   <span class="ladda-label">Save User</span>
-                                               </button>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </div>
-                           
-                        </div>
-                   
+													<span class="input-group-btn">
+														<button class="btn btn-primary" id="add-btn" type="button"
+															data-toggle="modal" data-target="#addEmployeeModal">
+															<span class="glyphicon glyphicon-plus"> </span>
+														</button>
+													</span>
+												</div>
+											</div>
 
-                    
-						
-<!--					</div>-->
-				<!-- </div> -->
-				<!--End Advanced Tables -->
-<!--			</div>-->
-		</div>
-		
-		<div class="col-md-3">
-		    <h4 class="mb-md">Statastics</h4>
-		    <ul class="simple-card-list mb-xlg">
-                        <li class="primary">
-                            <h3 id="TotalEnquiesTaken">0</h3>
-                            <p>Total Enquiries</p>
-                        </li>
-                        <li class="primary">
-                            <h3 id="TotalAdmissionsTaken">0</h3>
-                            <p>Total Admissions</p>
-                        </li>
-                        <li class="primary">
-                            <h3 id="TotalReceiptTaken">0</h3>
-                            <p>Total Receipts</p>
-                        </li>
-                    </ul>
-		</div>
-
-	</div>
-<!--    </div> col-sm-12--> 
-                </div>
-    </section>
+										</div>
+									</fieldset>
+									<hr class="dotted tall">
+									<h4 class="mb-xlg">Login Info</h4>
+									<fieldset id="new-user-info">
+										<div class="form-group">
+											<label class="control-label col-md-4">Username <span
+												class="text-danger">*</span>
+											</label>
+											<div class="col-md-8">
+												<input type="text" class="form-control" id="userid" name="userid"required>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4">Password <span
+												class="text-danger">*</span>
+											</label>
+											<div class="col-md-8">
+												<input type="password" class="form-control" id="password" name="password" required>
+											</div>
+										</div>
+									</fieldset>
+									<div class="panel-footer">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="pull-right">
+													<button type="button" id="btnSave"
+														class="btn btn-success ladda-button">
+														<b> <i class="fa fa-check margin-right-10"></i>
+														</b> <span class="ladda-label">Save User</span>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
 
 
-            
-        </section>
-<!--    </div>-->
-</section>
+
+
+							<!--					</div>-->
+							<!-- </div> -->
+							<!--End Advanced Tables -->
+							<!--			</div>-->
+						</div>
+
+						<div class="col-md-3">
+							<h4 class="mb-md">Statastics</h4>
+							<ul class="simple-card-list mb-xlg">
+								<li class="primary">
+									<h3 id="TotalEnquiesTaken">0</h3>
+									<p>Total Enquiries</p>
+								</li>
+								<li class="primary">
+									<h3 id="TotalAdmissionsTaken">0</h3>
+									<p>Total Admissions</p>
+								</li>
+								<li class="primary">
+									<h3 id="TotalReceiptTaken">0</h3>
+									<p>Total Receipts</p>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+					<!--    </div> col-sm-12-->
+				</div>
+			</section>
+
+			<div id="addEmployeeModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form id="add_employee">
+							<div class="modal-header">
+								<h4 class="modal-title">Add Employee</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label>Employee-Type</label> <select name="emp_type"
+										id="employee_type" class="form-control" required disabled>
+										<option value="Branch Level Employee" selected>Branch
+											Level Employee</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Branch</label> <select name="branch" id="emp_branch"
+										class="form-control" required disabled>
+										<option value="VC KIDZ">VC KIDZ</option>
+										<option value="VC CLASSES">VC CLASSES</option>
+										<option value="VC KIDZ - VASAI">VC KIDZ - VASAI</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Employee Name:</label> <input type="text"
+										name="emp_name" id="emp_name" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>Employee Code Unique:</label> <input type="number"
+										name="emp_unq_code" id="emp_unq_code" class="form-control"
+										required>
+								</div>
+								<div class="form-group">
+									<label>Email:</label> <input type="email" name="email"
+										id="email" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>Address:</label>
+									<textarea name="address" id="address" class="form-control"
+										required></textarea>
+								</div>
+								<div class="form-group">
+									<label>Phone</label> <input type="text" name="contact"
+										id="contact" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>DOB</label>
+									<div class='input-group date' id='datepicker'>
+										<input type="date" name="dob" id="dob" class="form-control"
+											required> <span class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+
+								</div>
+								<div class="form-group">
+									<label>Date Of Joining</label>
+									<div class='input-group date' id='datepicker'>
+										<input type="date" name="join_date" id="join_date"
+											class="form-control" required> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+
+								</div>
+								<div class="form-group">
+									<label>Designation</label> <select name="design" id="design"
+										class="form-control" required>
+										<option value="emp-1">Admin Head</option>
+										<option value="emp-2">Admin Head and Finance</option>
+										<option value="emp-3">Administrator</option>
+										<option value="emp-4">Branch Co-ordinate</option>
+										<option value="emp-5">Clerk</option>
+										<option value="emp-6">Counsellor</option>
+										<option value="emp-7">Exam and Content Development</option>
+										<option value="emp-8">Principal</option>
+										<option value="emp-9">Staff</option>
+										<option value="emp-10">Supervisor</option>
+										<option value="emp-11">Teacher</option>
+									</select>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default"
+									data-dismiss="modal" value="Cancel"> <input
+									type="submit" id="Add_employee" class="btn btn-success"
+									value="Add">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+		</section>
+		<!--    </div>-->
+	</section>
 
 	<!-- Edit Modal HTML -->
-	
+
 </body>
 <script>
-    $(document).ready(function(){
-        $("#datatable-view-2").hide();
-         $(".add-b").click(function(){
-             $("#datatable-view").hide();
-             $("#datatable-view-2").show();
-         });
-        $(".cancel-b").click(function(){
-             $("#datatable-view").show();
-             $("#datatable-view-2").hide();
-         });
-    });
-   
+	$(document).ready(function() {
+		$("#datatable-view-2").hide();
+		$(".add-b").click(function() {
+			$("#datatable-view").hide();
+			$("#datatable-view-2").show();
+		});
+		$(".cancel-b").click(function() {
+			$("#datatable-view").show();
+			$("#datatable-view-2").hide();
+		});
+	});
 </script>
- 
+
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.js"></script> -->
