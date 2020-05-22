@@ -50,7 +50,7 @@ public class StandardResource {
 		try{
 			String[] commaSeperated=Util.commaSeperatedString(branchData);
 			ArrayList<String> branch=new ArrayList<>();
-			for(int i=1;i<commaSeperated.length;i++)
+			for(int i=0;i<commaSeperated.length;i++)
 			{
 				String[] symbolSeperated=Util.symbolSeperatedString(commaSeperated[i]);
 				branch.add(symbolSeperated[0]);

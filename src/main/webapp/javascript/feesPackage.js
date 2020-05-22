@@ -1,6 +1,5 @@
 var standardData = new Array();
 var branchData = new Array();
-var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function() {
 	getFeesPackage();
 	loadFeesType();
@@ -42,14 +41,15 @@ function addNewFeesPackage(standardData, branchData) {
 		fees_details.push(feesType + "|" + feesTypeAmt + "|" + discount + "|"
 				+ total);
 	}
-
+	document.getElementById("inputDisabledAmt").disabled=false;
 	function callback(responseData, textStatus, request) {
 		console.log("save");
+		document.getElementById("inputDisabledAmt").disabled=true;
 	}
 	function errorCallback(responseData, textStatus, request) {
 		console.log("not save");
 	}
-	var formData = $("#feespackage").serialize() + "&standardData="
+	var formData = $("#feespackage-form").serialize() + "&standardData="
 			+ standardData + "&branchData=" + branchData + "&fees_details="
 			+ fees_details;
 	console.log(formData);

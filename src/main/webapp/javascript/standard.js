@@ -2,6 +2,7 @@
 $(document).ready(function(){
 	loadSubject();
 	getAllStandard();
+	loadBranch();
 	$('#multiple-checkboxes').multiselect({
         includeSelectAllOption: true,
       });
@@ -49,6 +50,41 @@ function getAllStandard() {
 	return false;
 }
 
+function loadBranch() {
+	function callback(responseData, textStatus, request) {
+		var table = document.getElementById("BranchTable");
+		
+		for(var i in responseData){
+			var rowCount = table.rows.length;
+	        var row = table.insertRow(rowCount);
+
+	        var cell1 = row.insertCell(0);
+	        cell1.innerHTML = '<div class="checkbox-custom checkbox-default checkbox-inline styled" style="margin-top: 0px;"> <input type="checkbox" id="select1" class="stdcheck"> </div>';
+
+	        var cell2 = row.insertCell(1);
+	        cell2.innerHTML = responseData[i].Branch;
+
+	        var cell3 = row.insertCell(2);
+	        cell3.innerHTML = '<input type="text" id="Amount" name="Amount" class="form-control text" value="0"></td>';
+			}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/branch/getAllBranch";
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
 function loadSubject(){
 	function callback(responseData, textStatus, request){
 		for ( var i in responseData) {
@@ -85,33 +121,14 @@ function getStandardData(){
 	var table = document.getElementById("BranchTable");
 	var rowCount = $('#BranchTable tr').length;
 	var fees=new Array();
-	for (var i = 1; i <= rowCount - 1; i++) {
-		fees.push($(table.rows.item(i).cells[2]).find('input').val());
-	}
-	var i=0;
-	var html_table_data = "";
-	var bRowStarted = true;
-	$('#BranchTable tbody>tr').each(function() {
-		$('td', this).each(function() {
-			if (html_table_data.length == 0 || bRowStarted == true) {
-				html_table_data += $(this).text();
-				bRowStarted = false;
-			} else
-				html_table_data += $(this).text();
-		});
-		
-		html_table_data +="|"+fees[i]+",";
-		i++;
-		bRowStarted = true;
-	});
-	var branchData="branch Details";
 	$('#BranchTable .stdcheck').each(function(i, chk) {
 		if (chk.checked) {
-			var standard = html_table_data.split(",");
-			branchData+=","+standard[i];
+			var branch=document.getElementById("BranchTable").rows[i+1].cells[1].innerHTML;
+			var branchamt=$(table.rows.item(i+1).cells[2]).find('input').val();
+			fees.push(branch+"|"+branchamt);
 		}
 	});
-	addStandard(branchData,selected);
+	addStandard(fees,selected);
 }
 function addStandard(branchData,subject){	
 	function callback(responseData, textStatus, request){
