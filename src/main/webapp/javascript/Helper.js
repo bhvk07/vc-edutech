@@ -6,6 +6,8 @@ var port="8080";
 
 var DESK="desk";
 var ADMIN="ADMIN";
+
+var branchSession=sessionStorage.getItem("branch");
 function fetchBaseUrl(){
 	return host+":"+port;
 }
@@ -118,4 +120,73 @@ function ajaxAuthenticatedRequest(httpMethod, relativeUrl, data,
 			}
 		});
 	}
+}
+
+function fetchAllBranch() 
+{
+	function callback(responseData, textStatus, request) {
+
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].Branch + '" >'
+					+ responseData[i].Branch + '</option>';
+			console.log(responseData[i].Branch);
+			$('.branch').append(htmlCode);
+		}
+		// var message=responseData.response.JSON.message;
+		// alert(message);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		// var message=responseData.response.JSON.message;
+		// alert(message);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/branch/getAllBranch";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function FetchAllEmployee() {
+	function callback(responseData, textStatus, request) {
+
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].emp_name + '" >'
+					+ responseData[i].emp_name + '</option>';
+			$('#enq_taken').append(htmlCode);
+		}
+		// var message=responseData.response.JSON.message;
+		// alert(message);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		// var message=responseData.response.JSON.message;
+		// alert(message);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function getFeesPackage() {
+
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode=('<option value="' + responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >'
+					+ responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
+			$('#fees').append(htmlCode);
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
 }

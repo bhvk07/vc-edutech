@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$('#UserMgmt_table').DataTable({
 		"pageLength" : 40
 	});
-
+	fetchAllBranch();
 	var checkbox = $('table tbody input[type="checkbox"]');
 	checkbox.click(function() {
 		if (!this.checked) {
@@ -12,7 +12,8 @@ $(document).ready(function() {
 		}
 	});
 	EmployeeList();
-	$("#branch").val(branch);
+	console.log(branchSession);
+	$(".branch").val(branchSession);
 	$("#btnSave").click(function() {
 		event.preventDefault();
 		createEmployeeAccount();

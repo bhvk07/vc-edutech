@@ -1,4 +1,4 @@
-var branchSession=sessionStorage.getItem("branch");
+
 $(document).ready(function(){
 	loadSubject();
 	getAllStandard();

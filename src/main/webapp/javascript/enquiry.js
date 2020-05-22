@@ -1,5 +1,5 @@
 var mes;
-var branch=sessionStorage.getItem("branch");
+
 $(document).ready(function() {
 	FetchAllEmployee();
 	//getCurrentDate();
@@ -14,7 +14,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		AddEmployee();
 	});
-	$("#branch").val(branch);
+	$("#branch").val(branchSession);
 });
 
 function EnquiryData() {
@@ -34,7 +34,7 @@ function EnquiryData() {
 		 * showNotification("error",message); alert(message);
 		 */
 	}
-	var formData = $('#EnquiryForm').serialize()+"&branch="+branch;
+	var formData = $('#EnquiryForm').serialize()+"&branch="+branchSession;
 	var httpMethod = "POST";
 	var relativeUrl = "/Enquiry/EnquiryData";
 
@@ -68,7 +68,7 @@ function AddEmployee() {
 	return false;
 }
 
-function FetchAllEmployee() {
+/*function FetchAllEmployee() {
 	function callback(responseData, textStatus, request) {
 
 		for ( var i in responseData) {
@@ -80,8 +80,8 @@ function FetchAllEmployee() {
 		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		/*var mes=responseData.responseJSON.message;
-		showNotification("error",mes);*/
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
@@ -90,7 +90,7 @@ function FetchAllEmployee() {
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
-}
+}*/
 
 //function getCurrentDate() {
 //	var today = new Date();

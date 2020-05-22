@@ -2,7 +2,7 @@ var mes;
 var attendance;
 var std;
 var acad_year;
-var branchSession = sessionStorage.getItem("branch");
+
 $(document).ready(function() {
 	getAllStandard();
 	$('#attendance_table').DataTable({

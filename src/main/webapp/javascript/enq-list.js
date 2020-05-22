@@ -1,5 +1,4 @@
 var mes;
-var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function() {
 	var selected = new Array();
 /*	var token=$.session.get('token'); 

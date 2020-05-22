@@ -1,5 +1,4 @@
 var mes;
-var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
 	var info;
     $('#admission_table').DataTable({
@@ -64,46 +63,3 @@ function showAdmissionTable(){
 			errorCallback);
 	return false;
 }
-
-
-
-/*function show_rows(){
-	var ro = table.rows();
-	//alert(ro);
-	var cnt = table.rows().data();
-	//alert("len"+cnt.cells.length);
-	rw = table.data().length; // output is 8
-	var arr = [];
-	cnt.each(function(value,index){
-		arr.push(value); //output is al values with html tags
-	});
-	alert(arr);
-	alert("cells"+table.rows().cells().length);
-	var json = [];
-	var headers = [];
-	for (var i = 0; i < arr.cells.length; i++) {
-		  headers[i] = arr[i];
-		  //alert("head"+headers[i]);
-		}
-	
-	for (var i = 1; i < rw; i++) {
-		  var tableRow = arr[i];
-		  
-		  var rowData = {};
-		  for (var j = 0; j < tableRow.cells().length; j++) {
-		    rowData[headers[j]] = tableRow.cells[j].innerHTML;
-		    //alert("rowdata"+ rowdata);
-		  }
-
-		  json.push(rowData);
-		}
-	alert("json"+json);
-	//localStorage.setItem("count",cnt);
-	cnt.each(function(){
-		
-	});
-	
-	
-	alert(cnt);
-}
-*/

@@ -2,10 +2,10 @@ var standardData = new Array();
 var branchData = new Array();
 var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function() {
-	loadFeesType();
-	loadFeesPackage();
-	loadBranchSpecificStandard();
 	getFeesPackage();
+	loadFeesType();
+	loadBranchSpecificStandard();
+	loadFeesPackage();
 	$("#submit").click(function() {
 		$('#standard input:checked').each(function () {
 			   var std=$(this).closest('tr').find('td:nth-child(2)').text();
@@ -61,7 +61,7 @@ function addNewFeesPackage(standardData, branchData) {
 }
 
 
-function loadFeesPackage() {
+/*function loadFeesPackage() {
 
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
@@ -79,7 +79,7 @@ function loadFeesPackage() {
 			errorCallback);
 	return false;
 }
-
+*/
 function loadBranchSpecificStandard(){
 	var table = document.getElementById("standard");
 	function callback(responseData, textStatus, request) {
@@ -138,7 +138,7 @@ function loadBranch(std){
 			errorCallback);
 	return false;
 }
-function getFeesPackage() {
+function loadFeesPackage() {
 
 	function callback(responseData, textStatus, request) {
 		var table = $("#feespackage").DataTable();

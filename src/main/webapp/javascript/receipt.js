@@ -1,8 +1,8 @@
 var mes;
-var branchSession=sessionStorage.getItem("branch");
+
 $(document).ready(function(){
 	receiptNumber();
-	//getCurrentDate();
+	FetchAllEmployee();
 	$("#stud_id").keyup(function() {
 		var id=parseInt(document.getElementById('stud_id').value);
 		event.preventDefault();

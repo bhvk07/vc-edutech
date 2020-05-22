@@ -211,7 +211,7 @@ function AddEmployee() {
 			errorCallback);
 	return false;
 }
-function FetchAllEmployee() {
+/*function FetchAllEmployee() {
 	function callback(responseData, textStatus, request) {
 
 		for ( var i in responseData) {
@@ -233,8 +233,8 @@ function FetchAllEmployee() {
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
-}
-function getFeesPackage() {
+}*/
+/*function getFeesPackage() {
 
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
@@ -251,7 +251,7 @@ function getFeesPackage() {
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
-}
+}*/
 /*function getCurrentDate() {
 	   var todaydate = new Date();
 	   var day = todaydate.getDate();
