@@ -32,17 +32,17 @@ function attemptLogin(){
 	function callback(responseData,textStatus,request){
 		var token=request.getResponseHeader('X-Authorization');
 		sessionStorage.setItem("token", token);
-		sessionStorage.setItem("branch",responseData.branch)
+		sessionStorage.setItem("branch",responseData.Branch)
 		alert(token);
 		var role = responseData.role;
-		var name = responseData.emp_name;
-		if(role=="fd")
+		var name = responseData.name;
+		if(role=="desk")
 			{
 			
 			window.location.href="dashboard.html";
 			localStorage.setItem("user",name);
 			}
-		else if(role=="fd")
+		else if(role=="desk")
 			{
 			
 			window.location.href="dashboard.html";

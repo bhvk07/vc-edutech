@@ -13,6 +13,13 @@ public class AcademicYear{
 	private String aca_year;
 	private String start_date;
 	private String end_date;
+	private String id_prefix;
+	private String id_no;
+	private String invoice_prefix;
+	private String invoice;
+	private String reg_prefix;
+	private String registration;
+	private String branch;
 	public long getId() {
 		return id;
 	}
@@ -42,6 +49,48 @@ public class AcademicYear{
 	}
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
+	}
+	public String getId_prefix() {
+		return id_prefix;
+	}
+	public void setId_prefix(String id_prefix) {
+		this.id_prefix = id_prefix;
+	}
+	public String getId_no() {
+		return id_no;
+	}
+	public void setId_no(String id_no) {
+		this.id_no = id_no;
+	}
+	public String getInvoice_prefix() {
+		return invoice_prefix;
+	}
+	public void setInvoice_prefix(String invoice_prefix) {
+		this.invoice_prefix = invoice_prefix;
+	}
+	public String getInvoice() {
+		return invoice;
+	}
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
+	}
+	public String getReg_prefix() {
+		return reg_prefix;
+	}
+	public void setReg_prefix(String reg_prefix) {
+		this.reg_prefix = reg_prefix;
+	}
+	public String getRegistration() {
+		return registration;
+	}
+	public void setRegistration(String registration) {
+		this.registration = registration;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 }

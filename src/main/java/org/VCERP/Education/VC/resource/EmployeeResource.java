@@ -19,6 +19,7 @@ import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.User;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("Employee")
@@ -59,33 +60,7 @@ public class EmployeeResource {
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
 	}
 	
-	@POST
-	@PermitAll
-	//@JWTTokenNeeded
-	@Path("/createEmployeeAccount")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response createEmployeeAccount(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
-			,@FormParam("role") String role,@FormParam("emp_name") String emp_name,
-			@FormParam("userid") String userid,@FormParam("password") String password){
-		Employee emp=null;
-		EmployeeController controller=null;
-		try {
-			emp=new Employee();
-			controller=new EmployeeController();
-			emp.setEmp_type(emp_type);
-			emp.setBranch(branch);
-			emp.setRole(role);
-			emp.setEmp_name(emp_name);
-			emp.setUserid(userid);
-			emp.setPassword(password);
-			controller.createEmployeeAccount(emp);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
-	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
-}
+	
 	
 	@GET
 	@PermitAll

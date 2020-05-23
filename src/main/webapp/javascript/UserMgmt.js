@@ -1,10 +1,10 @@
 var mes;
-var branchSession = sessionStorage.getItem("branch");
 $(document).ready(function() {
 	$('#UserMgmt_table').DataTable({
 		"pageLength" : 40
 	});
 	fetchAllBranch();
+	FetchAllEmployee();
 	var checkbox = $('table tbody input[type="checkbox"]');
 	checkbox.click(function() {
 		if (!this.checked) {
@@ -12,8 +12,11 @@ $(document).ready(function() {
 		}
 	});
 	EmployeeList();
-	console.log(branchSession);
 	$(".branch").val(branchSession);
+	$("#Add_employee").click(function() {
+		event.preventDefault();
+		AddEmployee();
+	});
 	$("#btnSave").click(function() {
 		event.preventDefault();
 		createEmployeeAccount();
@@ -30,12 +33,8 @@ function EmployeeList() {
 			var emp_role = responseData[i].role;
 			var id = responseData[i].created_date;
 			var emp_id = responseData[i].userid;
-			var branch = responseData[i].branch;
+			var branch = responseData[i].Branch;
 			table.row.add([ chck, id, emp_id, emp_role, branch ]).draw();
-
-			var htmlCode = '<option value="' + responseData[i].emp_name + '" >'
-					+ responseData[i].emp_name + '</option>';
-			$('#emp_name').append(htmlCode);
 		}
 
 	}
@@ -48,7 +47,7 @@ function EmployeeList() {
 
 	var httpMethod = "GET";
 	// var formData = ''
-	var relativeUrl = "/Employee/FetchAllEmployee?branch=" + branchSession;
+	var relativeUrl = "/user/getAllAccount?branch=" + branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
@@ -102,7 +101,7 @@ function createEmployeeAccount() {
 	var formData = $("#createAc").serialize();
 	console.log(formData);
 	var httpMethod = "POST";
-	var relativeUrl = "/Employee/createEmployeeAccount";
+	var relativeUrl = "/user/createEmployeeAccount";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
