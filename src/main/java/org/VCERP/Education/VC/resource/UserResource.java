@@ -5,9 +5,6 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -20,15 +17,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.configuration.SigningKeyGenerator;
-import org.VCERP.Education.VC.controller.EmployeeController;
 import org.VCERP.Education.VC.controller.UserController;
-import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
-import org.VCERP.Education.VC.validation.UserResourceValidation;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 
 @Controller
 @Path("user")
