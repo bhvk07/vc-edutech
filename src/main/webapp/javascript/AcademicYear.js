@@ -23,7 +23,8 @@ function InsertYear(){
 		showNotification("error",mes);
 		
 	}
-	var formData = $("#academicYear").serialize();
+	var formData = $("#academicYear").serialize()+"&branch="+branchSession;
+	console.log(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/AcademicYear/NewAcademic";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,

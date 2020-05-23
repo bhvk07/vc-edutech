@@ -15,15 +15,21 @@ public class AcademicYearDAO {
 		PreparedStatement ps = null;
 		try{
 			con = Util.getDBConnection();
-			String query = "insert into academic_year_master(`aca_year`,`aca_start`,`aca_end`,`created_date`)values(?,?,?,?)";
+			String query = "insert into academic_year_master(`aca_year`,`aca_start`,`aca_end`,`id_prefix`,`ID_Card`,"
+					+ "`invoice_prefix`,`invoice`,`reg_prefix`,`reg`,`created_date`,`branch`)values(?,?,?,?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(query);
 			ps.setString(1, year.getAca_year());
 			ps.setString(2, year.getStart_date());
 			ps.setString(3, year.getEnd_date());
-			ps.setString(4,  Util.currentDate());
+			ps.setString(4, year.getId_prefix());
+			ps.setString(5, year.getId_no());
+			ps.setString(6, year.getInvoice_prefix());
+			ps.setString(7, year.getInvoice());
+			ps.setString(8, year.getReg_prefix());
+			ps.setString(9, year.getRegistration());
+			ps.setString(10, Util.currentDate());
+			ps.setString(11,  year.getBranch());
 			ps.executeUpdate();
-			
-			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
