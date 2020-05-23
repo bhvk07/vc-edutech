@@ -17,9 +17,6 @@ public class Employee {
 	private String contact;
 	private String dob;
 	private String join_date;
-	private String role;
-	private String userid;
-	private String password;
 	private String design;
 	private String created_date;
 	public long getId() {
@@ -87,24 +84,6 @@ public class Employee {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getCreated_date() {
 		return created_date;
