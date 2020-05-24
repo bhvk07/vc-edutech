@@ -8,6 +8,7 @@ var DESK="desk";
 var ADMIN="ADMIN";
 
 var branchSession=sessionStorage.getItem("branch");
+var user=localStorage.getItem("user");
 function fetchBaseUrl(){
 	return host+":"+port;
 }
