@@ -62,13 +62,13 @@ public class AcademicYearResource{
 	@PermitAll
 	@Path("/AcademicList")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response FetchAllAcademic(){
+	public Response FetchAllAcademic(@QueryParam("branch") String branch){
 		
 		AcademicYearController controller = null;
 		try{
 			ArrayList<AcademicYear> academiclist = new ArrayList<>();
 			controller = new AcademicYearController();
-			academiclist = controller.AcademicList();
+			academiclist = controller.AcademicList(branch);
 			return Response.status(Status.OK).entity(academiclist).build();
 		}
 		catch (Exception e) {

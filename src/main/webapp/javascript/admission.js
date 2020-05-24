@@ -1,9 +1,10 @@
 var mes;
 var enqData;
-var branchSession=sessionStorage.getItem("branch");
 $(document).ready(function(){
-	admissionDetails();
+	//admissionDetails();
+	getAcademicYear();
 	FetchAllEmployee();
+	getAutoIncrementedDetails();
 	getFeesPackage();
 	$("#enq_taken").val(localStorage.getItem("user"));
 	//getCurrentDate();
@@ -92,27 +93,12 @@ function SearchStudent(id){
 	return false;
 }
 
-function admissionDetails(){
-	var initial_rno=01;
-	var initial_regno=01;
-	var initial_invoice=01;
+function getAutoIncrementedDetails(){
 	function callback(responseData,textStatus,request)
 	{
-		if(responseData==null||responseData=="")
-			{
-			document.getElementById('ID_no').value=parseInt(initial_rno);
-			document.getElementById('reg_no').value=parseInt(initial_regno);
-			document.getElementById('invoice_no').value=parseInt(initial_invoice);
-			}
-		else{
-			for (var i in responseData)
-			{
-				document.getElementById('ID_no').value=parseInt(responseData[i].Rollno)+1;
-				document.getElementById('reg_no').value=parseInt(responseData[i].regno)+1;
-				document.getElementById('invoice_no').value=parseInt(responseData[i].invoice_no)+1;
-			}
-		}
-		
+		document.getElementById("ID_no").value=responseData.id_prefix+"-"+responseData.id_no;
+		document.getElementById("invoice_no").value=responseData.invoice_prefix+"-"+responseData.invoice;
+		document.getElementById("reg_no").value=responseData.reg_prefix+"-"+responseData.registration;
 	}
 	function errorCallback(responseData, textStatus, request) {
 		alert("Data not Found");
@@ -120,7 +106,7 @@ function admissionDetails(){
 			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Admission/FetchAllAdmittedStudent";
+	var relativeUrl = "/Admission/getAutoIncrementedDetails?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

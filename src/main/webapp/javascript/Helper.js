@@ -191,3 +191,21 @@ function getFeesPackage() {
 			errorCallback);
 	return false;
 }
+
+function getAcademicYear() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode=('<option value="' + responseData[i].aca_year +'" >'
+					+ responseData[i].aca_year + '</option>');
+			$('#acad_year').append(htmlCode);
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}

@@ -56,7 +56,7 @@ function FetchAllAcademic() {
 	}
 	//var formData = $("#academicYear").serialize();
 	var httpMethod = "GET";
-	var relativeUrl = "/AcademicYear/AcademicList";
+	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

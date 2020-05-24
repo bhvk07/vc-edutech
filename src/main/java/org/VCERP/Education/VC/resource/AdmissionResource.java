@@ -15,8 +15,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.VCERP.Education.VC.controller.AcademicYearController;
 import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.EnquiryController;
+import org.VCERP.Education.VC.model.AcademicYear;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.model.Installment;
@@ -46,6 +48,7 @@ public class AdmissionResource {
 		String[] personal=Util.commaSeperatedString(personalDetails);
 		EnquiryController eqcontroller=null;
 		AdmissionController controller=null;
+		AcademicYearController acadcontroller=null;
 		try {
 			admission=new Admission();
 //			admission.setId(Integer.parseInt(name[0]));
@@ -103,6 +106,9 @@ public class AdmissionResource {
 			}
 			controller=new AdmissionController();
 			controller.StudentAdmission(admission);
+			
+			acadcontroller=new AcademicYearController();
+			acadcontroller.updateAcademicDetails(Rollno,invoice_no,regno,acad_year,branch);
 			
 			eqcontroller=new EnquiryController();
 			eqcontroller.Admission(Long.parseLong(name[0]));
@@ -198,6 +204,24 @@ public class AdmissionResource {
 			controller=new AdmissionController();
 			controller.fetchAllAdmittedStudent(admission,branch);
 			return Response.status(Status.ACCEPTED).entity(admission).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	
+	@PermitAll
+	@GET
+	@Path("/getAutoIncrementedDetails")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAutoIncrementedDetails(@QueryParam("branch") String branch){
+		
+		try {
+			AcademicYear acad=new AcademicYear();
+			AcademicYearController controller=new AcademicYearController();
+			acad=controller.getCurrentAcademicYear(branch);
+			return Response.status(Status.ACCEPTED).entity(acad).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);

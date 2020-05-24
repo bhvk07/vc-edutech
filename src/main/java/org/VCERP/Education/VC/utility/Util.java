@@ -96,5 +96,10 @@ public class Util {
 		String seperated[] = str.replaceAll("\\s+", "").split("[,]");
 		return seperated;
 	}
+	public static String[] hyphenSeperatedString(String str)
+	{
+		String seperated[] = str.replaceAll("\\s+", "").split("[-]");
+		return seperated;
+	}
 
 }
