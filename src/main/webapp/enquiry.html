@@ -10,6 +10,7 @@
 	href="font-awesome-4.7.0/css/font-awesome.min.css">
 
 <script src="core/popper.min.js"></script>
+<script src="core/jquery.validate.min.js"></script>
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
@@ -55,9 +56,9 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="sname"
 								type="text" class="form-control" name="sname" value=""
-								placeholder="Student name"> <input id="lname"
+								placeholder="Student name" required> <input id="lname"
 								type="text" class="form-control" name="lname" value=""
-								placeholder="Surname">
+								placeholder="Surname" required>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
@@ -322,8 +323,7 @@
 							<!-- Button -->
 
 							<div class="col-sm-12 controls">
-								<a id="enq_data_submit" class="btn btn-success">Submit </a>
-
+								<input type="submit" id="enq_data_submit" class="btn btn-success" value="Submit">
 
 							</div>
 						</div>
