@@ -52,7 +52,7 @@ public class AdmissionResource {
 		try {
 			admission=new Admission();
 //			admission.setId(Integer.parseInt(name[0]));
-			admission.setStudent_name(name[1]);
+			admission.setStudent_name(personal[15]);
 			admission.setFname(personal[0]);
 			admission.setLname(personal[1]);
 			admission.setMname(personal[2]);
@@ -62,7 +62,7 @@ public class AdmissionResource {
 			admission.setCaste(personal[6]);
 			admission.setCategory(personal[7]);
 			admission.setLanguage(personal[8]);
-			admission.setContact(name[2]);
+			admission.setContact(personal[16]);
 			admission.setFather_cont(personal[9]);
 			admission.setMother_cont(personal[10]);
 			admission.setAddress(personal[11]);
@@ -179,7 +179,6 @@ public class AdmissionResource {
 			enquiry=controller.searchStudent(enq_stud,branch);
 			if(enquiry==null)
 			{ 
-			
 				enquiry=controller.searchStudentFromAdmission(enq_stud,branch);
 				if(enquiry!=null){
 				return Response.status(Status.ACCEPTED).entity(enquiry).build();

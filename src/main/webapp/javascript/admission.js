@@ -69,6 +69,8 @@ function SearchStudent(id){
 		enqData.push(responseData.pin);
 		enqData.push(responseData.email);
 		enqData.push(responseData.w_app_no);
+		enqData.push(responseData.sname);
+		enqData.push(responseData.stud_cont);
 		$("#fees").val(responseData.fees_pack);
 		var fees=responseData.fees_pack.split("|");
 		var fees=fees[1];
