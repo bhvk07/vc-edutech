@@ -20,7 +20,7 @@ import org.VCERP.Education.VC.controller.UserController;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
-import org.VCERP.Education.VC.validation.UserResourceValidation;
+//import org.VCERP.Education.VC.validation.UserResourceValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 

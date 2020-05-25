@@ -27,7 +27,7 @@ public class Util {
 		 try {
 		
 		 Class.forName("com.mysql.jdbc.Driver").newInstance();
-		 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vc_db?autoReconnect=true&useSSL=false","root","");
+		 conn = DriverManager.getConnection("jdbc:mysql://localhost:3308/vc_db?autoReconnect=true&useSSL=false","root","");
 		 } catch (Exception ex) {
 			 System.out.println(ex);
 		 ex.printStackTrace();

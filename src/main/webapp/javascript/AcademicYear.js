@@ -4,10 +4,12 @@ $(document).ready(function(){
 	$('#academictable').DataTable({
 		"pageLength" : 40
 	});
-
+	
+	
 	$("#academicYear").submit(function(){
 		InsertYear();
 	});
+
 	
 });
 
@@ -41,7 +43,7 @@ function FetchAllAcademic() {
 			var academicyear = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="P"><label for="checkbox1"></label></span>';
 			var date = responseData[i].created_date;
 			var start = responseData[i].start_date;
-			var end = responseData[i].end_date;
+			var end =  responseData[i].end_date;
 			var year = responseData[i].aca_year;
 			table.row.add([ date, year, start, end, academicyear]).draw();
 		}
