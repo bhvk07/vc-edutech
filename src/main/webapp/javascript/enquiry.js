@@ -3,7 +3,7 @@ var mes;
 $(document).ready(function() {
 	$('form[id="EnquiryForm"]').validate({
 		  rules: {
-		    fname: {
+		    sname: {
 		    	required:true
 		    },
 		    lname: {
@@ -14,7 +14,7 @@ $(document).ready(function() {
 			sname: {
 				required:'This field is required'
 			},
-			mname: {
+			lname: {
 				required:'This field is required'
 		    }
 		  },
