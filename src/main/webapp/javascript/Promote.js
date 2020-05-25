@@ -14,7 +14,7 @@ $(function() {
 				this.el = el || {};
 				this.multiple = multiple || false;
 
-				var links = this.el.find('.content-entry label');
+				var links = this.el.find('.content-entry .label-title-stud');
 				links.on('click', {
 						el: this.el,
 						multiple: this.multiple
@@ -23,6 +23,7 @@ $(function() {
 
 		Accordion.prototype.dropdown = function(e) {
 				var $el = e.data.el;
+				
 				$this = $(this),
 						$next = $this.next();
 
