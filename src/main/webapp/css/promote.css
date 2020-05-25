@@ -99,3 +99,59 @@ label{
 .text-danger{
      color: red; !important;
 }*/
+
+.page-header .p_btn{
+  
+    margin-bottom: 0px;
+    display: inline-block;
+    padding: 6px 12px;
+}
+
+.ladda-button[data-style=zoom-in]{
+    overflow: hidden;
+    transition: .3s ease all;
+    border-radius: 0px;
+}
+.ladda-button{
+    position: relative;
+}
+.p_btn{
+    font-size: 14px;
+    font-weight: normal;
+
+    text-align: center;
+    cursor: pointer;
+    
+}
+.page-header{
+    z-index: 1001;
+    border-bottom: none;
+    border-left: 1px solid #3A3A3A;
+    height: 50px;
+    padding: 0;
+    background: #f6f6f6;
+    
+    
+}
+.page-header label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    line-height: 1.7;
+}
+.pahe-header h2{
+    color: #000;
+    font-size: 2rem;
+    line-height: 50px;
+}
+
+.content-body{
+    padding: 40px;
+    position: relative;
+    vertical-align: top;
+}
+
+@media only screen and (min-width: 768px)
+ .fixed.has-top-menu .page-header {
+    left: 0;
+}
