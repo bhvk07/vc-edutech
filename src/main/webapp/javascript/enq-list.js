@@ -106,17 +106,87 @@ function deletemultiplerow(id) {
 
 function Admission(id) {
 	function callback(responseData, textStatus, request) {
-		alert("admission done");
+		var enqData=new Array();
+		var today=new Date();
+		var studentDetails=id+"|"+responseData.sname+" "+responseData.fname+" "+responseData.lname+"|"+responseData.stud_cont;
+		
+		enqData.push(responseData.fname);
+		enqData.push(responseData.lname);
+		enqData.push(responseData.mname);
+		enqData.push(responseData.uid);
+		enqData.push(responseData.dob);
+		enqData.push(responseData.gender);
+		enqData.push(responseData.caste);
+		enqData.push(responseData.category);
+		enqData.push(responseData.lang);
+		/*enqData.push(responseData.stud_cont);*/
+		enqData.push(responseData.father_cont);
+		enqData.push(responseData.mother_cont);
+		enqData.push(responseData.address);
+		enqData.push(responseData.pin);
+		enqData.push(responseData.email);
+		enqData.push(responseData.w_app_no);
+		enqData.push(responseData.sname);
+		enqData.push(responseData.stud_cont);
+		var feespack=responseData.fees_pack;
+		var installment="installment details,0|ActivityFees|0";
+		var newAmt="0";
+		var enq_taken=localStorage.getItem("user");
+		var date=today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate();
+		var status="active";
+		var acad_data=getIncrementalData();
+		var acad_year=acad_data[0];
+		var id_no=acad_data[1]+"-"+acad_data[2];
+		var invoice_no=acad_data[3]+"-"+acad_data[4];
+		var reg_no=acad_data[5]+"-"+acad_data[6];
+		StudentAdmission(studentDetails,enq_taken,feespack,status,date,id_no,reg_no,invoice_no,date,acad_year,date,enqData,installment,newAmt,branchSession);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		alert("admission not done");
 	}
-	var formData = {
-		id : id
-	};
-	var httpMethod = "PUT";
-	var relativeUrl = "/Enquiry/Admission";
+	var httpMethod = "GET";
+	var relativeUrl = "/Admission/SearchStudent?id="+id+"&branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function getIncrementalData() {
+	var acad_data;
+	function callback(responseData, textStatus, request) {
+		acad_data=new Array();
+		acad_data.push(responseData.aca_year);
+		acad_data.push(responseData.id_prefix);
+		acad_data.push(responseData.id_no);
+		acad_data.push(responseData.invoice_prefix);
+		acad_data.push(responseData.invoice);
+		acad_data.push(responseData.reg_prefix);
+		acad_data.push(responseData.registration);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		alert("admission not done");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Admission/getAutoIncrementedDetails?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return acad_data;
+}
+
+function StudentAdmission(studentDetails,enq_taken,feespack,status,date,id_no,reg_no,invoice_no,date,acad_year,date,enqData,installment,newAmt,branchSession) {
+	function callback(responseData, textStatus, request) {
+		alert("done");
+	}
+	function errorCallback(responseData, textStatus, request) {
+		alert("admission not done");
+	}
+	formData="stud_details="+studentDetails+"&enq_taken_by="+enq_taken+"&adm_fees_pack="+feespack+"&status="+status+"&date="+date+"&Rollno="+id_no+"&regno="+reg_no+
+	"&invoice_no="+invoice_no+"&admission_date="+date+"&acad_year="+acad_year+"&join_date="+date+"&personalDetails="+enqData+
+	"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
+	var httpMethod = "POST";
+	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
+

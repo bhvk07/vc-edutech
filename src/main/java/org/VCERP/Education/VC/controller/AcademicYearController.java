@@ -11,8 +11,16 @@ public class AcademicYearController {
 		AcademicYearDAO dao=new AcademicYearDAO();
 		return dao.addAcademicYear(year);
 	}
-	public ArrayList<AcademicYear> AcademicList(){
+	public ArrayList<AcademicYear> AcademicList(String branch){
 		AcademicYearDAO dao=new AcademicYearDAO();
-		return dao.FetchAllAcademic();
+		return dao.FetchAllAcademic(branch);
+	}
+	public AcademicYear getCurrentAcademicYear(String branch) {
+		AcademicYearDAO dao=new AcademicYearDAO();
+		return dao.getCurrentAcademicYear(branch);
+	}
+	public void updateAcademicDetails(String rollno, String invoice_no, String regno, String acad_year, String branch) {
+		AcademicYearDAO dao=new AcademicYearDAO();
+		dao.updateAcademicDetails(rollno,invoice_no,regno,acad_year,branch);
 	}
 }
