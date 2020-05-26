@@ -13,20 +13,17 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class SecureUtil {
 	public static String signingKey="";
-	public String issueToken(Employee emp, PrivateKey key, String session) {
+	public String issueToken(User user, PrivateKey key, String session) {
 		signingKey=Base64.getEncoder().encodeToString(key.getEncoded());
 		Calendar tommorow=Calendar.getInstance();
 		tommorow.add(Calendar.DATE, 1);
         String jwtToken = Jwts.builder()
-                .setSubject(emp.getBranch()).claim("Employee Type", emp.getEmp_type())
-                .claim("Employee Name", emp.getEmp_name())
-                .claim("Employee Code", emp.getEmp_unq_code())
-                .claim("Employee Email", emp.getEmail())
-                .claim("Employee Contact", emp.getContact())
-                .claim("Employee Join Date", emp.getJoin_date())
-                .claim("Employee Role", emp.getRole())
-                .claim("Emaployee Username", emp.getUserid())
-                .claim("Employee Designation", emp.getDesign())
+                .setSubject(user.getBranch()).claim("Employee Id", user.getId())
+                .claim("Employee Type", user.getEmp_type())
+                .claim("Employee Name", user.getName())
+                .claim("Employee Role", user.getRole())
+                .claim("Emaployee Username", user.getUserid())
+                .claim("Emaployee Created Date", user.getCreated_date())
                 .claim("session", session)
                 //.setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())

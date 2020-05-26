@@ -26,16 +26,16 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/>
 <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
-
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
+<script type="text/javascript" src="core/noty.js"></script>
 	
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
-<script type="text/javascript" src="javascript/AcademicYear.js"></script> 
+<script type="text/javascript" src="javascript/branch.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
-
 
 <style type="text/css">
 body {
@@ -334,23 +334,25 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							<b>Academic Year</b>
+							<b>Branch</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
 
-						
+						<button type="button" id="btnMarkDelete" onclick="DeleteData();"
+							data-style="zoom-out" style="display: none;" title=""
+							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
+							data-original-title="Delete This Fees Type">
+							<b><i class=" padding-right-sm fs14"></i></b><span
+								class="label-xs hidden-xs hidden-sm p5">edit</span>
+						</button>
 
-						<a href="#editEmployeeModal" data-toggle="modal"  data-target="#editEmployeeModal" id="edit-btn" style="display:none" 
-							  class="btn btn-warning"><i
-							class="material-icons">&#xE147;</i> <span>Edit</span></a>
-							
 
 
-						<a href="#academicModal" data-toggle="modal"
-							 data-target="#academicModal" class="btn btn-success"><i
+
+						<a href="#branchModal" data-toggle="modal"
+							data-target="#branchModal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a>
-							
 							 <!-- <a href="#deleteEmployeeModal" class="btn btn-danger"
 							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a> -->
@@ -365,14 +367,16 @@ table.table .avatar {
 						<div class="panel-body">
 							<div class="table-responsive">
 								<table class="table table-striped table-bordered table-hover"
-									id="academictable">
+									id="branchtable">
 									<thead>
 										<tr>
 
 											<th>CREATED DATE</th>
-											<th>ACADEMIC YEAR</th>
-                                            <th>ACADEMIC FROM DATE</th>
-                                            <th>ACADEMIC END DATE</th>
+											<th>BRANCH NAME</th>
+											<th>BRANCH CODE</th>
+											<!-- <th>SMS BALANCE</th>
+											<th>EMAIL BALANCE</th> -->
+											
 											<th class="no-sort"><span class="custom-checkbox">
 													<input type="checkbox" id="selectAll" name="options[]"
 													value="0"> <label for="checkbox1"></label>
@@ -412,60 +416,100 @@ table.table .avatar {
 			</script>
 
 
-
-
-
 		</div>
 	</div>
 
 	<!-- subjectModal Modal HTML -->
-	<div id="academicModal" class="modal fade">
+	<div id="branchModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="academicYear">
+				<form id="branch-form">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Subject</h4>
+						<h4 class="modal-title">Branch</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Academic Year<font color="red">*</font></label>
-							<input type="text" class="form-control" id="aca_year" name="aca_year"  required>
+							<label>Branch Name<font color="red">*</font></label>
+							<input type="text" class="form-control" id="branch_name" name="branch_name"required>
 						</div>
 
-                        <div class="form-group">
-						  <label>Academic Start Date<font color="red">*</font></label>
-							<div class="input-group date form_date1" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_start" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="aca_start" name="aca_start"required>
-							</div>
-							<!-- <input type="hidden" id="dtp_input2" name="academic_date" value="" /> -->
-						</div>
+					</div>
+					<div class="modal-body">
 						<div class="form-group">
-							<label>Academic End Date<font color="red">*</font></label>
-							<div class="input-group date form_date2" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_end" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="aca_end" name="aca_end"required>
-							</div>
+							<label>Institute Type<font color="red">*</font></label>
+							<select name="instituteType" id="instituteType" class="form-control" required>
+							 <option value="Computer / Dance/ Music Training Institute">Computer / Dance/ Music Training Institute</option>
+							 <option value="Coaching / Tution Classes">Coaching / Tution Classes</option>
+							 <option value="School Colleges">School Colleges</option>
+							 <option value="Preschool">Preschool</option>
+							 </select>
 						</div>
+
+					</div>
+					<div class="modal-body">
 						<div class="form-group">
-							<label>New Series Of ID Card/Roll No<font color="red">*</font></label>
-							<input type="text" class="form-control" id="prefix_id_card" name="prefix_id_card" required placeholder="Prefix of Serial no">
-							<input type="text" class="form-control" id="id_card" name="id_card" required placeholder="Serial no">
+							<label>Title(To be displayed on receipt and invice header)<font color="red">*</font></label>
+							<input type="text" class="form-control" id="title" name="title"required>
 						</div>
+
+					</div>
+					<div class="modal-body">
 						<div class="form-group">
-							<label>New Series Of Invoice No<font color="red">*</font></label>
-							<input type="text" class="form-control" id="prefix_invoice" name="prefix_invoice" required placeholder="Prefix of Serial no">
-							<input type="text" class="form-control" id="invoice" name="invoice" required placeholder="Serial no">
+							<label>Sub title(To be displayed on receipt and invice header)<font color="red">*</font></label>
+							<input type="text" class="form-control" id="subTitle" name="subTitle"required>
 						</div>
+
+					</div>
+					<div class="modal-body">
 						<div class="form-group">
-							<label>New Series Of Registraion No<font color="red">*</font></label>
-							<input type="text" class="form-control" id="prefix_regno" name="prefix_regno" required placeholder="Prefix of Serial no">
-							<input type="text" class="form-control" id="regno" name="regno" required placeholder="Serial no">
+							<label>Branch Code<font color="red">*</font></label>
+							<input type="text" class="form-control" id="branchCode" name="branchCode"required>
+						</div>
+
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Address<font color="red">*</font></label>
+							<input type="text" class="form-control" id="adderss" name="address"required>
+						</div>
+
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Email Id<font color="red">*</font></label>
+							<input type="text" class="form-control" id="email" name="email"required>
+						</div>
+
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Mobile No<font color="red">*</font></label>
+							<input type="text" class="form-control" id="contact" name="contact"required>
+						</div>
+
+					</div>
+<!-- 					<div class="modal-body">
+						<div class="form-group">
+							<label>Country<font color="red">*</font></label>
+							<input type="text" class="form-control" id="country" name="country"required>
 						</div>
 					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>State<font color="red">*</font></label>
+							<input type="text" class="form-control" id="state" name="state"required>
+						</div>
+
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Distinct<font color="red">*</font></label>
+							<input type="text" class="form-control" id="distinct" name="distinct"required>
+						</div>
+					</div> -->
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
 							value="Cancel"> 
@@ -478,42 +522,36 @@ table.table .avatar {
 	</div>
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
-				<div class="modal-dialog">
+		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="EditAcademicYear">
-					<div class="modal-header"
-						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Edit</h4>
+				<form>
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Academic Year<font color="red">*</font></label>
-							<input type="text" class="form-control" id="edit_aca_year" name="edit_aca_year" required>
-						</div>
-
-                        <div class="form-group">
-						  <label>Academic Start Date<font color="red">*</font></label>
-							<div class="input-group date form_date1" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_start" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="edit_aca_start" name="edit_aca_start"required>
-							</div>
-							<!-- <input type="hidden" id="dtp_input2" name="academic_date" value="" /> -->
+							<label>Name</label> <input type="text" class="form-control"
+								required>
 						</div>
 						<div class="form-group">
-							<label>Academic End Date<font color="red">*</font></label>
-							<div class="input-group date form_date2" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_end" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="edit_aca_end" name="edit_aca_end"required>
-							</div>
+							<label>Email</label> <input type="email" class="form-control"
+								required>
+						</div>
+						<div class="form-group">
+							<label>Address</label>
+							<textarea class="form-control" required></textarea>
+						</div>
+						<div class="form-group">
+							<label>Phone</label> <input type="text" class="form-control"
+								required>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> 
-							<input type="submit" class="btn btn-success" value="Save"
-							style="background-color: #53b700; color: aliceblue">
+							value="Cancel"> <input type="submit" class="btn btn-info" id="saveBranch"
+							value="Save">
 					</div>
 				</form>
 			</div>
@@ -547,53 +585,7 @@ table.table .avatar {
 	<!-- <script type="text/javascript" src="javascript/jquery-1.8.3.min.js" charset="UTF-8"></script> -->
 <script type="text/javascript" src="javascript/bootstrap.min.js"></script>
 <script type="text/javascript" src="javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-		<!-- 	<script type="text/javascript">
-		$('.form_date').datetimepicker({
-			autoOpen: false,
-			dateFormat : 'DD/MM/YYYY',
-			weekStart : 1,
-			todayBtn : 1,
-			autoclose : 1,
-			todayHighlight : 1,
-			startView : 2,
-			minView : 2,
-			forceParse : 0,
 
-		});
-	</script> -->
-	<script type="text/javascript" src="javascript/aca-date.js">
-	/* $(document).ready(function() {
-		$(".form_date").datetimepicker("setDate", new Date());
-	}); */
-	 
-	</script>
-<script>
-$(document).ready(function() {
-$("#checkbox").on('click',function(){
-	
-	 var checkboxes = $(this).closest('#academictable').find(':checkbox');
-	 
-	 if ($(this).is(':checked')) {
-			checkboxes.prop('checked', true);
-			 $("#edit-btn").show();
-
-			/*  var $trr = this.closest('tr');  */
-			 var Acad_yr=$( "tr td:nth-last-child(4)" ).text();
-			 var start_date= $( "tr td:nth-last-child(3)" ).text();
-			 var end_date= $( "tr td:nth-last-child(2)" ).text();
-			document.getElementById("edit_aca_year").value=Acad_yr;
-			document.getElementById("edit_aca_start").value=start_date;
-			document.getElementById("edit_aca_end").value=end_date;
-		
-		} else {
-			checkboxes.prop('checked', false);
-			 $("#edit-btn").hide();
-		}
-});
-});
-
-
-</script>
 
 </body>
 </html>

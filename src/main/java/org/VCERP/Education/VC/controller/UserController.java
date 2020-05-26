@@ -1,14 +1,27 @@
 package org.VCERP.Education.VC.controller;
 
+import java.util.ArrayList;
+
+import org.VCERP.Education.VC.dao.EmployeeDAO;
 import org.VCERP.Education.VC.dao.UserDAO;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
 
 public class UserController {
 
-	public Employee authenticateUser(String userid, String password) {
+	public User authenticateUser(String userid, String password) {
 		UserDAO dao=new UserDAO();
 		return dao.authenticateUser(userid,password);
+	}
+	
+	public User createEmployeeAccount(User user) {
+		UserDAO dao=new UserDAO();
+		return dao.createEmployeeAccount(user);
+	}
+
+	public ArrayList<User> getAllAccount(String branch) {
+		UserDAO dao=new UserDAO();
+		return dao.getAllAccount(branch);
 	}
 
 }

@@ -25,7 +25,8 @@ function InsertYear(){
 		showNotification("error",mes);
 		
 	}
-	var formData = $("#academicYear").serialize();
+	var formData = $("#academicYear").serialize()+"&branch="+branchSession;
+	console.log(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/AcademicYear/NewAcademic";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
@@ -57,7 +58,7 @@ function FetchAllAcademic() {
 	}
 	//var formData = $("#academicYear").serialize();
 	var httpMethod = "GET";
-	var relativeUrl = "/AcademicYear/AcademicList";
+	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

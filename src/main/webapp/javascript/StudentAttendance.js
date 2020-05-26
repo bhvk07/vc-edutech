@@ -5,6 +5,7 @@ var acad_year;
 
 $(document).ready(function() {
 	getAllStandard();
+	getAcademicYear();
 	$('#attendance_table').DataTable({
 		"pageLength" : 40
 	});

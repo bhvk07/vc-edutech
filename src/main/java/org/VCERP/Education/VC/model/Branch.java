@@ -6,7 +6,7 @@ public class Branch {
 
 	private long id;
 	
-	@FormParam("branch")
+	@FormParam("branch_name")
 	private String Branch;
 	
 	@FormParam("instituteType")
@@ -30,26 +30,14 @@ public class Branch {
 	@FormParam("contact")
 	private String Contact;
 	
-	@FormParam("telno")
-	private String Telno;
-	
-	@FormParam("GSTIN")
-	private String GSTIN;
-	
-	@FormParam("panNo")
-	private String PanNo;
-	
-	@FormParam("country")
+/*	@FormParam("country")
 	private String Country;
 	
 	@FormParam("state")
 	private String State;
 	
 	@FormParam("distinct")
-	private String Distinct;
-	
-	@FormParam("tehsil")
-	private String Tehsil;
+	private String Distinct;*/
 	
 	@FormParam("createdBy")
 	private String CreatedBy;
@@ -109,25 +97,7 @@ public class Branch {
 	public void setContact(String contact) {
 		Contact = contact;
 	}
-	public String getTelno() {
-		return Telno;
-	}
-	public void setTelno(String telno) {
-		Telno = telno;
-	}
-	public String getGSTIN() {
-		return GSTIN;
-	}
-	public void setGSTIN(String gSTIN) {
-		GSTIN = gSTIN;
-	}
-	public String getPanNo() {
-		return PanNo;
-	}
-	public void setPanNo(String panNo) {
-		PanNo = panNo;
-	}
-	public String getCountry() {
+	/*public String getCountry() {
 		return Country;
 	}
 	public void setCountry(String country) {
@@ -144,13 +114,7 @@ public class Branch {
 	}
 	public void setDistinct(String distinct) {
 		Distinct = distinct;
-	}
-	public String getTehsil() {
-		return Tehsil;
-	}
-	public void setTehsil(String tehsil) {
-		Tehsil = tehsil;
-	}
+	}*/
 	public String getCreatedBy() {
 		return CreatedBy;
 	}

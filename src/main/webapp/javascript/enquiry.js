@@ -1,15 +1,38 @@
 var mes;
 
 $(document).ready(function() {
+	$('form[id="EnquiryForm"]').validate({
+		  rules: {
+		    sname: {
+		    	required:true
+		    },
+		    lname: {
+		      required: true
+		    }
+		  },
+		  messages: {
+			sname: {
+				required:'This field is required'
+			},
+			lname: {
+				required:'This field is required'
+		    }
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  EnquiryData();
+		  }
+	});
+
 	FetchAllEmployee();
 	//getCurrentDate();
-	$("#enq_data_submit").click(function() {
+	/*$("#enq_data_submit").click(function() {
 		var token=sessionStorage.getItem("token");
 		validateLogin(token);
 		 
 		event.preventDefault();
 		EnquiryData();
-	});
+	});*/
 	$("#Add_employee").click(function() {
 		event.preventDefault();
 		AddEmployee();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.dao.EmployeeDAO;
 import org.VCERP.Education.VC.model.Employee;
+import org.VCERP.Education.VC.model.User;
 
 public class EmployeeController {
 
@@ -17,9 +18,5 @@ public class EmployeeController {
 		return dao.FetchAllEmployee(branch);
 	}
 
-	public Employee createEmployeeAccount(Employee emp) {
-		EmployeeDAO dao=new EmployeeDAO();
-		return dao.createEmployeeAccount(emp);
-	}
-
+	
 }

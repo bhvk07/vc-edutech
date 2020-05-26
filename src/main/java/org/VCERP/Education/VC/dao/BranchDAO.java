@@ -17,8 +17,8 @@ public class BranchDAO {
 		try {
 			con=Util.getDBConnection();
 			String query="insert into branch(`branch_name`,`institute_type`,`title`,`subtitle`,`branchCode`,`address`,`email`,"
-					+ "`contact`,`telno`,`GSTIN`,`panno`,`country`,`state`,`branch_distinct`,`tehsil`,`created_by`,`created_date`)"
-					+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "`contact`,`created_by`,`created_date`)"
+					+ " values(?,?,?,?,?,?,?,?,?,?)";
 			
 			ps=con.prepareStatement(query);
 			ps.setString(1, branch.getBranch());
@@ -29,15 +29,11 @@ public class BranchDAO {
 			ps.setString(6, branch.getAddress());
 			ps.setString(7, branch.getEmail());
 			ps.setString(8, branch.getContact());
-			ps.setString(9, branch.getTelno());
-			ps.setString(10, branch.getGSTIN());
-			ps.setString(11, branch.getPanNo());
-			ps.setString(12, branch.getCountry());
-			ps.setString(13, branch.getState());
-			ps.setString(14, branch.getDistinct());
-			ps.setString(15, branch.getTehsil());
-			ps.setString(16, branch.getCreatedBy());
-			ps.setString(17, Util.currentDate());
+/*			ps.setString(9, branch.getCountry());
+			ps.setString(10, branch.getState());
+			ps.setString(11, branch.getDistinct());*/
+			ps.setString(9, branch.getCreatedBy());
+			ps.setString(10, Util.currentDate());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,15 +66,11 @@ public class BranchDAO {
 				branch.setAddress(rs.getString(7));
 				branch.setEmail(rs.getString(8));
 				branch.setContact(rs.getString(9));
-				branch.setTelno(rs.getString(10));
-				branch.setGSTIN(rs.getString(11));
-				branch.setPanNo(rs.getString(12));
-				branch.setCountry(rs.getString(13));
-				branch.setState(rs.getString(14));
-				branch.setDistinct(rs.getString(15));
-				branch.setTehsil(rs.getString(16));
-				branch.setCreatedBy(rs.getString(17));
-				branch.setCreated_Date(rs.getString(18));
+/*				branch.setCountry(rs.getString(10));
+				branch.setState(rs.getString(11));
+				branch.setDistinct(rs.getString(12));*/
+				branch.setCreatedBy(rs.getString(10));
+				branch.setCreated_Date(rs.getString(11));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,15 +104,11 @@ public class BranchDAO {
 				branch.setAddress(rs.getString(7));
 				branch.setEmail(rs.getString(8));
 				branch.setContact(rs.getString(9));
-				branch.setTelno(rs.getString(10));
-				branch.setGSTIN(rs.getString(11));
-				branch.setPanNo(rs.getString(12));
-				branch.setCountry(rs.getString(13));
-				branch.setState(rs.getString(14));
-				branch.setDistinct(rs.getString(15));
-				branch.setTehsil(rs.getString(16));
-				branch.setCreatedBy(rs.getString(17));
-				branch.setCreated_Date(rs.getString(18));
+/*				branch.setCountry(rs.getString(10));
+				branch.setState(rs.getString(11));
+				branch.setDistinct(rs.getString(12));*/
+				branch.setCreatedBy(rs.getString(12));
+				branch.setCreated_Date(rs.getString(13));
 				b.add(branch);
 			}
 		} catch (Exception e) {
