@@ -1,9 +1,16 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="jquery/jquery-3.3.1.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- <script src="jquery/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="jquery/bootstrap.min.js"></script>
+<script src="jquery/bootstrap.min.js"></script> -->
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> -->
 <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -83,7 +90,7 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="dob"
-								type="text" class="form-control" name="dob"
+								type="date" class="form-control" name="dob"
 								placeholder="Date of Birth">
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
@@ -101,7 +108,7 @@
 							<span class="input-group-addon">Religion</span>
 							<!-- <div class="form-control">-->
 							<!--                            <div class="select-list">-->
-							<select name="caste" class="form-control" required>
+							<select name="caste" id="caste" class="form-control" required>
 								<option value="Bhuddism">Buddhism</option>
 								<option value="hindu">Hindu</option>
 								<option value="Christanity">Christanity</option>
@@ -116,7 +123,7 @@
 							<span class="input-group-addon">Caste</span>
 							<!--  <div class="form-group"> -->
 							<!--  <div class="select-list"> -->
-							<select name="category" class="form-control" required>
+							<select name="category" id="category" class="form-control" required>
 								<option value="general">General</option>
 								<option value="obc">OBC</option>
 								<option value="SC">SC</option>
@@ -131,7 +138,7 @@
 							<span class="input-group-addon">Medium</span>
 							<!--  <div class="form-group">
                             <div class="select-list"> -->
-							<select name="lang" class="form-control" required>
+							<select name="lang" id="lang" class="form-control" required>
 								<option value="eng">English</option>
 								<option value="hin">Hindi</option>
 							</select>
@@ -173,21 +180,21 @@
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="stud_cont"
 								type="number" class="form-control" name="stud_cont" value=""
 								placeholder="Student's number">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="father_cont"
 								type="number" class="form-control" name="father_cont" value=""
 								placeholder="Father's number">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="mother_cont"
 								type="number" class="form-control" name="mother_cont" value=""
 								placeholder="Mother's number">
 						</div>
@@ -198,26 +205,26 @@
                                     </div> -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><label for="txtarea">Address</label></span>
-							<textarea id="addr" class="form-control" name="address" rows="6"
+							<textarea id="addr" class="form-control" id="address" name="address" rows="6"
 								cols="52"></textarea>
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="pin"
 								type="number" class="form-control" name="pin" value=""
 								placeholder="PIN">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="email"
 								type="text" class="form-control" name="email" value=""
 								placeholder="Email id">
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
+								class="glyphicon glyphicon-user"></i></span> <input id="w_app_no"
 								type="number" class="form-control" name="w_app_no" value=""
 								placeholder="Whatsapp number">
 						</div>
@@ -244,13 +251,13 @@
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">Enquiry Date</span> <input
-								id="login-username" type="number" class="form-control"
+								id="enq_date" type="date" class="form-control"
 								name="enq_date" value="" placeholder="">
 
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">Enquiry ID</span> <input
-								id="login-username" type="number" class="form-control"
+								id="enq_no" type="number" class="form-control"
 								name="enq_no" value="" placeholder="">
 
 						</div>
@@ -316,7 +323,7 @@
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><label for="txtarea">Remark</label></span>
-							<textarea id="addr" class="form-control" name="remark" rows="6"
+							<textarea id="remark" class="form-control" name="remark" rows="6"
 								cols="52"></textarea>
 						</div>
 
@@ -324,8 +331,12 @@
 							<!-- Button -->
 
 							<div class="col-sm-12 controls">
+							<div class="col-sm-2 controls">
 								<input type="submit" id="enq_data_submit" class="btn btn-success" value="Submit">
-
+							</div>
+								<div class="col-sm-2 controls">
+								<input type="submit" id="cancel" class="btn btn-success" value="Cancel" style="display:none;align">
+							</div>
 							</div>
 						</div>
 

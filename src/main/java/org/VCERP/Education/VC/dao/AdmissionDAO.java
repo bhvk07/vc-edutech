@@ -124,10 +124,12 @@ public class AdmissionDAO {
 		String query="";
 		try {
 			con=Util.getDBConnection();
-			query="select `id`,`sname`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`"
+			query="select * from enquiry "
+					+ "where enq_no=? or sname=? or lname=? or fname=? and branch=?";
+			/*query="select `id`,`sname`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`"
 					+ ",`caste`,`category`,`lang`,`stud_cont`,`father_cont`,`mother_cont`"
 					+ ",`address`,`pin`,`email`,`w_app_no`,`fees_pack`,`status` from enquiry "
-					+ "where id=? or sname=? or lname=? or fname=? and branch=?";
+					+ "where id=? or sname=? or lname=? or fname=? and branch=?";*/
 			ps=con.prepareStatement(query);
 			ps.setString(1, enq_stud);
 			ps.setString(2, enq_stud);
@@ -156,8 +158,14 @@ public class AdmissionDAO {
 				eq.setPin(rs.getString(16));
 				eq.setEmail(rs.getString(17));
 				eq.setW_app_no(rs.getString(18));
-				eq.setFees_pack(rs.getString(19));
-				eq.setStatus(rs.getString(20));
+				eq.setEnq_date(rs.getString(19));
+				eq.setEnq_no(rs.getString(20));
+				eq.setEnq_taken_by(rs.getString(21));
+				eq.setFees_pack(rs.getString(22));
+				eq.setLead_source(rs.getString(23));
+				eq.setRemark(rs.getString(24));
+				eq.setStatus(rs.getString(25));
+				eq.setBranch(rs.getString(26));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -168,7 +176,7 @@ public class AdmissionDAO {
 		}
 		return eq;
 	}
-	public Enquiry searchStudentFromAdmission(String enq_stud,String branch) {
+	/*public Enquiry searchStudentFromAdmission(String enq_stud,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -221,7 +229,7 @@ public class AdmissionDAO {
 		}
 		return admission;
 	}
-
+*/
 	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
 		Connection con=null;
 		PreparedStatement ps=null;

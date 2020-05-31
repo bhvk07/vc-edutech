@@ -36,7 +36,6 @@
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 
-
 <style type="text/css">
 body {
 	color: #566787;
@@ -339,18 +338,20 @@ table.table .avatar {
 					</div>
 					<div class="col-sm-6">
 
-						
+						<button type="button" id="btnMarkDelete" onclick="DeleteData();"
+							data-style="zoom-out" style="display: none;" title=""
+							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
+							data-original-title="Delete This Fees Type">
+							<b><i class=" padding-right-sm fs14"></i></b><span
+								class="label-xs hidden-xs hidden-sm p5">edit</span>
+						</button>
 
-						<a href="#editEmployeeModal" data-toggle="modal"  data-target="#editEmployeeModal" id="edit-btn" style="display:none" 
-							  class="btn btn-warning"><i
-							class="material-icons">&#xE147;</i> <span>Edit</span></a>
-							
+
 
 
 						<a href="#academicModal" data-toggle="modal"
-							 data-target="#academicModal" class="btn btn-success"><i
+							data-target="#academicModal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a>
-							
 							 <!-- <a href="#deleteEmployeeModal" class="btn btn-danger"
 							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a> -->
@@ -412,9 +413,6 @@ table.table .avatar {
 			</script>
 
 
-
-
-
 		</div>
 	</div>
 
@@ -432,7 +430,7 @@ table.table .avatar {
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Academic Year<font color="red">*</font></label>
-							<input type="text" class="form-control" id="aca_year" name="aca_year"  required>
+							<input type="text" class="form-control" id="aca_year" name="aca_year"required>
 						</div>
 
                         <div class="form-group">
@@ -478,42 +476,36 @@ table.table .avatar {
 	</div>
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
-				<div class="modal-dialog">
+		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="EditAcademicYear">
-					<div class="modal-header"
-						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Edit</h4>
+				<form>
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Academic Year<font color="red">*</font></label>
-							<input type="text" class="form-control" id="edit_aca_year" name="edit_aca_year" required>
-						</div>
-
-                        <div class="form-group">
-						  <label>Academic Start Date<font color="red">*</font></label>
-							<div class="input-group date form_date1" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_start" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="edit_aca_start" name="edit_aca_start"required>
-							</div>
-							<!-- <input type="hidden" id="dtp_input2" name="academic_date" value="" /> -->
+							<label>Name</label> <input type="text" class="form-control"
+								required>
 						</div>
 						<div class="form-group">
-							<label>Academic End Date<font color="red">*</font></label>
-							<div class="input-group date form_date2" data-date="" data-date-format="YYYY-MM-DD"
-							data-link-field="aca_end" data-link-format="yyyy-mm-dd">
-							<input type="text" class="form-control" id="edit_aca_end" name="edit_aca_end"required>
-							</div>
+							<label>Email</label> <input type="email" class="form-control"
+								required>
+						</div>
+						<div class="form-group">
+							<label>Address</label>
+							<textarea class="form-control" required></textarea>
+						</div>
+						<div class="form-group">
+							<label>Phone</label> <input type="text" class="form-control"
+								required>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> 
-							<input type="submit" class="btn btn-success" value="Save"
-							style="background-color: #53b700; color: aliceblue">
+							value="Cancel"> <input type="submit" class="btn btn-info"
+							value="Save">
 					</div>
 				</form>
 			</div>
@@ -567,33 +559,7 @@ table.table .avatar {
 	}); */
 	 
 	</script>
-<script>
-$(document).ready(function() {
-$("#checkbox").on('click',function(){
-	
-	 var checkboxes = $(this).closest('#academictable').find(':checkbox');
-	 
-	 if ($(this).is(':checked')) {
-			checkboxes.prop('checked', true);
-			 $("#edit-btn").show();
 
-			/*  var $trr = this.closest('tr');  */
-			 var Acad_yr=$( "tr td:nth-last-child(4)" ).text();
-			 var start_date= $( "tr td:nth-last-child(3)" ).text();
-			 var end_date= $( "tr td:nth-last-child(2)" ).text();
-			document.getElementById("edit_aca_year").value=Acad_yr;
-			document.getElementById("edit_aca_start").value=start_date;
-			document.getElementById("edit_aca_end").value=end_date;
-		
-		} else {
-			checkboxes.prop('checked', false);
-			 $("#edit-btn").hide();
-		}
-});
-});
-
-
-</script>
 
 </body>
 </html>

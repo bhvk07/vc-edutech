@@ -312,35 +312,9 @@ table.table .avatar {
 				});
 			}
 		});
-		
-		
-		
 		checkbox.click(function() {
 			if (!this.checked) {
 				$("#selectAll").prop("checked", false);
-				$("#edit-btn").hide();
-			}
-			if(this.checked){
-				var trr = $(this).closest('tr');
-				 var subjectname_value= trr.find("td:nth-last-child(3)" ).text();
-				 var timeline_value= trr.find("td:nth-last-child(2)" ).text();
-				
-				 
-				 
-				 $("#edit-btn").show();
-				 $("#edit-btn").click(function() {
-				
-				document.getElementById("edit-subjectname").value=subjectname_value;
-				document.getElementById("edit-timeline").value=timeline_value;
-				 });
-				 
-				 $("#edit-cancel").click(function() {
-					 $("#edit-btn").hide();
-					 checkbox.each(function() {
-							this.checked = false;
-						});
-						
-					});
 			}
 		});
 	});
@@ -353,15 +327,18 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							<b>STANDARD</b>
+							<b>Fees Type</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
 
-					<a href="#editEmployeeModal" data-toggle="modal"  data-target="#editEmployeeModal" id="edit-btn" style="display:none" 
-							  class="btn btn-warning"><i
-							class="material-icons">&#xE147;</i> <span>Edit</span></a>
-							
+						<button type="button" id="btnMarkDelete" onclick="DeleteData();"
+							data-style="zoom-out" style="display: none;" title=""
+							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
+							data-original-title="Delete This Fees Type">
+							<b><i class=" padding-right-sm fs14"></i></b><span
+								class="label-xs hidden-xs hidden-sm p5">edit</span>
+						</button>
 
 
 
@@ -570,150 +547,6 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
-	
-	
-	<!-- edit modal -->
-	
-	
-		<div id="editEmployeeModal" class="modal fade">
-		<div class="modal-body">
-			<div class="modal-content">
-				<form id="standard">
-					<div class="modal-header"
-						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">STANDARD</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Standard<font color="red">*</font></label> <input
-								type="text" class="form-control" id="edit-stdtname" name="stdname"
-								required>
-						</div>
-
-						<div class="form-group">
-							<label>Standard Fees Amount<font color="red">*</font></label> <input
-								type="number" class="form-control" id="edit-stdamt" name="stdamt"
-								required>
-						</div>
-
-						<div class="form-group">
-							
-							<div class="col-sm-12">
-								<div class="col-sm-6">
-									<div class="form-group has-search">
-										<div class="input-group">
-											<!-- <input type="text" class="form-control" placeholder="Search"> -->
-											<label>Subject<font color="red">*</font></label>
-											<select id="multiple-checkboxes" name="subject" multiple="multiple">
-												
-											</select>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-8">
-									<div class="form-group">
-
-										<label class="control-label">Branch<span
-											class="text-red">*</span></label>
-
-										<table id="BranchTable" style="width: 70%;"
-											class="table table-bordered table-hover table-condensed table-lg">
-											<thead>
-												<tr>
-													<th>
-														<div
-															class="checkbox-custom checkbox-default checkbox-inline style"
-															style="margin-top: 0px !important;">
-															<input type="checkbox" id="selectall" class="allstdcheck">
-															<label for="SelectAllBranch"></label>
-														</div>
-													</th>
-													<th>Branch</th>
-													<th>Amount</th>
-												</tr>
-											</thead>
-											<!-- <tbody>
-												<tr>
-													<td>
-														<div
-															class="checkbox-custom checkbox-default checkbox-inline styled"
-															style="margin-top: 0px;">
-															<input type="checkbox" id="select1" class="stdcheck">
-														</div>
-													</td>
-													<td>VC CLASSES</td>
-													<td><input type="text" id="Amount"
-														class="form-control text" value="0"></td>
-												</tr>
-												<tr>
-													<td><div
-															class="checkbox-custom checkbox-default checkbox-inline styled"
-															style="margin-top: 0px;">
-															<input type="checkbox" id="select2" class="stdcheck">
-														</div></td>
-													<td>VC KIDZ - VASAI</td>
-													<td><input type="text" id="Amount1"
-														class="form-control text" value="0"></td>
-												</tr>
-												<tr>
-													<td>
-														<div
-															class="checkbox-custom checkbox-default checkbox-inline styled"
-															style="margin-top: 0px !important;">
-															<input type="checkbox" id="select3" class="stdcheck">
-														</div>
-													</td>
-													<td>VC KIDZ</td>
-													<td><input type="text" id="Amount2"
-														class="form-control text" value="0"></td>
-												</tr>
-											</tbody>
- -->										</table>
-
-									</div>
-
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-					<!----code for selecting all check boxes---->
-					<script type="text/javascript">
-					 
-						$('#selectall').click(
-								function(event) { //on click
-
-									var checkboxes = $(this).closest(
-											'#BranchTable').find(':checkbox');
-									if ($(this).is(':checked')) {
-										checkboxes.prop('checked', true);
-										//CheckSelection();
-
-									} else {
-										checkboxes.prop('checked', false);
-										//CheckSelection();
-									}
-								});
-					</script>
-
-
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit" id="savestd"
-							class="btn btn-success" value="Save"
-							style="background-color: #53b700; color: aliceblue">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	
-	
 	<!-- <script>
 		function GetSelectedTextValue(mySelect) {
 			var selectedText = mySelect.options[mySelect.selectedIndex].innerHTML;

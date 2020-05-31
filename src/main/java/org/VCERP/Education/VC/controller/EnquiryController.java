@@ -32,4 +32,9 @@ public class EnquiryController {
 		dao.Admission(id);	
 	}
 
+	public void EditEnquiryData(Enquiry enquiry) {
+		EnquiryDAO dao=new EnquiryDAO();
+		dao.EditEnquiryData(enquiry);
+	}
+
 }

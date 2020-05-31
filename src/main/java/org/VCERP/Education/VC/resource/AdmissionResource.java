@@ -177,17 +177,17 @@ public class AdmissionResource {
 		 Enquiry enquiry=new Enquiry();
 			AdmissionController controller=new AdmissionController();
 			enquiry=controller.searchStudent(enq_stud,branch);
-			if(enquiry==null)
+			if(enquiry!=null)
 			{ 
-				enquiry=controller.searchStudentFromAdmission(enq_stud,branch);
-				if(enquiry!=null){
+				/*enquiry=controller.searchStudentFromAdmission(enq_stud,branch);
+				if(enquiry!=null){*/
 				return Response.status(Status.ACCEPTED).entity(enquiry).build();
-				}	
+				/*}*/	
 			}
-			else{
+			/*else{
 				return Response.status(Status.ACCEPTED).entity(enquiry).build();
 				
-			}
+			}*/
 			return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
 	

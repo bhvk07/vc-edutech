@@ -32,10 +32,10 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.saveInstallment(installment);
 	}
-	public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
+	/*public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.searchStudentFromAdmission(enq_stud,branch);
-	}
+	}*/
 	public String getStandard(String fees_pack, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getStandard(fees_pack,branch);

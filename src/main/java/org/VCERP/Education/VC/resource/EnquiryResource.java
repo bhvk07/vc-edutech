@@ -45,6 +45,26 @@ public class EnquiryResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not Accepted.").build();
 	}
+
+	@Path("/editEnquiryData")
+	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	//@PreAuthorize("hasRole('desk')")
+	//@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditEnquiryData(@Valid @BeanParam Enquiry enquiry){
+		try {
+			
+			//System.out.println(enquiry.getCaste());
+			EnquiryController controller=new EnquiryController();
+			controller.EditEnquiryData(enquiry);
+			return Response.status(Status.OK).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not updated.").build();
+	}
 	
 	@GET
 	@PermitAll

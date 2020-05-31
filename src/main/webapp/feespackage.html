@@ -367,13 +367,7 @@ table.table .avatar {
 				</div>
 -->
 
-
 <!--							<div id="demo2">-->
-
-<a href="#editEmployeeModal" data-toggle="modal"  data-target="#editEmployeeModal" id="edit-btn" style="display:none" 
-							  class="btn btn-warning"><i
-							class="material-icons">&#xE147;</i> <span>Edit</span></a>
-							
 							<button type="button" style="background-color:#53b700;"
 								class="btn btn-danger popconfirm  margin-right-sm ladda-button add-b">
 								<b><i class=" padding-right-sm fs14"></i></b><span>Add
@@ -382,6 +376,9 @@ table.table .avatar {
 
 
 
+							<!-- <a href="#feestypeModal" data-toggle="modal"
+							data-target="#feestypeModal" class="btn btn-success"><i
+							class="material-icons">&#xE147;</i> <span>Add New</span></a> -->
 
 <!--
 							<a href="#deleteEmployeeModal" class="btn btn-danger"
@@ -774,7 +771,7 @@ $("#feestypetable").on('change','.amt, .discount', function(){
    var r = document.getElementById('feespackage');
    var noof = r.rows.length-1;
   // var val = this.value;
-   var $trr = this.closest('tr');         // 
+   var $trr = this.closest('tr');
    amount = parseInt($(".amt",$trr).val());
    discount = parseInt($(".discount",$trr).val());
    if(amount.value!=NaN){

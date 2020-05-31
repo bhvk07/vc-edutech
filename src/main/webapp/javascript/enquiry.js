@@ -1,5 +1,6 @@
 var mes;
-
+var editData=sessionStorage.getItem("EditData");
+var request="";
 $(document).ready(function() {
 	$('form[id="EnquiryForm"]').validate({
 		  rules: {
@@ -25,14 +26,15 @@ $(document).ready(function() {
 	});
 
 	FetchAllEmployee();
-	//getCurrentDate();
-	/*$("#enq_data_submit").click(function() {
-		var token=sessionStorage.getItem("token");
-		validateLogin(token);
-		 
+	if(editData!=null){
+		loadEditData(editData);
+		request="Edit"
+		document.getElementById("cancel").style.display = "block";
+	}
+	$("#cancel").click(function() {
 		event.preventDefault();
-		EnquiryData();
-	});*/
+		sessionStorage.removeItem("EditData");
+	});
 	$("#Add_employee").click(function() {
 		event.preventDefault();
 		AddEmployee();
@@ -43,7 +45,10 @@ $(document).ready(function() {
 function EnquiryData() {
 
 	function callback(responseData, textStatus, request) {
-		alert("suc")
+		alert("suc");
+		if(editData!=null){
+			sessionStorage.removeItem("EditData");
+		}
 		/*var mes=responseData.responseJSON.message;
 		showNotification("success",mes);*/
 	}
@@ -58,9 +63,14 @@ function EnquiryData() {
 		 */
 	}
 	var formData = $('#EnquiryForm').serialize()+"&branch="+branchSession;
+	alert(formData);
 	var httpMethod = "POST";
+	if(request==""){
 	var relativeUrl = "/Enquiry/EnquiryData";
-
+	}else
+		{
+		var relativeUrl = "/Enquiry/editEnquiryData";
+		}
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
@@ -91,34 +101,33 @@ function AddEmployee() {
 	return false;
 }
 
-/*function FetchAllEmployee() {
-	function callback(responseData, textStatus, request) {
-
-		for ( var i in responseData) {
-			var htmlCode = '<option value="' + responseData[i].emp_name + '" >'
-					+ responseData[i].emp_name + '</option>';
-			$('#enq_taken').append(htmlCode);
-		}
-		// var message=responseData.response.JSON.message;
-		// alert(message);
-	}
-	function errorCallback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
-		// var message=responseData.response.JSON.message;
-		// alert(message);
-	}
-	var httpMethod = "GET";
-	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branch;
-	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}*/
-
-//function getCurrentDate() {
-//	var today = new Date();
-//	var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-'
-//			+ today.getDate();
-//	alert(date);
-//	document.getElementById('enq_date').value = date;
-//}
+function loadEditData(Data){
+	var data=Data.split(",");
+	alert(Data);
+	document.getElementById("sname").value=data[15];
+	document.getElementById("lname").value=data[1];
+	document.getElementById("fname").value=data[0];
+	document.getElementById("mname").value=data[2];
+	document.getElementById("uid").value=data[3];
+	$("#dob").val(data[4]);
+	//document.getElementById("dob").value = data[4];	
+	$("input[name=gender][value="+data[5]+"]").attr('checked', true);
+	$("#caste").val(data[6]);
+	$("#category").val(data[7]);
+	$("#lang").val(data[8]);
+	document.getElementById("stud_cont").value=data[16];
+	document.getElementById("father_cont").value=data[9];
+	document.getElementById("mother_cont").value=data[10];
+	$("#address").val(data[11]);
+	//document.getElementByTagName("address").value=data[11];
+	document.getElementById("pin").value=data[12];	
+	document.getElementById("email").value=data[13];
+	document.getElementById("w_app_no").value=data[14];
+	document.getElementById("enq_date").value=data[17];
+	document.getElementById("enq_no").value=data[18];
+	document.getElementById('enq_no').readOnly = true;
+	$("#enq_taken").val(data[19]);
+	$("#fees").val(data[22]);
+	$("#lead").val(data[20]);
+	document.getElementById("remark").value=data[21];
+}
