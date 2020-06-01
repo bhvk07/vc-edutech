@@ -22,4 +22,9 @@ public class BranchController {
 		return dao.getAllBranchDetails();
 	}
 
+	public void editBranch(Branch branch) {
+		BranchDAO dao=new BranchDAO();
+		dao.editBranch(branch);
+	}
+
 }

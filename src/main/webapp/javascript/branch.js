@@ -1,7 +1,22 @@
+var request;
 $(document).ready(function(){
 	getBranch();
 	$("#branch-form").submit(function(){
 		addNewBranch();
+	});
+	var table=$('#branchtable').DataTable();
+	$("#edit").click(function(e){
+		request="Edit";
+		var code;
+		$('table .cbCheck').each(function(i, chk) {
+			if (chk.checked == true) {
+				code = table.rows({selected : true}).column(2).data()[i];	
+			}
+		});
+		loadBranch(code,e,request);
+	});
+	$("#cancel").click(function(){
+		clearModal();
 	});
 });
 
@@ -9,6 +24,7 @@ function addNewBranch(){
 	function callback(responseData, textStatus, request){
 		var msg = responseData.responseJSON.message;
 		showNotification("success",mes);
+		clearBranch();
 
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -19,7 +35,12 @@ function addNewBranch(){
 	var formData = $("#branch-form").serialize()+"&createdBy="+user;
 	console.log(formData);
 	var httpMethod = "POST";
+	if(request!="Edit"){
 	var relativeUrl = "/branch/addNewBranch";
+	}
+	else{
+		var relativeUrl = "/branch/editBranch";
+	}
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
@@ -30,7 +51,7 @@ function getBranch(){
 		var table = $('#branchtable').DataTable();
 		var value = 0;
 		table.rows().remove().draw();
-			var check = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="P"><label for="checkbox1"></label></span>';
+			var check = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'+responseData.BranchCode+'"><label for="checkbox1"></label></span>';
 			var date = responseData.Created_Date;
 			var Branch = responseData.Branch;
 			var BranchCode = responseData.BranchCode;
@@ -46,4 +67,43 @@ function getBranch(){
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
+}
+function loadBranch(code,e,req){
+	function callback(responseData, textStatus, request){
+		document.getElementById("branch_name").value=responseData.Branch;
+		$("#instituteType").val(responseData.InstituteType);
+		document.getElementById("title").value=responseData.Title;
+		document.getElementById("subTitle").value=responseData.SubTitle;
+		document.getElementById("branchCode").value=responseData.BranchCode;
+		document.getElementById("address").value=responseData.Address;
+		document.getElementById("email").value=responseData.Email;
+		document.getElementById("contact").value=responseData.Contact;
+		e.preventDefault();
+		$('#branchModal').modal({
+		        show: true, 
+		        backdrop: 'static',
+		        keyboard: true
+		     })
+		}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/branch/getBranch?branch="+code;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function clearModal(){
+	document.getElementById("branch_name").value="";
+	$("#instituteType").val("Computer / Dance/ Music Training Institute");
+	document.getElementById("title").value="";
+	document.getElementById("subTitle").value="";
+	document.getElementById("branchCode").value="";
+	document.getElementById("address").value="";
+	document.getElementById("email").value="";
+	document.getElementById("contact").value="";
+	request="";
 }

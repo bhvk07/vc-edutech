@@ -50,9 +50,10 @@ public class BranchDAO {
 		Branch branch=null;
 		try {
 			conn=Util.getDBConnection();
-			String query="select * from Branch where branch_name=?";
+			String query="select * from Branch where branch_name=? or branchCode=?";
 			ps=conn.prepareStatement(query);
 			ps.setString(1, input);
+			ps.setString(2 	, input);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -118,6 +119,36 @@ public class BranchDAO {
 			Util.closeConnection(rs, ps, conn);
 		}
 		return b;
+
+	}
+
+	public void editBranch(Branch branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update branch set branch_name=?,institute_type=?,title=?,subtitle=?,address=?,email=?,contact=? where branchCode=?";
+			
+			ps=con.prepareStatement(query);
+			ps.setString(1, branch.getBranch());
+			ps.setString(2, branch.getInstituteType());
+			ps.setString(3, branch.getTitle());
+			ps.setString(4, branch.getSubTitle());
+			
+			ps.setString(5, branch.getAddress());
+			ps.setString(6, branch.getEmail());
+			ps.setString(7, branch.getContact());
+			ps.setString(8, branch.getBranchCode());
+/*			ps.setString(9, branch.getCountry());
+			ps.setString(10, branch.getState());
+			ps.setString(11, branch.getDistinct());*/
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 
 	}
 

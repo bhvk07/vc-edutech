@@ -69,4 +69,18 @@ public class BranchResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not Found").build();
 	}
+	@Path("/editBranch")
+	@POST
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response editBranch(@BeanParam Branch branch) {
+		try {
+			BranchController controller = new BranchController();
+			controller.editBranch(branch);
+			return Util.generateResponse(Status.ACCEPTED, "Data Save").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not updated").build();
+	}
 }
