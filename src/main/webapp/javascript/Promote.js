@@ -8,13 +8,14 @@ $(document).ready(function() {
     includeSelectAllOption : true,
       enableFiltering: true
 
-  });
+});
+});
 $(function() {
 		var Accordion = function(el, multiple) {
 				this.el = el || {};
 				this.multiple = multiple || false;
 
-				var links = this.el.find('.content-entry .label-title-stud');
+				var links = this.el.find('.content-entry .title-promote');
 				links.on('click', {
 						el: this.el,
 						multiple: this.multiple
@@ -23,7 +24,7 @@ $(function() {
 
 		Accordion.prototype.dropdown = function(e) {
 				var $el = e.data.el;
-				
+                /*alert(e.data);*/
 				$this = $(this),
 						$next = $this.next();
 
@@ -37,10 +38,10 @@ $(function() {
 		var accordion = new Accordion($('.accordion-container'), false);
 });
 
-$(document).on('click', function (event) {
+$('.title-promote').on('click', function (event) {
   if (!$(event.target).closest('#accordion').length) {
     $this.parent().toggleClass('open');
   }
 });    
     
-});
+//});
