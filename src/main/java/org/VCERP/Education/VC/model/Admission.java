@@ -43,6 +43,7 @@ public class Admission {
 	private long remain_fees;
 	private String created_date;
 	private String Branch;
+	private Installment installment;
 	public long getId() {
 		return id;
 	}
@@ -254,6 +255,12 @@ public class Admission {
 	}
 	public void setStandard(String standard) {
 		this.standard = standard;
+	}
+	public Installment getInstallment() {
+		return installment;
+	}
+	public void setInstallment(Installment installment) {
+		this.installment = installment;
 	}
 	
 	

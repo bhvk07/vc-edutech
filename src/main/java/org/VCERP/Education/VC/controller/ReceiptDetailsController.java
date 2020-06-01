@@ -19,7 +19,7 @@ public class ReceiptDetailsController {
 		return dao.ReceiptDetailsForm(details);	
 	}
 
-	public Admission searchStudent(long enq_stud, String branch) {
+	public Admission searchStudent(String enq_stud, String branch) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
 		return dao.searchStudent(enq_stud,branch);
 	}
@@ -44,6 +44,11 @@ public class ReceiptDetailsController {
 	public ArrayList<ReceiptDetails> getReceiptAdmissionData(long rollno, String receiptno) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
 		return dao.getReceiptAdmissionData(rollno,receiptno);
+	}
+
+	public void updateInstallment(String rollno, String due_date, String branch, long received_amt) {
+		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
+		dao.updateInstallment(rollno,due_date,branch,received_amt);
 	}
 
 }

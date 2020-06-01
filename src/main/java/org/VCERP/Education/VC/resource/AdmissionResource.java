@@ -102,7 +102,7 @@ public class AdmissionResource {
 //			admission.setRemain_fees(Integer.parseInt(f_pack[1])-admission.getPaid_fees());
 			String[] commaSeperated=Util.commaSeperatedString(installment);
 			if(commaSeperated.length>2){
-				saveInstallment(commaSeperated);
+				saveInstallment(commaSeperated,branch);
 			}
 			controller=new AdmissionController();
 			controller.StudentAdmission(admission);
@@ -139,7 +139,7 @@ public class AdmissionResource {
 		return std;
 	}
 	
-	public Response saveInstallment(String[] commaSeperated){
+	public Response saveInstallment(String[] commaSeperated, String branch){
 		ArrayList<String> installDate=new ArrayList<>();
 		ArrayList<String> fees_title=new ArrayList<>();
 		ArrayList<Integer> amt=new ArrayList<>();
@@ -161,7 +161,7 @@ public class AdmissionResource {
 			installment.setDue_date(installDate);
 			installment.setFees_title(fees_title);
 			controller=new AdmissionController();
-			controller.saveInstallment(installment);	
+			controller.saveInstallment(installment,branch);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

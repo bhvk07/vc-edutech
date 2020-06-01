@@ -20,6 +20,7 @@ public class ReceiptDetails {
 	private String branch;
 	private Admission admission;
 	
+	
 	public long getId() {
 		return id;
 	}
@@ -111,6 +112,5 @@ public class ReceiptDetails {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
-	
 	
 }

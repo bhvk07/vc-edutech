@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -64,16 +65,18 @@ public class ReceiptDetailsDAO {
 		return details;
 	}
 
-	public Admission searchStudent(long enq_stud, String branch) {
+	public Admission searchStudent(String enq_stud, String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Admission admission=null;
+		Installment install=new Installment();
 		try {
 			con=Util.getDBConnection();
-			String query="select Rollno,student_name,contact,fees from admission where Rollno=? and branch=?";
+			String query="select Rollno,student_name,contact,fees,invoice_no from "
+					+ "admission where Rollno=? and branch=?";
 			ps=con.prepareStatement(query);
-			ps.setLong(1, enq_stud);
+			ps.setString(1, enq_stud);
 			ps.setString(2, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
@@ -83,8 +86,12 @@ public class ReceiptDetailsDAO {
 				admission.setStudent_name(rs.getString(2));
 				admission.setContact(rs.getString(3));
 				admission.setFees(rs.getLong(4));
+				admission.setInvoice_no(rs.getString(5));
 			}
-			
+			install=getInstallmentDetails(enq_stud, branch);
+			if(install!=null){
+			admission.setInstallment(install);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -94,6 +101,45 @@ public class ReceiptDetailsDAO {
 		}
 		return admission;
 	}
+	public Installment getInstallmentDetails(String enq_stud, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Installment install=new Installment();
+		ArrayList<Integer> id=new ArrayList<>();
+		ArrayList<String> title=new ArrayList<>();
+		ArrayList<Integer> payment=new ArrayList<>();
+		ArrayList<String> date=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select id,fees_title,monthly_payment,due_date from "
+					+ "installment where rollno=? and paid_status='0' and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, enq_stud);
+			ps.setString(2, branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				id.add(rs.getInt(1));
+				title.add(rs.getString(2));
+				payment.add(rs.getInt(3));
+				date.add(rs.getString(4));
+			}
+			install.setId(id);
+			install.setFees_title(title);
+			install.setMonthly_pay(payment);
+			install.setDue_date(date);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return install;
+	}
+
 
 	public ArrayList<ReceiptDetails> FetchAllReceiptDetails(String branch) {
 		Connection con=null;
@@ -272,5 +318,27 @@ public class ReceiptDetailsDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return ad;
+	}
+
+	public void updateInstallment(String rollno, String due_date, String branch, long received_amt) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update installment set paid_amount=?,paid_status='1' where rollno=? and due_date=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setLong(1, received_amt);
+			ps.setString(2, rollno);
+			ps.setString(3, due_date);
+			ps.setString(4, branch);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+
 	}
 }

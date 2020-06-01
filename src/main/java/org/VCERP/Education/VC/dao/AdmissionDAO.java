@@ -250,14 +250,14 @@ public class AdmissionDAO {
 		}
 	}
 
-	public Installment saveInstallment(Installment installment) {
+	public Installment saveInstallment(Installment installment, String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
 			String query="insert into installment(`rollno`,`stud_name`,`total_fees`,`monthly_payment`,"
-					+ "`due_date`,`fees_title`)"
-					+ "values(?,?,?,?,?,?)";
+					+ "`due_date`,`fees_title`,`paid_amount`,`paid_status`,`branch`)"
+					+ "values(?,?,?,?,?,?,0,0,?)";
 			ps=con.prepareStatement(query);
 			for(int i=0;i<installment.getDue_date().size();i++){
 			ps.setString(1, installment.getRollno());
@@ -266,6 +266,7 @@ public class AdmissionDAO {
 			ps.setLong(4, installment.getMonthly_pay().get(i));
 			ps.setString(5, installment.getDue_date().get(i));
 			ps.setString(6, installment.getFees_title().get(i));
+			ps.setString(7, branch);
 			ps.executeUpdate();
 			}
 		}catch (Exception e) {

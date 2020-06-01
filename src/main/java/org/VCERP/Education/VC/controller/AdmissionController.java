@@ -28,9 +28,9 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		dao.updateTotalFeesPaid(rollno,fees_paid,fees_remain);
 	}
-	public Installment saveInstallment(Installment installment) {
+	public Installment saveInstallment(Installment installment, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
-		return dao.saveInstallment(installment);
+		return dao.saveInstallment(installment,branch);
 	}
 	/*public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();

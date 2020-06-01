@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Installment {
 
-	private long id;
+	private ArrayList<Integer> id;
 	private String rollno;
 	private String stud_name;
 	private long total_fees;
@@ -13,10 +13,10 @@ public class Installment {
 	private ArrayList<String> fees_title;
 	private long paid_fees;
 	private ArrayList<String> paid;
-	public long getId() {
+	public ArrayList<Integer> getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(ArrayList<Integer> id) {
 		this.id = id;
 	}
 	public String getRollno() {

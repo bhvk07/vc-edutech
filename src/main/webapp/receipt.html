@@ -11,7 +11,7 @@
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+
 <!--<link href="style.css" rel="stylesheet" type="text/css">-->
 <link rel="stylesheet" href="css/receipt-style.css" type="text/css">
 <script src="core/popper.min.js"></script>
@@ -67,7 +67,7 @@
 									class="text-red">*</span>
 								</label>
 								<div class="col-sm-3">
-									<input type="date" name="receipt_date" class="form-control"
+									<input type="date" name="receipt_date" id="receipt_date" class="form-control"
 										style="width: 196px;">
 
 								</div>
@@ -143,7 +143,7 @@
 									<div class="input-group">
 										<select name="received_by" class="form-control" id="enq_taken"
 											required style="width: 196px;">
-											
+
 										</select>
 									</div>
 								</div>
@@ -154,6 +154,20 @@
 					</section>
 				</div>
 			</div>
+			<table id="InstallmentTable" style="display: none"
+				class="table table-bordered table-hover table-condensed table-lg">
+				<thead>
+					<tr>
+						<th>Sr.No.</th>
+						<th>Invoice</th>
+						<th>Details</th>
+						<th>Invoice Amount</th>
+						<th>Due Date</th>
+						<th>Due Amount</th>
+						<th>Payment</th>
+					</tr>
+				</thead>
+			</table>
 
 			<!--                         <div class="row" id="PaymentSchedule" >
                 <div class="col-md-12 bg-light p10 hidden-xs">

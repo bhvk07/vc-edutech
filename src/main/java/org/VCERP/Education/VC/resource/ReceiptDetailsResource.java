@@ -18,6 +18,7 @@ import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.ReceiptDetailsController;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -28,7 +29,7 @@ public class ReceiptDetailsResource {
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchStudent(@QueryParam("id") long enq_stud,@QueryParam("branch") String branch){
+	public Response searchStudent(@QueryParam("id") String enq_stud,@QueryParam("branch") String branch){
 		 Admission admission=new Admission();
 			ReceiptDetailsController controller=new ReceiptDetailsController();
 			admission=controller.searchStudent(enq_stud,branch);
@@ -69,7 +70,7 @@ public class ReceiptDetailsResource {
 			@FormParam("receipt_date") String receipt_date,@FormParam("receipt_no") String receipt_no,
 			@FormParam("received_amt") long received_amt,@FormParam("pay_mode") String pay_mode
 			,@FormParam("trans_status") String trans_status,@FormParam("trans_date") String trans_date
-			,@FormParam("received_by") String received_by,@FormParam("branch") String branch)
+			,@FormParam("received_by") String received_by,@FormParam("due_date") String due_date,@FormParam("branch") String branch)
 	{
 		String[] stud_details=Util.symbolSeperatedString(stud_name);
 		ReceiptDetails details=null;
@@ -105,9 +106,12 @@ public class ReceiptDetailsResource {
 			controller.ReceiptDetailsForm(details);
 			long fees_paid=controller.calculateTotalFeesPaid(details.getRollno(),details.getStud_name());
 			long fees_remain=details.getTotal_amt()-fees_paid;
-			System.out.println(fees_paid+"   "+fees_remain);
+			
 			adcontroller=new AdmissionController();
 			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain);
+			
+			controller.updateInstallment(stud_details[0],due_date,branch,received_amt);
+			
 			return Util.generateResponse(Status.ACCEPTED, "Data Inserted").build();
 		} catch (Exception e) {
 			e.printStackTrace();
