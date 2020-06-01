@@ -23,4 +23,12 @@ public class AcademicYearController {
 		AcademicYearDAO dao=new AcademicYearDAO();
 		dao.updateAcademicDetails(rollno,invoice_no,regno,acad_year,branch);
 	}
+	public AcademicYear SpecificAcademicData(String id, String branch) {
+		AcademicYearDAO dao=new AcademicYearDAO();
+		return dao.SpecificAcademicData(id,branch);
+	}
+	public void editAcademicYear(AcademicYear year) {
+		AcademicYearDAO dao=new AcademicYearDAO();
+		dao.editAcademicYear(year);		
+	}
 }

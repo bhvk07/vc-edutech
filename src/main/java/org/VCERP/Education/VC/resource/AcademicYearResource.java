@@ -77,5 +77,60 @@ public class AcademicYearResource{
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
-	
+	@GET
+	@PermitAll
+	@Path("/SpecificAcademicData")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response SpecificAcademicData(@QueryParam("id") String id,@QueryParam("branch") String branch){
+		
+		AcademicYearController controller = null;
+		try{
+			AcademicYear academiclist = new AcademicYear();
+			controller = new AcademicYearController();
+			academiclist = controller.SpecificAcademicData(id,branch);
+			return Response.status(Status.OK).entity(academiclist).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	@POST
+	@PermitAll
+	@Path("/editAcademicYear")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response editAcademicYear(@FormParam("aca_year") String aca_year, @FormParam("aca_start") String aca_start,
+			@FormParam("aca_end") String aca_end,@FormParam("prefix_id_card") String prefix_id_card,
+			@FormParam("id_card") String id_card,@FormParam("prefix_invoice") String prefix_invoice,
+			@FormParam("invoice") String invoice,@FormParam("prefix_regno") String prefix_regno,
+			@FormParam("regno") String regno,@FormParam("id") long id,@FormParam("branch") String branch)
+	{
+		AcademicYear year = null;
+		AcademicYearController controller = null;
+		try {
+			year = new AcademicYear();
+			controller = new AcademicYearController();
+			year.setAca_year(aca_year);
+			year.setStart_date(aca_start);
+			year.setEnd_date(aca_end);
+			year.setId_prefix(prefix_id_card);
+			year.setId_no(id_card);
+			year.setInvoice_prefix(prefix_invoice);
+			year.setInvoice(invoice);
+			year.setReg_prefix(prefix_regno);
+			year.setRegistration(regno);
+			year.setId(id);
+			year.setBranch(branch);
+			controller.editAcademicYear(year);
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Updated").build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Updated").build();
+	}
+
+
 }
