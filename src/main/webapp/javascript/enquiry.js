@@ -8,17 +8,73 @@ $(document).ready(function() {
 		    	required:true
 		    },
 		    lname: {
-		      required: true
-		    }
+		      required: true,
+		      
+		    },
+		    fname: {
+			      required: true
+			},
+			mname: {
+			      required: true
+			},
+			uid: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+			},
+			stud_cont: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+			},
+			father_cont: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+			},
+			mother_cont: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+			},
+			addr: {
+		        required: true
+			},
+			pin: {
+		        required: true,
+		        digits: true,
+		        minlength: 4,
+		        maxlength: 12,
+			},
+			email: {
+		        required: true,
+		        email: true
+			},
+			w_app_no: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+			},
 		  },
-		  messages: {
+		 /* messages: {
 			sname: {
-				required:'This field is required'
+				required:'your name is required'
 			},
 			lname: {
-				required:'This field is required'
-		    }
-		  },
+				required:'Surname is required'
+		    },
+		    fname: {
+				required:'father name is required'
+		    },
+		    mname: {
+				required:'Mother name is required'
+		    },
+		  },*/
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  EnquiryData();
@@ -118,8 +174,8 @@ function loadEditData(Data){
 	document.getElementById("stud_cont").value=data[16];
 	document.getElementById("father_cont").value=data[9];
 	document.getElementById("mother_cont").value=data[10];
-	$("#address").val(data[11]);
-	//document.getElementByTagName("address").value=data[11];
+	//$("#address").val(data[11]);
+	document.getElementById("addr").value=data[11];
 	document.getElementById("pin").value=data[12];	
 	document.getElementById("email").value=data[13];
 	document.getElementById("w_app_no").value=data[14];
