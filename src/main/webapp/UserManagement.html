@@ -321,8 +321,17 @@ table.table .avatar {
 		});
 	});
 </script>
+<script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
+<div class="wrapper">
+<div id="navbar">
+</div>
+
 	<section class="body">
 
 		<!--    <div class="inner-wrapper">-->
@@ -433,8 +442,7 @@ table.table .avatar {
 							<div class="tabs">
 								<ul class="nav nav-tabs tabs-primary">
 									<div class="nav nav-tabs tabs-primary">
-										<li class="active"><a href="#edit" data-toggle="tab"
-											onclick="showEdit();">New User</a></li>
+										<li class="active"><a href="#edit" data-toggle="tab" onclick="showEdit();">New User</a></li>
 									</div>
 								</ul>
 							</div>
@@ -690,7 +698,7 @@ table.table .avatar {
 	</section>
 
 	<!-- Edit Modal HTML -->
-
+</div>
 </body>
 <script>
 	$(document).ready(function() {
