@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.controller.AcademicYearController;
 import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.EnquiryController;
+import org.VCERP.Education.VC.dao.AdmissionDAO;
 import org.VCERP.Education.VC.model.AcademicYear;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
@@ -35,7 +36,7 @@ public class AdmissionResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)	
 	public Response StudentAdmission(@FormParam("stud_details") String student_name,
 			@FormParam("enq_taken_by") String enq_taken_by,@FormParam("adm_fees_pack") String adm_fees_pack,
-			@FormParam("status") String status,@FormParam("date") String date,
+			@FormParam("division") String division,@FormParam("status") String status,@FormParam("date") String date,
 			@FormParam("Rollno") String Rollno,@FormParam("regno") String regno,
 			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
 			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date,
@@ -70,6 +71,7 @@ public class AdmissionResource {
 			admission.setEmail(personal[13]);
 			admission.setW_app_no(personal[14]);
 			admission.setEnq_taken_by(enq_taken_by);
+			admission.setDivision(division);
 			admission.setAdm_fees_pack(f_pack[0]);
 			admission.setStatus(status);
 			admission.setDate(date);
@@ -228,4 +230,57 @@ public class AdmissionResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
 
+	@Path("/getPromotionData")
+	@POST
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response getPromotionData(@FormParam("acad_year") String acad_year,@FormParam("standard") String standard,
+			@FormParam("division") String division,@FormParam("selectedStatus") String status,@FormParam("branch") String branch){
+		 	Admission admission=new Admission();
+		 	ArrayList<Admission> promotion=new ArrayList<>();
+			AdmissionController controller=new AdmissionController();
+			admission.setAcad_year(acad_year);
+			admission.setStandard(standard);
+			admission.setDivision(division);
+			admission.setStatus(status);
+			admission.setBranch(branch);
+			promotion=controller.getPromotionData(admission);
+			if(promotion!=null){
+				return Response.status(Status.ACCEPTED).entity(promotion).build();
+			}
+			return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	@Path("/StudentPromotion")
+	@POST
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response StudentPromotion(@FormParam("fees") String fees,@FormParam("student_status") String status,
+			@FormParam("acad_year") String acad_year,@FormParam("division") String division,
+			@FormParam("admission_date") String admission_date,@FormParam("id") String id,
+			@FormParam("user") String enq_taken,@FormParam("branch") String branch){
+		Enquiry enq=new Enquiry();
+		AcademicYear year=new AcademicYear();
+		AcademicYearController yearController=new AcademicYearController();
+		AdmissionDAO dao=new AdmissionDAO();
+		String[] commaSeperatedId=Util.commaSeperatedString(id);
+		for(int i=0;i<commaSeperatedId.length;i++)
+		{
+			enq=dao.searchStudentFromAdmission(commaSeperatedId[i], branch);
+			String personalDetails=enq.getFname()+","+enq.getLname()+","+enq.getMname()+","+enq.getUid()+","+enq.getDob()+","
+			+enq.getGender()+","+enq.getCaste()+","+enq.getCategory()+","+enq.getLang()+","+enq.getFather_cont()+","+
+			enq.getMother_cont()+","+enq.getAddress()+","+enq.getPin()+","+enq.getEmail()+","+enq.getW_app_no()+","+enq.getSname()+
+			","+enq.getStud_cont();
+			String stud_details=enq.getId()+"|"+enq.getSname()+" "+enq.getFname()+" "+enq.getLname()+"|"+enq.getStud_cont()+"|"+enq.getStatus();
+			year=yearController.getCurrentAcademicYear(branch);
+			String studId=year.getId_prefix()+"-"+year.getId_no();
+			String regno=year.getReg_prefix()+"-"+year.getRegistration();
+			String invoice=year.getInvoice_prefix()+"-"+year.getInvoice();
+			yearController.updateAcademicDetails(studId, invoice, regno, acad_year, branch);
+			String installment="installment details,0|ActivityFees|0";
+			String newamt="0";
+			StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice, admission_date,
+					acad_year, admission_date, personalDetails, installment, newamt, branch);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
 }

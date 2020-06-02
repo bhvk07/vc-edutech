@@ -40,5 +40,9 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getStandard(fees_pack,branch);
 	}
+	public ArrayList<Admission> getPromotionData(Admission admission) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.getPromotionData(admission);
+	}
 
 }

@@ -198,6 +198,7 @@ function getAcademicYear() {
 			var htmlCode=('<option value="' + responseData[i].aca_year +'" >'
 					+ responseData[i].aca_year + '</option>');
 			$('#acad_year').append(htmlCode);
+			$('#studacad_year').append(htmlCode);
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -206,6 +207,55 @@ function getAcademicYear() {
 	var httpMethod = "GET";
 	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function getAllStandard() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].standard + '" >'
+					+ responseData[i].standard + '</option>';
+			$('#standard').append(htmlCode);
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/standard/getAllStandard?branch=" + branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function getAllDivision() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].division + '" >'
+					+ responseData[i].division + '</option>';
+			$('#division').append(htmlCode);
+			$('#studdivision').append(htmlCode);
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Division/DivisionList?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

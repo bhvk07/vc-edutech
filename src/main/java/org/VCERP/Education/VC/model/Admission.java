@@ -33,6 +33,7 @@ public class Admission {
 	private String Rollno;
 	private String regno;
 	private String standard;
+	private String division;
 	private String invoice_no;
 	private String admission_date;
 	private String acad_year;
@@ -261,6 +262,12 @@ public class Admission {
 	}
 	public void setInstallment(Installment installment) {
 		this.installment = installment;
+	}
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
 	}
 	
 	

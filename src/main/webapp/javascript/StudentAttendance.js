@@ -16,40 +16,14 @@ $(document).ready(function() {
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	var select=document.getElementById("standard");
+	var select=document.getElementById("acad_year");
 	select.addEventListener('change', function() {
 		std=document.getElementById("standard").value;
-		document.getElementById('acad_year').disabled = false;
 		acad_year=document.getElementById("acad_year").value;
-		document.getElementById('acad_year').disabled = true;
 		attendanceList(std,acad_year)
 	});
 
 });
-function getAllStandard() {
-	function callback(responseData, textStatus, request) {
-		for ( var i in responseData) {
-			var htmlCode = '<option value="' + responseData[i].standard + '" >'
-					+ responseData[i].standard + '</option>';
-			$('#standard').append(htmlCode);
-		}
-
-	}
-
-	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
-		var mes = responseData.responseJSON.message;
-		showNotification("error", mes);
-	}
-	var httpMethod = "GET";
-	var relativeUrl = "/standard/getAllStandard?branch=" + branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}
 
 function attendanceList(std,acad_year) {
 	function callback(responseData, textStatus, request) {
