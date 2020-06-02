@@ -11,6 +11,7 @@ public class Subject{
 	private String subject;
 	private String created_date;
 	private String timeline;
+	private String branch;
 	public long getId() {
 		return id;
 	}
@@ -34,6 +35,12 @@ public class Subject{
 	}
 	public void setTimeline(String timeline) {
 		this.timeline = timeline;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 	
 }

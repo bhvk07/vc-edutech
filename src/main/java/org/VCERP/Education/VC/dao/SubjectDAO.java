@@ -16,11 +16,12 @@ public class SubjectDAO{
 		PreparedStatement ps=null;
 		try{
 		con=Util.getDBConnection();
-		String query="insert into subject_master(`subject`,`time_hrs`,`created_date`)values(?,?,?)";
+		String query="insert into subject_master(`subject`,`time_hrs`,`created_date`,`branch`)values(?,?,?,?)";
 		ps=con.prepareStatement(query);
 		ps.setString(1, sub.getSubject());
 		ps.setString(2, sub.getTimeline());
 		ps.setString(3, Util.currentDate());
+		ps.setString(4, sub.getBranch());
 		ps.executeUpdate();
 		}
 		catch(Exception e){
@@ -33,15 +34,16 @@ public class SubjectDAO{
 		return sub;
 	}
 	
-	public ArrayList<Subject> FetchAllSubject() {
+	public ArrayList<Subject> FetchAllSubject(String branch) {
 		Connection con=null;
 		PreparedStatement st=null;
 		ResultSet rs=null;
 		ArrayList<Subject> subject=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select `id`,`subject`,`time_hrs`,`created_date` from subject_master";
+			String query="select `id`,`subject`,`time_hrs`,`created_date` from subject_master where branch=?";
 			st=con.prepareStatement(query);
+			st.setString(1, branch);
 			rs=st.executeQuery();
 			while(rs.next())
 			{
@@ -62,6 +64,28 @@ public class SubjectDAO{
 			Util.closeConnection(rs, st, con);
 		}
 		return subject;
+	}
+
+	public void EditSubject(Subject sub) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try{
+		con=Util.getDBConnection();
+		String query="update subject_master set subject=?,time_hrs=? where id=? and branch=?";
+		ps=con.prepareStatement(query);
+		ps.setString(1, sub.getSubject());
+		ps.setString(2, sub.getTimeline());
+		ps.setLong(3, sub.getId());
+		ps.setString(4, sub.getBranch());
+		ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 	
 	

@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -27,7 +28,8 @@ public class SubjectResource {
 	//@JWTTokenNeeded
 	@Path("/NewSubject")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addSubject(@FormParam("subjectname") String subjectname,@FormParam("timeline") String timeline)
+	public Response addSubject(@FormParam("subjectname") String subjectname,@FormParam("timeline") String timeline,
+			@FormParam("branch") String branch)
 	{
 	Subject sub = null;
 	SubjectController controller = null;
@@ -36,6 +38,7 @@ public class SubjectResource {
 		controller = new SubjectController();
 		sub.setSubject(subjectname);
 		sub.setTimeline(timeline);
+		sub.setBranch(branch);
 		controller.addSubject(sub);
 		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
 	}
@@ -53,11 +56,11 @@ public class SubjectResource {
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response FetchAllSubject(){
+	public Response FetchAllSubject(@QueryParam("branch") String branch){
 		try {
 			ArrayList<Subject> sub=new ArrayList<>();
 			SubjectController controller=new SubjectController();
-			sub=controller.FetchAllSubject();
+			sub=controller.FetchAllSubject(branch);
 			return Response.status(Status.OK).entity(sub).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,6 +68,31 @@ public class SubjectResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 	
-	
+	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/EditSubject")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditSubject(@FormParam("subjectname") String subjectname,@FormParam("timeline") String timeline,
+			@FormParam("id") long id,@FormParam("branch") String branch)
+	{
+	Subject sub = null;
+	SubjectController controller = null;
+	try{
+		sub = new Subject();
+		controller = new SubjectController();
+		sub.setId(id);
+		sub.setSubject(subjectname);
+		sub.setTimeline(timeline);
+		sub.setBranch(branch);
+		controller.EditSubject(sub);
+		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+	}
+	catch(Exception e){
+		e.printStackTrace();
+		System.out.println(e);
+	}
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	}
 	
 }

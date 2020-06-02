@@ -12,8 +12,13 @@ public class SubjectController{
 		return dao.addSubject(sub);
 	}
 	
-	public ArrayList<Subject> FetchAllSubject() {
+	public ArrayList<Subject> FetchAllSubject(String branch) {
 		SubjectDAO dao=new SubjectDAO();
-		return dao.FetchAllSubject();
+		return dao.FetchAllSubject(branch);
+	}
+
+	public void EditSubject(Subject sub) {
+		SubjectDAO dao=new SubjectDAO();
+		dao.EditSubject(sub);
 	}
 }
