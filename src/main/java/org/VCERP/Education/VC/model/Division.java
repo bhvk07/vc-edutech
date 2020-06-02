@@ -10,6 +10,7 @@ public class Division{
 	private long id;
 	private String created_date;
 	private String division;
+	private String branch;
 	public long getId() {
 		return id;
 	}
@@ -28,5 +29,12 @@ public class Division{
 	public void setDivision(String division) {
 		this.division = division;
 	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	
 	
 }

@@ -17,10 +17,11 @@ public class DivisionDAO {
 		try{
 			con = Util.getDBConnection();
 			
-			String query = "insert into division_master(`division`,`created_date`)values(?,?)";
+			String query = "insert into division_master(`division`,`created_date`,`branch`)values(?,?,?)";
 			ps = con.prepareStatement(query);
 			ps.setString(1, div.getDivision());
 			ps.setString(2, Util.currentDate());
+			ps.setString(3, div.getBranch());
 			ps.executeUpdate();
 			
 			
@@ -35,15 +36,16 @@ public class DivisionDAO {
 		return div;
 		
 	}
-	public ArrayList<Division> FetchAllDivision(){
+	public ArrayList<Division> FetchAllDivision(String branch){
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		ArrayList<Division> divisionList = new ArrayList<>();
 	   try{
 		   con = Util.getDBConnection();
-		   String query =  "select * from division_master";
+		   String query =  "select * from division_master where branch=?";
 		   st = con.prepareStatement(query);
+		   st.setString(1, branch);
 		   rs = st.executeQuery();
 		   while(rs.next()){
 			   Division div = new Division();
@@ -62,5 +64,54 @@ public class DivisionDAO {
 		}
 		return divisionList;
 		
+	}
+	/*public Division GetDivision(String id) {
+		Connection con = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		Division division= new Division();
+	   try{
+		   con = Util.getDBConnection();
+		   String query =  "select * from division_master where id=?";
+		   st = con.prepareStatement(query);
+		   st.setString(1, id);
+		   rs = st.executeQuery();
+		   while(rs.next()){
+			   Division div = new Division();
+			   div.setId(rs.getLong(1));
+			   div.setDivision(rs.getString(2));
+			   div.setCreated_date(rs.getString(3));
+		   }
+	   }
+	   catch (Exception e) {
+		   e.printStackTrace();
+			System.out.println(e);
+	}
+	   finally {
+			Util.closeConnection(rs, st, con);
+		}
+		return division;
+	}*/
+	public void EditDivision(Division div) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			con = Util.getDBConnection();
+			
+			String query = "update division_master set division=? where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, div.getDivision());
+			ps.setLong(2, div.getId());
+			ps.executeUpdate();
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 }

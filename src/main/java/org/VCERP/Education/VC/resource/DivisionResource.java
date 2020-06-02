@@ -28,14 +28,14 @@ public class DivisionResource {
 	@PermitAll
 	@Path("/NewDivision")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addDiv(@FormParam("division") String division){
-		System.out.println("d"+division);
+	public Response addDivision(@FormParam("division") String division,@FormParam("branch") String branch){
 		Division div = null;
 		DivisionController controller = null;
 		try{
 			div = new Division();
 			controller = new DivisionController();
 			div.setDivision(division);
+			div.setBranch(branch);
 			controller.addDivision(div);
 			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
 		}
@@ -52,13 +52,13 @@ public class DivisionResource {
 	@PermitAll
 	@Path("/DivisionList")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response FetchAllDivision(){
+	public Response FetchAllDivision(@QueryParam("branch") String branch){
 		
 		DivisionController controller = null;
 		try{
 			ArrayList<Division> divisionlist = new ArrayList<>();
 			controller = new DivisionController();
-			divisionlist = controller.divisionList();
+			divisionlist = controller.divisionList(branch);
 			return Response.status(Status.OK).entity(divisionlist).build();
 		}
 		catch (Exception e) {
@@ -66,5 +66,47 @@ public class DivisionResource {
 			System.out.println(e);
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	/*@GET
+	@PermitAll
+	@Path("/getDivision")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response GetDivision(@QueryParam("id") String id){
+		
+		DivisionController controller = null;
+		try{
+			Division division= new Division();
+			controller = new DivisionController();
+			division = controller.GetDivision(id);
+			return Response.status(Status.OK).entity(division).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	*/
+	@POST
+	@PermitAll
+	@Path("/EditDivision")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditDivision(@FormParam("division") String division,@FormParam("id") Long id){
+		Division div = null;
+		DivisionController controller = null;
+		try{
+			div = new Division();
+			controller = new DivisionController();
+			div.setDivision(division);
+			div.setId(id);
+			controller.EditDivision(div);
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
 	}
 	}
