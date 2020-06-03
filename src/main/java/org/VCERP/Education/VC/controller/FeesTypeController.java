@@ -13,9 +13,14 @@ public class FeesTypeController {
 		
 	}
 
-	public ArrayList<FeesType> getFeesType() {
+	public ArrayList<FeesType> getFeesType(String branch) {
 		FeesTypeDAO dao=new FeesTypeDAO();
-		return dao.getFeesType();
+		return dao.getFeesType(branch);
+	}
+
+	public void EditFeesType(FeesType type) {
+		FeesTypeDAO dao=new FeesTypeDAO();
+		dao.EditFeesType(type);
 	}
 
 }

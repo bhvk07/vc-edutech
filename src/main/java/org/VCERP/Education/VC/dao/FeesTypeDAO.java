@@ -15,25 +15,27 @@ public class FeesTypeDAO {
 		PreparedStatement ps = null;
 		try {
 			con = Util.getDBConnection();
-			String query = "insert into feestype(`created_date`,`feestype`) values(?,?)";
+			String query = "insert into feestype(`created_date`,`feestype`,`branch`) values(?,?,?)";
 			ps = con.prepareStatement(query);
 			ps.setString(1, type.getCreatedDate());
 			ps.setString(2, type.getFeesType());
+			ps.setString(3, type.getBranch());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public ArrayList<FeesType> getFeesType() {
+	public ArrayList<FeesType> getFeesType(String branch) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		ArrayList<FeesType> type=new ArrayList<>();
 		try {
 			con = Util.getDBConnection();
-			String query = "select * from feestype";
+			String query = "select * from feestype where branch=?";
 			ps = con.prepareStatement(query);
+			ps.setString(1, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -47,6 +49,22 @@ public class FeesTypeDAO {
 			e.printStackTrace();
 		}
 		return type;
+	}
+
+	public void EditFeesType(FeesType type) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = Util.getDBConnection();
+			String query = "update feestype set feestype=? where id=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, type.getFeesType());
+			ps.setLong(2, type.getId());
+			ps.setString(3, type.getBranch());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

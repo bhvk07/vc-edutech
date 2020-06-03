@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -28,12 +29,13 @@ public class FeesTypeResource {
 	@Path("/addNewFeesType")
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addNewFeesType(@FormParam("feesType") String feesType)
+	public Response addNewFeesType(@FormParam("feesType") String feesType,@FormParam("branch") String branch)
 	{
 		try{
 		FeesType type=new FeesType();
 		type.setCreatedDate(Util.currentDate());
 		type.setFeesType(feesType);
+		type.setBranch(branch);
 		FeesTypeController controller=new FeesTypeController();
 		controller.addNewFeesType(type);
 		return Util.generateResponse(Status.ACCEPTED, "Data save").build();
@@ -47,12 +49,12 @@ public class FeesTypeResource {
 	@Path("/getFeesType")
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFeesType()
+	public Response getFeesType(@QueryParam("branch") String branch)
 	{
 		try{
 		ArrayList<FeesType> type=new ArrayList<>();
 		FeesTypeController controller=new FeesTypeController();
-		type=controller.getFeesType();
+		type=controller.getFeesType(branch);
 		if(type!=null)
 		{
 			return Response.status(Status.ACCEPTED).entity(type).build();
@@ -62,5 +64,26 @@ public class FeesTypeResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not found").build();
+	}
+	
+	@POST
+	@Path("/EditFeesType")
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditFeesType(@FormParam("feesType") String feesType,@FormParam("id") Long id,@FormParam("branch") String branch)
+	{
+		try{
+		FeesType type=new FeesType();
+		type.setFeesType(feesType);
+		type.setId(id);
+		type.setBranch(branch);
+		FeesTypeController controller=new FeesTypeController();
+		controller.EditFeesType(type);
+		return Util.generateResponse(Status.ACCEPTED, "Data save").build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not save").build();
 	}
 }

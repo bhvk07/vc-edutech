@@ -1,4 +1,5 @@
 var mes;
+var requestid=0;
 $(document).ready(function() {
 	getFeesType();
 	$("#feestype").submit(function() {
@@ -8,6 +9,19 @@ $(document).ready(function() {
 		event.preventDefault();
 		addFeesType();
 	});
+	$("#edit").click(function(e) {		 
+		var table = $('#feestypetable').DataTable();
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			requestid=$(this).val();
+			feestype = table.rows({selected : true}).column(1).data()[i];
+			loadFeesType(feestype,e);
+			}
+		});
+	});
+	$("#cancel").click(function() {
+		clearModal()
+	});
 
 });
 
@@ -16,6 +30,7 @@ function addFeesType() {
 	{
 //		var mes=responseData.responseJSON.message;
 //		showNotification("success",mes);
+		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
 //		var mes=responseData.responseJSON.message;
@@ -24,8 +39,16 @@ function addFeesType() {
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData=$('#feestype').serialize();
-	var relativeUrl = "/feesType/addNewFeesType";
+	var formData;
+	var relativeUrl;
+	if(requestid==0){
+	formData =$('#feestype').serialize()+"&branch="+branchSession;
+	relativeUrl = "/feesType/addNewFeesType";
+	}else{
+		formData =$('#feestype').serialize()+"&id="+requestid+"&branch="+branchSession;
+		relativeUrl = "/feesType/EditFeesType";
+	}
+		
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
@@ -42,17 +65,6 @@ function getFeesType() {
 						+ '"><label for="checkbox1"></label></span>';
 				var createdDate = responseData[i].createdDate;
 				var feesType = responseData[i].feesType;
-				var invoice_no = responseData[i].invoice_no;
-				var Rollno = responseData[i].Rollno;
-				var regno = responseData[i].regno;
-				var contact = responseData[i].contact;
-				var adm_fees_pack = responseData[i].adm_fees_pack;
-				var acad_year = responseData[i].acad_year;
-				var status = responseData[i].status;
-				var enq_taken_by = responseData[i].enq_taken_by;
-				var fees = responseData[i].fees;
-				var paid_fees = responseData[i].paid_fees;
-				var remain_fees = responseData[i].remain_fees;
 				//var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 				table.row.add(
 						[createdDate,feesType, srno]).draw();
@@ -65,8 +77,22 @@ function getFeesType() {
 			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/feesType/getFeesType";
+	var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
-	return false;
-	
+	return false;	
+}
+
+function loadFeesType(type,e){
+	document.getElementById("feesType").value=type;
+	e.preventDefault();
+	$('#feestypeModal').modal({
+        show: true, 
+        backdrop: 'static',
+        keyboard: true
+     })
+}
+
+function clearModal(){
+	document.getElementById("feesType").value="";
+	requestid=0;
 }

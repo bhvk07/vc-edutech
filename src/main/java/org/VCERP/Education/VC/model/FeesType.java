@@ -5,6 +5,7 @@ public class FeesType {
 	private long id;
 	private String createdDate;
 	private String feesType;
+	private String branch;
 	public long getId() {
 		return id;
 	}
@@ -23,6 +24,10 @@ public class FeesType {
 	public void setFeesType(String feesType) {
 		this.feesType = feesType;
 	}
-	
-	
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
 }
