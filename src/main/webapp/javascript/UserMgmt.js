@@ -1,4 +1,5 @@
 var mes;
+requestid=0;
 $(document).ready(function() {
 	$('#UserMgmt_table').DataTable({
 		"pageLength" : 40
@@ -21,6 +22,24 @@ $(document).ready(function() {
 		event.preventDefault();
 		createEmployeeAccount();
 	});
+	$("#edit").click(function(e) {
+		event.preventDefault();
+		$("table .cbCheck").each(function(i, chk) {
+			if(chk.checked){
+				requestid=$(this).val();
+				loadUserAccount(i,e);
+				}
+			});
+	});
+	$("#deactivate").click(function(e) {
+		event.preventDefault();
+		$("table .cbCheck").each(function(i, chk) {
+			if(chk.checked){
+				requestid=$(this).val();
+				deactivateUserAccount();
+				}
+			});
+	});
 });
 
 function EmployeeList() {
@@ -29,12 +48,13 @@ function EmployeeList() {
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
-			var chck = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="P"><label for="checkbox1"></label></span>';
+			var chck = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'+responseData[i].id+'"><label for="checkbox1"></label></span>';
 			var emp_role = responseData[i].role;
-			var id = responseData[i].created_date;
-			var emp_id = responseData[i].userid;
+			var emp_name = responseData[i].name;
+			var created_date = responseData[i].created_date;
+			var userid = responseData[i].userid;
 			var branch = responseData[i].Branch;
-			table.row.add([ chck, id, emp_id, emp_role, branch ]).draw();
+			table.row.add([ chck, created_date,emp_name ,userid, emp_role, branch ]).draw();
 		}
 
 	}
@@ -89,6 +109,7 @@ function createEmployeeAccount() {
 		// alert(message);
 //		document.getElementById('emp_type').disabled = true;
 //		document.getElementById('branch').disabled = true;
+		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
 		/*
@@ -98,11 +119,56 @@ function createEmployeeAccount() {
 		// var message=responseData.response.JSON.message;
 		// alert(message);
 	}
-	var formData = $("#createAc").serialize();
-	console.log(formData);
 	var httpMethod = "POST";
-	var relativeUrl = "/user/createEmployeeAccount";
+	var formData;
+	var relativeUrl;
+	if(requestid==0){
+	formData = $("#createAc").serialize();
+	relativeUrl = "/user/createEmployeeAccount";
+	}else{
+		formData = $("#createAc").serialize()+"&id="+requestid;
+		relativeUrl = "/user/EditEmployeeAccount";
+	}
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+
+function loadUserAccount(i,e){
+	var table = $("#UserMgmt_table").DataTable();
+	empname = table.rows({selected : true}).column(2).data()[i];
+	username = table.rows({selected : true}).column(3).data()[i];
+	role = table.rows({selected : true}).column(4).data()[i];
+	$("#enq_taken").val(empname);
+	$("#role").val(role);
+	document.getElementById("userid").value=empname;
+	e.preventDefault();
+	$("#datatable-view").hide();
+	$("#datatable-view-2").show();
+}
+
+function clearModal(){
+	$("#enq_taken").val("");
+	$("#role").val("");
+	document.getElementById("userid").value="";
+	requestid=0;
+}
+
+function deactivateUserAccount(){
+	function callback(responseData, textStatus, request) {
+
+		// var message=responseData.response.JSON.message;
+		// alert(message);
+		requestid=0;
+	}
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var mes=responseData.responseJSON.message;
+		 * showNotification("error",mes);*/
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/user/DeactivateAcount?id="+requestid;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

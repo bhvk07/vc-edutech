@@ -363,11 +363,11 @@ table.table .avatar {
 								<button class="btn btn-success add-b">
 									<i class="material-icons">&#xE147;</i> <span>Add New</span>
 								</button>
-								<a href="" class="btn btn-success" id="admission"><i
+								<a href="" class="btn btn-success" id="edit"><i
 									class="material-icons">&#xE147;</i> <span>Edit </span></a> <a
-									href="#deleteEmployeeModal" class="btn btn-danger"
-									id="btn-danger" data-toggle="modal"><i
-									class="material-icons">&#xE15C;</i> <span>Delete</span></a> <a
+									href="" class="btn btn-danger"
+									id="deactivate" data-toggle="modal"><i
+									class="material-icons">&#xE15C;</i> <span>Block Acount</span></a> <a
 									href="" class="btn btn-success" id="btn-view"> <i
 									class="material-icons">&#xE15C;</i> <span>View</span>
 								</a>
@@ -390,6 +390,7 @@ table.table .avatar {
 															value="0"> <label for="checkbox1"></label>
 													</span></th>
 													<th>Created Date</th>
+													<th>Employee Name</th>
 													<th>Username</th>
 													<th class="no-sort">Role Name</th>
 													<th class="no-sort">Branch Name</th>
@@ -499,7 +500,8 @@ table.table .avatar {
 											<div class="col-md-8">
 												<div class="input-group" style="width: 100%;">
 													<select class="form-control" id="role" name="role">
-														<option value="1">Administrator</option>
+														<option value="">Select Role Name</option>
+														<option value="desk">Administrator</option>
 													</select>
 
 												</div>
@@ -512,7 +514,7 @@ table.table .avatar {
 											<div class="col-md-8">
 												<div class="input-group">
 													<select class="form-control" id="enq_taken" name="emp_name">
-
+														<option value="">Select Employee Name</option>
 													</select>
 													<!--
                                     <span class="input-group-addon" id="bhvk"> <button type="button" id="add-btn" data-toggle="modal" data-target="#addEmployeeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;">
@@ -708,6 +710,7 @@ table.table .avatar {
 			$("#datatable-view-2").show();
 		});
 		$(".cancel-b").click(function() {
+			clearModal();
 			$("#datatable-view").show();
 			$("#datatable-view-2").hide();
 		});
