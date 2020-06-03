@@ -14,7 +14,6 @@ import org.VCERP.Education.VC.utility.Util;
 public class AdmissionDAO {
 
 	public Admission StudentAdmission(Admission admission) {
-		System.out.println("here");
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
@@ -61,7 +60,6 @@ public class AdmissionDAO {
 			ps.setString(32, Util.currentDate());
 			ps.setString(33, admission.getBranch());
 			ps.executeUpdate();
-			System.out.println("here1");
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
