@@ -23,9 +23,16 @@ Website: http://www.webthemez.com/
     <link href="assets/css/custom-styles.css" rel="stylesheet" />
      <!-- Google Fonts-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+   <script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
     <div id="wrapper">
+    <div id="navbar">
+	</div>
         <nav class="navbar navbar-default top-navbar" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">

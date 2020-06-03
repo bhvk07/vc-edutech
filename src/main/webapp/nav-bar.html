@@ -1,73 +1,169 @@
 <style>
-.navbar{
- border-radius:0px;
- }
+    .navbar{
+        border-radius: 0px;
+    }
+/*
+    .dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+*/
+/*    */
+   
+    .dropdown-menu{
+        border-radius: 0px !important;
+    }
+    .dropdown-submenu{
+        position: relative; border-radius: 0px;
+    }
+.dropdown-submenu .caret{
+    -webkit-transform: rotate(-90deg); transform: rotate(-90deg);
+    }
+.dropdown-submenu > .dropdown-menu {
+    top:0; left:100%; margin-top:-6px; margin-left:-1px;
+    }
+.dropdown-submenu.open > a:after{
+    border-left-color:#fff;
+    }
+.dropdown-submenu.open > .dropdown-menu, .dropdown-submenu.open > .dropdown-menu {
+    display: block;
+    }
+.dropdown-submenu .dropdown-menu{
+    margin-bottom: 8px;
+    }
+.navbar-default .navbar-nav .open .dropdown-menu .dropdown-submenu ul{
+    background-color: #f6f6f6;
+    }
+.navbar-inverse .navbar-nav .open .dropdown-menu .dropdown-submenu ul{
+    background-color:#333;
+    }
+.navbar .navbar-nav .open .dropdown-submenu .dropdown-menu > li > a{
+    padding-left: 30px;
+    }
+@media screen and (min-width:992px){
+    .dropdown-submenu .dropdown-menu{
+        margin-bottom: 2px;
+    }
+    .navbar .navbar-nav .open .dropdown-submenu .dropdown-menu > li > a{
+        padding-left: 25px;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu .dropdown-submenu ul{
+        background-color:#fff;
+    }
+    .navbar-inverse .navbar-nav .open .dropdown-menu .dropdown-submenu ul{
+        background-color:#fff;
+    }
+}
 </style>
-<div class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
+<nav class="navbar navbar-inverse bg-dark">
+<!--        <div class="navbar navbar-inverse">-->
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-12">
+<div class="navbar-header">
+<button class="navbar-toggle collapsed" data-target="#bs-navbar-collapse-1"
+data-toggle="collapse">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a href="#" class="navbar-brand">VC Edutech</a>
+</div>
 
-						<div class="navbar-header">
-							<button class="navbar-toggle" data-target="#mobile_menu"
-								data-toggle="collapse">
-								<span class="icon-bar"></span><span class="icon-bar"></span><span
-									class="icon-bar"></span>
-							</button>
-							<a href="#" class="navbar-brand">VC Edutech</a>
-						</div>
+<div class="navbar-collapse collapse" id="bs-navbar-collapse-1">
+<ul class="nav navbar-nav">
+<li class="active"><a href="#">Dashboard</a></li>
+<li><a href="#" class="dropdown-toggle"
+data-toggle="dropdown">Transaction <span class="caret"></span></a>
+<ul class="dropdown-menu">
 
-						<div class="navbar-collapse collapse" id="mobile_menu">
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="#">Dashboard</a></li>
-								<li><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown">Transaction <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="enq-list.html">Student Info/Enquiry</a></li>
-										<li><a href="admission-list.html">Admission/Invoice</a></li>
-										<li><a href="receipt-list.html">Receipt</a></li>
-								 <li><a href="#">Followup</a></li>
-										<li><a href="#">Accounting</a></li>
-										<li><a href="#">Event Management</a></li>
-								
+<li><a href="enq-list.html">Student Info/Enquiry</a></li>
+<li><a href="admission-list.html">Admission Invoice</a></li>
+<li><a href="receipt-list.html">Receipt</a></li>
+
+<li class="dropdown-submenu"><a href="#" tabindex="-1" class="dropdown-submenu-toggle">Attendance <b class="caret"></b>
+                                            </a>
+   <ul class="dropdown-menu">
+       <li><a href="StudentAttendance.html">Student Attendance</a></li>
+       <li><a href="EmployeeAttendance.html">Employee Attendance</a></li>
+   </ul>
+</li>
+<li><a href="">Timetable</a></li>  <!-- link remaining -->
+</ul>
+</li>
+
+<li><a href="masters.html">Masters</a></li>
+<li><a href="#" class="dropdown-toggle"
+data-toggle="dropdown">Settings <span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="#">Roles And Permissions</a></li>
+<li><a href="Branch.html">Branch Profile</a></li>
+<li><a href="UserManagement.html">User Management</a></li>
+<li><a href="OrganizationProfile.html">Organization Profile</a></li>
+<li><a href="Promote.html">Promotion</a></li>	
+
+</ul></li>
+<li><a href="#" class="dropdown-toggle"
+data-toggle="dropdown">Reports <span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li class="dropdown-submenu"><a href="#" tabindex="-1" class="dropdown-submenu-toggle">Student Reports <b class="caret"></b>
+                                            </a>
+   <ul class="dropdown-menu">
+       <li><a href="#">Student Info Report</a></li>
+       <li><a href="#">Admission Report</a></li>
+       <li><a href="#">Student Attendance Report</a></li>
+   </ul>
+</li>
+<li class="dropdown-submenu"><a href="#" tabindex="-1" class="dropdown-submenu-toggle">Employee Reports <b class="caret"></b>
+                                            </a>
+   <ul class="dropdown-menu">
+       <li><a href="#">Employee Report</a></li>
+       <li><a href="#">Employee Attendance Report</a></li>
+   </ul>
+</li>
+<li class="dropdown-submenu"><a href="#" tabindex="-1" class="dropdown-submenu-toggle">Fees Reports <b class="caret"></b>
+                                            </a>
+   <ul class="dropdown-menu">
+       <li><a href="#">Receipts Report</a></li>
+       <li><a href="#">Receivable Report</a></li>
+         <li><a href="#">Installment Report</a></li>
+       <li><a href="#">Installment due fees Report</a></li>
+   </ul>
+</li>
+<li><a href="#">Expenses Reports</a></li>
+</ul></li>
+
+</ul>
+
                    
-									</ul></li>
-
-								<li><a href="#">Masters</a></li>
-								<li><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown">Settings <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-									<li><a href="branch.html">Branch/Company Profile</a></li>
-										<li><a href="UserManagement.html">User Management</a></li>
-										 <li><a href="#">Roles And Permissions</a></li>
-										<li><a href="#">Organization Profile</a></li>
-											<li><a href="#">Custom Document Title</a></li>
-													<li><a href="#">Addons</a></li>
-															<li><a href="#">Utility</a></li>
-									</ul></li>
-									
-									
-								<li><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown">Reports <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Student Reports</a></li>
-										<li><a href="#">Fees Reports</a></li>
-											<li><a href="#">Other Certificates</a></li>
-										<li><a href="#">SMS Delivery Reports</a></li>
-									</ul></li>
-
-							</ul>
-							
-                    
 
 
-							<ul class="nav navbar-nav navbar-right">
-								<li><a href="#" id="profile"><span
-										class="glyphicon glyphicon-user" id="user"></span></a></li>
-							
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<ul class="nav navbar-nav navbar-right">
+<li><a href="#" id="profile"><span
+class="glyphicon glyphicon-user" id="user"></span></a></li>
+
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- </div>-->
+</nav>
+
+<script>
+$('.dropdown-submenu a.dropdown-submenu-toggle').on("click", function(e){
+    $('.dropdown-submenu ul').removeAttr('style');
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+});
+// Clear Submenu Dropdowns on hidden event
+$('#bs-navbar-collapse-1').on('hidden.bs.dropdown', function () {
+  $('.navbar-nav .dropdown-submenu ul.dropdown-menu').removeAttr('style');
+});
+    </script>
