@@ -65,6 +65,7 @@ public class AdmissionResource {
 			admission.setLanguage(personal[8]);
 			admission.setContact(personal[16]);
 			admission.setFather_cont(personal[9]);
+			System.out.println(personal[10]+" "+personal[11]);
 			admission.setMother_cont(personal[10]);
 			admission.setAddress(personal[11]);
 			admission.setPin(personal[12]);
@@ -83,28 +84,29 @@ public class AdmissionResource {
 			admission.setJoin_date(join_date);
 			admission.setBranch(branch);
 			admission.setStandard(getStandard(f_pack[0],branch));
-			if(!newAmt.equals("0"))
-			{
-				String[] commaSeperated=Util.commaSeperatedString(newAmt);
+		/*	if(!newAmt.equals("0"))
+			{*/
+//				String[] commaSeperated=Util.commaSeperatedString(newAmt);
 				
-				for(int i=1;i<commaSeperated.length;i++)
-				{	String a=commaSeperated[i];
-					String[] symbolSeperated=Util.symbolSeperatedString(a);
+/*				for(int i=0;i<commaSeperated.length;i++)
+				{	*/
+					//String a=commaSeperated[i];
+					String[] symbolSeperated=Util.symbolSeperatedString(newAmt);
 					
 					admission.setDisccount(Integer.parseInt(symbolSeperated[0]));
 					admission.setFees(Integer.parseInt(symbolSeperated[1]));
-				}
+			//	}
 				
-			}
-			else{
+//			}
+			/*else{
 				admission.setDisccount(0);
 				admission.setFees(Integer.parseInt(f_pack[1]));
-			}
+			}*/
 //			admission.setPaid_fees(getPaidFees(installment));
 //			admission.setRemain_fees(Integer.parseInt(f_pack[1])-admission.getPaid_fees());
-			String[] commaSeperated=Util.commaSeperatedString(installment);
-			if(commaSeperated.length>2){
-				saveInstallment(commaSeperated,branch);
+			String[] commaSeperatedInstallment=Util.commaSeperatedString(installment);
+			if(commaSeperatedInstallment.length>2){
+				saveInstallment(commaSeperatedInstallment,branch);
 			}
 			controller=new AdmissionController();
 			controller.StudentAdmission(admission);

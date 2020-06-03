@@ -6,6 +6,7 @@ $(document).ready(function(){
 	FetchAllEmployee();
 	getAutoIncrementedDetails();
 	getFeesPackage();
+	getAllDivision();
 	$("#enq_taken").val(localStorage.getItem("user"));
 	//getCurrentDate();
 	$("#enq_stud").keyup(function() {
@@ -33,6 +34,7 @@ $(document).ready(function(){
 		outputElem.value = fees_amt[1];
 		document.getElementById('total-amt').value=fees_amt[1];
 		document.getElementById('amt_installment').value=fees_amt[1];
+		document.getElementById('grand-t').value=fees_amt[1];
 	});
 	$("#discount").focusout(function() {
 		var amount = document.getElementById('amount').value;
@@ -127,15 +129,16 @@ function StudentAdmission(){
 	}
 	var table=document.getElementById("feestypetable");
 	var rowCount=$('#feestypetable tr').length;
-	var newAmt="0";
-	for (var i = 1; i < rowCount-2; i++) {
-        var discount = $(table.rows.item(i).cells[2]).find('input').val();
-        if(discount!=0){
-        total = $(table.rows.item(i).cells[5]).find('input').val();
-        newAmt=newAmt+","+discount+"|"+total;
-        } 
+	var discount=0;
+	var total=0;
+	var newAmt;
+	for (var i = 1; i < rowCount-3; i++) {
+        discount += parseInt($(table.rows.item(i).cells[2]).find('input').val());
+        total += parseInt($(table.rows.item(i).cells[5]).find('input').val());
+        
+//        } 
 	}
-	
+	newAmt=discount+"|"+total;
 	function callback(responseData,textStatus,request)
 	{
 		var mes=responseData.responseJSON.message;
@@ -149,7 +152,7 @@ function StudentAdmission(){
 	}
 	var httpMethod = "POST";
 	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
-	
+	console.log(formData);
 	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;

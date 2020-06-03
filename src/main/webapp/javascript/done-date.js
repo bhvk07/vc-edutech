@@ -4,7 +4,7 @@ $(document)
 					document.getElementById("add_installment")
 							.addEventListener("click", add, false);
 
-					var html1 = '<tr><td><div class="form-group"><div class="input-group"><span class="input-group-addon"> <button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></span><input type="date" class="form-control" id="datetimepicker4" style=" width:"30px" "/></div></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype"><option value="ActivityFees">Activity Fees</option> <option value="AdmissionForm">Admission Form</option> <option value="AnnualDayFees">AnnualDayFees</option><option value="BoardExamFees">BoardExamFees</option><option value="BooksFees">BooksFees</option> <option value="ComputerFees">ComputerFees</option><option value="DonationFees">DonationFees</option><option value="Downpayment">Downpayment</option><option value="EducationalTripFees">EducationalTripFees</option> <option value="ExamFees">ExamFees</option> <option value="ID_Calendar_Form">ID_Calendar_Form</option> <option value="Installments">Installments</option> <option value="LateFees">LateFees</option><option value="LumpsumForm">LumpsumForm</option><option value="MiscellaneousFees">MiscellaneousFees</option><option value="MonthlyFees">MonthlyFees</option><option value="NewAdmission">NewAdmission</option><option value="PartyCharges">PartyCharges</option><option value="Re-AdmissionFees">Re-AdmissionFees</option><option value="StudentKit">StudentKit</option><option value="TermFees">TermFees</option><option value="TransportationFees">TransportationFees</option><option value="TutionFees">TutionFees</option></select><span class="input-group-addon" id="bhvk"></span></div></div></td><td><input type="text" class="form-control" id="amt_installment" name="amt_installment"></td><td><input type="text" class="form-control" id="r_installment" name="r_installment" disabled></td></tr>';
+					var html1 = '<tr><td><div class="form-group"><div class="input-group"><span class="input-group-addon"> <button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></span><input type="date" class="form-control" id="datetimepicker4" style=" width:"30px" "/></div></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"></span></div></div></td><td><input type="text" class="form-control" id="amt_installment" name="amt_installment"></td><td><input type="text" class="form-control" id="r_installment" name="r_installment" disabled></td></tr>';
 
 					$(".form_date").datetimepicker("setDate", new Date()); // sets
 																			// current
@@ -24,7 +24,7 @@ $(document)
 						output2 = noiValue.value;
 						
 						var fees;
-						fees=document.getElementById("total-amt").value;
+						fees=document.getElementById("grand-t").value;
 						console.log(fees);
 						if(fees=="0.00")
 							{
