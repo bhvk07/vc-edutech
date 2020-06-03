@@ -108,8 +108,8 @@ public class BranchDAO {
 /*				branch.setCountry(rs.getString(10));
 				branch.setState(rs.getString(11));
 				branch.setDistinct(rs.getString(12));*/
-				branch.setCreatedBy(rs.getString(12));
-				branch.setCreated_Date(rs.getString(13));
+				branch.setCreatedBy(rs.getString(10));
+				branch.setCreated_Date(rs.getString(11));
 				b.add(branch);
 			}
 		} catch (Exception e) {
