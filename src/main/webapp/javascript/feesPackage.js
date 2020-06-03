@@ -2,7 +2,7 @@ var standardData = new Array();
 var branchData = new Array();
 $(document).ready(function() {
 	getFeesPackage();
-	loadFeesType();
+	//loadFeesType();
 	loadBranchSpecificStandard();
 	loadFeesPackage();
 	$("#submit").click(function() {

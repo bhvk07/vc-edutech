@@ -748,14 +748,17 @@ function loadFeesType() {
 			htmlCode.push('<option value="' + responseData[i].feesType + '" >'
 					+ responseData[i].feesType + '</option>');
 		}
+		for(var i=0;i<htmlCode.length;i++)
+			{
+			$("#feestype").append(htmlCode[i]);
+			}
 	}
-	$('#feestype').append(htmlCode);
 	function errorCallback(responseData, textStatus, request) {
 
 	}
 
 	var httpMethod = "GET";
-	var relativeUrl = "/feesType/getFeesType";
+	var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
