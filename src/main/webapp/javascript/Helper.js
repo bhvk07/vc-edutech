@@ -156,6 +156,7 @@ function FetchAllEmployee() {
 			var htmlCode = '<option value="' + responseData[i].emp_name + '" >'
 					+ responseData[i].emp_name + '</option>';
 			$('#enq_taken').append(htmlCode);
+			$('.enq_taken').append(htmlCode);
 		}
 		// var message=responseData.response.JSON.message;
 		// alert(message);
@@ -180,6 +181,7 @@ function getFeesPackage() {
 			var htmlCode=('<option value="' + responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >'
 					+ responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
 			$('#fees').append(htmlCode);
+			$('.fees').append(htmlCode);
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
