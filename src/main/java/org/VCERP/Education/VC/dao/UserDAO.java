@@ -19,7 +19,7 @@ public class UserDAO {
 		User user=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select * from user_db where username=? and password=password(?)";
+			String query="select * from user_db where username=? and password=password(?) and active='1'";
 			st=con.prepareStatement(query);
 			st.setString(1, userid);
 			st.setString(2, password);
@@ -52,8 +52,8 @@ public class UserDAO {
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
-			String query="insert into user_db(`name`,`username`,`password`,`emp_type`,`branch`,`role`,`created_date`) "
-					+ "values(?,?,password(?),?,?,?,?)";
+			String query="insert into user_db(`name`,`username`,`password`,`emp_type`,`branch`,`role`,`created_date`,`active`) "
+					+ "values(?,?,password(?),?,?,?,?,'1')";
 			ps=con.prepareStatement(query);
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getUserid());
@@ -81,7 +81,7 @@ public class UserDAO {
 		ArrayList<User> u=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select * from user_db where branch=?";
+			String query="select * from user_db where branch=? and active='1'";
 			st=con.prepareStatement(query);
 			st.setString(1, branch);
 			rs=st.executeQuery();
@@ -162,6 +162,47 @@ public class UserDAO {
 		}
 		System.out.println(logg);
 		return logg;
+	}
+
+	public void EditEmployeeAccount(User user) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con=Util.getDBConnection();
+			String query = "update user_db set username=?,password=password(?),role=? where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1,user.getUserid());
+			ps.setString(2,user.getPassword());
+			ps.setString(3,user.getRole());
+			ps.setLong(4,user.getId());
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	}
+
+	public void DeactivateEmployeeAccount(Long id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con=Util.getDBConnection();
+			String query = "update user_db set active='0' where id=?";
+			ps = con.prepareStatement(query);
+			ps.setLong(1,id);
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 }
 

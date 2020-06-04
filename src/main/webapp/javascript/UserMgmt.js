@@ -36,6 +36,7 @@ $(document).ready(function() {
 		$("table .cbCheck").each(function(i, chk) {
 			if(chk.checked){
 				requestid=$(this).val();
+				alert("here"+requestid);
 				deactivateUserAccount();
 				}
 			});
@@ -107,8 +108,8 @@ function createEmployeeAccount() {
 
 		// var message=responseData.response.JSON.message;
 		// alert(message);
-//		document.getElementById('emp_type').disabled = true;
-//		document.getElementById('branch').disabled = true;
+		document.getElementById('emp_type').disabled = true;
+		document.getElementById('branch').disabled = true;
 		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -141,7 +142,7 @@ function loadUserAccount(i,e){
 	role = table.rows({selected : true}).column(4).data()[i];
 	$("#enq_taken").val(empname);
 	$("#role").val(role);
-	document.getElementById("userid").value=empname;
+	document.getElementById("userid").value=username;
 	e.preventDefault();
 	$("#datatable-view").hide();
 	$("#datatable-view-2").show();
@@ -151,10 +152,12 @@ function clearModal(){
 	$("#enq_taken").val("");
 	$("#role").val("");
 	document.getElementById("userid").value="";
+	document.getElementById("password").value="";
 	requestid=0;
 }
 
 function deactivateUserAccount(){
+	alert(requestid);
 	function callback(responseData, textStatus, request) {
 
 		// var message=responseData.response.JSON.message;
@@ -167,7 +170,7 @@ function deactivateUserAccount(){
 		 * showNotification("error",mes);*/
 	}
 	var httpMethod = "DELETE";
-	var relativeUrl = "/user/DeactivateAcount?id="+requestid;
+	var relativeUrl = "/user/DeactivateAccount?id="+requestid;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;

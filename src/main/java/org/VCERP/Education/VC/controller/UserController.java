@@ -34,4 +34,14 @@ public class UserController {
 		UserDAO dao=new UserDAO();
 		return dao.getLoginHistoryList();
 	}
+
+	public void EditEmployeeAccount(User user) {
+		UserDAO dao=new UserDAO();
+		dao.EditEmployeeAccount(user);
+	}
+
+	public void DeactivateEmployeeAccount(Long id) {
+		UserDAO dao=new UserDAO();
+		dao.DeactivateEmployeeAccount(id);
+	}
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -125,6 +126,45 @@ public class UserResource {
 		} else {
 			return Response.status(Status.ACCEPTED).entity(logg).build();
 		}
-	}	
+	}
 	
+	@POST
+	@PermitAll
+	@Path("/EditEmployeeAccount")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditEmployeeAccount(@FormParam("role") String role, @FormParam("emp_name") String emp_name,
+			@FormParam("userid") String userid,@FormParam("password") String password,@FormParam("id") Long id){
+		
+		try {
+			User user=new User();
+			UserController controller=new UserController();
+			user.setId(id);
+			user.setRole(role);
+			user.setName(emp_name);
+			user.setUserid(userid);
+			user.setPassword(password);
+			controller.EditEmployeeAccount(user);
+			return Response.status(Status.ACCEPTED).build();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Updated").build();
+		}
+	@DELETE
+	@PermitAll
+	@Path("/DeactivateAccount")
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response DeactivateEmployeeAccount(@QueryParam("id") Long id){
+		
+		try {
+			UserController controller=new UserController();
+			controller.DeactivateEmployeeAccount(id);
+			return Response.status(Status.ACCEPTED).build();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Updated").build();
+		}
 }
