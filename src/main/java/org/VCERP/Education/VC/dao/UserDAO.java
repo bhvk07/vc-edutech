@@ -110,7 +110,7 @@ public class UserDAO {
 	}
 	
 	
-	public LoginHistory createLoginHistory(LoginHistory history){
+	public void createLoginHistory(LoginHistory history){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -130,8 +130,6 @@ public class UserDAO {
 		finally {
 			Util.closeConnection(null, ps, con);
 		}
-		
-		return history;
 	}
 	
 	public ArrayList<LoginHistory> getLoginHistoryList(){

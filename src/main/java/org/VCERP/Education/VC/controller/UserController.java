@@ -25,9 +25,9 @@ public class UserController {
 		return dao.getAllAccount(branch);
 	}
 
-	public LoginHistory createLoginHistory(LoginHistory history){
+	public void createLoginHistory(LoginHistory history){
 		UserDAO dao = new UserDAO();
-		return dao.createLoginHistory(history);
+		dao.createLoginHistory(history);
 		
 	}
 	public ArrayList<LoginHistory> getLoginHistoryList() {

@@ -30,6 +30,9 @@ import org.springframework.stereotype.Controller;
 @Path("user")
 public class UserResource {
 
+	@Context 
+	HttpServletRequest request;
+	
 	@POST
 	@PermitAll
 	@Path("/login")
@@ -39,7 +42,7 @@ public class UserResource {
 		// System.out.println(userid+""+password);
 		// String
 		// message=UserResourceValidation.validateAuthenticateUser(userid,password);
-
+		
 		User user = new User();
 		// if(message=="accepted"){
 		UserController controller = new UserController();
@@ -50,6 +53,12 @@ public class UserResource {
 		if (user == null) {
 			return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		} else {
+			LoginHistory history=new LoginHistory();
+			
+			history.setBranch(user.getBranch());
+			history.setEmployee(user.getName());
+			history.setIp(request.getRemoteAddr());
+			controller.createLoginHistory(history);
 			PrivateKey key = SigningKeyGenerator.signKey();
 			String session = Util.randomStringGenerator(8);
 			SecureUtil secure = new SecureUtil();
@@ -102,40 +111,6 @@ public class UserResource {
 		}
 	}
 	
-
-	@GET
-	@PermitAll
-	// @JWTTokenNeeded
-	@Path("/getLoginHistory")
-	/*@Produces(MediaType.APPLICATION_JSON)*/
-	public Response getLoginHistory(@QueryParam("branch") String branch,@QueryParam("user") String user, @Context HttpServletRequest request) {
-		/*ArrayList<LoginHistory> history = new ArrayList<>();*/
-		String remoteIP = request.getRemoteAddr();
-		System.out.println("Ip is:"+remoteIP);
-		LoginHistory history = null;
-		UserController controller = null;
-		try{
-		history = new LoginHistory();
-		controller = new UserController();
-		history.setBranch(branch);
-		history.setEmployee(user);
-		history.setIp(remoteIP);
-		history = controller.createLoginHistory(history);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
-		
-		/*if (history == null) {
-			return Util.generateErrorResponse(Status.NOT_FOUND, "Not Found").build();
-		} else {
-			
-			return Response.status(Status.ACCEPTED).entity(history).build();
-		}*/
-	}
-	
 	@GET
 	@PermitAll
 	@Path("/LoginHistoryList")
@@ -150,5 +125,6 @@ public class UserResource {
 		} else {
 			return Response.status(Status.ACCEPTED).entity(logg).build();
 		}
-	}
+	}	
+	
 }

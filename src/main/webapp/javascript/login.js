@@ -52,7 +52,7 @@ function attemptLogin(){
 			{
 			mesasge="Role Not Assign.";
 			}
-		LoginHistory();
+		/*LoginHistory();*/
 	}
 	
 	function errorCallback(responseData,textStatus,request){
@@ -68,7 +68,7 @@ function attemptLogin(){
 	return false;
 }
 
-function LoginHistory(){
+/*function LoginHistory(){
 	function callback(responseData,textStatus,request){
 	
 	}
@@ -76,7 +76,7 @@ function LoginHistory(){
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 	}
-	/*var formData = $('#signin').serialize();*/
+	var formData = $('#signin').serialize();
 	var httpMethod="GET";
 	var relativeUrl="/user/getLoginHistory?branch="+branchSession+"&user="+user;
 
@@ -84,3 +84,4 @@ function LoginHistory(){
 			errorCallback);
 	return false;
 }
+*/
