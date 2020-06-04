@@ -261,3 +261,27 @@ function getAllDivision() {
 			errorCallback);
 	return false;
 }
+function getCaste() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].Caste + '" >'
+					+ responseData[i].Caste + '</option>';
+			$('#category').append(htmlCode);
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/caste/getCaste?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
