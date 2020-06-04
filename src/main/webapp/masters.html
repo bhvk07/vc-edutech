@@ -3,74 +3,109 @@
 <title>Admission/Invoice</title>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="jquery/jquery-3.3.1.min.js"></script>
+	<script src="jquery/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" /> 
-<!--<link href="style.css" rel="stylesheet" type="text/css">-->
-<link rel="stylesheet" href="admission-style.css" type="text/css">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
+
+<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+
 <script src="core/popper.min.js"></script>
-<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
-<script type="text/javascript" src="javascript/admission.js"></script>
+
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <!--  jQuery -->
-<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
 
-<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-<link href="bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <title>Admission</title>
-    
-    
-    <script>
+<script>
 	$(function() {
 		$("#navbar").load("nav-bar.html");
 	});
 </script>
+<style>
+    .panel-heading{
+        background: #f6f6f6;
+        border-bottom: 1px solid #DADADA;
+        padding: 18px;
+        position: relative;
+    }
+    .col-md-3 a{
+        border-radius:0px;
+        outline: none !important;
+        background: #435D7D;
+    }
+    .row{
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    .btn{
+        
+        border: 1px solid transparent;
+        display: inline-block;
+        
+      
+        text-align: center;
+        cursor: pointer;
+        background-image: none;
+    }
+    .btn-lg{
+        line-height: 1.334;
+        padding: 10px 16px;
+        font-size: 18px;
+    }
+    .mb-xs{
+        margin-bottom: 5px !important;
+    }
+    .mb-xs{
+        margin-bottom: 5px !important;
+    }
+    .mt-xs{
+        margin-bottom: 5px !important;
+    }
+</style>
 </head>
 <body>  
 <div id="navbar">
 	</div>          
-            <header class="page-header">
+           <!--  <header class="page-header">
         <h2>
             <label class="Title" style="font-size: 20px">Master Setup</label>
         <hr size="90 px" width="150 px" align="left" color="green">    
         </h2>
-    </header>
+    </header> -->
             
             <div class="menu" id="MasterPageMenu">
 
 <div id="content" class="content">
     <div>
 
-        <div class="row mastermenu" id="ulMaster">
+<!--        <div class="row">-->
             <div class="col-md-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <h2 class="panel-title">Basic</h2>
+                        <h2 class="panel-title">Masters Page</h2>
                     </header>
-                    <div class="panel-body ">
+                    <div class="panel-body" style="padding:15px;">
                         <div class="row">
-                <div class="col-md-3" id="Doc_14">
-<a href="feestype.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" style="background-color: #53b700;">Fees Types<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Add multiple types of fees here. Like Admission fees, Registration fees, Examination fees, Sports fees etc. along with HSN Code if any with tax details. It will useful while creating Fees Package." ></i></a>
+               				 <div class="col-md-3">
+								<a href="feestype.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item">Fees Types<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Add multiple types of fees here. Like Admission fees, Registration fees, Examination fees, Sports fees etc. along with HSN Code if any with tax details. It will useful while creating Fees Package." ></i></a>
                             </div>
-                            <div class="col-md-3" id="Doc_64">
-                                <a href="subject.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" style="background-color: #53b700;">
+                           <div class="col-md-3">
+                                <a href="subject.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item">
                                     <span class="DocTitleSubject ">Subject</span>
                                     <i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-toggle="tooltip" data-placement="top" title="Create Subject here for the Standard. Suppose the Standard is 10th, and then Subject will be like English, Maths, History, Geography, Science etc. So simply add Subjects one by one, not Standard. Subject will be useful while creating Standard."></i></a>
                             </div>
-                            <div class="col-md-3" id="Doc_15">
-                                <a href="standard.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" style="background-color: #53b700;">
+                           <div class="col-md-3">
+                                <a href="standard.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item">
                                     <span class="DocTitleGrade">Standard</span>
                                     <i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="This screen is to add Standard. Like Jr. Kg, 5th Std., 10th Std., 12th Std., F.Y.B.Com., S.Y.B.A., T.Y. B.Sc., MCA, MBA etc. In first column, add your Standard then in second column select the Standard for it &amp; last select branches to apply Standard. Standard will be useful while creating Standard." ></i></a>
                             </div>
-                            <div class="col-md-3" id="Doc_13">
-                                <a href="feespackage.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" style="background-color: #53b700;">
+                           <div class="col-md-3">
+                                <a href="feespackage.html" class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item">
                                     <span class="DocTitleFeesPackage">Fees Package</span>
                                     <i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Fees Package is to create package for the Admission. It can have single or multiple Standard." ></i></a>
                             </div>
@@ -79,27 +114,50 @@
                             
                           
                             
-                <div class="col-md-3" id="Doc_7">
-                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="Cast" style="background-color: #53b700;"><span class="DocTitleCaste">Caste</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Add Caste here like General, OBC, SC, NT etc. so that you can easily get it for the selection at the time of Students info."></i></a>
+                <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="Cast"><span class="DocTitleCaste">Caste</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Add Caste here like General, OBC, SC, NT etc. so that you can easily get it for the selection at the time of Students info."></i></a>
                             </div>
                             
-                            <div class="col-md-3" id="Doc_16">
-                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadSource" style="background-color: #53b700;">
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadSource">
                                     <span class="DocTitleLeadSource">Lead Source</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Add Lead Source over here like Bulk SMS, Email Campaign, News Paper, Reference, Internet etc. so that you can easily differentiate the sources to focus on advertisements."></i>
                                 </a>
                             </div>
-                            <div class="col-md-3" id="Doc_17">
-                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadStage" style="background-color: #53b700;">
-                                    <span class="DocTitleLeadStage">Lead Stage</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Lead Stage can be Interested, Working, Converted/Qualified etc. It is helpful for students follow up."></i>
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadStage">
+                                    <span class="DocTitleLeadStage">Designation</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
                                 </a>
                             </div>
-                            <div class="col-md-3" id="Doc_30">
-                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="TermsCondition" style="background-color: #53b700;">
-                                    Terms &amp; Conditions<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top" title="Enter your Institute terms &amp; conditions here so that you can add it to invoices &amp; receipts."></i>
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="TermsCondition">
+                                    Academic Year<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
                                 </a>
                             </div>
                             
                             
+                            
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadStage">
+                                    <span class="DocTitleLeadStage">Employee</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="Division.html">
+                                     Division<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
+                                </a>
+                            </div>
+<!--
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="LeadStage">
+                                    <span class="DocTitleLeadStage">Caste</span><i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary btn-lg btn-block menu-item" href="TermsCondition">
+                                    Academic Year<i class="fa fa-question-circle-o pull-right" style="display:''; margin-top: 5px;" data-html="true" data-toggle="tooltip" data-placement="top"></i>
+                                </a>
+                            </div>
+-->
 
                         </div>
                     </div>
@@ -111,7 +169,7 @@
         
     </div>
 </div>
-</div>
+<!--</div>-->
             
 
 	
