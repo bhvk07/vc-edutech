@@ -283,10 +283,10 @@
 											<div class="form-group">
 												<div class="input-group">
 													<select name="feestype" class="form-control" id="feestype">
-														
+
 													</select> <span class="input-group-addon" id="bhvk">
-														<button type="button" id="add-btn" data-toggle="modal"
-															data-target="#addFeesTypeModal"
+														<button type="button" id="feestype" data-toggle="modal"
+															data-target="#feestypeModal"
 															style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
 															+</button>
 													</span>
@@ -419,9 +419,15 @@
 
 										<td><div class="form-group">
 												<div class="input-group">
-													<select name="feestype" class="form-control feestype" id="feestype">
+													<select name="feestype" class="form-control feestype"
+														id="feestype">
 
-													</select> <span class="input-group-addon" id="bhvk"> </span>
+													</select> <span class="input-group-addon" id="bhvk">
+														<button type="button" id="feestype" data-toggle="modal"
+															data-target="#feestypeModal"
+															style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
+															+</button>
+													</span>
 												</div>
 											</div></td>
 										<td><input type="text" class="form-control f-row"
@@ -758,6 +764,34 @@
 	</div>
 
 	<!-- modal-end -->
+	<div id="feestypeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="feestypeform">
+					<div class="modal-header"
+						style="background-color: #53b700; color: aliceblue">
+						<h4 class="modal-title">Add Employee</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Fees Type/Inventory Item<font color="red">*</font></label>
+							<input type="text" class="form-control" id="feesType"
+								name="feesType" required>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							id="cancel" value="Cancel"> <input type="submit"
+							class="btn btn-success" value="Save"
+							style="background-color: #53b700; color: aliceblue">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 
 	<!--enquiry modal-start -->
@@ -985,8 +1019,9 @@
 
 											<div class="form-group">
 												<div class="input-group">
-													<select name="feestype" class="form-control feestype" id="feestype">
-													
+													<select name="feestype" class="form-control feestype"
+														id="feestype">
+
 													</select> <span class="input-group-addon" id="bhvk">
 														<button type="button" id="add-btn" data-toggle="modal"
 															data-target="#addFeesTypeModal"
@@ -1018,12 +1053,12 @@
 										</td>
 
 										<td><input type="text" class="form-control"
-													placeholder="NONE"></td>
+											placeholder="NONE"></td>
 
 										<td>
 											<!--      Total field      --> <input type="text"
-													class="form-control totala" name="price" id="total-amt"
-													value="" disabled>
+											class="form-control totala" name="price" id="total-amt"
+											value="" disabled>
 										</td>
 										<td>
 											<div class="w3-padding w3-xlarge w3-teal">
@@ -1045,11 +1080,12 @@
 									</div>
 									<div class="col-xs-5">
 										<input type="number" class="form-control totala" id="grand-t"
-													value="0" disabled>
+											value="0" disabled>
 									</div>
 								</div>
 							</div>
-							<button type="button" id="addrow" class="addrow">Add new line</button>
+							<button type="button" id="addrow" class="addrow">Add new
+								line</button>
 						</div>
 
 

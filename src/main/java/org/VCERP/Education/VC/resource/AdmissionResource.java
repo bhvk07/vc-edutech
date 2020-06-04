@@ -115,6 +115,7 @@ public class AdmissionResource {
 			acadcontroller.updateAcademicDetails(Rollno,invoice_no,regno,acad_year,branch);
 			
 			eqcontroller=new EnquiryController();
+			System.out.println(Long.parseLong(name[0]));
 			eqcontroller.Admission(Long.parseLong(name[0]));
 			
 		} catch (Exception e) {
@@ -267,6 +268,7 @@ public class AdmissionResource {
 		String[] commaSeperatedId=Util.commaSeperatedString(id);
 		for(int i=0;i<commaSeperatedId.length;i++)
 		{
+			String[] symbolSeperatedFees=Util.symbolSeperatedString(fees);
 			enq=dao.searchStudentFromAdmission(commaSeperatedId[i], branch);
 			String personalDetails=enq.getFname()+","+enq.getLname()+","+enq.getMname()+","+enq.getUid()+","+enq.getDob()+","
 			+enq.getGender()+","+enq.getCaste()+","+enq.getCategory()+","+enq.getLang()+","+enq.getFather_cont()+","+
@@ -279,7 +281,7 @@ public class AdmissionResource {
 			String invoice=year.getInvoice_prefix()+"-"+year.getInvoice();
 			yearController.updateAcademicDetails(studId, invoice, regno, acad_year, branch);
 			String installment="installment details,0|ActivityFees|0";
-			String newamt="0";
+			String newamt="0|"+symbolSeperatedFees[1];
 			StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice, admission_date,
 					acad_year, admission_date, personalDetails, installment, newamt, branch);
 		}

@@ -21,6 +21,10 @@ $(document).ready(function(){
 		event.preventDefault();
 		StudentAdmission();
 	});
+	$("#feestypeform").submit(function() {
+		event.preventDefault();
+		addFeesType();
+	});
 	$("#EnquiryForm").submit(function() {
 		event.preventDefault();
 		AddNewEnquiryStudent();
@@ -219,13 +223,12 @@ function AddEmployee() {
 			errorCallback);
 	return false;
 }
-
 function addFeesType() {
 	function callback(responseData,textStatus,request)
 	{
+		$("#feestypeModal").hide();
 //		var mes=responseData.responseJSON.message;
 //		showNotification("success",mes);
-		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
 //		var mes=responseData.responseJSON.message;
@@ -234,66 +237,10 @@ function addFeesType() {
 			// alert(message);
 	}
 	var httpMethod = "POST";
-	var formData;
-	var relativeUrl;
-	if(requestid==0){
-	formData =$('#feestype').serialize()+"&branch="+branchSession;
+	formData =$('#feestypeform').serialize()+"&branch="+branchSession;
+	alert(formData);
 	relativeUrl = "/feesType/addNewFeesType";
-	}else{
-		formData =$('#feestype').serialize()+"&id="+requestid+"&branch="+branchSession;
-		relativeUrl = "/feesType/EditFeesType";
-	}
-		
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
 }
-/*function FetchAllEmployee() {
-	function callback(responseData, textStatus, request) {
-
-		for ( var i in responseData) {
-			var htmlCode = '<option value="' + responseData[i].emp_name + '" >'
-					+ responseData[i].emp_name + '</option>';
-			$('#enq_taken').append(htmlCode);
-		}
-		// var message=responseData.response.JSON.message;
-		// alert(message);
-	}
-	function errorCallback(responseData, textStatus, request) {
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
-		// var message=responseData.response.JSON.message;
-		// alert(message);
-	}
-	var httpMethod = "GET";
-	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}*/
-/*function getFeesPackage() {
-
-	function callback(responseData, textStatus, request) {
-		for ( var i in responseData) {
-			var htmlCode=('<option value="' + responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >'
-					+ responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
-			$('#fees').append(htmlCode);
-		}
-	}
-	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
-	}
-	var httpMethod = "GET";
-	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
-	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}*/
-/*function getCurrentDate() {
-	   var todaydate = new Date();
-	   var day = todaydate.getDate();
-	   var month = todaydate.getMonth() + 1;
-	   var year = todaydate.getFullYear();
-	   var datestring = month + "-" + day + "-" + year;
-	   document.getElementById("current_date").value = datestring;
-}*/

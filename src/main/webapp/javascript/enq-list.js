@@ -22,6 +22,7 @@ $(document).ready(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked == true) {
 				enq_no = table.rows({selected : true}).column(2).data()[i];
+				alert(enq_no);
 				
 			}
 		});
@@ -162,18 +163,20 @@ function Admission(id, req) {
 		} else {
 			alert("here1");
 			var feespack = responseData.fees_pack;
+			var fees=feespack.split("|");
 			var installment = "installment details,0|ActivityFees|0";
-			var newAmt = "0";
+			var newAmt = "0|"+fees[1];
 			var enq_taken = localStorage.getItem("user");
 			var date = today.getFullYear() + "-" + today.getMonth() + "-"
 					+ today.getDate();
 			var status = "active";
+			var division="null";
 			var acad_data = getIncrementalData();
 			var acad_year = acad_data[0];
 			var id_no = acad_data[1] + "-" + acad_data[2];
 			var invoice_no = acad_data[3] + "-" + acad_data[4];
 			var reg_no = acad_data[5] + "-" + acad_data[6];
-			StudentAdmission(studentDetails, enq_taken, feespack, status, date,
+			StudentAdmission(studentDetails, enq_taken, feespack,division, status, date,
 					id_no, reg_no, invoice_no, date, acad_year, date, enqData,
 					installment, newAmt, branchSession);
 		}
@@ -212,7 +215,7 @@ function getIncrementalData() {
 	return acad_data;
 }
 
-function StudentAdmission(studentDetails, enq_taken, feespack, status, date,
+function StudentAdmission(studentDetails, enq_taken, feespack, division ,status, date,
 		id_no, reg_no, invoice_no, date, acad_year, date, enqData, installment,
 		newAmt, branchSession) {
 	function callback(responseData, textStatus, request) {
@@ -222,7 +225,7 @@ function StudentAdmission(studentDetails, enq_taken, feespack, status, date,
 		alert("admission not done");
 	}
 	formData = "stud_details=" + studentDetails + "&enq_taken_by=" + enq_taken
-			+ "&adm_fees_pack=" + feespack + "&status=" + status + "&date="
+			+ "&adm_fees_pack=" + feespack +"&division=" + division + "&status=" + status + "&date="
 			+ date + "&Rollno=" + id_no + "&regno=" + reg_no + "&invoice_no="
 			+ invoice_no + "&admission_date=" + date + "&acad_year="
 			+ acad_year + "&join_date=" + date + "&personalDetails=" + enqData
