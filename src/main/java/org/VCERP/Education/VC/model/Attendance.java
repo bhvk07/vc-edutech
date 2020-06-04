@@ -7,7 +7,9 @@ public class Attendance {
 	private String currentDate;
 	private String Attendance;
 	private String acad_year;
-	private String course;
+	private String standard;
+	private String division;
+	private String branch;
 	public long getId() {
 		return id;
 	}
@@ -29,9 +31,6 @@ public class Attendance {
 	public String getCurrentDate() {
 		return currentDate;
 	}
-	public void setDate(String date) {
-		currentDate = date;
-	}
 	public String getAttendance() {
 		return Attendance;
 	}
@@ -44,12 +43,28 @@ public class Attendance {
 	public void setAcad_year(String acad_year) {
 		this.acad_year = acad_year;
 	}
-	public String getCourse() {
-		return course;
+	public String getDivision() {
+		return division;
 	}
-	public void setCourse(String course) {
-		this.course = course;
+	public void setDivision(String division) {
+		this.division = division;
 	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public void setCurrentDate(String currentDate) {
+		this.currentDate = currentDate;
+	}
+	public String getStandard() {
+		return standard;
+	}
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+	
 	
 	
 }

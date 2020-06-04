@@ -7,15 +7,15 @@ import org.VCERP.Education.VC.model.Attendance;
 
 public class AttendanceController {
 
-	public ArrayList<Attendance> getAttendanceList(String standard, String acad_year, String branch) {
+	public ArrayList<Attendance> getAttendanceList(Attendance attendance) {
 		AttendanceDAO dao=new AttendanceDAO();
-		return dao.getAttendanceList(standard,acad_year,branch);
+		return dao.getAttendanceList(attendance);
 	}
 
-	public void studentAttendance(String standard, String acad_year,  String branch, ArrayList<String> rollno,
+	public void studentAttendance(String standard,String division, String acad_year,  String branch, ArrayList<String> rollno,
 			ArrayList<String> attend) {
 		AttendanceDAO dao=new AttendanceDAO();
-		dao.studentAttendance(standard,acad_year,branch,rollno,attend);
+		dao.studentAttendance(standard,division,acad_year,branch,rollno,attend);
 		
 	}
 

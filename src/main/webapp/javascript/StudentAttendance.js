@@ -2,10 +2,11 @@ var mes;
 var attendance;
 var std;
 var acad_year;
-
+var division;
 $(document).ready(function() {
 	getAllStandard();
 	getAcademicYear();
+	getAllDivision();
 	$('#attendance_table').DataTable({
 		"pageLength" : 40
 	});
@@ -16,21 +17,29 @@ $(document).ready(function() {
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	var select=document.getElementById("acad_year");
+	/*var select=document.getElementById("acad_year");
 	select.addEventListener('change', function() {
 		std=document.getElementById("standard").value;
 		acad_year=document.getElementById("acad_year").value;
+		acad_year=document.getElementById("division").value;
 		attendanceList(std,acad_year)
+	});*/
+	$("#submit").click(function(e) {
+		std=document.getElementById("standard").value;
+		acad_year=document.getElementById("acad_year").value;
+		division=document.getElementById("division").value;
+		attendanceList(std,acad_year,division,e);
 	});
 
 });
 
-function attendanceList(std,acad_year) {
+function attendanceList(std,acad_year,division,e) {
 	function callback(responseData, textStatus, request) {
 		var table = $("#attendance_table").DataTable();
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
+			e.preventDefault();
 			var attendance = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="P"><label for="checkbox1"></label></span>';
 			var date = responseData[i].currentDate;
 			var Rollno = responseData[i].RollNo;
@@ -49,7 +58,8 @@ function attendanceList(std,acad_year) {
 		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
-	var formData = {standard : std , acad_year : acad_year, branch : branchSession};
+	var formData = {standard : std , acad_year : acad_year, division : division , branch : branchSession};
+	alert(formData);
 	var relativeUrl = "/Attendance/getAttendaceList";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
@@ -78,9 +88,9 @@ function getAttendance() {
 	});
 	// myArray=myArray.sort();
 
-	saveAttendance(std, acad_year, attendance);
+	saveAttendance(std, acad_year,division, attendance);
 }
-function saveAttendance(standard, acad_year, attendance) {
+function saveAttendance(standard, acad_year,division, attendance) {
 	function callback(responseData, textStatus, request) {
 		/*
 		 * var message=responseData.responseJSON.message;
@@ -99,6 +109,7 @@ function saveAttendance(standard, acad_year, attendance) {
 	console.log(attendance);
 	var formData = {
 		standard : standard,
+		division : division,
 		acad_year : acad_year,
 		Attendance : attendance,
 		branch : branchSession

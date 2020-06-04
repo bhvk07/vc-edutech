@@ -26,10 +26,16 @@ public class AttendanceResource {
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAttendaceList(@FormParam("standard") String standard,@FormParam("acad_year") String acad_year
-			,@FormParam("branch") String branch){
+			,@FormParam("division") String division,@FormParam("branch") String branch){
+		System.out.println("here");
+		Attendance at=new Attendance();
+		at.setStandard(standard);
+		at.setAcad_year(acad_year);
+		at.setDivision(division);
+		at.setBranch(branch);
 		ArrayList<Attendance> attendance=new ArrayList<>();
 		AttendanceController controller=new AttendanceController();
-		attendance=controller.getAttendanceList(standard,acad_year,branch);
+		attendance=controller.getAttendanceList(at);
 		if(attendance!=null)
 		{
 			return Response.status(Status.ACCEPTED).entity(attendance).build();
@@ -42,7 +48,8 @@ public class AttendanceResource {
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response studentAttendance(@FormParam("standard") String standard,@FormParam("acad_year") String acad_year
+	public Response studentAttendance(@FormParam("standard") String standard,@FormParam("division") String division
+			,@FormParam("acad_year") String acad_year
 			,@FormParam("Attendance") String attendance,@FormParam("branch") String branch){
 		
 		String[] commaSeperatedAttendance=Util.commaSeperatedString(attendance);
@@ -56,7 +63,7 @@ public class AttendanceResource {
 		}
 		try {
 			AttendanceController controller=new AttendanceController();
-			controller.studentAttendance(standard,acad_year,branch,rollno,attend);
+			controller.studentAttendance(standard,division,acad_year,branch,rollno,attend);
 			return Response.status(Status.ACCEPTED).build();
 		} catch (Exception e) {
 			e.printStackTrace();
