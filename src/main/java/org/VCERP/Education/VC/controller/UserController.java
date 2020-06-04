@@ -6,6 +6,7 @@ import org.VCERP.Education.VC.dao.EmployeeDAO;
 import org.VCERP.Education.VC.dao.UserDAO;
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
+import org.VCERP.Education.VC.model.LoginHistory;
 
 public class UserController {
 
@@ -24,4 +25,13 @@ public class UserController {
 		return dao.getAllAccount(branch);
 	}
 
+	public LoginHistory createLoginHistory(LoginHistory history){
+		UserDAO dao = new UserDAO();
+		return dao.createLoginHistory(history);
+		
+	}
+	public ArrayList<LoginHistory> getLoginHistoryList() {
+		UserDAO dao=new UserDAO();
+		return dao.getLoginHistoryList();
+	}
 }

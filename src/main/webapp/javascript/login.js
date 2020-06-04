@@ -52,6 +52,7 @@ function attemptLogin(){
 			{
 			mesasge="Role Not Assign.";
 			}
+		LoginHistory();
 	}
 	
 	function errorCallback(responseData,textStatus,request){
@@ -63,6 +64,23 @@ function attemptLogin(){
 	var relativeUrl="/user/login";
 
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+
+function LoginHistory(){
+	function callback(responseData,textStatus,request){
+	
+	}
+	function errorCallback(responseData,textStatus,request){
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	/*var formData = $('#signin').serialize();*/
+	var httpMethod="GET";
+	var relativeUrl="/user/getLoginHistory?branch="+branchSession+"&user="+user;
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

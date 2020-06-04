@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
+import org.VCERP.Education.VC.model.LoginHistory;
 import org.VCERP.Education.VC.utility.Util;
 
 public class UserDAO {
@@ -107,4 +108,63 @@ public class UserDAO {
 		}
 			return u;
 	}
+	
+	
+	public LoginHistory createLoginHistory(LoginHistory history){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con=Util.getDBConnection();
+			String query = "insert into login_history(`employee`,`branch`,`ip`,`timestamp`) values(?,?,?,?)";
+			ps = con.prepareStatement(query);
+			ps.setString(1,history.getEmployee());
+			ps.setString(2,history.getBranch());
+			ps.setString(3,history.getIp());
+			ps.setString(4,Util.DateTime());
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		
+		return history;
+	}
+	
+	public ArrayList<LoginHistory> getLoginHistoryList(){
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		LoginHistory history=null;
+		ArrayList<LoginHistory> logg=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select * from login_history";
+			st=con.prepareStatement(query);
+			rs=st.executeQuery();
+			while(rs.next()){
+				history = new LoginHistory();
+				history.setId(rs.getLong(1));
+				history.setEmployee(rs.getString(2));
+				history.setBranch(rs.getString(3));
+				history.setIp(rs.getString(4));
+				history.setTimestamp(rs.getString(5));
+				logg.add(history);
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, st, con);
+		}
+		System.out.println(logg);
+		return logg;
+	}
 }
+
+

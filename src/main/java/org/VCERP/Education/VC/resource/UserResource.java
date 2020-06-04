@@ -5,6 +5,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -12,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -19,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.configuration.SigningKeyGenerator;
 import org.VCERP.Education.VC.controller.UserController;
 import org.VCERP.Education.VC.model.User;
+import org.VCERP.Education.VC.model.LoginHistory;
 import org.VCERP.Education.VC.utility.SecureUtil;
 import org.VCERP.Education.VC.utility.Util;
 import org.springframework.stereotype.Controller;
@@ -96,6 +99,56 @@ public class UserResource {
 			return Util.generateErrorResponse(Status.NOT_FOUND, "Not Found").build();
 		} else {
 			return Response.status(Status.ACCEPTED).entity(user).build();
+		}
+	}
+	
+
+	@GET
+	@PermitAll
+	// @JWTTokenNeeded
+	@Path("/getLoginHistory")
+	/*@Produces(MediaType.APPLICATION_JSON)*/
+	public Response getLoginHistory(@QueryParam("branch") String branch,@QueryParam("user") String user, @Context HttpServletRequest request) {
+		/*ArrayList<LoginHistory> history = new ArrayList<>();*/
+		String remoteIP = request.getRemoteAddr();
+		System.out.println("Ip is:"+remoteIP);
+		LoginHistory history = null;
+		UserController controller = null;
+		try{
+		history = new LoginHistory();
+		controller = new UserController();
+		history.setBranch(branch);
+		history.setEmployee(user);
+		history.setIp(remoteIP);
+		history = controller.createLoginHistory(history);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		
+		/*if (history == null) {
+			return Util.generateErrorResponse(Status.NOT_FOUND, "Not Found").build();
+		} else {
+			
+			return Response.status(Status.ACCEPTED).entity(history).build();
+		}*/
+	}
+	
+	@GET
+	@PermitAll
+	@Path("/LoginHistoryList")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLoginHistoryList(){
+		ArrayList<LoginHistory> logg = new ArrayList<>();
+		UserController controller = new UserController();
+		logg = controller.getLoginHistoryList();
+	
+		if (logg == null) {
+			return Util.generateErrorResponse(Status.NOT_FOUND, "Not Found").build();
+		} else {
+			return Response.status(Status.ACCEPTED).entity(logg).build();
 		}
 	}
 }

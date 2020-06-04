@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class Util {
 		 try {
 		
 		 Class.forName("com.mysql.jdbc.Driver").newInstance();
-		 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vc_db?autoReconnect=true&useSSL=false","root","");
+		 conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/vc_db?autoReconnect=true&useSSL=false","root","");
 		 } catch (Exception ex) {
 			 System.out.println(ex);
 		 ex.printStackTrace();
@@ -85,6 +86,12 @@ public class Util {
 		DateFormat time = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		return time.format(date);
+	}
+	public static String DateTime(){
+		Date dt = new Date();
+		DateFormat sdt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String datetime = sdt.format(dt);
+		return datetime;
 	}
 	public static String[] symbolSeperatedString(String str)
 	{
