@@ -7,6 +7,9 @@
 <title>Masters</title>
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"
 	media="screen">
+	
+	
+	
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css"> -->
  <!--  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
@@ -21,8 +24,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/>
 <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
@@ -325,8 +328,15 @@ table.table .avatar {
 		});
 	});
 </script>
+<script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
+<div id="navbar">
+	</div>
 	<div class="container" style="width: AUTO">
 		<div class="table-wrapper">
 			<div class="table-title">
@@ -422,7 +432,7 @@ table.table .avatar {
 	<div id="academicModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="academicYear">
+				<form id="academicYearForm">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">Subject</h4>
@@ -432,7 +442,8 @@ table.table .avatar {
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Academic Year<font color="red">*</font></label>
-							<input type="text" class="form-control" id="aca_year" name="aca_year"required>
+							<input type="text" class="form-control" id="aca_year" name="aca_year" required>
+							<span id="errmsg" style=""></span>
 						</div>
 
                         <div class="form-group">
@@ -555,13 +566,20 @@ table.table .avatar {
 
 		});
 	</script> -->
-	<script type="text/javascript" src="javascript/aca-date.js">
-	/* $(document).ready(function() {
-		$(".form_date").datetimepicker("setDate", new Date());
-	}); */
-	 
-	</script>
+	
 
 
+<<!-- script>
+    $(document).ready(function() {
+        $('input[id$=aca_start]').datepicker({
+            onClose: function(dateText, inst) {
+                $("#aca_end").focus();
+            }
+        });
+    });
+</script> -->
+<script type="text/javascript" src="javascript/aca-date.js"></script>
 </body>
+
+
 </html>

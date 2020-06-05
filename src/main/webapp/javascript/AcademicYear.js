@@ -1,6 +1,119 @@
 var mes;
 var requestid=0;
 $(document).ready(function(){
+	
+	 $("#aca_year").keypress(function (e) {
+	     //if the letter is not digit then display error and don't type anything
+		 if (e.which != 8 && e.which != 0 && String.fromCharCode(e.which) != '-' && (e.which < 48 || e.which > 57))
+ {
+	        //display error message
+	        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+	               return false;
+	    }
+	   });
+	
+	 /*function checkDate() {
+		   var selectedText = document.getElementById('aca_start').value;
+		   var selectedDate = new Date(selectedText);
+		   var now = new Date();
+		   if (selectedDate < now) {
+		    alert("Date must be in the future");
+		   }
+		 }*/
+	/* jQuery.validator.addMethod("noSpace", function(value, element) { 
+		    return value.indexOf(" ") < 0 && value != ""; 
+		  }, "Space are not allowed");*/
+
+	/*jQuery.validator.addMethod("minDate", function (value, element) {
+	    var now = new Date();
+	    var myDate = new Date(value);
+	    return this.optional(element) || myDate > now;
+
+	   
+	});*/
+	$('form[id="academicYearForm"]').validate({
+		
+		
+		  rules: {
+		    
+			aca_year: {
+		        required: true,
+		        minlength:6,
+		        maxlength:8
+		        
+		     /*   noSpace: true*/
+		       
+		        
+		        
+			},
+			aca_start: {
+		        required: true,
+		        date:true,
+		      
+		      
+			},
+			aca_end: {
+		        required: true,
+		        date:true,
+		        
+			},
+			
+			prefix_id_card: {
+		        required: true
+		  
+		        
+			},
+			id_card: {
+		        required: true,
+		        digits: true,
+		        maxlength: 2,
+		        range: [1, 60]
+		        
+			},
+			prefix_invoice: {
+		        required: true,
+		        
+		      
+		        
+			},
+			invoice: {
+		        required: true,
+		        digits: true,
+		        maxlength: 2,
+		        range: [1, 60]
+		      
+		        
+			},
+			prefix_regno: {
+		        required: true
+		   
+		        
+		        
+			},
+			regno: {
+		        required: true,
+		        digits: true,
+		        maxlength:2,
+		        range: [1, 60]
+		        
+			},
+			
+			
+		
+		  },
+		  messages: {
+			aca_year: {
+				required:'Academic year is required'
+			},
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  FetchAllAcademic();
+			  
+		  }
+	});
+	
 	FetchAllAcademic();
 	$('#academictable').DataTable({
 		"pageLength" : 40

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	$('#aca_start').on('click', function(){
 		$('.form_date1').datetimepicker({
 			format: 'd/m/Y', //date format
@@ -11,6 +12,7 @@ $(document).ready(function() {
 			startView : 2,
 			minView : 2,
 			forceParse : 0,
+			keepOpen: false,
 			 
 
 		});
