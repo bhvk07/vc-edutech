@@ -339,20 +339,23 @@ table.table .avatar {
 					</div>
 					<div class="col-sm-6">
 
-						<button type="button" id="btnMarkDelete" onclick="DeleteData();"
+						<!-- <button type="button" id="btnMarkDelete" onclick="DeleteData();"
 							data-style="zoom-out" style="display: none;" title=""
 							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
 							data-original-title="Delete This Fees Type">
 							<b><i class=" padding-right-sm fs14"></i></b><span
 								class="label-xs hidden-xs hidden-sm p5">edit</span>
-						</button>
+						</button> -->
 
 
 
 
 						<a href="#subjectModal" data-toggle="modal"
-							data-target="#subjectModal" class="btn btn-success"><i
+							data-target="#standardmodal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
+							href="" class="btn btn-danger"
+							id="edit" ><i class="material-icons">&#xE15C;</i>
+							<span>Edit</span></a><a
 							href="#deleteEmployeeModal" class="btn btn-danger"
 							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a>
@@ -375,6 +378,7 @@ table.table .avatar {
 											<th>STANDARD</th>
 											<th>BRANCH(ES)</th>
 											<th>STANDARD FEES AMOUNT</th>
+											<th>SUBJECT</th>
 											<th class="no-sort"><span class="custom-checkbox">
 													<input type="checkbox" id="selectAll" name="options[]"
 													value="0"> <label for="checkbox1"></label>
@@ -418,7 +422,7 @@ table.table .avatar {
 	</div>
 
 	<!-- subjectModal Modal HTML -->
-	<div id="subjectModal" class="modal fade">
+	<div id="standardmodal" class="modal fade">
 		<div class="modal-body">
 			<div class="modal-content">
 				<form id="standard">
