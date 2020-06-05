@@ -24,13 +24,22 @@ $(document).ready(function(){
 		    return value.indexOf(" ") < 0 && value != ""; 
 		  }, "Space are not allowed");*/
 
-	/*jQuery.validator.addMethod("minDate", function (value, element) {
+	jQuery.validator.addMethod("minDate", function (value, element) {
 	    var now = new Date();
 	    var myDate = new Date(value);
 	    return this.optional(element) || myDate > now;
+	 });
+	jQuery.validator.addMethod("maxDate", function (value, element) {
+		var startDate = new Date($('#aca_start').val());
+		var endDate = new Date($('#aca_end').val());
 
-	   
-	});*/
+		if (startDate > endDate){
+			 $("#errmsg1").html("!").show();
+             return false;
+		}
+	 });
+	
+	
 	$('form[id="academicYearForm"]').validate({
 		
 		
@@ -49,12 +58,13 @@ $(document).ready(function(){
 			aca_start: {
 		        required: true,
 		        date:true,
-		      
+		        minDate: true
 		      
 			},
 			aca_end: {
 		        required: true,
 		        date:true,
+		        maxDate: true
 		        
 			},
 			
@@ -103,8 +113,17 @@ $(document).ready(function(){
 		  },
 		  messages: {
 			aca_year: {
-				required:'Academic year is required'
+				required:'Academic year is required',		
 			},
+			aca_start:{
+				required:'Start date is required',		
+				minDate:'Date should be current or future date'
+			},
+			aca_end:{
+				required:'End date is required',		
+				maxDate:'End date should be greater than start date'
+			},
+			
 		
 		  },
 		  submitHandler:function(form){
