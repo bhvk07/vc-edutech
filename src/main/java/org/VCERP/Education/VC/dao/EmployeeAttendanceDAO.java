@@ -10,7 +10,7 @@ import org.VCERP.Education.VC.utility.Util;
 
 public class EmployeeAttendanceDAO {
 
-	public ArrayList<Employee> getEmployeeAttendanceList() {
+	public ArrayList<Employee> getEmployeeAttendanceList(String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -18,9 +18,9 @@ public class EmployeeAttendanceDAO {
 		ArrayList<Employee> employee=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select id,emp_name,emp_unq_code from employee";
+			String query="select id,emp_name,emp_unq_code from employee where branch=?";
 			ps=con.prepareStatement(query);
-		//	ps.setString(1, acad_year);
+			ps.setString(1, branch);
 		//	ps.setString(2, courses);
 			rs=ps.executeQuery();
 			while(rs.next())
@@ -44,13 +44,13 @@ public class EmployeeAttendanceDAO {
 	}
 
 	public void employeeAttendance(ArrayList<String> empcode, ArrayList<String> intime, ArrayList<String> outtime,
-			ArrayList<String> attend) {
+			ArrayList<String> attend,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
-			String query="insert into empattendance(`emp_code`,`attendance`,`start_time`,`end_time`,`date`)"
-					+ "values(?,?,?,?,?)";
+			String query="insert into empattendance(`emp_code`,`attendance`,`start_time`,`end_time`,`date`,`branch`)"
+					+ "values(?,?,?,?,?,?)";
 			ps=con.prepareStatement(query);
 			for(int i=0;i<empcode.size();i++){
 			ps.setString(1, empcode.get(i));
@@ -58,6 +58,7 @@ public class EmployeeAttendanceDAO {
 			ps.setString(3, intime.get(i));
 			ps.setString(4, outtime.get(i));
 			ps.setString(5, Util.currentDate());
+			ps.setString(6, branch);
 			ps.executeUpdate();
 			}
 		}catch (Exception e) {
@@ -68,5 +69,38 @@ public class EmployeeAttendanceDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	
+	}
+
+	public Employee getEmpAttendanceStat(Employee emp) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Employee em=null;
+		ArrayList<Employee> employee=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select Count(`attendance`) as TotalDays from empattendance where date between ? and ? and branch=?";
+			ps=con.prepareStatement(query);
+			//ps.setString(1, emp.);
+		//	ps.setString(2, courses);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				em=new Employee();
+				em.setId(rs.getLong(1));
+				em.setEmp_name(rs.getString(2));
+				em.setEmp_unq_code(rs.getString(3));
+				//at.setDate(Util.currentDate());
+				employee.add(em);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return emp;
 	}
 }

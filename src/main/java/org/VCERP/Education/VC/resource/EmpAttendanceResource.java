@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -32,11 +33,11 @@ public class EmpAttendanceResource {
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response getEmpAttendanceList(){
+	public Response getEmpAttendanceList(@QueryParam("branch") String branch){
 		try {
 			ArrayList<Employee> em=new ArrayList<>();
 			EmployeeAttendanceController controller=new EmployeeAttendanceController();
-			em=controller.getEmpAttendanceList();
+			em=controller.getEmpAttendanceList(branch);
 			return Response.status(Status.OK).entity(em).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +50,7 @@ public class EmpAttendanceResource {
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response employeeAttendance(@FormParam("Attendance") String attendance)
+	public Response employeeAttendance(@FormParam("Attendance") String attendance,@FormParam("branch") String branch )
 	{		
 		String[] commaSeperatedAttendance=Util.commaSeperatedString(attendance);
 		ArrayList<String> empcode=new ArrayList<>();
@@ -66,11 +67,43 @@ public class EmpAttendanceResource {
 		}
 		try {
 			EmployeeAttendanceController controller=new EmployeeAttendanceController();
-			controller.employeeAttendance(empcode,intime,outtime,attend);
+			controller.employeeAttendance(empcode,intime,outtime,attend,branch);
 			return Response.status(Status.ACCEPTED).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not save.").build();
+	}
+	@Path("/getEmpAttendaceStat")
+	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response getEmpAttendanceStat(@FormParam("start_date") String from_date,@FormParam("end_date") String to_date,
+			@FormParam("branch") String branch){
+		try {
+			Employee employee=new Employee();
+			ArrayList<Employee> em=new ArrayList<>();
+			EmployeeAttendanceController controller=new EmployeeAttendanceController();
+			em=controller.getEmpAttendanceList(branch);
+			Employee emp=null;
+			for(int i=0;i<em.size();i++){
+			employee=em.get(i);
+			emp=new Employee();
+			emp.setEmp_unq_code(employee.getEmp_unq_code());
+			emp.setEmp_name(employee.getEmp_name());
+			emp.setFrom_date(from_date);
+			emp.setTo_date(to_date);
+			emp.setBranch(branch);
+			emp=controller.getEmpAttendanceStat(emp);
+			}
+			return Response.status(Status.OK).entity(em).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 }

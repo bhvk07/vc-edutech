@@ -8,15 +8,20 @@ import org.VCERP.Education.VC.model.Employee;
 
 public class EmployeeAttendanceController{
 
-	public ArrayList<Employee> getEmpAttendanceList() {
+	public ArrayList<Employee> getEmpAttendanceList(String branch) {
 		EmployeeAttendanceDAO dao=new EmployeeAttendanceDAO();
-		return dao.getEmployeeAttendanceList();
+		return dao.getEmployeeAttendanceList(branch);
 	}
 
 	public void employeeAttendance(ArrayList<String> empcode, ArrayList<String> intime, ArrayList<String> outtime,
-			ArrayList<String> attend) {
+			ArrayList<String> attend,String branch) {
 		EmployeeAttendanceDAO dao=new EmployeeAttendanceDAO();
-		dao.employeeAttendance(empcode,intime,outtime,attend);
+		dao.employeeAttendance(empcode,intime,outtime,attend,branch);
+	}
+
+	public Employee getEmpAttendanceStat(Employee emp) {
+		EmployeeAttendanceDAO dao=new EmployeeAttendanceDAO();
+		return dao.getEmpAttendanceStat(emp);
 	}
 
 }

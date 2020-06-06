@@ -65,9 +65,9 @@ function attendanceList() {
 		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
-	var formData = $("#attendance").serialize();
-	var relativeUrl = "/Attendance/getEmpAttendaceList";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	//var formData = $("#attendance").serialize();
+	var relativeUrl = "/Attendance/getEmpAttendaceList?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -125,7 +125,8 @@ function saveAttendance(attendance) {
 
 	var httpMethod = "POST";
 	var formData = {
-		Attendance : attendance
+		Attendance : attendance,
+		branch : branchSession
 	}
 	console.log(formData);
 	var relativeUrl = "/Attendance/employeeAttendance";
