@@ -7,6 +7,8 @@
 <title>Masters</title>
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"
 	media="screen">
+	<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="jquery/bootstrap.min.js"></script>
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css"> -->
  <!--  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
@@ -327,8 +329,15 @@ table.table .avatar {
 		});
 	});
 </script>
+	<script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
+<div id="navbar">
+	</div>
 	<div class="container" style="width: AUTO">
 		<div class="table-wrapper">
 			<div class="table-title">
