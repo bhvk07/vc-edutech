@@ -199,7 +199,7 @@ function getAcademicYear() {
 		for ( var i in responseData) {
 			var htmlCode=('<option value="' + responseData[i].aca_year +'" >'
 					+ responseData[i].aca_year + '</option>');
-			$('#acad_year').append(htmlCode);
+			$('.acad_year').append(htmlCode);
 			$('#studacad_year').append(htmlCode);
 		}
 	}
@@ -217,7 +217,8 @@ function getAllStandard() {
 		for ( var i in responseData) {
 			var htmlCode = '<option value="' + responseData[i].standard + '" >'
 					+ responseData[i].standard + '</option>';
-			$('#standard').append(htmlCode);
+			//$('#standard').append(htmlCode);
+			$('.standard').append(htmlCode);
 		}
 
 	}
@@ -241,7 +242,7 @@ function getAllDivision() {
 		for ( var i in responseData) {
 			var htmlCode = '<option value="' + responseData[i].division + '" >'
 					+ responseData[i].division + '</option>';
-			$('#division').append(htmlCode);
+			$('.division').append(htmlCode);
 			$('#studdivision').append(htmlCode);
 		}
 

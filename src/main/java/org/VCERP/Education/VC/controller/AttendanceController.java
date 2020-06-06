@@ -19,4 +19,9 @@ public class AttendanceController {
 		
 	}
 
+	public Attendance getAttendanceStat(Attendance attendance) {
+		AttendanceDAO dao=new AttendanceDAO();
+		return dao.getAttendanceStat(attendance);
+	}
+
 }

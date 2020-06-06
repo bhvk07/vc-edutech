@@ -24,18 +24,66 @@ $(document).ready(function() {
 		acad_year=document.getElementById("division").value;
 		attendanceList(std,acad_year)
 	});*/
-	$("#submit").click(function(e) {
+	$("#attendance").submit(function(e) {
+		e.preventDefault();
 		std=document.getElementById("standard").value;
 		acad_year=document.getElementById("acad_year").value;
 		division=document.getElementById("division").value;
 		attendanceList(std,acad_year,division,e);
 	});
+	$("#attendance_stat_form").submit(function(e) {
+		e.preventDefault();
+		std=document.getElementById("standard_stat").value;
+		acad_year=document.getElementById("acad_year_stat").value;
+		division=document.getElementById("division_stat").value;
+		from_date=document.getElementById("start_date").value;
+		to_date=document.getElementById("end_date").value;
+		attendanceStat(std,acad_year,division,from_date,to_date,e);
+	});
 
 });
+function attendanceStat(std,acad_year,division,from_date,to_date,e) {
+	alert(std+acad_year+division+from_date+to_date)
+	function callback(responseData, textStatus, request) {
+		var table = $("#attendance_stat_table").DataTable(); 
+		var value = 0;
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			e.preventDefault();
+			var percentage = responseData[i].percentageCount;
+			var Rollno = responseData[i].RollNo;
+			var student_name = responseData[i].Name;
+			table.row.add([ Rollno, student_name, percentage ]).draw();
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "POST";
+	var formData = {
+			standard : std , 
+			acad_year : acad_year,
+			division : division ,
+			from_date : from_date ,
+			to_date : to_date,
+			branch : branchSession
+			};
+	var relativeUrl = "/Attendance/getAttendaceStat";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
 
 function attendanceList(std,acad_year,division,e) {
+	alert(std+acad_year+division)
 	function callback(responseData, textStatus, request) {
-		var table = $("#attendance_table").DataTable();
+		var table = $("#attendance_table").DataTable(); 
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
@@ -59,7 +107,6 @@ function attendanceList(std,acad_year,division,e) {
 	}
 	var httpMethod = "POST";
 	var formData = {standard : std , acad_year : acad_year, division : division , branch : branchSession};
-	alert(formData);
 	var relativeUrl = "/Attendance/getAttendaceList";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);

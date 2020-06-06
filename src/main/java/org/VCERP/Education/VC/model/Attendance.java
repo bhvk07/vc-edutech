@@ -9,6 +9,11 @@ public class Attendance {
 	private String acad_year;
 	private String standard;
 	private String division;
+	private String from_date;
+	private String to_date;
+	private int totalDays;
+	private int totalPresent;
+	private String percentageCount;
 	private String branch;
 	public long getId() {
 		return id;
@@ -64,7 +69,35 @@ public class Attendance {
 	public void setStandard(String standard) {
 		this.standard = standard;
 	}
-	
-	
+	public String getFrom_date() {
+		return from_date;
+	}
+	public void setFrom_date(String from_date) {
+		this.from_date = from_date;
+	}
+	public String getTo_date() {
+		return to_date;
+	}
+	public void setTo_date(String to_date) {
+		this.to_date = to_date;
+	}
+	public String getPercentageCount() {
+		return percentageCount;
+	}
+	public void setPercentageCount(String percentageCount) {
+		this.percentageCount = percentageCount;
+	}
+	public int getTotalDays() {
+		return totalDays;
+	}
+	public void setTotalDays(int totalDays) {
+		this.totalDays = totalDays;
+	}
+	public int getTotalPresent() {
+		return totalPresent;
+	}
+	public void setTotalPresent(int totalPresent) {
+		this.totalPresent = totalPresent;
+	}
 	
 }
