@@ -1,6 +1,47 @@
 var mes;
 var requestid=0;
 $(document).ready(function(){
+	
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		  return this.optional(element) || /^[a-z]+$/i.test(value);
+		}, "Please enter letters only");
+	
+	$('form[id="subjectForm"]').validate({
+		
+		
+		  rules: {
+		    
+			  subjectname: {
+		        required: true,
+		        lettersonly: true
+		   },
+			timeline: {
+		        required: true,
+		        digits:true,
+		      },
+			
+		  },
+		 messages: {
+			 subjectname: {
+				required:'subjectname is required',		
+			},
+			timeline: {
+				required:'Timeline is required',	
+				digits:'Please enter only digits'
+			},
+			
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  createSubject();
+			  
+		  }
+	});
+	
+	
+	
+	
 	SubjectList();
 	$('#subjecttable').DataTable({
 		"pageLength" : 40

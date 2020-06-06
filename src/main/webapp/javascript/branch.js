@@ -1,5 +1,77 @@
 var request;
 $(document).ready(function(){
+	
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		  return this.optional(element) || /^[a-z]+$/i.test(value);
+		}, "Please enter letters only");
+	
+	
+	$('form[id="branchForm"]').validate({
+		
+		
+		  rules: {
+		    
+			  branch_name: {
+		        required: true, 
+		        lettersonly: true
+		        
+		        
+			},
+			title: {
+		        required: true,
+		        lettersonly: true
+		        
+		      
+			},
+			subTitle: {
+		        required: true,
+		        lettersonly: true
+		      
+		        
+			},
+			
+			branchCode: {
+		        required: true,
+		        digits:true
+		  
+		        
+			},
+			address: {
+		        required: true,
+		       
+		        
+			},
+			email: {
+		        required: true,
+		        email:true
+		        
+		      
+		        
+			},
+			contact: {
+		        required: true,
+		        digits: true,
+		        minlength:10,
+		        maxlength:10
+		       
+		    },
+			
+		  },
+		  messages: {
+			  contact:'Please enter correct mobile number',
+				
+			
+			
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  addNewBranch();
+			  
+		  }
+	});
+	
+	
 	getBranch();
 	$("#branch-form").submit(function(){
 		addNewBranch();

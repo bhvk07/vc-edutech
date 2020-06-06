@@ -1,6 +1,42 @@
 var mes;
 requestid=0;
 $(document).ready(function(){
+	
+	$.validator.addMethod("alphanum", function(value, element) {
+        return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value);
+    }, "Username must contain only letters");
+
+	
+	$('form[id="divisionForm"]').validate({
+		
+		
+		  rules: {
+		    
+			  division: {
+		        required: true,
+		        loginRegex: true
+		   },
+			
+		  },
+		 messages: {
+			 division: {
+				required:'subjectname is required',	
+				alphanum:'Please enter leters or numbers only'
+			},
+			
+			
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  InsertDivision();
+			  
+		  }
+	});
+	
+	
+	
+	
 	FetchAllDiv();
 	$('#divisiontable').DataTable({
 		"pageLength" : 40
