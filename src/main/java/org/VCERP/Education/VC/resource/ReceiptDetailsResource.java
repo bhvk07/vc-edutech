@@ -159,4 +159,20 @@ public class ReceiptDetailsResource {
 //			}
 	}*/
 
+	@Path("/getStudReceiptList")
+	@GET
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response StudReceiptList(@QueryParam("rno") long rno){
+		 ArrayList<ReceiptDetails> rlist = new ArrayList<>();
+		 ReceiptDetailsController controller=new ReceiptDetailsController();
+		 rlist=controller.getStudReceiptList(rno);
+		 if(rlist!=null)
+			{
+				return Response.status(Status.ACCEPTED).entity(rlist).build();
+			}
+			else{
+				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+			}
+	}
 }

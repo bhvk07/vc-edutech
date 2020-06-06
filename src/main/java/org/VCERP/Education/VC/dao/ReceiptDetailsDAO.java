@@ -341,4 +341,35 @@ public class ReceiptDetailsDAO {
 		}
 
 	}
+	
+	public ArrayList<ReceiptDetails> getStudReceiptList(long rno){
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ReceiptDetails details=null;
+		ArrayList<ReceiptDetails> receiptList = new ArrayList<>();
+		try{
+			con = Util.getDBConnection();
+			String query = "select receipt_date,receipt_no,stud_name,pay_mode,total_fees from receipt_details where RollNO=?";
+			ps = con.prepareStatement(query);
+			ps.setLong(1, rno);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				details = new ReceiptDetails();
+				details.setReceipt_date(rs.getString(1));
+				details.setReceipt_no(rs.getString(2));
+				details.setStud_name(rs.getString(3));
+				details.setPay_mode(rs.getString(4));
+				details.setTotal_amt(rs.getLong(5));
+				receiptList.add(details);
+			}
+		}
+		catch (Exception e) {
+			
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return receiptList;
+	}
 }

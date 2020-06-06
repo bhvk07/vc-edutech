@@ -11,6 +11,18 @@ $(document).ready(function(){
 	});
 	showAdmissionTable();
 	
+	
+$('#admission_table tbody tr').on('click', '.cbCheck', function() {
+		
+		var table = $('#admission_table').DataTable();
+		if (this.checked == true) {
+			val = table.row(this.closest('tr')).data();
+			var rno = val[4];
+			getStudReceiptList(rno);
+			
+		}
+
+	});
 	//show_rows1();
 	
 	
@@ -63,3 +75,9 @@ function showAdmissionTable(){
 			errorCallback);
 	return false;
 }
+
+
+/*function getStudReceiptList(rno){
+	var httpMethod = "GET";
+	var relativeUrl = "/Receipt/getStudReceiptList?id=" + rno;
+}*/
