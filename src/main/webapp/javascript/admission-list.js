@@ -77,7 +77,33 @@ function showAdmissionTable(){
 }
 
 
-/*function getStudReceiptList(rno){
+function getStudReceiptList(rno){
+	function callback(responseData, textStatus, request) {
+	    var table = $("#StudReceiptList_table").DataTable();
+		var value = 0;
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			var rec_date = responseData[i].receipt_date;
+			var rec_no = responseData[i].receipt_no;
+			var student_name = responseData[i].stud_name;
+			var pay_mode = responseData[i].pay_mode;
+			var total = responseData[i].total_amt;
+			var viewbtn = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'
+				+ responseData[i].id
+				+ '"><label for="checkbox1"></label></span>';
+			table.row.add(
+			[rec_date,rec_no,student_name,pay_mode,total,viewbtn]).draw();
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/getStudReceiptList?id=" + rno;
-}*/
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+

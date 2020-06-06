@@ -13,6 +13,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
 
@@ -337,11 +338,13 @@ table.table .avatar {
 				</div>
 				<div class="col-sm-6">
 					<a href="enquiry.html" class="btn btn-success"><i
-						class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
-						href="" class="btn btn-success" id="admission"><i
-						class="material-icons">&#xE147;</i> <span>Addmission </span></a> <a
-						href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
+						class="material-icons">&#xE147;</i> <span>Add New</span></a> 
+						<a href="" class="btn btn-success" id="admission"><i
+						class="material-icons">&#xE147;</i> <span>Admission </span></a> 
+						<a href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
 						data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+						<a href="" class="btn btn-success" id="Viewbtn"><i
+						class="material-icons">&#xE147;</i> <span>View </span></a>
 				</div>
 			</div>
 		</div>
@@ -389,6 +392,65 @@ table.table .avatar {
 		</div>
 
 	</div>
+	
+	<!-- View Tab -->
+	<section class="panel" id="datatable-view-2">
+				<div class="table-wrapper" id="table-style">
+					<!--	<div class=col-sm-12>-->
+					<!-- <div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>
+									<b>Organization</b>
+								</h2>
+							</div>
+
+						</div>
+					</div> -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="tabs">
+								<ul class="nav nav-tabs tabs-primary">
+									<div class="nav nav-tabs tabs-primary">
+										<li class="active"><a href="#edit" data-toggle="tab" onclick="">Receipt</a></li>
+									</div>
+								</ul>
+							</div>
+							<div id="edit" class="tab-pane active">
+<!--								<h4 class="mb-xlg">Personal Information</h4>-->
+								<div class="table-wrapper" id="table-style">
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                            <!-- Advanced Tables -->
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+						                           <div class="table-responsive">
+                                                      <table class="table table-striped table-bordered table-hover" id="StudReceiptList_table">
+                                                           <thead>
+                                                            <tr>
+                                                                <th>Receipt Date</th>
+                                                                <th>Receipt No.</th>
+                                                                <th>Student Name</th>
+                                                                <th>Pay Mode</th>
+                                                                <th>Amount</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                      </table>
+                                                   </div>
+                                                </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+	
+	
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
