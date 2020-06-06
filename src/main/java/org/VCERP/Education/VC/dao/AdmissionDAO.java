@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.FeesPackage;
 import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
@@ -276,33 +277,6 @@ public class AdmissionDAO {
 			Util.closeConnection(null, ps, con);
 		}
 		return installment;
-	}
-
-	public String getStandard(String fees_pack, String branch) {
-		Connection con=null;
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		String std="";
-		try {
-			con=Util.getDBConnection();
-			String query="select `standard` from fees_package where fees_pack=? and branch=?";
-			ps=con.prepareStatement(query);
-			ps.setString(1, fees_pack);
-			ps.setString(2, branch);
-			rs=ps.executeQuery();
-			while(rs.next())
-			{
-				std=rs.getString(1);
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
-		finally {
-			Util.closeConnection(rs, ps, con);
-		}
-		return std;
 	}
 
 	public ArrayList<Admission> getPromotionData(Admission admission) {

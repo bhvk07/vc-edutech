@@ -2,6 +2,7 @@ package org.VCERP.Education.VC.controller;
 
 import java.util.ArrayList;
 
+import org.VCERP.Education.VC.dao.AdmissionDAO;
 import org.VCERP.Education.VC.dao.FeesPackageDAO;
 import org.VCERP.Education.VC.model.FeesPackage;
 
@@ -25,6 +26,15 @@ public class FeesPackageController {
 	public ArrayList<String> loadBranch(String std) {
 		FeesPackageDAO dao=new FeesPackageDAO();
 		return dao.loadBranch(std);
+	}
+	public FeesPackage getFeesPackage(String fees_pack, String branch) {
+		FeesPackageDAO dao=new FeesPackageDAO();
+		return dao.getFeesPackage(fees_pack,branch);
+	}
+
+	public void EditFeesPackage(FeesPackage pack) {
+		FeesPackageDAO dao=new FeesPackageDAO();
+		dao.EditFeesPackage(pack);
 	}
 
 }

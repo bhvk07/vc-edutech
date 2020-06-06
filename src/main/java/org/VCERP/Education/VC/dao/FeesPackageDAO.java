@@ -16,14 +16,15 @@ public class FeesPackageDAO {
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
-			String query="insert into fees_package(`fees_pack`,`standard`,`branch`,`fees_details`,`total_amount`,`created_date`)"
-					+ "values(?,?,?,?,?,?)";
+			String query="insert into fees_package(`fees_pack`,`standard`,`branch`,`fees_details`,`total_amount`,`created_by`,`created_date`)"
+					+ "values(?,?,?,?,?,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, pack.getFeesPackage());
 			ps.setString(2, pack.getStandard());
 			ps.setString(3, pack.getBranch());
 			ps.setString(4, pack.getFees_details());
 			ps.setString(5, pack.getTotal_amt());
+			ps.setString(5, pack.getCreated_by());
 			ps.setString(6, Util.currentDate());
 			ps.executeUpdate();
 		}catch (Exception e) {
@@ -116,5 +117,63 @@ public class FeesPackageDAO {
 			Util.closeConnection(null, ps, con);
 		}
 		return branch;
+	}
+	
+	public FeesPackage getFeesPackage(String fees_pack, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		FeesPackage pack=null;
+		try {
+			con=Util.getDBConnection();
+			String query="select * from fees_package where fees_pack=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, fees_pack);
+			ps.setString(2, branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				pack=new FeesPackage();
+				pack.setId(1);
+				pack.setFeesPackage(rs.getString(2));
+				pack.setStandard(rs.getString(3));
+				pack.setBranch(rs.getString(4));
+				pack.setFees_details(rs.getString(5));
+				pack.setTotal_amt(rs.getString(6));
+				pack.setCreated_by(rs.getString(7));
+				pack.setCreated_date(rs.getString(8));
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return pack;
+	}
+
+	public void EditFeesPackage(FeesPackage pack) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update fees_package set fees_pack=?,standard=?,fees_details=?,total_amount=? where id=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, pack.getFeesPackage());
+			ps.setString(2, pack.getStandard());
+			ps.setString(3, pack.getFees_details());
+			ps.setString(4, pack.getTotal_amt());
+			ps.setLong(5, pack.getId());
+			ps.setString(6, pack.getBranch());
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 }

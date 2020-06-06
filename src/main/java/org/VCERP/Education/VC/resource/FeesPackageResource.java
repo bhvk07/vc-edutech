@@ -27,7 +27,8 @@ public class FeesPackageResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addNewFeesPackage(@FormParam("fees-pack") String fees_pack,
 	@FormParam("finalamt") String finalamt,@FormParam("standardData") String standardData,
-	@FormParam("branchData") String branchData,@FormParam("fees_details") String fees_details)
+	@FormParam("branchData") String branchData,@FormParam("fees_details") String fees_details
+	,@FormParam("createdby") String createdby)
 	{
 		/*String[] commaSeperatedFeesDetails=Util.commaSeperatedString(fees_details);
 		for(int i=1;i<commaSeperatedFeesDetails.length;i++){
@@ -45,6 +46,7 @@ public class FeesPackageResource {
 		pack.setBranch(branchData);
 		pack.setTotal_amt(finalamt);
 		pack.setFees_details(fees_details);
+		pack.setCreated_by(createdby);
 		FeesPackageController controller=new FeesPackageController();
 		controller.addNewFeesPackage(pack);
 		return Util.generateResponse(Status.ACCEPTED, "DATA save").build();
@@ -104,6 +106,60 @@ public class FeesPackageResource {
 		if(pack!=null){
 		return Response.status(Status.ACCEPTED).entity(pack).build();
 		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
+	}
+	
+	@Path("/getFeesPackageData")
+	@POST
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response getSpecificFeesPackageData(@FormParam("pack") String pack,@FormParam("branch") String branch)
+	{
+		try{
+		FeesPackage fees=new FeesPackage();
+		FeesPackageController controller=new FeesPackageController();
+		fees=controller.getFeesPackage(pack,branch);
+		if(fees!=null){
+		return Response.status(Status.ACCEPTED).entity(fees).build();
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+	}
+	@Path("/EditFeesPackage")
+	@PermitAll
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditFeesPackage(@FormParam("fees-pack") String fees_pack,
+	@FormParam("finalamt") String finalamt,@FormParam("standardData") String standardData,
+	@FormParam("branchData") String branchData,@FormParam("fees_details") String fees_details
+	,@FormParam("createdby") String createdby,@FormParam("id") Long id)
+	{
+		/*String[] commaSeperatedFeesDetails=Util.commaSeperatedString(fees_details);
+		for(int i=1;i<commaSeperatedFeesDetails.length;i++){
+			//String a=commaSeperatedFeesDetails;
+			String[] symbolSeperatedFeesDetails=Util.symbolSeperatedString(commaSeperatedFeesDetails[i]);
+				feesType.add(symbolSeperatedFeesDetails[0]);
+				amt.add(symbolSeperatedFeesDetails[1]);
+				discount.add(symbolSeperatedFeesDetails[2]);
+				totalFeesTypeAmt.add(symbolSeperatedFeesDetails[3]);		
+		}*/
+		try{
+		FeesPackage pack=new FeesPackage();
+		pack.setId(id);
+		pack.setFeesPackage(fees_pack);
+		pack.setStandard(standardData);
+		pack.setBranch(branchData);
+		pack.setTotal_amt(finalamt);
+		pack.setFees_details(fees_details);
+		pack.setCreated_by(createdby);
+		FeesPackageController controller=new FeesPackageController();
+		controller.EditFeesPackage(pack);
+		return Util.generateResponse(Status.ACCEPTED, "DATA save").build();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
