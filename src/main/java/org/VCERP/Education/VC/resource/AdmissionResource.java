@@ -18,10 +18,12 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.controller.AcademicYearController;
 import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.EnquiryController;
+import org.VCERP.Education.VC.controller.FeesPackageController;
 import org.VCERP.Education.VC.dao.AdmissionDAO;
 import org.VCERP.Education.VC.model.AcademicYear;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.FeesPackage;
 import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
@@ -138,10 +140,10 @@ public class AdmissionResource {
 	
 	public String getStandard(String fees_pack,String branch){
 		System.out.println(fees_pack+"  "+branch);
-		AdmissionController controller=new AdmissionController();
-		String std=controller.getStandard(fees_pack,branch);
-		System.out.println(std);
-		return std;
+		FeesPackage pack=new FeesPackage();
+		FeesPackageController controller=new FeesPackageController();
+		pack=controller.getFeesPackage(fees_pack,branch);
+		return pack.getStandard();
 	}
 	
 	public Response saveInstallment(String[] commaSeperated, String branch){

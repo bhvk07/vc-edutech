@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.VCERP.Education.VC.dao.AdmissionDAO;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
+import org.VCERP.Education.VC.model.FeesPackage;
 import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 
@@ -36,10 +37,7 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.searchStudentFromAdmission(enq_stud,branch);
 	}*/
-	public String getStandard(String fees_pack, String branch) {
-		AdmissionDAO dao=new AdmissionDAO();
-		return dao.getStandard(fees_pack,branch);
-	}
+	
 	public ArrayList<Admission> getPromotionData(Admission admission) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getPromotionData(admission);
