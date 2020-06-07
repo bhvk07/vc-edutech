@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -85,5 +86,21 @@ public class FeesTypeResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not save").build();
+	}
+	@DELETE
+	@Path("/deleteFeesType")
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteFeesType(@QueryParam("id") String id)
+	{
+		try{
+		FeesTypeController controller=new FeesTypeController();
+		controller.deleteFeesType(id);
+		return Response.status(Status.ACCEPTED).build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
 	}
 }

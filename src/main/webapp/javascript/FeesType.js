@@ -22,6 +22,16 @@ $(document).ready(function() {
 	$("#cancel").click(function() {
 		clearModal()
 	});
+	$("#Delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			deleteFeesType(idarray);
+			}
+		});
+		
+	});
 
 });
 
@@ -78,6 +88,23 @@ function getFeesType() {
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;	
+}
+
+function deleteFeesType(id) {
+	function callback(responseData,textStatus,request)
+	{
+	
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/feesType/deleteFeesType?id="+id;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }

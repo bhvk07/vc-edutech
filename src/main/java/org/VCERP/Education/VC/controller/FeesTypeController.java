@@ -23,4 +23,9 @@ public class FeesTypeController {
 		dao.EditFeesType(type);
 	}
 
+	public void deleteFeesType(String id) {
+		FeesTypeDAO dao=new FeesTypeDAO();
+		dao.deleteFeesType(id);
+	}
+
 }

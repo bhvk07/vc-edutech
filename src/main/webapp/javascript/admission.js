@@ -166,9 +166,9 @@ function StudentAdmission(){
 	}
 	var httpMethod = "POST";
 	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
-	console.log(formData);
+	alert(formData);
 	var relativeUrl = "/Admission/StudentAdmission";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	//ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 }
 
