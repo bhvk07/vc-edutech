@@ -82,13 +82,14 @@ public class EmpAttendanceResource {
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response getEmpAttendanceStat(@FormParam("start_date") String from_date,@FormParam("end_date") String to_date,
+	public Response getEmpAttendanceStat(@FormParam("from_date") String from_date,@FormParam("to_date") String to_date,
 			@FormParam("branch") String branch){
 		try {
 			Employee employee=new Employee();
 			ArrayList<Employee> em=new ArrayList<>();
 			EmployeeAttendanceController controller=new EmployeeAttendanceController();
 			em=controller.getEmpAttendanceList(branch);
+			ArrayList<Employee> employeeattendancestat=new ArrayList<>();
 			Employee emp=null;
 			for(int i=0;i<em.size();i++){
 			employee=em.get(i);
@@ -99,8 +100,11 @@ public class EmpAttendanceResource {
 			emp.setTo_date(to_date);
 			emp.setBranch(branch);
 			emp=controller.getEmpAttendanceStat(emp);
+			String percent=(int)Math.round(emp.getTotalPresent() * 100.0 / emp.getTotalDays()) + "%";
+			emp.setPercentage(percent);
+			employeeattendancestat.add(emp);
 			}
-			return Response.status(Status.OK).entity(em).build();
+			return Response.status(Status.OK).entity(employeeattendancestat).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

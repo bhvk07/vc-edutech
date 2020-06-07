@@ -5,6 +5,7 @@ var time;
 $(document).ready(function() {
 	today = new Date();
 	time = today.getHours() + ":" + today.getMinutes();
+	attendanceList();
 	$('#EmpAttendance_table').DataTable({
 		"pageLength" : 40
 	});
@@ -20,20 +21,10 @@ $(document).ready(function() {
 			$("#selectAllAbsent").prop("checked", false);
 		}
 	});
+	$("#attendance_stat_form").submit(function(e){
+		getEmployeeAttendanceStat(e);
+	})
 
-	/*
-	 * var options = { // hh:mm 24 hour format only, defaults to current time
-	 * twentyFour: false, // Display 24 hour format, defaults to false upArrow:
-	 * 'wickedpicker__controls__control-up', downArrow:
-	 * 'wickedpicker__controls__control-down', close: 'wickedpicker__close',
-	 * hoverState: 'hover-state', showSeconds: false, secondsInterval: 1,
-	 * minutesInterval: 1, beforeShow: null, show: null, clearable: false, //
-	 * Make the picker's input clearable (has // clickable "x") };
-	 */
-	// var myPicker = $('.timepicker').wickedpicker(options);
-	attendanceList();
-
-	// $('.timepicker').wickedpicker(options);
 });
 
 function attendanceList() {
@@ -130,6 +121,40 @@ function saveAttendance(attendance) {
 	}
 	console.log(formData);
 	var relativeUrl = "/Attendance/employeeAttendance";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+
+function getEmployeeAttendanceStat(e) {
+	function callback(responseData, textStatus, request) {
+		var table = $("#EmpAttendance_stat_table").DataTable();
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			e.preventDefault();
+			var emp_name = responseData[i].emp_name;
+			var emp_code = responseData[i].emp_unq_code;
+			var working_days = responseData[i].totalDays;
+			var working_Present = responseData[i].totalPresent;
+			var Percentage = responseData[i].percentage;
+			table.row.add(
+					[ emp_name, emp_code, working_days, working_Present, Percentage])
+					.draw();
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "POST";
+	var formData = $("#attendance_stat_form").serialize()+"&branch="+branchSession;
+	var relativeUrl = "/Attendance/getEmpAttendaceStat";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
