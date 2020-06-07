@@ -1001,7 +1001,7 @@
 
 							<br>
 
-							<table class="table" id="feestypetable" class="feestable">
+							<table class="table" id="feestypetable2" class="feestypetable">
 								<thead>
 									<tr style="font-size: small;">
 										<th scope="col">FEES TYPE<font color="red"> * </font></th>
@@ -1079,7 +1079,7 @@
 										<label for="grant-t" id="total"> Total: </label>
 									</div>
 									<div class="col-xs-5">
-										<input type="number" class="form-control totala" id="grand-t"
+										<input type="number" class="form-control" id="grand-t2"
 											value="0" disabled>
 									</div>
 								</div>
@@ -1163,7 +1163,7 @@
 		   var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
 				+ htmlCode
 				+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
-		$("#feestypetable").on('change', '.amt,.discount', function() {
+		$("#feestypetable,#feestypetable2").on('change', '.amt,.discount', function() {
 			alert("10");
 			var discount = 0;
 			var amount = 0;
@@ -1197,11 +1197,19 @@
 
 		function getTotalPrice() {
 			var total = 0;
-			$(".totala").each(function() {
+			var total2 = 0;
+			$("#feestypetable .totala").each(function() {
+				
 				var val = $(this).val();
 				total += isNaN(val) || $.trim(val) == "" ? 0 : parseFloat(val);
 			});
 			$("#grand-t").val(total.toFixed(2));
+			$("#feestypetable2 .totala").each(function() {
+				
+				var val = $(this).val();
+				total2 += isNaN(val) || $.trim(val) == "" ? 0 : parseFloat(val);
+			});
+			$("#grand-t2").val(total2.toFixed(2));
 		}
 
 		//function() {
