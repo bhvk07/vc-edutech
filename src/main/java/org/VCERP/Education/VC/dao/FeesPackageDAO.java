@@ -24,8 +24,8 @@ public class FeesPackageDAO {
 			ps.setString(3, pack.getBranch());
 			ps.setString(4, pack.getFees_details());
 			ps.setString(5, pack.getTotal_amt());
-			ps.setString(5, pack.getCreated_by());
-			ps.setString(6, Util.currentDate());
+			ps.setString(6, pack.getCreated_by());
+			ps.setString(7, Util.currentDate());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();

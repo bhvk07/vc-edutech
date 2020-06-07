@@ -314,50 +314,47 @@ table.table .avatar {
 	});
 </script>
 
-				<script type="text/javascript">
-					$('#selectall').click(
-							function(event) { //on click
+<script type="text/javascript">
+	$('#selectall').click(function(event) { //on click
 
-								var checkboxes = $(this).closest(
-										'#FeesTypeList').find(':checkbox');
-								if ($(this).is(':checked')) {
-									checkboxes.prop('checked', true);
-									CheckSelection();
+		var checkboxes = $(this).closest('#FeesTypeList').find(':checkbox');
+		if ($(this).is(':checked')) {
+			checkboxes.prop('checked', true);
+			CheckSelection();
 
-								} else {
-									checkboxes.prop('checked', false);
-									CheckSelection();
-								}
-							});
-				</script>
+		} else {
+			checkboxes.prop('checked', false);
+			CheckSelection();
+		}
+	});
+</script>
 </head>
-	<script>
+<script>
 	$(function() {
 		$("#navbar").load("nav-bar.html");
 	});
-</script> 
+</script>
 <body>
-  	<div id="navbar">
-	</div>
-		
+	<div id="navbar"></div>
+
 	<section class="body">
 
-	    <section role="main" class="content-body">
-     
-               <section class="panel" id="datatable-view">
-                   	
-		<div class="container" style="width: AUTO">
-			<div class="table-wrapper">
-				<div class="table-title">
-					<div class="row">
-						<div class="col-sm-6">
-							<h2>
-								<b>Fees Package</b>
-							</h2>
-						</div>
-						<div class="col-sm-6">
+		<section role="main" class="content-body">
 
-<!--
+			<section class="panel" id="datatable-view">
+
+				<div class="container" style="width: AUTO">
+					<div class="table-wrapper">
+						<div class="table-title">
+							<div class="row">
+								<div class="col-sm-6">
+									<h2>
+										<b>Fees Package</b>
+									</h2>
+								</div>
+								<div class="col-sm-6">
+
+									<!--
 							<button type="button" id="btnMarkDelete" onclick="DeleteData();"
 								data-style="zoom-out" style="display: none;" title=""
 								class="btn btn-danger popconfirm  margin-right-sm ladda-button"
@@ -367,7 +364,7 @@ table.table .avatar {
 							</button>
 -->
 
-<!--
+									<!--
 				<div align="right" id="demo">
 			<input type="button" id="close" style="background-color:#d9534f;" class="btn btn-default"
 				data-dismiss="modal" value="Cancel"> 
@@ -376,212 +373,212 @@ table.table .avatar {
 				</div>
 -->
 
-<!--							<div id="demo2">-->
-							<button type="button" style="background-color:#53b700;"
-								class="btn btn-danger popconfirm  margin-right-sm ladda-button" id="edit">
-								<b><i class=" padding-right-sm fs14"></i></b><span>Edit</span>
-							</button>
-							<button type="button" style="background-color:#53b700;"
-								class="btn btn-danger popconfirm  margin-right-sm ladda-button add-b">
-								<b><i class=" padding-right-sm fs14"></i></b><span>Add
-									New</span>
-							</button>
+									<!--							<div id="demo2">-->
+									<button type="button" style="background-color: #53b700;"
+										class="btn btn-danger popconfirm  margin-right-sm ladda-button"
+										id="edit">
+										<b><i class=" padding-right-sm fs14"></i></b><span>Edit</span>
+									</button>
+									<button type="button" style="background-color: #53b700;"
+										class="btn btn-danger popconfirm  margin-right-sm ladda-button add-b">
+										<b><i class=" padding-right-sm fs14"></i></b><span>Add
+											New</span>
+									</button>
 
 
 
-							<!-- <a href="#feestypeModal" data-toggle="modal"
+									<!-- <a href="#feestypeModal" data-toggle="modal"
 							data-target="#feestypeModal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a> -->
 
-<!--
+									<!--
 							<a href="#deleteEmployeeModal" class="btn btn-danger"
 								id="btn-danger" data-toggle="modal"><i
 								class="material-icons">&#xE15C;</i> <span>Delete</span></a>
 -->
-<!--								</div>-->
+									<!--								</div>-->
+								</div>
+							</div>
 						</div>
+						<!--				<form id="form1">-->
+						<div class="row">
+							<div class="col-md-12">
+								<!-- Advanced Tables -->
+								<div class="panel panel-default">
+									<!-- <div class="panel-heading">Advanced Tables</div> -->
+									<div class="panel-body">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover"
+												id="feespackage">
+												<thead>
+													<tr>
+
+														<th>CREATED DATE</th>
+														<th>FEES PACKAGE</th>
+														<th>BRANCH(ES)</th>
+														<th class="no-sort"><span class="custom-checkbox">
+																<input type="checkbox" id="selectAll" name="options[]"
+																value="0"> <label for="checkbox1"></label>
+														</span></th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+
+									</div>
+									<!-- </div> -->
+									<!--End Advanced Tables -->
+								</div>
+							</div>
+
+						</div>
+						<!--</form>-->
+						<!----code for selecting all check boxes---->
+
 					</div>
 				</div>
-<!--				<form id="form1">-->
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Advanced Tables -->
-						<div class="panel panel-default">
-							<!-- <div class="panel-heading">Advanced Tables</div> -->
-							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered table-hover"
-										id="feespackage">
+
+
+
+			</section>
+			<section class="panel" id="datatable-view-2">
+				<div class="table-wrapper" id="table-style">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>
+									<b>Fees Package</b>
+								</h2>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-success cancel-b" id="cancel">
+									<i class="material-icons">&#xE147;</i> <span>Cancel</span>
+								</button>
+								<button class="btn btn-success save-b" id="submit">
+									<i class="material-icons">&#xE147;</i> <span>Save</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<!--			<div class="container" style="width: 60%">-->
+
+						<form id="feespackage-form" method="post">
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label>Fees package <font color="red"> * </font>
+									</label> <input type="text" name="fees-pack" class="form-control"
+										id="fees-pack" required>
+								</div>
+
+
+								<!-- Default input -->
+								<div class="form-group">
+									<label for="inputDisabledEx2" class="disabled">Amount <font
+										color="red"> * </font></label> <input type="text" name="finalamt"
+										id="inputDisabledAmt" class="form-control" disabled>
+								</div>
+
+
+								<hr
+									style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+
+
+								<div class="form-group" style="background-color: #f5f2eb;">
+									<br> STANDARD DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
+
+								<div class="form-group">
+
+									<!-- Actual search box -->
+									<div class="form-group has-search">
+										<div class="input-group">
+											<span class="input-group-addon"><i
+												class="fa fa-search form-control-feedback"></i></span> <input
+												type="text" class="form-control"
+												placeholder="Search for Standard">
+										</div>
+									</div>
+
+									<table class="table table-bordered" id="standard">
 										<thead>
 											<tr>
+												<th scope="col">SELECT</th>
+												<th scope="col">STANDARD</th>
+												<th scope="col">STANDARD FEES AMOUNT</th>
 
-												<th>CREATED DATE</th>
-												<th>FEES PACKAGE</th>
-												<th>BRANCH(ES)</th>
-												<th class="no-sort"><span class="custom-checkbox">
-														<input type="checkbox" id="selectAll" name="options[]"
-														value="0"> <label for="checkbox1"></label>
-												</span></th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+								<br> <br> <br>
+								<hr
+									style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+
+								<div class="form-group">
+									<button type="button" id="loadBranch" class="btn btn-default"
+										style="background-color: #53b700; color: white">
+										<b>Load Branch >></b>
+									</button>
+								</div>
+								<div class="form-group" style="background-color: #f5f2eb;">
+									<br> BRANCH DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="form-group has-search">
+									<!--   <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>-->
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-search form-control-feedback"></i></span> <input
+											type="text" class="form-control"
+											placeholder="Search for Standard">
+									</div>
+									<br>
+
+									<table class="table table-bordered" id="branchTable">
+										<thead>
+											<tr>
+												<th scope="col">SELECT</th>
+												<th scope="col">BRANCH</th>
 											</tr>
 										</thead>
 									</table>
 								</div>
 
-							</div>
-							<!-- </div> -->
-							<!--End Advanced Tables -->
-						</div>
-					</div>
-
-				</div>
-<!--</form>-->
-	<!----code for selecting all check boxes---->
-
-			</div>
-		</div>
-               
-               
-               
-            </section>
-        <section class="panel" id="datatable-view-2">
-                     <div class="table-wrapper" id="table-style">
-                     		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-6">
-					<h2>
-						<b>Fees Package</b>
-					</h2>
-				</div>
-				<div class="col-sm-6">
-					<button class="btn btn-success cancel-b" ><i
-						class="material-icons">&#xE147;</i> 
-						<span>Cancel</span>
-                    </button>
-                    <button class="btn btn-success save-b" id="submit"><i
-						class="material-icons">&#xE147;</i> 
-						<span>Save</span>
-                    </button>
-				</div>
-			</div>
-		</div>
-            
-
-          <div class="row">
-<!--			<div class="container" style="width: 60%">-->
-	
-	<form id="feespackage-form" method="post">
-		<div class="modal-body">
-
-			<div class="form-group">
-				<label>Fees package <font color="red"> * </font>
-				</label> <input type="text" name="fees-pack" class="form-control" id="fees-pack" required>
-			</div>
 
 
-			<!-- Default input -->
-			<div class="form-group">
-				<label for="inputDisabledEx2" class="disabled">Amount <font
-					color="red"> * </font></label> <input type="text" name="finalamt" id="inputDisabledAmt"
-					class="form-control" disabled>
-			</div>
-
-
-			<hr
-				style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-
-
-			<div class="form-group" style="background-color: #f5f2eb;">
-				<br> STANDARD DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-
-			<div class="form-group">
-
-				<!-- Actual search box -->
-				<div class="form-group has-search">
-					<div class="input-group">
-						<span class="input-group-addon"><i
-							class="fa fa-search form-control-feedback"></i></span> <input
-							type="text" class="form-control"
-							placeholder="Search for Standard">
-					</div>
-				</div>
-
-				<table class="table table-bordered" id="standard">
-					<thead>
-						<tr>
-							<th scope="col">SELECT</th>
-							<th scope="col">STANDARD</th>
-							<th scope="col">STANDARD FEES AMOUNT</th>
-
-						</tr>
-					</thead>
-									</table>
-			</div>
-			<br>
-			<br>
-			<br>
-			<hr
-				style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-
-			<div class="form-group">
-				<button type="button" id="loadBranch" class="btn btn-default"
-					style="background-color: #53b700; color: white">
-					<b>Load Branch >></b>
-				</button>
-			</div>
-			<div class="form-group" style="background-color: #f5f2eb;">
-				<br> BRANCH DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-			<div class="form-group has-search">
-				<!--   <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>-->
-				<div class="input-group">
-					<span class="input-group-addon"><i
-						class="fa fa-search form-control-feedback"></i></span> <input type="text"
-						class="form-control" placeholder="Search for Standard">
-				</div>
-				<br>
-
-				<table class="table table-bordered" id="branchTable">
-					<thead>
-						<tr>
-							<th scope="col">SELECT</th>
-							<th scope="col">BRANCH</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+								<div class="form-group" style="background-color: #f5f2eb;">
+									<br> FEES DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="form-group has-search">
 
 
 
-			<div class="form-group" style="background-color: #f5f2eb;">
-				<br> FEES DETAILS <br> &nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-			<div class="form-group has-search">
+									<br>
 
+									<table class="table" id="feestypetable">
+										<thead>
+											<tr style="font-size: small;">
+												<th scope="col">FEES TYPE<font color="red"> * </font></th>
+												<th scope="col">AMOUNT <font color="red"> * </font></th>
+												<th scope="col">DISCOUNT</th>
+												<th scope="col">DISCOUNT TYPE</th>
+												<th scope="col">Tax</th>
+												<th scope="col">TOTAL</th>
+												<th scope="col">REMOVE</th>
+											</tr>
+										</thead>
+										<tbody id="fee-details">
+											<tr>
+												<td>
 
-
-				<br>
-
-				<table class="table" id="feestypetable">
-					<thead>
-						<tr style="font-size: small;">
-							<th scope="col">FEES TYPE<font color="red"> * </font></th>
-							<th scope="col">AMOUNT <font color="red"> * </font></th>
-							<th scope="col">DISCOUNT</th>
-							<th scope="col">DISCOUNT TYPE</th>
-							<th scope="col">Tax</th>
-							<th scope="col">TOTAL</th>
-							<th scope="col">REMOVE</th>
-						</tr>
-					</thead>
-					<tbody id="fee-details">
-						<tr>
-							<td>
-
-								<div class="form-group">
-									<div class="input-group">
-										<select name="feestype" class="form-control" id="feestype">
-											<!-- <option value="ActivityFees">Activity Fees</option>
+													<div class="form-group">
+														<div class="input-group">
+															<select name="feestype" class="form-control"
+																id="feestype">
+																<!-- <option value="ActivityFees">Activity Fees</option>
 											<option value="AdmissionForm">Admission Form</option>
 											<option value="AnnualDayFees">AnnualDayFees</option>
 											<option value="BoardExamFees">BoardExamFees</option>
@@ -604,91 +601,122 @@ table.table .avatar {
 											<option value="TermFees">TermFees</option>
 											<option value="TransportationFees">TransportationFees</option>
 											<option value="TutionFees">TutionFees</option> -->
-										</select> <span class="input-group-addon" id="bhvk">
-											<button type="button" id="add-btn" data-toggle="modal"
-												data-target="#addFeesTypeModal"
-												style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
-												+</button>
-										</span>
+															</select> <span class="input-group-addon" id="bhvk">
+																<button type="button" id="add-btn" data-toggle="modal"
+																	data-target="#feestypeModal"
+																	style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
+																	+</button>
+															</span>
+														</div>
+													</div>
+												</td>
+
+												<td>
+													<!--  Amount Field       --> <input type="number"
+													class="form-control amt" id="amount" value="" name="amount"
+													placeholder="0.00">
+												</td>
+
+												<td>
+													<!--          discount field     --> <input type="number"
+													class="form-control discount" id="discount" name="discount"
+													value="0">
+												</td>
+
+												<td>
+													<div class="form-group">
+														<select name="distype" class="form-control">
+															<option value="INR">INR</option>
+														</select>
+													</div>
+												</td>
+
+												<td><input type="text" class="form-control"
+													placeholder="NONE"></td>
+
+												<td>
+													<!--      Total field      --> <input type="text"
+													class="form-control totala" name="price" id="total-amt"
+													value="" disabled>
+												</td>
+												<td>
+													<div class="w3-padding w3-xlarge w3-teal">
+														<button type="button" id="remove-row" class="remove-row">
+															<i class="glyphicon glyphicon-trash"></i>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+
+
+										</tbody>
+
+									</table>
+
+									<div class="form-group">
+										<div class="input-group" id="total-row">
+											<div class="col-xs-6 col-sm-2">
+												<label for="grant-t" id="total"> Total: </label>
+											</div>
+											<div class="col-xs-5">
+												<input type="number" class="form-control" id="grand-t"
+													value="0" disabled>
+											</div>
+										</div>
 									</div>
+									<button type="button" id="addrow">Add new line</button>
+									<!--<button type="button" id="copy" onclick="getandset();">Copy</button>-->
+
+
+
 								</div>
-							</td>
 
-							<td>
-								<!--  Amount Field       --> 
-								<input type="number" class="form-control amt" id="amount" value="" name="amount" placeholder="0.00">
-							</td>
 
-							<td>
-								<!--          discount field     -->
-								 <input type="number" class="form-control discount" id="discount" name="discount" value="0">
-							</td>
 
-							<td>
+
+							</div>
+
+
+
+						</form>
+					</div>
+					<!--          End of table wrapper below-->
+				</div>
+			</section>
+			<div id="feestypeModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form id="feestypeform">
+							<div class="modal-header"
+								style="background-color: #53b700; color: aliceblue">
+								<h4 class="modal-title">Add Employee</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+							</div>
+							<div class="modal-body">
 								<div class="form-group">
-									<select name="distype" class="form-control">
-										<option value="INR">INR</option>
-									</select>
+									<label>Fees Type/Inventory Item<font color="red">*</font></label>
+									<input type="text" class="form-control" id="feesType"
+										name="feesType" required>
 								</div>
-							</td>
 
-							<td><input type="text" class="form-control" placeholder="NONE"></td>
-
-							<td>
-								<!--      Total field      --> 
-								<input type="text" class="form-control totala" name="price" id="total-amt" value=""
-								disabled>
-							</td>
-							<td>
-								<div class="w3-padding w3-xlarge w3-teal">
-									<button type="button" id="remove-row">
-										<i class="glyphicon glyphicon-trash"></i>
-									</button>
-								</div>
-							</td>
-						</tr>
-
-
-
-					</tbody>
-
-				</table>
-
-				<div class="form-group">
-					<div class="input-group" id="total-row">
-						<div class="col-xs-6 col-sm-2">
-							<label for="grant-t" id="total"> Total: </label>
-						</div>
-						<div class="col-xs-5">
-							<input type="number" class="form-control" id="grand-t" value="0"
-								disabled>
-						</div>
+							</div>
+							<div class="modal-footer">
+								<input type="button" class="btn btn-default"
+									data-dismiss="modal" id="cancel" value="Cancel"> <input
+									type="submit" class="btn btn-success" value="Save"
+									style="background-color: #53b700; color: aliceblue">
+							</div>
+						</form>
 					</div>
 				</div>
-				<button type="button" id="addrow">Add new line</button>
-				<!--<button type="button" id="copy" onclick="getandset();">Copy</button>-->
-
-
-
 			</div>
 
+		</section>
+	</section>
 
-
-
-		</div>
-	
-
-
-	</form>
-</div>
-<!--          End of table wrapper below-->
-           </div> 
-            </section>
-
-        </section>
-    </section>
-	
-<!--
+	<!--
 
 			<div class="container" style="width: 60%">
 	
@@ -696,23 +724,22 @@ table.table .avatar {
 </div>
 -->
 
-<script>
-    $(document).ready(function(){
-        $("#datatable-view-2").hide();
-         $(".add-b").on('click',function(){
-             $("#datatable-view").hide();
-             $("#datatable-view-2").show();
-         });
-        $(".cancel-b").on('click',function(){
-             $("#datatable-view").show();
-             $("#datatable-view-2").hide();
-         });
-    });
-   
-</script>
+	<script>
+		$(document).ready(function() {
+			$("#datatable-view-2").hide();
+			$(".add-b").on('click', function() {
+				$("#datatable-view").hide();
+				$("#datatable-view-2").show();
+			});
+			$(".cancel-b").on('click', function() {
+				$("#datatable-view").show();
+				$("#datatable-view-2").hide();
+			});
+		});
+	</script>
 
 
-<!--
+	<!--
     <script type="text/javascript">
         document.getElementById("form2").style.display = "none";
         document.getElementById("demo").style.display = "none";
@@ -732,7 +759,7 @@ table.table .avatar {
 
 
 
-<!--
+	<!--
 <script type="text/javascript">
 	
 		$('#close').on('click',function(event) { //on click
@@ -748,89 +775,86 @@ table.table .avatar {
 -->
 
 
-		
-  
-<script>
- 
-var htmlCode=new Array();
-loadFeesType();
-function loadFeesType() {
 
-	function callback(responseData, textStatus, request) {
-		for ( var i in responseData) {
-			htmlCode.push('<option value="' + responseData[i].feesType + '" >'
-					+ responseData[i].feesType + '</option>');
-		}
-		for(var i=0;i<htmlCode.length;i++)
-			{
-			$("#feestype").append(htmlCode[i]);
+
+	<script>
+		var htmlCode = new Array();
+		loadFeesType();
+		function loadFeesType() {
+
+			function callback(responseData, textStatus, request) {
+				for ( var i in responseData) {
+					htmlCode
+							.push('<option value="' + responseData[i].feesType + '" >'
+									+ responseData[i].feesType + '</option>');
+				}
+				for (var i = 0; i < htmlCode.length; i++) {
+					$("#feestype").append(htmlCode[i]);
+				}
 			}
-	}
-	function errorCallback(responseData, textStatus, request) {
+			function errorCallback(responseData, textStatus, request) {
 
-	}
+			}
 
-	var httpMethod = "GET";
-	var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
-	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-} 
+			var httpMethod = "GET";
+			var relativeUrl = "/feesType/getFeesType?branch=" + branchSession;
+			ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+					errorCallback);
+			return false;
+		}
 
-var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
-//var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
+				+ htmlCode
+				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+		//var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control .feestype" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value=""></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
-$("#feestypetable").on('change','.amt, .discount', function(){
-  alert("1");
-   var discount= 0;
-   var amount = 0;
-   var r = document.getElementById('feespackage');
-   var noof = r.rows.length-1;
-  // var val = this.value;
-   var $trr = this.closest('tr');
-   amount = parseInt($(".amt",$trr).val());
-   discount = parseInt($(".discount",$trr).val());
-   if(amount.value!=NaN){
-       $(".totala",$trr).val(amount);
-   }
-  
-   if($(".totala",$trr).val()>0 && discount>=0){
-         var cal = amount - discount;
-       if(cal<0){
-       alert("Profit cannot be Negative");
-            $(".totala",$trr).val(0);
-            }
-       else{
-           $(".totala",$trr).val(cal);
-       }
-   }
-   else if($(".totala",$trr).val()<0){
-       alert("Input positive amount value");
-       $(".totala",$trr).val(0);
-       
-   }
-   getTotalPrice();
+		$("#feestypetable").on('change', '.amt, .discount', function() {
+			alert("1");
+			var discount = 0;
+			var amount = 0;
+			var r = document.getElementById('feespackage');
+			var noof = r.rows.length - 1;
+			// var val = this.value;
+			var $trr = this.closest('tr');
+			amount = parseInt($(".amt", $trr).val());
+			discount = parseInt($(".discount", $trr).val());
+			if (amount.value != NaN) {
+				$(".totala", $trr).val(amount);
+			}
 
-          });
-   
+			if ($(".totala", $trr).val() > 0 && discount >= 0) {
+				var cal = amount - discount;
+				if (cal < 0) {
+					alert("Profit cannot be Negative");
+					$(".totala", $trr).val(0);
+				} else {
+					$(".totala", $trr).val(cal);
+				}
+			} else if ($(".totala", $trr).val() < 0) {
+				alert("Input positive amount value");
+				$(".totala", $trr).val(0);
 
-function getTotalPrice() {
-var total = 0; 
-$(".totala").each(function() { 
-var val = $(this).val();
-total += isNaN(val) || $.trim(val)=="" ? 0 : parseInt(val); 
-});
-$("#grand-t").val(total);
-$("#inputDisabledAmt").val(total);
+			}
+			getTotalPrice();
 
-}
-    
-$(function () {
-$("#addrow").click(function(){
-    $("table #fee-details").append(html);
-});
-});
+		});
 
-</script>
+		function getTotalPrice() {
+			var total = 0;
+			$(".totala").each(function() {
+				var val = $(this).val();
+				total += isNaN(val) || $.trim(val) == "" ? 0 : parseInt(val);
+			});
+			$("#grand-t").val(total);
+			$("#inputDisabledAmt").val(total);
+
+		}
+
+		$(function() {
+			$("#addrow").click(function() {
+				$("table #fee-details").append(html);
+			});
+		});
+	</script>
 </body>
 </html>
