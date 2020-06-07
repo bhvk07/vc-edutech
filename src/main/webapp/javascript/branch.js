@@ -73,9 +73,9 @@ $(document).ready(function(){
 	
 	
 	getBranch();
-	$("#branch-form").submit(function(){
+	/*$("#branch-form").submit(function(){
 		addNewBranch();
-	});
+	});*/
 	var table=$('#branchtable').DataTable();
 	$("#edit").click(function(e){
 		request="Edit";
@@ -104,7 +104,7 @@ function addNewBranch(){
 		showNotification("error",mes);
 		
 	}
-	var formData = $("#branch-form").serialize()+"&createdBy="+user;
+	var formData = $("#branchForm").serialize()+"&createdBy="+user;
 	console.log(formData);
 	var httpMethod = "POST";
 	if(request!="Edit"){

@@ -42,9 +42,9 @@ $(document).ready(function(){
 		"pageLength" : 40
 	});
 	
-	$("#division_master").submit(function(){
+/*	$("#division_master").submit(function(){
 		InsertDivision();
-	});
+	});*/
 	$("#edit").click(function(e){
 		var table = $('#divisiontable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
@@ -77,10 +77,10 @@ function InsertDivision(){
 	var formData;
 	var relativeUrl;
 	if(requestid==0){
-	formData = $("#division_master").serialize()+"&branch="+branchSession;
+	formData = $("#divisionForm").serialize()+"&branch="+branchSession;
 	relativeUrl = "/Division/NewDivision";
 	}else{
-		formData = $("#division_master").serialize()+"&id="+requestid;
+		formData = $("#divisionForm").serialize()+"&id="+requestid;
 		relativeUrl = "/Division/EditDivision";
 	}
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,

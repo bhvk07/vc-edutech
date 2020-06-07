@@ -53,9 +53,9 @@ $(document).ready(function(){
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	$("#subject").submit(function(){
+	/*$("#subject").submit(function(){
 		createSubject();	
-	});
+	});*/
 	$("#edit").click(function(e){
 		var table = $('#subjecttable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
@@ -90,11 +90,11 @@ function createSubject(){
 	var relativeUrl;
 	alert(requestid);
 	if(requestid==0){
-	var formData=$("#subject").serialize()+"&branch="+branchSession;
+	var formData=$("#subjectForm").serialize()+"&branch="+branchSession;
 	var relativeUrl = "/Subject/NewSubject";
 	}
 	else{
-		var formData=$("#subject").serialize()+"&id="+requestid+"&branch="+branchSession;
+		var formData=$("#subjectForm").serialize()+"&id="+requestid+"&branch="+branchSession;
 		var relativeUrl = "/Subject/EditSubject";
 	}
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
