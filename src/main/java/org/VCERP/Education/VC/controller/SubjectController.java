@@ -21,4 +21,9 @@ public class SubjectController{
 		SubjectDAO dao=new SubjectDAO();
 		dao.EditSubject(sub);
 	}
+
+	public void deleteSubject(String id) {
+		SubjectDAO dao=new SubjectDAO();
+		dao.deleteSubject(id);
+	}
 }

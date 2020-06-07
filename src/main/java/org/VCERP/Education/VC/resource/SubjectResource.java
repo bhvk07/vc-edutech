@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.VCERP.Education.VC.controller.CasteController;
 import org.VCERP.Education.VC.controller.EmployeeController;
 import org.VCERP.Education.VC.controller.SubjectController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
@@ -93,6 +95,22 @@ public class SubjectResource {
 		System.out.println(e);
 	}
 	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	}
+	@DELETE
+	@Path("/deleteSubject")
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteSubject(@QueryParam("id") String id)
+	{
+		try{
+		SubjectController controller=new SubjectController();
+		controller.deleteSubject(id);
+		return Response.status(Status.ACCEPTED).build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
 	}
 	
 }

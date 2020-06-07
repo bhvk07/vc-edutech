@@ -67,6 +67,15 @@ $(document).ready(function(){
 			}
 		});	
 	});
+	$("#Delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			deleteSubject(idarray);
+			}
+		});
+	});
 	$("#cancel").click(function(){
 		clearModal();	
 	});
@@ -133,6 +142,22 @@ function SubjectList(){
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
+}
+function deleteSubject(id) {
+	function callback(responseData,textStatus,request)
+	{
+	
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/Subject/deleteSubject?id="+id;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;	
 }
 function loadSubject(subject,time,e){
 	document.getElementById("subjectname").value=subject;
