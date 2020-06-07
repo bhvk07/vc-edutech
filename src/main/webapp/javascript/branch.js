@@ -5,6 +5,9 @@ $(document).ready(function(){
 		  return this.optional(element) || /^[a-z]+$/i.test(value);
 		}, "Please enter letters only");
 	
+	jQuery.validator.addMethod("letterswithspace", function(value, element) {
+	    return this.optional(element) || /^[a-z\s]+$/i.test(value);
+	}, "Please enter letters only");
 	
 	$('form[id="branchForm"]').validate({
 		
@@ -13,7 +16,7 @@ $(document).ready(function(){
 		    
 			  branch_name: {
 		        required: true, 
-		        lettersonly: true
+		        letterswithspace: true
 		        
 		        
 			},

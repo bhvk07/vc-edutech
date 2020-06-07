@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 	$.validator.addMethod("alphanum", function(value, element) {
         return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value);
-    }, "Username must contain only letters");
+    }, " must contain only letters");
 
 	
 	$('form[id="divisionForm"]').validate({
@@ -14,13 +14,13 @@ $(document).ready(function(){
 		    
 			  division: {
 		        required: true,
-		        loginRegex: true
+		        alphanum: true
 		   },
 			
 		  },
 		 messages: {
 			 division: {
-				required:'subjectname is required',	
+				required:'Division is required',	
 				alphanum:'Please enter leters or numbers only'
 			},
 			
