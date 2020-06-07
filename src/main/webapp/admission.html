@@ -1103,8 +1103,8 @@
 	</div>
 
 	<!-- <script type="text/javascript" src="javascript/jquery-1.8.3.min.js"
-		charset="UTF-8"></script> -->
-	<!-- <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->
+		charset="UTF-8"></script>  -->
+	<!--  <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->
 	<script type="text/javascript"
 		src="javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<!--<script type="text/javascript" src="../js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>-->
@@ -1159,15 +1159,15 @@
 			ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 					errorCallback);
 			return false;
-		}
-		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
+		} 
+		   var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
 				+ htmlCode
-				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
-		$(".feestypetable").on('change', '.amt,.discount', function() {
-			//alert("10");
+				+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
+		$("#feestypetable").on('change', '.amt,.discount', function() {
+			alert("10");
 			var discount = 0;
 			var amount = 0;
-			var r = document.getElementByClass('feestypetable');
+			var r = document.getElementById('feestypetable');
 			var noof = r.rows.length - 1;
 			// var val = this.value;
 			var $trr = this.closest('tr');
@@ -1225,6 +1225,6 @@
 	<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 	<!-- <script src="vendor/select2/select2.min.js"></script>
  -->
-	<script src="javascript/done-date.js" type="text/javascript"></script>
+	<script src="javascript/done-date.js" type="text/javascript"></script> 
 </body>
 </html>
