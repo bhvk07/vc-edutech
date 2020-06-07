@@ -2,20 +2,34 @@ var mes;
 var editData=sessionStorage.getItem("EditData");
 var request="";
 $(document).ready(function() {
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z\s]+$/i.test(value);
+		}, "Only alphabetical characters");
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
 	$('form[id="EnquiryForm"]').validate({
 		  rules: {
 		    sname: {
-		    	required:true
+		    	required:true,
+		    	lettersonly:true,
+		    	noSpace: true
 		    },
 		    lname: {
 		      required: true,
+		      lettersonly:true,
+		      noSpace: true
 		      
 		    },
 		    fname: {
-			      required: true
+			      required: true,
+			      lettersonly:true,
+			      noSpace: true
 			},
 			mname: {
-			      required: true
+			      required: true,
+			      lettersonly:true,
+			      noSpace: true
 			},
 			uid: {
 		        required: true,
@@ -28,18 +42,21 @@ $(document).ready(function() {
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
+		        noSpace: true
 			},
 			father_cont: {
 		        required: true,
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
+		        noSpace: true
 			},
 			mother_cont: {
 		        required: true,
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
+		        noSpace: true
 			},
 			addr: {
 		        required: true
@@ -59,6 +76,7 @@ $(document).ready(function() {
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
+		        noSpace: true
 			},
 		  },
 		 /* messages: {

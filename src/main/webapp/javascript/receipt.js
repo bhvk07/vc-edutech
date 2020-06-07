@@ -2,8 +2,51 @@ var mes;
 var today=new Date();
 var date=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 $(document).ready(function(){
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z\s]+$/i.test(value);
+		}, "Only alphabetical characters");
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
+	$('form[id="receipt-form"]').validate({
+		  rules: {
+			stud_id: {
+		        required: true,
+		        digits: true,
+		        noSpace: true
+			},
+			receipt_no: {
+		        required: true,
+		        digits: true,
+		        noSpace: true
+			},
+			stud_details:{
+				required: true,
+				noSpace: true
+			},
+			received_amt:{
+				required: true,
+		        digits: true,
+			},
+			received_in:{
+				required: true
+			},
+			trans_status:{
+				required: true
+			},
+			enq_taken:{
+				required: true
+			},
+			
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  StudentReceipt();
+		  }
+	});
 	receiptNumber();
 	FetchAllEmployee();
+	
 	//document.getElementById('receipt_date').value=date;
 	$("#stud_id").focusout(function() {
 		var id=document.getElementById('stud_id').value;
@@ -17,6 +60,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		StudentReceipt();
 	});
+	
 });
 
 function SearchStudent(id){
