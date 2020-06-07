@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.CasteController;
+import org.VCERP.Education.VC.controller.DivisionController;
 import org.VCERP.Education.VC.controller.FeesTypeController;
 import org.VCERP.Education.VC.model.Caste;
 import org.VCERP.Education.VC.model.FeesType;
@@ -82,6 +84,22 @@ public class CasteResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not save").build();
+	}
+	@DELETE
+	@Path("/deleteCaste")
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCaste(@QueryParam("id") String id)
+	{
+		try{
+		CasteController controller=new CasteController();
+		controller.deleteCaste(id);
+		return Response.status(Status.ACCEPTED).build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
 	}
 
 }

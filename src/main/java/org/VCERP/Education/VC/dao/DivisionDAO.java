@@ -114,4 +114,21 @@ public class DivisionDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+	public void deleteDivision(String id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from division_master where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

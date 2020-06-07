@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 
 import org.VCERP.Education.VC.controller.DivisionController;
+import org.VCERP.Education.VC.controller.FeesTypeController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Division;
 
@@ -108,5 +110,21 @@ public class DivisionResource {
 		}
 		
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	}
+	@DELETE
+	@Path("/deleteDivision")
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteDivision(@QueryParam("id") String id)
+	{
+		try{
+		DivisionController controller=new DivisionController();
+		controller.deleteDivision(id);
+		return Response.status(Status.ACCEPTED).build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
 	}
 	}

@@ -1,7 +1,7 @@
 var mes;
 var requestid=0;
 $(document).ready(function() {
-	getCaste();
+	getAllCaste();
 	$("#caste-form").submit(function() {
 		event.preventDefault();
 		addCaste();
@@ -13,6 +13,15 @@ $(document).ready(function() {
 			requestid=$(this).val();
 			caste = table.rows({selected : true}).column(1).data()[i];
 			loadCaste(caste,e);
+			}
+		});
+	});
+	$("#Delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			deleteCaste(idarray);
 			}
 		});
 	});
@@ -51,7 +60,7 @@ function addCaste() {
 	
 }
 
-function getCaste() {
+function getAllCaste() {
 	function callback(responseData,textStatus,request)
 	{
 		 var table = $("#caste-table").DataTable();
@@ -78,7 +87,22 @@ function getCaste() {
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
-
+function deleteCaste(id) {
+	function callback(responseData,textStatus,request)
+	{
+	
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/caste/deleteCaste?id="+id;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;	
+}
 function loadCaste(caste,e){
 	alert(caste);
 	document.getElementById("caste").value=caste;

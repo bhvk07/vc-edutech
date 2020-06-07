@@ -24,4 +24,9 @@ public class CasteController {
 		CasteDAO dao=new CasteDAO();
 		dao.EditCaste(caste);
 	}
+
+	public void deleteCaste(String id) {
+		CasteDAO dao=new CasteDAO();
+		dao.deleteCaste(id);
+	}
 }

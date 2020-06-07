@@ -55,6 +55,15 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$("#Delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			deleteDivision(idarray);
+			}
+		});
+	});
 	$("#cancel").click(function(){
 		clearModal();
 	});
@@ -113,7 +122,22 @@ function FetchAllDiv(){
 			errorCallback);
 	return false;
 }
-
+function deleteDivision(id) {
+	function callback(responseData,textStatus,request)
+	{
+	
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/Division/deleteDivision?id="+id;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;	
+}
 function loadDivision(div,e){
 		document.getElementById("division").value=div;
 		e.preventDefault();
@@ -128,3 +152,4 @@ function clearModal(){
 	document.getElementById("division").value="";
 	requestid=0;
 }
+

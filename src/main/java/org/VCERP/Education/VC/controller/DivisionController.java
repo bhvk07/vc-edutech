@@ -24,4 +24,9 @@ public class DivisionController {
 		dao.EditDivision(div);
 		
 	}
+	public void deleteDivision(String id) {
+		DivisionDAO dao=new DivisionDAO();
+		dao.deleteDivision(id);
+		
+	}
 }
