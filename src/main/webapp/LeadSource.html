@@ -5,8 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Masters</title>
-<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"
-	media="screen">
 	<script src="jquery/jquery-3.3.1.min.js"></script>
 <script src="jquery/bootstrap.min.js"></script>
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
@@ -35,7 +33,7 @@
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
-<script type="text/javascript" src="javascript/division.js"></script> 
+<script type="text/javascript" src="javascript/LeadSource.js"></script> 
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 
@@ -344,7 +342,7 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							<b>Division</b>
+							<b>Lead Source</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
@@ -361,7 +359,7 @@ table.table .avatar {
 
 
 						<a href="#divisionModal" data-toggle="modal"
-							data-target="#divisionModal" class="btn btn-success"><i
+							data-target="#leadsourceModal" class="btn btn-success"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a>
 						<a href="" class="btn btn-success" id="edit"><i
 							class="material-icons">&#xE147;</i> <span>Edit</span></a>
@@ -387,7 +385,7 @@ table.table .avatar {
 										<tr>
 
 											<th>CREATED DATE</th>
-											<th>DIVISION</th>
+											<th>LEAD SOURCE</th>
 											<th class="no-sort"><span class="custom-checkbox">
 													<input type="checkbox" id="selectAll" name="options[]"
 													value="0"> <label for="checkbox1"></label>
@@ -431,20 +429,20 @@ table.table .avatar {
 	
 
 	<!-- subjectModal Modal HTML -->
-	<div id="divisionModal" class="modal fade">
+	<div id="leadsourceModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="divisionForm">
+				<form id="LeadSourceForm">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Division</h4>
+						<h4 class="modal-title">Lead Source</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Division<font color="red">*</font></label>
-							<input type="text" class="form-control" id="division" name="division"required>
+							<label>Lead Source<font color="red">*</font></label>
+							<input type="text" class="form-control" id="leadsource" name="leadsource"required>
 						</div>
 
 					</div>
@@ -522,7 +520,6 @@ table.table .avatar {
 	</div>
  -->	<!-- <script type="text/javascript" src="javascript/jquery-1.8.3.min.js" charset="UTF-8"></script> -->
 <script type="text/javascript" src="javascript/bootstrap.min.js"></script>
-<script type="text/javascript" src="javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 
 
 </body>
