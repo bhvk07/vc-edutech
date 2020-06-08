@@ -37,7 +37,9 @@ $(document).ready(function(){
 			enq_taken:{
 				required: true
 			},
-			
+			receipt_date:{
+				required: true
+			},
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();

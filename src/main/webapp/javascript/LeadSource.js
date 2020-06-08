@@ -1,6 +1,25 @@
 var mes;
 requestid=0;
 $(document).ready(function(){
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z\s]+$/i.test(value);
+		}, "Only alphabetical characters");
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
+	$('form[id="LeadSourceForm"]').validate({
+		  rules: {
+			  leadsource: {
+		        required: true,
+		        lettersonly: true,
+		        
+			},
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  LeadSourceList();
+		  }
+	});
 	$("#LeadSourceForm").submit(function(){
 		InsertLeadSource();
 });
