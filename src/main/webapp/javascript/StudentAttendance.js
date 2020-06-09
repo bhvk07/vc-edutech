@@ -4,6 +4,41 @@ var std;
 var acad_year;
 var division;
 $(document).ready(function() {
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z\s]+$/i.test(value);
+		}, "Only alphabetical characters");
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
+	$('form[id="attendance_stat_form"]').validate({
+		  rules: {
+			  standard_stat: {
+		        required: true
+		        
+			},
+			acad_year_stat: {
+		        required: true
+		        
+			},
+			division_stat:{
+				required: true,
+				noSpace: true
+			},
+			start_date:{
+				required: true,
+				date:true
+			},
+			end_date:{
+				required: true,
+				date:true
+			},
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  attendanceStat();
+		  }
+	});
+	
 	getAllStandard();
 	getAcademicYear();
 	getAllDivision();

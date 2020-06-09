@@ -38,7 +38,8 @@ $(document).ready(function(){
 				required: true
 			},
 			receipt_date:{
-				required: true
+				required: true,
+				date:true
 			},
 		  },
 		  submitHandler:function(form){
