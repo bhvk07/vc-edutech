@@ -2,6 +2,7 @@ var mes;
 var editData=sessionStorage.getItem("EditData");
 var request="";
 $(document).ready(function() {
+	getCaste();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
 		}, "Only alphabetical characters");
@@ -114,6 +115,41 @@ $(document).ready(function() {
 		AddEmployee();
 	});
 	$("#branch").val(branchSession);
+	$("#feestype-form").submit(function() {
+		event.preventDefault();
+		addFeesType();
+	});
+	$("#employee-modal").click(function(e){
+		e.preventDefault();
+		$('#addEmployeeModal').modal({
+	        show: true, 
+	        backdrop: 'static',
+	        keyboard: true
+	     })
+	})
+	$("#feespackage-modal").click(function(e){
+		e.preventDefault();
+		$('#myFeesPackageModal').modal({
+	        show: true, 
+	        backdrop: 'static',
+	        keyboard: true
+	     });
+	});
+	$("#fees-type-modal").click(function(e){
+		e.preventDefault();
+		$('#feestypeModal').modal({
+	        show: true, 
+	        backdrop: 'static',
+	        keyboard: true
+	     });
+	});
+	$('#feestypetable').on('click','.remove-row',function(e) {
+		var val = $(this).closest('tr').find('#total-amt').val();
+		document.getElementById("grand-t").value = parseInt(document.getElementById("grand-t").value)- parseInt(val);
+		$(this).closest('tr').remove();
+		});
+	
+	
 });
 
 function EnquiryData() {
@@ -204,4 +240,24 @@ function loadEditData(Data){
 	$("#fees").val(data[22]);
 	$("#lead").val(data[20]);
 	document.getElementById("remark").value=data[21];
+}
+function addFeesType() {
+	function callback(responseData,textStatus,request)
+	{
+//		var mes=responseData.responseJSON.message;
+//		showNotification("success",mes);
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "POST";
+	var formData =$("#feestype-form").serialize()+"&branch="+branchSession;
+	alert(formData);
+	var relativeUrl = "/feesType/addNewFeesType";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	return false;
+	
 }

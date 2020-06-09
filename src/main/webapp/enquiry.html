@@ -274,8 +274,7 @@
                         </div> -->
 
 							<span class="input-group-addon" id="bhvk">
-								<button type="button" id="add-btn" data-toggle="modal"
-									data-target="#addEmployeeModal"
+								<button type="button" id="employee-modal"
 									style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
 									+</button>
 							</span>
@@ -295,8 +294,7 @@
                         </div> -->
 
 							<span class="input-group-addon" id="bhvk">
-								<button type="button" id="add-btn" data-toggle="modal"
-									data-target="#myFeesPackageModal"
+								<button type="button" id="feespackage-modal"
 									style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
 									+</button>
 							</span>
@@ -584,33 +582,9 @@
 
 											<div class="form-group">
 												<div class="input-group">
-													<select name="feestype" class="form-control" id="feestype">
-														<!-- <option value="ActivityFees">Activity Fees</option>
-														<option value="AdmissionForm">Admission Form</option>
-														<option value="AnnualDayFees">AnnualDayFees</option>
-														<option value="BoardExamFees">BoardExamFees</option>
-														<option value="BooksFees">BooksFees</option>
-														<option value="ComputerFees">ComputerFees</option>
-														<option value="DonationFees">DonationFees</option>
-														<option value="Downpayment">Downpayment</option>
-														<option value="EducationalTripFees">EducationalTripFees</option>
-														<option value="ExamFees">ExamFees</option>
-														<option value="ID_Calendar_Form">ID_Calendar_Form</option>
-														<option value="Installments">Installments</option>
-														<option value="LateFees">LateFees</option>
-														<option value="LumpsumForm">LumpsumForm</option>
-														<option value="MiscellaneousFees">MiscellaneousFees</option>
-														<option value="MonthlyFees">MonthlyFees</option>
-														<option value="NewAdmission">NewAdmission</option>
-														<option value="PartyCharges">PartyCharges</option>
-														<option value="Re-AdmissionFees">Re-AdmissionFees</option>
-														<option value="StudentKit">StudentKit</option>
-														<option value="TermFees">TermFees</option>
-														<option value="TransportationFees">TransportationFees</option>
-														<option value="TutionFees">TutionFees</option> -->
+													<select name="feestype" class="form-control feestype" id="feestype">
 													</select> <span class="input-group-addon" id="bhvk">
-														<button type="button" id="add-btn" data-toggle="modal"
-															data-target="#addFeesTypeModal"
+														<button type="button" id="fees-type-modal"
 															style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
 															+</button>
 													</span>
@@ -695,69 +669,34 @@
 
 
 	<!-- modal-start -->
-	<div id="addFeesTypeModal" class="modal fade">
+	<div id="feestypeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
+				<form id="feestype-form">
 					<div class="modal-header"
-						style="background-color: #8F7A0A; color: white">
-						<h4 class="modal-title">Fees Type</h4>
+						style="background-color: #53b700; color: aliceblue">
+						<h4 class="modal-title">Add Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
-
 						<div class="form-group">
-							<label>Select type <font color="red"> * </font></label> <select
-								name="feestype" class="form-control" required>
-								<option value="feestype">Fees Type</option>
-								<option value="invitem">Inventory Item</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Fees Type/Inventory Item <font color="red">
-									* </font></label> <input type="text" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label>Sales Account <font color="red"> * </font></label> <input
-								type="number" class="form-control" required>
+							<label>Fees Type/Inventory Item<font color="red">*</font></label>
+							<input type="text" class="form-control" id="feesTypeModal"
+								name="feesType" required>
 						</div>
 
-						<div class="form-group">
-							<label>SAC Code</label>
-							<!--<input type="text" class="form-control" required>-->
-							<span> <input class="form-control mr-sm-2" type="text"
-								placeholder="Search" aria-label="Search">
-								<button class="btn btn-outline-warning btn-rounded btn-sm my-0"
-									type="submit">Search</button>
-							</span>
-						</div>
-
-						<div class="form-group">
-							<label> Default Tax for Other State Client</label> <select
-								name="tax1" class="form-control" required>
-								<option value="feestype">None</option>
-								<option value="invitem">None</option>
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label> Default Tax for Within State Client</label> <select
-								name="tax2" class="form-control" required>
-								<option value="feestype">None</option>
-								<option value="invitem">None</option>
-							</select> <br> <input type="button" class="btn btn-default"
-								data-dismiss="modal" value="Cancel"> <input
-								type="submit" class="btn btn-success" value="Add">
-						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancel"
+							value="Cancel"> <input type="submit"
+							class="btn btn-success" value="Save"
+							style="background-color: #53b700; color: aliceblue">
 					</div>
 				</form>
 			</div>
 		</div>
-
-		<div class="modal-footer"></div>
-
-	</div>
+		</div>
 	<script>
 		var htmlCode = new Array();
 		loadFeesType();
@@ -765,18 +704,19 @@
 
 			function callback(responseData, textStatus, request) {
 				for ( var i in responseData) {
-					htmlCode
-							.push('<option value="' + responseData[i].feesType + '" >'
-									+ responseData[i].feesType + '</option>');
+					htmlCode.push('<option value="' + responseData[i].feesType + '" >'+ responseData[i].feesType + '</option>');
+					
 				}
+					$('#feestype').append(htmlCode);
 			}
-			$('#feestype').append(htmlCode);
+			
+			
 			function errorCallback(responseData, textStatus, request) {
 
 			}
 
 			var httpMethod = "GET";
-			var relativeUrl = "/feesType/getFeesType";
+			var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
 			ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 					errorCallback);
 			return false;
@@ -784,7 +724,7 @@
 		//console.log(htmlCode);
 		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
 				+ htmlCode
-				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
 		$("#feestypetable").on('change', '.amt,.discount', function() {
 			//alert("1");

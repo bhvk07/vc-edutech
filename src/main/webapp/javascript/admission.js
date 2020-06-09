@@ -12,6 +12,7 @@ $(document).ready(function(){
 	getAutoIncrementedDetails();
 	getFeesPackage();
 	getAllDivision();
+	getCaste();
 	fetchAllBranch();
 	loadBranchSpecificStandard();
 	$("#enq_taken").val(user);
