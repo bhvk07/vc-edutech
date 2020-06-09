@@ -35,7 +35,7 @@
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
-<script type="text/javascript" src="javascript/division.js"></script> 
+<script type="text/javascript" src="javascript/TimeTable.js"></script> 
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 
@@ -501,29 +501,12 @@ font-size:16px;
 	                </div>
 	                 <div class="col-md-8">
 	                     <div class="input-group">
-	                         <select class="form-control" name="aca_year">
+	                         <select class="form-control acad_year" name="aca_year" id="ay">
 	                             
 	                         </select>
 	                     </div>
 	                 </div>
 	            </div>
-	            <div class="form-group">
-	                 <div class="col-md-4">
-	                     <label class="control-label">Start Date</label>
-	                     <font color='red'>*</font>
-	                 </div>
-	                 <div class="col-md-8">
-	                     <input type="text" class="form-control" name="start_date">
-	                 </div>
-	            </div>
-	            <div class="form-group">
-	                 <div class="col-md-4">
-	                     <label class="control-label">End Date</label>
-	                     <font color='red'>*</font>
-	                 </div>
-	                 <div class="col-md-8">
-	                     <input type="text" class="form-control" name="end_date">
-	                 </div>
 	            </div>
 	            <div class="form-group">
 	                 <div class="col-md-4">
@@ -532,7 +515,7 @@ font-size:16px;
 	                 </div>
 	                 <div class="col-md-8">
                        <div class="input-group">
-	                      <select class="form-control" name="standard">
+	                      <select class="form-control standard" name="standard" id="std">
 	                             
 	                       </select>
                          </div>
@@ -545,7 +528,7 @@ font-size:16px;
 	                 </div>
 	                 <div class="col-md-8">
                        <div class="input-group">
-	                      <select class="form-control" name="subject">
+	                      <select class="form-control subject" name="subject" id="sub">
 	                             
 	                         </select>
                          </div>
@@ -558,7 +541,7 @@ font-size:16px;
 	                 </div>
 	                 <div class="col-md-8">
                        <div class="input-group">
-	                      <select class="form-control" name="division">
+	                      <select class="form-control division" name="division" id="div">
 	                             
 	                         </select>
                          </div>
@@ -570,7 +553,7 @@ font-size:16px;
 	                     <font color='red'>*</font>
 	                 </div>
 	                 <div class="col-md-8">
-	                      <input type="text" class="form-control" name="end_date">
+	                      <input type="text" class="form-control" name="title" id="title">
 	                 </div>
 	            </div>
 	        </div>

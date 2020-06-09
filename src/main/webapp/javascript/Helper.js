@@ -2,7 +2,7 @@
  * 
  */
 var host="http://localhost";
-var port="8080";
+var port="10080";
 
 var DESK="desk";
 var ADMIN="ADMIN";
@@ -212,6 +212,26 @@ function getAcademicYear() {
 			errorCallback);
 	return false;
 }
+
+function getSubject() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode=('<option value="' + responseData[i].subject +'" >'
+					+ responseData[i].subject + '</option>');
+			$('.subject').append(htmlCode);
+			//$('#studacad_year').append(htmlCode);
+		}
+	}
+	function errorCallback(responseData, textStatus, request) {
+		console.log("not found");
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Subject/FetchAllSubject?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
 function getAllStandard() {
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
