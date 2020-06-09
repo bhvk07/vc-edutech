@@ -42,7 +42,7 @@ public class AdmissionResource {
 			@FormParam("Rollno") String Rollno,@FormParam("regno") String regno,
 			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
 			@FormParam("acad_year") String acad_year,@FormParam("join_date") String join_date,
-			@FormParam("personalDetails") String personalDetails,
+			@FormParam("personalDetails") String personalDetails,@FormParam("feestypeDetails") String feestypeDetails,
 			@FormParam("installment") String installment,@FormParam("newAmt") String newAmt
 			,@FormParam("branch") String branch)
 	{
@@ -86,6 +86,7 @@ public class AdmissionResource {
 			admission.setJoin_date(join_date);
 			admission.setBranch(branch);
 			admission.setStandard(getStandard(f_pack[0],branch));
+			admission.setFeesDetails(feestypeDetails);
 		/*	if(!newAmt.equals("0"))
 			{*/
 //				String[] commaSeperated=Util.commaSeperatedString(newAmt);
@@ -184,17 +185,15 @@ public class AdmissionResource {
 		 Enquiry enquiry=new Enquiry();
 			AdmissionController controller=new AdmissionController();
 			enquiry=controller.searchStudent(enq_stud,branch);
+			FeesPackage pack=new FeesPackage();
+			FeesPackageController feescontroller=new FeesPackageController();
+			String[] packname=Util.symbolSeperatedString(enquiry.getFees_pack());
+			pack=feescontroller.getFeesPackage(packname[0], branch);
+			enquiry.setFeesPack(pack);
 			if(enquiry!=null)
 			{ 
-				/*enquiry=controller.searchStudentFromAdmission(enq_stud,branch);
-				if(enquiry!=null){*/
 				return Response.status(Status.ACCEPTED).entity(enquiry).build();
-				/*}*/	
 			}
-			/*else{
-				return Response.status(Status.ACCEPTED).entity(enquiry).build();
-				
-			}*/
 			return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
 	
@@ -263,29 +262,60 @@ public class AdmissionResource {
 			@FormParam("acad_year") String acad_year,@FormParam("division") String division,
 			@FormParam("admission_date") String admission_date,@FormParam("id") String id,
 			@FormParam("user") String enq_taken,@FormParam("branch") String branch){
-		Enquiry enq=new Enquiry();
+		Admission enq=new Admission();
 		AcademicYear year=new AcademicYear();
 		AcademicYearController yearController=new AcademicYearController();
 		AdmissionDAO dao=new AdmissionDAO();
+		FeesPackage pack=new FeesPackage();
+		FeesPackageController controller=new FeesPackageController();
 		String[] commaSeperatedId=Util.commaSeperatedString(id);
 		for(int i=0;i<commaSeperatedId.length;i++)
 		{
 			String[] symbolSeperatedFees=Util.symbolSeperatedString(fees);
+			pack=controller.getFeesPackage(symbolSeperatedFees[0], branch);
+			String feesdetails=pack.getFees_details();
 			enq=dao.searchStudentFromAdmission(commaSeperatedId[i], branch);
 			String personalDetails=enq.getFname()+","+enq.getLname()+","+enq.getMname()+","+enq.getUid()+","+enq.getDob()+","
-			+enq.getGender()+","+enq.getCaste()+","+enq.getCategory()+","+enq.getLang()+","+enq.getFather_cont()+","+
-			enq.getMother_cont()+","+enq.getAddress()+","+enq.getPin()+","+enq.getEmail()+","+enq.getW_app_no()+","+enq.getSname()+
-			","+enq.getStud_cont();
-			String stud_details=enq.getId()+"|"+enq.getSname()+" "+enq.getFname()+" "+enq.getLname()+"|"+enq.getStud_cont()+"|"+enq.getStatus();
+			+enq.getGender()+","+enq.getCaste()+","+enq.getCategory()+","+enq.getLanguage()+","+enq.getFather_cont()+","+
+			enq.getMother_cont()+","+enq.getAddress()+","+enq.getPin()+","+enq.getEmail()+","+enq.getW_app_no()+","+enq.getStudent_name()+
+			","+enq.getContact();
+			String stud_details=enq.getId()+"|"+enq.getStudent_name()+" "+enq.getFname()+" "+enq.getLname()+"|"+enq.getContact()+"|"+enq.getStatus();
 			year=yearController.getCurrentAcademicYear(branch);
 			String studId=year.getId_prefix()+"-"+year.getId_no();
 			String regno=year.getReg_prefix()+"-"+year.getRegistration();
 			String invoice=year.getInvoice_prefix()+"-"+year.getInvoice();
 			yearController.updateAcademicDetails(studId, invoice, regno, acad_year, branch);
 			String installment="installment details,0|ActivityFees|0";
-			String newamt="0|"+symbolSeperatedFees[1];
+			int disc=0;
+			String[] commaSeperatedFeesDetails=Util.commaSeperatedString(feesdetails);
+			for(int j=0;j<commaSeperatedFeesDetails.length;j++){
+				String[] getdiscount=Util.symbolSeperatedString(commaSeperatedFeesDetails[j]);
+				disc=disc+Integer.parseInt(getdiscount[2]);
+			}
+			String newamt=disc+"|"+symbolSeperatedFees[1];
 			StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice, admission_date,
-					acad_year, admission_date, personalDetails, installment, newamt, branch);
+					acad_year, admission_date, personalDetails, feesdetails, installment, newamt, branch);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+	
+	@PermitAll
+	@GET
+	@Path("/getAdmissionDetailsOfSpecificStudent")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAdmissionDetailsOfSpecificStudent(@QueryParam("id") String id,
+			@QueryParam("branch") String branch){
+		
+		try {
+			Admission admission=new Admission(); 
+			AdmissionController controller=new AdmissionController();
+			admission=controller.searchStudentFromAdmission(id,branch);
+			Installment installment=controller.getInstallment(admission.getRollno(),branch);
+			admission.setInstallment(installment);
+			return Response.status(Status.ACCEPTED).entity(admission).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}

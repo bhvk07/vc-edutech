@@ -33,14 +33,17 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.saveInstallment(installment,branch);
 	}
-	/*public Enquiry searchStudentFromAdmission(String enq_stud, String branch) {
+	public Admission searchStudentFromAdmission(String enq_stud, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.searchStudentFromAdmission(enq_stud,branch);
-	}*/
+	}
 	
 	public ArrayList<Admission> getPromotionData(Admission admission) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getPromotionData(admission);
 	}
-
+	public Installment getInstallment(String rollno, String branch) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.getInstallment(rollno,branch);
+	}
 }

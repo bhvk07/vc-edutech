@@ -24,8 +24,8 @@ public class AdmissionDAO {
 					+ "`contact`,`father_cont`,`mother_cont`,`address`,`pin`"
 					+ ",`email`,`w_app_no`,`enq_taken_by`,`adm_fees_pack`,"
 					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`standard`,`division`,`admission_date`,`acad_year`,`join_date`,`fees`,"
-					+ "`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?,?)";
+					+ "`fees_type_details`,`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
 			ps.setString(2, admission.getLname());
@@ -57,9 +57,10 @@ public class AdmissionDAO {
 			ps.setString(28, admission.getAcad_year());
 			ps.setString(29, admission.getJoin_date());
 			ps.setLong(30, admission.getFees());
-			ps.setLong(31, admission.getDisccount());
-			ps.setString(32, Util.currentDate());
-			ps.setString(33, admission.getBranch());
+			ps.setString(31, admission.getFeesDetails());
+			ps.setLong(32, admission.getDisccount());
+			ps.setString(33, Util.currentDate());
+			ps.setString(34, admission.getBranch());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -178,18 +179,16 @@ public class AdmissionDAO {
 		}
 		return eq;
 	}
-	public Enquiry searchStudentFromAdmission(String enq_stud,String branch) {
+	public Admission searchStudentFromAdmission(String enq_stud,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		Enquiry admission=null;
+		Admission admission=null;
 		String query="";
 		System.out.println(enq_stud);
 		try {
 			con=Util.getDBConnection();
-			query="select `id`,`student_name`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`"
-					+ ",`caste`,`category`,`language`,`contact`,`father_cont`,`mother_cont`"
-					+ ",`address`,`pin`,`email`,`w_app_no`,`adm_fees_pack`,`status` from"
+			query="select * from"
 					+ " admission where id=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setString(1, enq_stud);
@@ -197,9 +196,9 @@ public class AdmissionDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				admission=new Enquiry();
+				admission=new Admission();
 				admission.setId(rs.getLong(1));
-				admission.setSname(rs.getString(2));
+				admission.setStudent_name(rs.getString(2));
 				admission.setLname(rs.getString(3));
 				admission.setFname(rs.getString(4));
 				admission.setMname(rs.getString(5));
@@ -208,16 +207,28 @@ public class AdmissionDAO {
 				admission.setGender(rs.getString(8));
 				admission.setCaste(rs.getString(9));
 				admission.setCategory(rs.getString(10));
-				admission.setLang(rs.getString(11));
-				admission.setStud_cont(rs.getString(12));
+				admission.setLanguage(rs.getString(11));
+				admission.setContact(rs.getString(12));
 				admission.setFather_cont(rs.getString(13));
 				admission.setMother_cont(rs.getString(14));
 				admission.setAddress(rs.getString(15));
 				admission.setPin(rs.getString(16));
 				admission.setEmail(rs.getString(17));
 				admission.setW_app_no(rs.getString(18));
-				admission.setFees_pack(rs.getString(19));
-				admission.setStatus(rs.getString(20));
+				admission.setEnq_taken_by(rs.getString(19));
+				admission.setAdm_fees_pack(rs.getString(20));
+				admission.setStatus(rs.getString(21));
+				admission.setDate(rs.getString(22));
+				admission.setRollno(rs.getString(23));
+				admission.setRegno(rs.getString(24));
+				admission.setInvoice_no(rs.getString(25));
+				admission.setStandard(rs.getString(26));
+				admission.setDivision(rs.getString(27));
+				admission.setAdmission_date(rs.getString(28));
+				admission.setAcad_year(rs.getString(29));
+				admission.setJoin_date(rs.getString(30));
+				admission.setFees(rs.getLong(31));
+				admission.setFeesDetails(rs.getString(32));
 			}
 			
 		}catch (Exception e) {
@@ -318,6 +329,41 @@ public class AdmissionDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return admissionList;
+	}
+
+	public Installment getInstallment(String rollno, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<Integer> monthly=new ArrayList<>();
+		ArrayList<String> due=new ArrayList<>();
+		ArrayList<String> title=new ArrayList<>();
+		Installment install=new Installment();
+		
+		try {
+			con=Util.getDBConnection();
+			String query="select * from installment where rollno=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1,rollno);
+			ps.setString(2,branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				monthly.add(rs.getInt(5));
+				due.add(rs.getString(6));
+				title.add(rs.getString(7));
+			}
+			install.setMonthly_pay(monthly);
+			install.setDue_date(due);
+			install.setFees_title(title);			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return install;
 	}
 		
 }

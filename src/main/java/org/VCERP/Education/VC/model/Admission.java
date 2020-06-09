@@ -38,6 +38,7 @@ public class Admission {
 	private String admission_date;
 	private String acad_year;
 	private String join_date;
+	private String feesDetails;
 	private long fees;
 	private long disccount;
 	private long paid_fees;
@@ -268,6 +269,12 @@ public class Admission {
 	}
 	public void setDivision(String division) {
 		this.division = division;
+	}
+	public String getFeesDetails() {
+		return feesDetails;
+	}
+	public void setFeesDetails(String feesDetails) {
+		this.feesDetails = feesDetails;
 	}
 	
 	

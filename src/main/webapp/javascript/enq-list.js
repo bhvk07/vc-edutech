@@ -165,7 +165,18 @@ function Admission(id, req) {
 			var feespack = responseData.fees_pack;
 			var fees=feespack.split("|");
 			var installment = "installment details,0|ActivityFees|0";
-			var newAmt = "0|"+fees[1];
+			var feespackname=feespack.split("|");
+			var feespackdetails=feespackagedetails(feespackname[0]);
+			//feespackdetails=feespackdetails.split(",");
+			var disc=0;
+			feespackdetails=feespackdetails.split(",");
+			for(var i=0;i<feespackdetails.length;i++){
+				var packdisc=feespackdetails[i].split("|");
+				for(var j=0;j<packdisc.length;j++){
+					disc=disc+parseInt(packdisc[2]);
+				}
+			}
+			var newAmt = disc+"|"+fees[1];
 			var enq_taken = localStorage.getItem("user");
 			var date = today.getFullYear() + "-" + today.getMonth() + "-"
 					+ today.getDate();
@@ -178,7 +189,7 @@ function Admission(id, req) {
 			var reg_no = acad_data[5] + "-" + acad_data[6];
 			StudentAdmission(studentDetails, enq_taken, feespack,division, status, date,
 					id_no, reg_no, invoice_no, date, acad_year, date, enqData,
-					installment, newAmt, branchSession);
+					feespackdetails,installment, newAmt, branchSession);
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -191,7 +202,28 @@ function Admission(id, req) {
 			errorCallback);
 	return false;
 }
-
+function feespackagedetails(pack){
+	var packdetails="";
+	function callback(responseData,textStatus,request)
+	{
+		packdetails=responseData.fees_details;
+	}
+	function errorCallback(responseData, textStatus, request) {
+//		var mes=responseData.responseJSON.message;
+//		showNotification("error",mes);
+			// var message=responseData.response.JSON.message;
+			// alert(message);
+	}
+	var httpMethod = "POST";
+	var formData = {
+		pack : pack,
+		branch : branchSession
+	}
+	var relativeUrl = "/FeesPackage/getFeesPackageData";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return packdetails;
+}
 function getIncrementalData() {
 	var acad_data;
 	function callback(responseData, textStatus, request) {
@@ -216,7 +248,7 @@ function getIncrementalData() {
 }
 
 function StudentAdmission(studentDetails, enq_taken, feespack, division ,status, date,
-		id_no, reg_no, invoice_no, date, acad_year, date, enqData, installment,
+		id_no, reg_no, invoice_no, date, acad_year, date, enqData, feespackdetails, installment,
 		newAmt, branchSession) {
 	function callback(responseData, textStatus, request) {
 		alert("done");
@@ -228,7 +260,7 @@ function StudentAdmission(studentDetails, enq_taken, feespack, division ,status,
 			+ "&adm_fees_pack=" + feespack +"&division=" + division + "&status=" + status + "&date="
 			+ date + "&Rollno=" + id_no + "&regno=" + reg_no + "&invoice_no="
 			+ invoice_no + "&admission_date=" + date + "&acad_year="
-			+ acad_year + "&join_date=" + date + "&personalDetails=" + enqData
+			+ acad_year + "&join_date=" + date + "&personalDetails=" + enqData+ "&feestypeDetails=" + feespackdetails
 			+ "&installment=" + installment + "&newAmt=" + newAmt + "&branch="
 			+ branchSession;
 	var httpMethod = "POST";

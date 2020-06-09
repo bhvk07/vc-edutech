@@ -126,7 +126,7 @@
 								</label>
 								<div class="col-sm-7">
 									<div class="input-group">
-										<select name="adm_fees_pack" class="form-control" id="fees"
+										<select name="adm_fees_pack" class="form-control fees_package" id="fees"
 											required>
 
 										</select>
@@ -168,8 +168,8 @@
 								</label>
 								<div class="col-sm-7">
 									<div class="input-group">
-										<select name="division" class="form-control" id="division"
-											required>
+										<select name="division" class="form-control division"
+											id="division" required>
 											<option value="null">Select Division</option>
 										</select>
 									</div>
@@ -187,8 +187,8 @@
 										</select>
 									</div>
 									<div class="input-group">
-										<input type="date" class="form-control" name="date" id="date"
-											style="margin-top: 15px;">
+										<input type="text" class="form-control" name="date"
+											id="current_date" style="margin-top: 15px;" readonly>
 									</div>
 								</div>
 							</div>
@@ -238,7 +238,8 @@
 								<label class="col-sm-6 control-label">Academic Year<span
 									class="text-red" id="spIdCard" style="display: none">*</span></label>
 								<div class="col-sm-6">
-									<select class="form-control" id="acad_year" name="acad_year">
+									<select class="form-control acad_year" id="acad_year"
+										name="acad_year">
 
 									</select>
 								</div>
@@ -276,7 +277,7 @@
 										<th scope="col">REMOVE</th>
 									</tr>
 								</thead>
-								<tbody id="fee-details">
+								<tbody id="fee-details" class="fee-details">
 									<tr>
 										<td>
 
@@ -496,6 +497,8 @@
 							</table>
 							<input type="submit" id="admission" class="btn btn-success"
 								value="Submit">
+							<button id="cancel" class="btn btn-success"
+							>Cancel</button>
 						</div>
 					</section>
 				</div>
@@ -706,7 +709,12 @@
 								name="enq_taken_by" class="form-control enq_taken"
 								id="enq_taken" required>
 
-							</select>
+							</select><span class="input-group-addon" id="bhvk">
+								<button type="button" id="add-btn" data-toggle="modal"
+									data-target="#addEmployeeModal"
+									style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
+									+</button>
+							</span>
 						</div>
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">Fees package</span>
@@ -902,7 +910,7 @@
 	<div id="myFeesPackageModal" class="modal fade">
 		<div class="modal-dialog" id="dialog-size">
 			<div class="modal-content">
-				<form>
+				<form id="feespackage-modal-form">
 					<div class="modal-header"
 						style="background-color: #34ba13; color: white">
 						<h4 class="modal-title">Add Fees package</h4>
@@ -926,7 +934,8 @@
 						<div class="form-group">
 							<label for="inputDisabledEx2" class="disabled">Amount <font
 								color="red"> * </font></label> <input type="text" name="finalamt"
-								id="inputDisabledAmt" class="form-control" disabled>
+								id="inputDisabledAmt" class="form-control inputDisabledAmt"
+								disabled>
 						</div>
 						<hr
 							style="border: 0; height: 0; border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
@@ -1013,7 +1022,7 @@
 										<th scope="col">REMOVE</th>
 									</tr>
 								</thead>
-								<tbody id="fee-details" class="fee-details">
+								<tbody id="fee-details" class="fee-details2">
 									<tr>
 										<td>
 
@@ -1084,8 +1093,8 @@
 									</div>
 								</div>
 							</div>
-							<button type="button" id="addrow" class="addrow">Add new
-								line</button>
+							<button type="button" id="addrow2" class="addrow2">Add
+								new line</button>
 						</div>
 
 
@@ -1094,7 +1103,7 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit"
+							value="Cancel" id="cancel"> <input type="submit"
 							class="btn btn-success" value="Add">
 					</div>
 				</form>
@@ -1159,66 +1168,72 @@
 			ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 					errorCallback);
 			return false;
-		} 
-		   var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
+		}
+		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
 				+ htmlCode
-				+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
-		$("#feestypetable,#feestypetable2").on('change', '.amt,.discount', function() {
-			alert("10");
-			var discount = 0;
-			var amount = 0;
-			var r = document.getElementById('feestypetable');
-			var noof = r.rows.length - 1;
-			// var val = this.value;
-			var $trr = this.closest('tr');
-			amount = parseInt($(".amt", $trr).val());
-			discount = parseInt($(".discount", $trr).val());
-			if (amount.value != NaN) {
-				alert("1");
-				$(".totala", $trr).val(amount);
-			}
+				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
+		$("#feestypetable,#feestypetable2").on('change', '.amt,.discount',
+				function() {
+					alert("10");
+					var discount = 0;
+					var amount = 0;
+					var r = document.getElementById('feestypetable');
+					var noof = r.rows.length - 1;
+					// var val = this.value;
+					var $trr = this.closest('tr');
+					amount = parseInt($(".amt", $trr).val());
+					discount = parseInt($(".discount", $trr).val());
+					if (amount.value != NaN) {
+						alert("1");
+						$(".totala", $trr).val(amount);
+					}
 
-			if ($(".totala", $trr).val() > 0 && discount >= 0) {
-				var cal = amount - discount;
-				if (cal < 0) {
-					alert("Profit cannot be Negative");
-					$(".totala", $trr).val(0);
-				} else {
-					$(".totala", $trr).val(cal);
-				}
-			} else if ($(".totala", $trr).val() < 0) {
-				alert("Input positive amount value");
-				$(".totala", $trr).val(0);
+					if ($(".totala", $trr).val() > 0 && discount >= 0) {
+						var cal = amount - discount;
+						if (cal < 0) {
+							alert("Profit cannot be Negative");
+							$(".totala", $trr).val(0);
+						} else {
+							$(".totala", $trr).val(cal);
+						}
+					} else if ($(".totala", $trr).val() < 0) {
+						alert("Input positive amount value");
+						$(".totala", $trr).val(0);
 
-			}
-			getTotalPrice();
+					}
+					getTotalPrice();
 
-		});
+				});
 
 		function getTotalPrice() {
 			var total = 0;
 			var total2 = 0;
 			$("#feestypetable .totala").each(function() {
-				
+
 				var val = $(this).val();
 				total += isNaN(val) || $.trim(val) == "" ? 0 : parseFloat(val);
 			});
 			$("#grand-t").val(total.toFixed(2));
-			$("#feestypetable2 .totala").each(function() {
-				
-				var val = $(this).val();
-				total2 += isNaN(val) || $.trim(val) == "" ? 0 : parseFloat(val);
-			});
+			document.getElementById('amt_installment').value = document
+					.getElementById('grand-t').value;
+			$("#feestypetable2 .totala").each(
+					function() {
+
+						var val = $(this).val();
+						total2 += isNaN(val) || $.trim(val) == "" ? 0
+								: parseFloat(val);
+					});
 			$("#grand-t2").val(total2.toFixed(2));
+			$("#inputDisabledAmt").val(total2.toFixed(2));
 		}
 
 		//function() {
 
 		$("#addrow").on("click", function() {
-			$("table #fee-details").append(html);
-		});
-		$(".addrow").on("click", function() {
 			$("table .fee-details").append(html);
+		});
+		$("#addrow2").on("click", function() {
+			$("table .fee-details2").append(html);
 		});
 		//}
 	</script>
@@ -1233,6 +1248,6 @@
 	<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 	<!-- <script src="vendor/select2/select2.min.js"></script>
  -->
-	<script src="javascript/done-date.js" type="text/javascript"></script> 
+	<script src="javascript/done-date.js" type="text/javascript"></script>
 </body>
 </html>

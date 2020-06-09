@@ -18,13 +18,17 @@ $('#admission_table tbody tr').on('click', '.cbCheck', function() {
 		if (this.checked == true) {
 			val = table.row(this.closest('tr')).data();
 			var rno = val[4];
-			getStudReceiptList(rno);
-			
+			getStudReceiptList(rno);	
 		}
-
 	});
-	//show_rows1();
-	
+$('#Edit').click(function() {
+	$('table .cbCheck').each(function(i,chk){
+	if (chk.checked) {
+		var id = $(this).val();
+		getAdmissionDetailsOfSpecificStudent(id);
+		}
+	});	
+});
 	
 });
 
@@ -105,5 +109,66 @@ function getStudReceiptList(rno){
 			errorCallback);
 	return false;
 }
-
+function getAdmissionDetailsOfSpecificStudent(id){
+	var admissionData;
+	function callback(responseData, textStatus, request) {
+		admissionData=new Array();
+		admissionData.push(responseData.id);
+		admissionData.push(responseData.student_name);
+		admissionData.push(responseData.lname);
+		admissionData.push(responseData.fname);
+		admissionData.push(responseData.contact);
+		admissionData.push(responseData.enq_taken_by);
+		admissionData.push(responseData.adm_fees_pack);
+		admissionData.push(responseData.status);
+		admissionData.push(responseData.date);
+		admissionData.push(responseData.Rollno);
+		admissionData.push(responseData.regno);
+		admissionData.push(responseData.division);
+		admissionData.push(responseData.invoice_no);
+		admissionData.push(responseData.admission_date);
+		admissionData.push(responseData.acad_year);
+		admissionData.push(responseData.join_date);
+		var feesData=responseData.feesDetails.split(",");
+		var feesDetails="feesDetails";
+		for(var i=0;i<feesData.length;i++){
+			feesDetails+="-"+feesData[i];
+		}
+		admissionData.push(feesDetails);
+		admissionData.push(responseData.fees);
+		var installment=responseData.installment;
+		
+		//var monthly=installment.monthly_pay.split(",");
+		var monthlypay="monthlypay";
+		for(var i=0;i<installment.monthly_pay.length;i++){
+			monthlypay+="-"+installment.monthly_pay[i];
+		}
+		
+		//var due=installment.due_date.split(",");
+		var due_date="due_date";
+		for(var i=0;i<installment.due_date.length;i++){
+			due_date+="-"+installment.due_date[i];
+		}
+		
+		//var title=installment.fees_title.split(",");
+		var fees_title="fees_title";
+		for(var i=0;i<installment.fees_title.length;i++){
+			fees_title+="-"+installment.fees_title[i];
+		}
+		admissionData.push(monthlypay);
+		admissionData.push(due_date);
+		admissionData.push(fees_title);
+		sessionStorage.setItem("admission",admissionData);
+		window.location.href = "admission.html";
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Admission/getAdmissionDetailsOfSpecificStudent?id=" + id + "&branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
 

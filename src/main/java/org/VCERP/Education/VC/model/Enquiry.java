@@ -90,6 +90,15 @@ public class Enquiry {
 	@FormParam("branch")
 	private String branch;
 	
+	
+	private FeesPackage feesPack; 
+	
+	public FeesPackage getFeesPack() {
+		return feesPack;
+	}
+	public void setFeesPack(FeesPackage feesPack) {
+		this.feesPack = feesPack;
+	}
 	public long getId() {
 		return id;
 	}

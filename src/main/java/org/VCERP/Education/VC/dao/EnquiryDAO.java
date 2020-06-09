@@ -142,7 +142,7 @@ public class EnquiryDAO {
 		PreparedStatement st=null;
 		try {
 			con=Util.getDBConnection();
-			String query="update enquiry set status='Admitted' where enq_no	=?";
+			String query="update enquiry set status='Admitted' where id	=?";
 			st=con.prepareStatement(query);
 			st.setLong(1, id);
 			st.executeUpdate();

@@ -93,6 +93,7 @@ function getPromoteData() {
 }
 
 function promoteStudent(id){
+	alert(id);
 	function callback(responseData, textStatus, request) {
 		var table = $('#promotion_table').DataTable();
 		var value = 0;
