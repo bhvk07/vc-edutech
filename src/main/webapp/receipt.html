@@ -5,6 +5,8 @@
 <meta charset="ISO-8859-1">
 
 <script src="jquery/jquery-3.3.1.min.js"></script>
+
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="jquery/bootstrap.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
@@ -24,8 +26,15 @@
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 <title>Admission</title>
+	<script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
+<div id="navbar">
+	</div>
 	<div class="container">
 		<form id="receipt-form" class="horizontal-form" method="post">
 			<div class="row">

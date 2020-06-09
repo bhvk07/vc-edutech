@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admission-List</title>
+<title>Feestype</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -13,6 +13,9 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="jquery/jquery-3.3.1.min.js"></script>
+	<script src="jquery/bootstrap.min.js"></script>
+	
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
@@ -24,6 +27,7 @@
 
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
 <script type="text/javascript" src="javascript/FeesType.js"></script>
@@ -421,10 +425,10 @@ table.table .avatar {
 	<div id="feestypeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="feestype" method="post">
+				<form id="feestypeForm" method="post">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
-						<h4 class="modal-title">Add Employee</h4>
+						<h4 class="modal-title">Add Fees type</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
@@ -447,5 +451,6 @@ table.table .avatar {
 		</div>
 	</div>
 	<!-- Edit Modal HTML -->
+	<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
 </body>
 </html>

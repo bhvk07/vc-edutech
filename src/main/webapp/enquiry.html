@@ -4,6 +4,9 @@
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<script src="jquery/jquery-3.3.1.min.js"></script>
+	<script src="jquery/bootstrap.min.js"></script>
 <script src="jquery/jquery-3.3.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -39,11 +42,16 @@
 /* Bootstrap 4 text input with search icon */
 </style>
 
-
+	<script>
+	$(function() {
+		$("#navbar").load("nav-bar.html");
+	});
+</script>
 </head>
 <body>
 
-
+<div id="navbar">
+	</div>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">

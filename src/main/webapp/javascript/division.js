@@ -3,7 +3,7 @@ requestid=0;
 $(document).ready(function(){
 	
 	$.validator.addMethod("alphanum", function(value, element) {
-        return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value);
+        return this.optional(element) || /^[a-z0-9\\]+$/i.test(value);
     }, " must contain only letters");
 
 	
@@ -21,7 +21,7 @@ $(document).ready(function(){
 		 messages: {
 			 division: {
 				required:'Division is required',	
-				alphanum:'Please enter leters or numbers only'
+				alphanum:'Please enter letters or numbers only'
 			},
 			
 			

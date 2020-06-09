@@ -1,6 +1,42 @@
 var mes;
 var requestid=0;
 $(document).ready(function() {
+	
+	jQuery.validator.addMethod("letterswithspace", function(value, element) {
+	    return this.optional(element) || /^[a-z\s]+$/i.test(value);
+	}, "Please enter letters only");
+	
+	
+	$('form[id="feestypeForm"]').validate({
+		
+		
+		  rules: {
+		    
+			  feesType: {
+		        required: true,
+		        letterswithspace: true
+		   },
+			
+		  },
+		 messages: {
+			 division: {
+				required:'Division is required',	
+				letterswithspace:'Please enter letters only'
+			},
+			
+			
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  
+			  
+		  }
+	});
+	
+	
+	
+	
 	getFeesType();
 	$("#feestype").submit(function() {
 		// var token=sessionStorage.getItem("token");
