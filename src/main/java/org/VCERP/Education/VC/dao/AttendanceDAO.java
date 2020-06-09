@@ -81,14 +81,18 @@ public class AttendanceDAO {
 		ResultSet rs=null;
 		PreparedStatement ps1=null;
 		ResultSet rs1=null;
+		System.out.println(attendance.getRollNo());
 		try {
 			con=Util.getDBConnection();
-			String query="SELECT COUNT(?) as totalCount FROM `attendance` where date BETWEEN ? AND ? AND branch=? ";
+			String query="SELECT COUNT(`"+attendance.getRollNo()+"`) as totalCount FROM `attendance` where date BETWEEN ? AND ? AND acad_year=? and "
+					+ "standard=? and division=? AND branch=? ";
 			ps=con.prepareStatement(query);
-			ps.setString(1, attendance.getRollNo());
-			ps.setString(2, attendance.getFrom_date());
-			ps.setString(3, attendance.getTo_date());
-			ps.setString(4, attendance.getBranch());
+			ps.setString(1, attendance.getFrom_date());
+			ps.setString(2, attendance.getTo_date());
+			ps.setString(3, attendance.getAcad_year());
+			ps.setString(4, attendance.getStandard());
+			ps.setString(5, attendance.getDivision());
+			ps.setString(6, attendance.getBranch());
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -96,15 +100,57 @@ public class AttendanceDAO {
 				System.out.println(rs.getInt("totalCount"));
 			}
 			
-			String query2="SELECT COUNT(`"+attendance.getRollNo()+"`) as totalPresent FROM `attendance` where `"+attendance.getRollNo()+"`='P' AND `date` BETWEEN ? AND ? AND `branch`=?";
+			String query2="SELECT COUNT(`"+attendance.getRollNo()+"`) as totalPresent FROM `attendance` where `"+attendance.getRollNo()+"`='P' "
+					+ "AND `date` BETWEEN ? AND ? AND acad_year=? and "
+					+ "standard=? and division=? AND `branch`=?";
 			ps1=con.prepareStatement(query2);
 			ps1.setString(1, attendance.getFrom_date());
 			ps1.setString(2, attendance.getTo_date());
-			ps1.setString(3, attendance.getBranch());
+			ps1.setString(3, attendance.getAcad_year());
+			ps1.setString(4, attendance.getStandard());
+			ps1.setString(5, attendance.getDivision());
+			ps1.setString(6, attendance.getBranch());
 			rs1=ps1.executeQuery();
 			while(rs1.next()){
 			attendance.setTotalPresent(rs1.getInt("totalPresent"));
 			System.out.println(rs1.getInt("totalPresent"));
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return attendance;
+
+	}
+
+	public ArrayList<Attendance> studentAttendanceReport(Attendance attend) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String rollno=attend.getRollNo();
+		ArrayList<Attendance> attendance=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="SELECT `"+rollno+"`,`date` FROM `attendance` WHERE date BETWEEN ? AND ? AND `acad_year`=? and "
+					+ "`standard`=? and `division`=? AND `branch`=? AND `"+rollno+"`='P'  OR `"+rollno+"`='A'";
+			ps=con.prepareStatement(query);
+			ps.setString(1, attend.getFrom_date());
+			ps.setString(2, attend.getTo_date());
+			ps.setString(3, attend.getAcad_year());
+			ps.setString(4, attend.getStandard());	
+			ps.setString(5, attend.getDivision());
+			ps.setString(6, attend.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				attend=new Attendance();
+				attend.setAttendance(rs.getString(1));
+				attend.setCurrentDate(rs.getString(2));
+				attendance.add(attend);
 			}
 			
 		}catch (Exception e) {

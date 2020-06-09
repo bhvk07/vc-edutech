@@ -24,4 +24,9 @@ public class AttendanceController {
 		return dao.getAttendanceStat(attendance);
 	}
 
+	public ArrayList<Attendance> studentAttendanceReport(Attendance attend) {
+		AttendanceDAO dao=new AttendanceDAO();
+		return dao.studentAttendanceReport(attend);
+	}
+
 }

@@ -102,6 +102,9 @@ public class AttendanceResource {
 			attendance.setName(name);
 			attendance.setFrom_date(from_date);
 			attendance.setTo_date(to_date);
+			attendance.setStandard(standard);
+			attendance.setDivision(division);
+			attendance.setAcad_year(acad_year);
 			attendance.setBranch(branch);
 			attendance=controller.getAttendanceStat(attendance);
 			
@@ -118,5 +121,38 @@ public class AttendanceResource {
 			return Response.status(Status.ACCEPTED).entity(attendancelistnew).build();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data Not Found").build();
+	}
+	
+	@Path("/studentAttendanceReport")
+	@POST
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response studentAttendanceReport(@FormParam("rollno") String rollno,
+			@FormParam("standard") String standard,@FormParam("division") String division
+			,@FormParam("acad_year") String acad_year,@FormParam("from_date") String from_date
+		,@FormParam("to_date") String to_date,@FormParam("branch") String branch){
+		String[] hyphenSeperated=Util.hyphenSeperatedString(rollno);
+		String rno=hyphenSeperated[1];
+		Attendance attend=new Attendance();
+		ArrayList<Attendance> attendance=new ArrayList<>();
+		attend.setRollNo(rno);
+		attend.setAcad_year(acad_year);
+		attend.setStandard(standard);
+		attend.setDivision(division);
+		attend.setFrom_date(from_date);
+		attend.setTo_date(to_date);
+		attend.setBranch(branch);
+		AttendanceController controller=new AttendanceController();
+		try{
+			attendance=controller.studentAttendanceReport(attend);
+			if(attendance!=null){
+				return Response.status(Status.ACCEPTED).entity(attendance).build();	
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return Response.status(Status.NOT_FOUND).build();
 	}
 }

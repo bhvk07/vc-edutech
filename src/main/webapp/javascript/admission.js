@@ -21,10 +21,7 @@ $(document).ready(function(){
 	if(sessionStorage.getItem("admission")!=null){
 		loadAdmissionData();
 	}
-	
-	
-	
-	//getCurrentDate();
+
 	$("#enq_stud").focusout(function() {
 		deletefeesTypeTableRow();
 		var id=document.getElementById('enq_stud').value;

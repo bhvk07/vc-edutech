@@ -68,6 +68,16 @@ $(document).ready(function() {
 		division=document.getElementById("division").value;
 		attendanceList(std,acad_year,division,e);
 	});
+	$("#View").click(function(e) {
+		var table = $("#attendance_stat_table").DataTable();
+		$("table .cbCheck").each(function(i,chk){
+			if (chk.checked==true) {
+			e.preventDefault();
+			var rno=table.rows({selected : true}).column(1).data()[i];
+			StudentAttendanceReport(rno);
+			}
+		});	
+	});
 	$("#attendance_stat_form").submit(function(e) {
 		e.preventDefault();
 		std=document.getElementById("standard_stat").value;
@@ -80,17 +90,19 @@ $(document).ready(function() {
 
 });
 function attendanceStat(std,acad_year,division,from_date,to_date,e) {
-	alert(std+acad_year+division+from_date+to_date)
+	var srno=0;
 	function callback(responseData, textStatus, request) {
 		var table = $("#attendance_stat_table").DataTable(); 
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
 			e.preventDefault();
+			srno+=1;
 			var percentage = responseData[i].percentageCount;
 			var Rollno = responseData[i].RollNo;
 			var student_name = responseData[i].Name;
-			table.row.add([ Rollno, student_name, percentage ]).draw();
+			var view='<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type"><label for="checkbox1"></label></span>';
+			table.row.add([srno, Rollno, student_name, percentage, view ]).draw();
 		}
 	}
 
@@ -118,7 +130,6 @@ function attendanceStat(std,acad_year,division,from_date,to_date,e) {
 }
 
 function attendanceList(std,acad_year,division,e) {
-	alert(std+acad_year+division)
 	function callback(responseData, textStatus, request) {
 		var table = $("#attendance_table").DataTable(); 
 		var value = 0;
@@ -203,4 +214,43 @@ function saveAttendance(standard, acad_year,division, attendance) {
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
+}
+function StudentAttendanceReport(rno){
+	var srno=0;
+	function callback(responseData, textStatus, request) {
+		var table = $("#attendance_report_table").DataTable(); 
+		var value = 0;
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			//e.preventDefault();
+			srno+=1;
+			var currentDate = responseData[i].currentDate;
+			var rollno=rno;
+			var Attendance = responseData[i].Attendance;
+			table.row.add([srno,currentDate, rollno, Attendance]).draw();
+			 $("#attendancestat").css("display", "none");
+				$("#attendance-list").css("display", "none");
+				$("#attendance-report-list").css("display", "block");
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "POST";
+	var formData = {
+			rollno : rno,
+			standard : std , 
+			acad_year : acad_year,
+			division : division ,
+			from_date : from_date ,
+			to_date : to_date,
+			branch : branchSession
+			};
+	var relativeUrl = "/Attendance/studentAttendanceReport";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+
 }
