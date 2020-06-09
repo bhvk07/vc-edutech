@@ -13,11 +13,13 @@ $(document).ready(function() {
 	$('form[id="attendance_stat_form"]').validate({
 		  rules: {
 			  standard_stat: {
-		        required: true
+		        required: true,
+		        noSpace:true
 		        
 			},
 			acad_year_stat: {
-		        required: true
+		        required: true,
+		        noSpace:true
 		        
 			},
 			division_stat:{

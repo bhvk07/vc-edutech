@@ -99,7 +99,50 @@ $(document).ready(function() {
 			  EnquiryData();
 		  }
 	});
-
+	//add_employee validation
+	$('form[id="add_employee"]').validate({
+		  rules: {
+			  emp_name: {
+		    	required:true,
+		    	lettersonly:true,
+		    	noSpace: true
+		    },
+		    emp_unq_code: {
+		      required: true,
+		      digits:true
+		    },
+		    email: {
+		        required: true,
+		        email: true
+		    },
+		    address: {
+		        required: true
+			},
+			contact: {
+		        required: true,
+		        digits: true,
+		        minlength: 10,
+		        maxlength: 10,
+		        noSpace: true
+			},
+			dob:{
+				required:true,
+				date:true
+			},
+			join_date:{
+				required:true,
+				date:true
+			},
+			design:{
+				required:true
+			},
+		  },
+		
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  AddEmployee();
+		  }
+	});
 	FetchAllEmployee();
 	if(editData!=null){
 		loadEditData(editData);
@@ -210,6 +253,7 @@ function AddEmployee() {
 			errorCallback);
 	return false;
 }
+
 
 function loadEditData(Data){
 	var data=Data.split(",");
