@@ -194,4 +194,57 @@ public class EnquiryDAO {
 		}
 		
 	}
+
+	public Enquiry EnquiryReport(Enquiry enquiry) {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		Enquiry enq=new Enquiry();
+		try {
+			con=Util.getDBConnection();
+			String query="select * from enquiry where enq_date BETWEEN ? AND ? AND branch=? AND enq_taken=? AND status=?";
+			st=con.prepareStatement(query);
+			st.setString(1, enquiry.getFrom_date());
+			st.setString(2, enquiry.getTo_date());
+			st.setString(3, enquiry.getBranch());
+			st.setString(4, enquiry.getEnq_taken_by());
+			st.setString(5, enquiry.getStatus());
+			rs=st.executeQuery();
+			while(rs.next()){
+				enq.setId(rs.getLong(1));
+				enq.setSname(rs.getString(2));
+				enq.setLname(rs.getString(3));
+				enq.setFname(rs.getString(4));
+				enq.setMname(rs.getString(5));
+				enq.setUid(rs.getString(6));
+				enq.setDob(rs.getString(7));
+				enq.setGender(rs.getString(8));
+				enq.setCaste(rs.getString(9));
+				enq.setCategory(rs.getString(10));
+				enq.setLang(rs.getString(11));
+				enq.setStud_cont(rs.getString(12));
+				enq.setFather_cont(rs.getString(13));
+				enq.setMother_cont(rs.getString(14));
+				enq.setAddress(rs.getString(15));
+				enq.setPin(rs.getString(16));
+				enq.setEmail(rs.getString(17));
+				enq.setW_app_no(rs.getString(18));
+				enq.setEnq_date(rs.getString(19));
+				enq.setEnq_no(rs.getString(20));
+				enq.setEnq_taken_by(rs.getString(21));
+				enq.setFees_pack(rs.getString(22));
+				enq.setLead_source(rs.getString(23));
+				enq.setRemark(rs.getString(24));
+				enq.setStatus(rs.getString(25));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, st, con);
+		}
+		return enq;
+		
+	}
 }

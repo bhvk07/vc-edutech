@@ -95,17 +95,17 @@ public class Util {
 	}
 	public static String[] symbolSeperatedString(String str)
 	{
-		String seperated[] = str.replaceAll("\\s+", "").split("[|]");
+		String seperated[] = str.split("[|]");//.replaceAll("\\s+", "")
 		return seperated;
 	}
 	public static String[] commaSeperatedString(String str)
 	{
-		String seperated[] = str.replaceAll("\\s+", "").split("[,]");
+		String seperated[] = str.split("[,]");//.replaceAll("\\s+", "")
 		return seperated;
 	}
 	public static String[] hyphenSeperatedString(String str)
 	{
-		String seperated[] = str.replaceAll("\\s+", "").split("[-]");
+		String seperated[] = str.split("[-]");//.replaceAll("\\s+", "")
 		return seperated;
 	}
 

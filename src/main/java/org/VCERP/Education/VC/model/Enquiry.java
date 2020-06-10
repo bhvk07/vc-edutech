@@ -90,6 +90,9 @@ public class Enquiry {
 	@FormParam("branch")
 	private String branch;
 	
+	private String from_date;
+	
+	private String to_date;
 	
 	private FeesPackage feesPack; 
 	
@@ -254,6 +257,18 @@ public class Enquiry {
 	}
 	public void setBranch(String branch) {
 		this.branch = branch;
+	}
+	public String getFrom_date() {
+		return from_date;
+	}
+	public void setFrom_date(String from_date) {
+		this.from_date = from_date;
+	}
+	public String getTo_date() {
+		return to_date;
+	}
+	public void setTo_date(String to_date) {
+		this.to_date = to_date;
 	}
 	
 	

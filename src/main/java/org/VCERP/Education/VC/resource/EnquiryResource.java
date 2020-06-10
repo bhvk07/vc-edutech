@@ -116,5 +116,43 @@ public class EnquiryResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST,"Admission not done.").build();
 	}
+	@POST
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/EnquiryReport")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response EnquiryReport(@FormParam("enq_taken_by") String enq_taken,@FormParam("from_date") String from_date,
+			@FormParam("to_date") String to_date,@FormParam("enq_status") String enq_status,
+			@FormParam("branch") String branch){
+		System.out.println(enq_status);
+		String[] commaSeperated_Enq_taken=Util.commaSeperatedString(enq_taken);
+		String[] commaSeperated_Enq_status=Util.commaSeperatedString(enq_status);
+		Enquiry enquiry=null;
+		Enquiry enqData=new Enquiry();
+		EnquiryController controller=new EnquiryController();
+		ArrayList<Enquiry> enq=new ArrayList<>();
+		try {
+			for(int i=0;i<commaSeperated_Enq_taken.length;i++){
+				for(int j=0;j<commaSeperated_Enq_status.length;j++){
+					enquiry=new Enquiry();
+					enquiry.setEnq_taken_by(commaSeperated_Enq_taken[i]);
+					enquiry.setFrom_date(from_date);
+					enquiry.setTo_date(to_date);
+					enquiry.setStatus(commaSeperated_Enq_status[j]);
+					enquiry.setBranch(branch);
+					enqData=controller.EnquiryReport(enquiry);
+					enq.add(enqData);
+				}
+			}
+			if(enq!=null){
+				return Response.status(Status.ACCEPTED).entity(enq).build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST,"Admission not done.").build();
+	}
+	
 
 }

@@ -37,4 +37,9 @@ public class EnquiryController {
 		dao.EditEnquiryData(enquiry);
 	}
 
+	public Enquiry EnquiryReport(Enquiry enquiry) {
+		EnquiryDAO dao=new EnquiryDAO();
+		return dao.EnquiryReport(enquiry);
+	}
+
 }
