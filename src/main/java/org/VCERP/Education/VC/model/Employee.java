@@ -23,6 +23,9 @@ public class Employee {
 	private int totalPresent;
 	private String percentage;
 	private String design;
+	private String attendance;
+	private String start_time;
+	private String end_time;
 	private String created_date;
 	public long getId() {
 		return id;
@@ -125,6 +128,24 @@ public class Employee {
 	}
 	public void setTo_date(String to_date) {
 		this.to_date = to_date;
+	}
+	public String getAttendance() {
+		return attendance;
+	}
+	public void setAttendance(String attendance) {
+		this.attendance = attendance;
+	}
+	public String getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+	public String getEnd_time() {
+		return end_time;
+	}
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
 	}
 	
 	

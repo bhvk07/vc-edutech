@@ -110,4 +110,32 @@ public class EmpAttendanceResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
+	
+@Path("/getEmpAttendaceReport")
+@POST
+@PermitAll
+//@JWTTokenNeeded
+
+//@PreAuthorize("hasRole('desk')")
+@Produces(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public Response getEmpAttendanceReport(@FormParam("id") String id,@FormParam("from_date") String from_date,
+		@FormParam("to_date") String to_date,@FormParam("branch") String branch){
+	Employee emp=new Employee();
+	emp.setEmp_unq_code(id);
+	emp.setFrom_date(from_date);
+	emp.setTo_date(to_date);
+	emp.setBranch(branch);
+	EmployeeAttendanceController controller=new EmployeeAttendanceController();
+	ArrayList<Employee> employee=new ArrayList<>();
+	try {
+		employee=controller.getEmpAttendanceReport(emp);		
+		if(employee!=null){
+		return Response.status(Status.OK).entity(employee).build();
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+}
 }

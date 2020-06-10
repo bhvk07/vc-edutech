@@ -24,6 +24,15 @@ $(document).ready(function() {
 	$("#attendance_stat_form").submit(function(e){
 		getEmployeeAttendanceStat(e);
 	})
+	$("#view").click(function(e){
+		var table = $("#EmpAttendance_stat_table").DataTable();
+		$("table .cbCheckAbs").each(function(i,chk){
+			if (chk.checked==true) {
+			var rno=table.rows({selected : true}).column(2).data()[i];
+			getEmployeeAttendanceReport(rno,e);
+			}
+		});
+	})
 
 });
 
@@ -127,18 +136,21 @@ function saveAttendance(attendance) {
 }
 
 function getEmployeeAttendanceStat(e) {
+	var srno=0;
 	function callback(responseData, textStatus, request) {
 		var table = $("#EmpAttendance_stat_table").DataTable();
 		table.rows().remove().draw();
 		for ( var i in responseData) {
 			e.preventDefault();
+			srno+=1;
 			var emp_name = responseData[i].emp_name;
 			var emp_code = responseData[i].emp_unq_code;
 			var working_days = responseData[i].totalDays;
 			var working_Present = responseData[i].totalPresent;
 			var Percentage = responseData[i].percentage;
+			var view='<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheckAbs" name="type"><label for="checkbox1"></label></span>';
 			table.row.add(
-					[ emp_name, emp_code, working_days, working_Present, Percentage])
+					[srno, emp_name, emp_code, working_days, working_Present, Percentage,view])
 					.draw();
 		}
 
@@ -159,3 +171,46 @@ function getEmployeeAttendanceStat(e) {
 			errorCallback);
 	return false;
 }
+function getEmployeeAttendanceReport(id,e) {
+	var srno=0;
+	function callback(responseData, textStatus, request) {
+		var table = $("#EmpAttendance_report_table").DataTable();
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			e.preventDefault();
+			srno+=1;
+			var date = responseData[i].created_date;
+			var emp_code = responseData[i].emp_unq_code;
+			var attendance = responseData[i].attendance;
+			if(responseData[i].start_time=="null"){
+				start_time = "-";
+				end_time = "-";
+			}else{
+			start_time = responseData[i].start_time;
+			end_time = responseData[i].end_time;
+			}table.row.add(
+					[srno, date, emp_code, attendance, start_time, end_time])
+					.draw();
+			 $("#attendance_stat").css("display", "none");
+				$("#attendance").css("display", "none");
+				$("#attendance_report").css("display", "block");
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		/*
+		 * var message=responseData.responseJSON.message;
+		 * showNotification("error",message);
+		 */
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "POST";
+	var formData = $("#attendance_stat_form").serialize()+"&id="+id+"&branch="+branchSession;
+	var relativeUrl = "/Attendance/getEmpAttendaceReport";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+

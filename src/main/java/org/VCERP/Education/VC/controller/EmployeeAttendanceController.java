@@ -24,4 +24,9 @@ public class EmployeeAttendanceController{
 		return dao.getEmpAttendanceStat(emp);
 	}
 
+	public ArrayList<Employee> getEmpAttendanceReport(Employee emp) {
+		EmployeeAttendanceDAO dao=new EmployeeAttendanceDAO();
+		return dao.getEmpAttendanceReport(emp);
+	}
+
 }

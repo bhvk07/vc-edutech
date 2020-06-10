@@ -109,4 +109,41 @@ public class EmployeeAttendanceDAO {
 		}
 		return emp;
 	}
+
+	public ArrayList<Employee> getEmpAttendanceReport(Employee emp) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String id=emp.getEmp_unq_code();
+		ArrayList<Employee> employee=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="SELECT `attendance`,`start_time`,`end_time`,`date` FROM `empattendance` where `emp_code`=? "
+					+ "AND date BETWEEN ? AND ? AND `branch`=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, id);
+			ps.setString(2, emp.getFrom_date());
+			ps.setString(3, emp.getTo_date());
+			ps.setString(4, emp.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				emp=new Employee();
+				emp.setEmp_unq_code(id);
+				emp.setAttendance(rs.getString(1));
+				emp.setStart_time(rs.getString(2));
+				emp.setEnd_time(rs.getString(3));
+				emp.setCreated_date(rs.getString(4));
+				employee.add(emp);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return employee;
+
+	}
 }
