@@ -1,6 +1,125 @@
 var mes;
 requestid=0;
 $(document).ready(function() {
+	
+	
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		  return this.optional(element) || /^[a-z]+$/i.test(value);
+		}, "Please enter letters only");
+	
+	jQuery.validator.addMethod("maxDate", function (value, element) {
+		var startDate = new Date($('#aca_start').val());
+		var endDate = new Date($('#aca_end').val());
+
+		if (startDate > endDate){
+			 $("#errmsg1").html("!").show();
+             return false;
+		}
+	 });
+	
+	$('form[id="createAc"]').validate({
+		
+		
+		  rules: {
+		    
+			  role: {
+		        required: true,
+		        
+		   },
+		   enq_taken: {
+		        required: true,
+		      },
+			
+		      userid: {
+			        required: true,
+			        
+			   },
+			   password: {
+			        required: true,
+			      },
+		  },
+		 messages: {
+			 role: {
+				required:'Please select any role',		
+			},
+			enq_taken: {
+				required:'Please select any Employee',	
+			},
+			
+			userid: {
+					required:'Please enter your Username',		
+				},
+				password: {
+					required:'Please enter your password',	
+				},
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+	  
+		  }
+	});
+	
+	add_employee
+	
+
+	$('form[id="add_employee"]').validate({
+		
+		
+		  rules: {
+		    
+			  emp_name: {
+		        required: true,
+		        lettersonly:true
+		        
+		   },
+		   emp_unq_code: {
+		        required: true,
+		      },
+			
+		      email: {
+			        required: true,
+			        email:true
+			        
+			   },
+			   address: {
+			        required: true,
+			      },
+			      contact: {
+				        required: true,
+				        digits: true,
+				        minlength:10,
+				        maxlength:10
+				   },
+				   dob: {
+				        required: true,
+				        date:true,
+				      },
+					
+				      join_date: {
+					        required: true,
+					        date:true,
+					        maxDate: true
+					        
+					   },
+					   design: {
+					        required: true,
+					      },
+ },
+		 messages: {
+			 
+			 contact:'Please enter correct mobile number',
+			 join_date:'Please enter valid joing date '
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+	  
+		  }
+	});
+	
+	
+	
+	
 	$('#UserMgmt_table').DataTable({
 		"pageLength" : 40
 	});
