@@ -1,10 +1,11 @@
 <html>
 <meta charset="ISO-8859-1">
-<title>STUDENT INFO</title>
+
 <head>
 <meta charset="ISO-8859-1">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -31,14 +32,16 @@
 
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
+	
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 
-
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script src="core/popper.min.js"></script>
 <script src="assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
+<script src="javascript/Promote.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 
@@ -396,7 +399,7 @@ table.table .avatar {
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleYear">Academic Year</span> <span
-																class="text-danger">*</span>
+																class="text-danger" style="color:red">*</span>
 															</label>
 															<div class="input-group select" style="width: 100%;">
 																<select name="acad_year" id="acad_year"
@@ -411,7 +414,7 @@ table.table .avatar {
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleYear">Standard</span> <span
-																class="text-danger">*</span>
+																class="text-danger" style="color:red">*</span>
 															</label>
 															<div class="input-group select" style="width: 100%;">
 																<select name="standard" id="standard"
@@ -430,7 +433,7 @@ table.table .avatar {
 															<div class="input-group" style="width: 100%">
 																<select id="division" name="division"
 																	class="form-control division">
-																	<option value="null">Select Division</option>
+																	<!-- <option value="null">Select Division</option> -->
 																</select>
 															</div>
 														</div>
@@ -442,7 +445,7 @@ table.table .avatar {
 															</label>
 															<div class="input-group" style="width: 100%">
 																<select id="multi_status_select" name="status[]"
-																	class="form-control" multiple="multiple">
+																	class="form-control" multiple="multiple" Required>
 																	<option value="active">Active</option>
 																</select>
 															</div>
@@ -489,22 +492,22 @@ table.table .avatar {
 								<div class="col-md-3">
 									<label class="control-label"> <span
 										class="course_title">Course Package</span> <span
-										class="text-danger">*</span>
+										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
 										<select name="fees" id="fees" class="form-control">
-											<option>Select Fees Package</option>
+											<!-- <option>Select Fees Package</option> -->
 										</select>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<label class="control-label"> <span
 										class="course_title">Select status of student</span> <span
-										class="text-danger">*</span>
+										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
 										<select name="student_status" class="form-control">
-											<option>Select Student Status</option>
+											<!-- <option>Select Student Status</option> -->
 											<option value="active">Active</option>
 										</select>
 									</div>
@@ -512,22 +515,22 @@ table.table .avatar {
 								<div class="col-md-3">
 									<label class="control-label"> <span
 										class="course_title">Select Academic Year</span> <span
-										class="text-danger">*</span>
+										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
 										<select name="acad_year" id="studacad_year" class="form-control">
-											<option>Select Acad Year</option>
+											<!-- <option>Select Acad Year</option> -->
 										</select>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<label class="control-label"> <span
 										class="course_title">Select Div</span> <span
-										class="text-danger">*</span>
+										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
-										<select name="division" id="studdivision" class="form-control">
-											<option value="null">Select Division</option>
+										<select name="division" id="studdivision" class="form-control" placeholder="Select Division">
+											<!-- <option value="null">Select Division</option> -->
 										</select>
 									</div>
 								</div>
@@ -536,7 +539,7 @@ table.table .avatar {
 								<div class="col-md-3">
 									<label class="control-label"> <span
 										class="course_title">Select Admission date</span> <span
-										class="text-danger">*</span>
+										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
 										<input type="date" id="admission_date" name="admission_date" class="form-control">
@@ -597,6 +600,7 @@ table.table .avatar {
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
 	<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
-	<script src="javascript/Promote.js"></script>
+	
+	<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
 </body>
 </html>

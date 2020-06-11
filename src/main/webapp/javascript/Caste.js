@@ -1,6 +1,38 @@
 var mes;
 var requestid=0;
 $(document).ready(function() {
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		  return this.optional(element) || /^[a-z]+$/i.test(value);
+		}, "Please enter letters only");
+	
+	$('form[id="caste-form"]').validate({
+		
+		  rules: {
+		    
+			  caste: {
+		        required: true,
+		        lettersonly: true
+		   },
+		
+			
+		  },
+		 messages: {
+			 subjectname: {
+				required:'Please enter your caste',		
+				lettersonly:'Enter only letters'
+			},
+		
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			 
+			  
+		  }
+	});
+	
+	
+	
 	getAllCaste();
 	$("#caste-form").submit(function() {
 		event.preventDefault();

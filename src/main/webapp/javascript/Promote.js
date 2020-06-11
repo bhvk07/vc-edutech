@@ -1,5 +1,43 @@
 var ids=new Array();
 $(document).ready(function() {
+	
+	
+	
+	$('form[id="getPromoteData"]').validate({
+		
+		
+		  rules: {
+		    
+			  acad_year: {
+		        required: true,     
+		   },
+		   standard: {
+		        required: true,
+		      },
+		      division: {
+			        required: true,     
+			   },
+			   multi_status_select: {
+			        required: true,
+			      },
+				
+		  },
+		 messages: {
+			 multi_status_select: {
+				required:'Please select status',		
+			},
+			
+			
+		
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			 
+			  
+		  }
+	});
+	
+	
 	getAcademicYear();
 	getAllStandard();
 	getAllDivision();
