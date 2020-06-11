@@ -365,5 +365,50 @@ public class AdmissionDAO {
 		}
 		return install;
 	}
+
+	public Admission AdmissionReport(Admission admission) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Admission admissionData=null;
+		try {
+			con=Util.getDBConnection();
+			String query="select `invoice_no`,`admission_date`,`student_name`,`fname`,`lname`,`Rollno`,`adm_fees_pack`,`fees`,"
+					+ "`paid_fees`,`remain_fees` from admission where admission_date BETWEEN ? AND ? AND acad_year=? AND"
+					+ " enq_taken_by=? AND adm_fees_pack=? AND standard=? AND division=? AND branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1,admission.getFrom_date());
+			ps.setString(2,admission.getTo_date());
+			ps.setString(3,admission.getAcad_year());
+			ps.setString(4,admission.getEnq_taken_by());
+			ps.setString(5,admission.getAdm_fees_pack());
+			ps.setString(6,admission.getStandard());
+			ps.setString(7,admission.getDivision());
+			ps.setString(8,admission.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				admissionData=new Admission();
+				admissionData.setInvoice_no(rs.getString(1));
+				admissionData.setAdmission_date(rs.getString(2));
+				admissionData.setStudent_name(rs.getString(3));
+				admissionData.setFname(rs.getString(4));
+				admissionData.setLname(rs.getString(5));
+				admissionData.setRollno(rs.getString(6));
+				admissionData.setAdm_fees_pack(rs.getString(7));
+				admissionData.setFees(rs.getLong(8));
+				admissionData.setPaid_fees(rs.getLong(9));
+				admissionData.setRemain_fees(rs.getLong(10));
+			}			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return admissionData;
+
+	}
 		
 }

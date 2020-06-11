@@ -44,6 +44,8 @@ public class Admission {
 	private long paid_fees;
 	private long remain_fees;
 	private String created_date;
+	private String from_date;
+	private String to_date;
 	private String Branch;
 	private Installment installment;
 	public long getId() {
@@ -275,6 +277,18 @@ public class Admission {
 	}
 	public void setFeesDetails(String feesDetails) {
 		this.feesDetails = feesDetails;
+	}
+	public String getFrom_date() {
+		return from_date;
+	}
+	public void setFrom_date(String from_date) {
+		this.from_date = from_date;
+	}
+	public String getTo_date() {
+		return to_date;
+	}
+	public void setTo_date(String to_date) {
+		this.to_date = to_date;
 	}
 	
 	

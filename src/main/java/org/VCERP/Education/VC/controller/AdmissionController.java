@@ -46,4 +46,8 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.getInstallment(rollno,branch);
 	}
+	public Admission AdmissionReport(Admission admission) {
+		AdmissionDAO dao=new AdmissionDAO();
+		return dao.AdmissionReport(admission);
+	}
 }

@@ -142,7 +142,9 @@ public class EnquiryResource {
 					enquiry.setStatus(commaSeperated_Enq_status[j]);
 					enquiry.setBranch(branch);
 					enqData=controller.EnquiryReport(enquiry);
-					enq.add(enqData);
+					if(enqData!=null){
+						enq.add(enqData);	
+					}
 				}
 			}
 			if(enq!=null){
