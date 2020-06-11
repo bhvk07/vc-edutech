@@ -175,4 +175,46 @@ public class ReceiptDetailsResource {
 				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 			}
 	}
+	@Path("/ReceiptReport")
+	@POST
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response ReceiptReport(@FormParam("from_date") String from_date,@FormParam("to_date") String to_date,
+			@FormParam("received_by") String received_by,@FormParam("branch") String branch,
+			@FormParam("pay_mode") String pay_mode,@FormParam("standard") String standard,
+			@FormParam("acad_year") String acad_year,@FormParam("stud_name") String stud_name){
+		 String[] commaSeperatedReceivedBy=Util.commaSeperatedString(received_by);
+		 String[] commaSeperatedPayMode=Util.commaSeperatedString(pay_mode);
+		 String[] commaSeperatedStandard=Util.commaSeperatedString(standard);
+		 //ReceiptDetails receiptData=new ReceiptDetails();
+		 ReceiptDetailsController controller=new ReceiptDetailsController();
+		 ArrayList<ReceiptDetails> receiptReportData=new ArrayList<>();
+		 try {
+			 for(int i=0;i<commaSeperatedReceivedBy.length;i++){
+				 for(int j=0;j<commaSeperatedPayMode.length;j++){
+					 for(int k=0;k<commaSeperatedStandard.length;k++){
+						 ReceiptDetails receipt=new ReceiptDetails();
+						 Admission admission=new Admission();
+							receipt.setFrom_date(from_date);
+							receipt.setTo_date(to_date);
+							receipt.setReceived_by(commaSeperatedReceivedBy[i]);
+							receipt.setPay_mode(commaSeperatedPayMode[j]);
+							admission.setBranch(branch);
+							receipt.setStud_name(stud_name);
+							admission.setAcad_year(acad_year);
+							admission.setStandard(commaSeperatedStandard[k]);
+							receiptReportData=controller.ReceiptReport(receipt,admission,receiptReportData);
+					 }
+				 }
+			 }
+			 if(receiptReportData!=null){
+			 return Response.status(Status.ACCEPTED).entity(receiptReportData).build();
+			 }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+	}
+
 }

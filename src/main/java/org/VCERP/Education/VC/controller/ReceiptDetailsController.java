@@ -56,4 +56,9 @@ public class ReceiptDetailsController {
 		dao.updateInstallment(rollno,due_date,branch,received_amt);
 	}
 
+	public ArrayList<ReceiptDetails> ReceiptReport(ReceiptDetails receipt, Admission admission,ArrayList<ReceiptDetails> receiptReportData) {
+		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
+		return dao.ReceiptReport(receipt,admission,receiptReportData);
+	}
+
 }

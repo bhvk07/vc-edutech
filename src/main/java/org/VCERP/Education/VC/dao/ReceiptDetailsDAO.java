@@ -365,11 +365,59 @@ public class ReceiptDetailsDAO {
 			}
 		}
 		catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		finally {
-			Util.closeConnection(null, ps, con);
+			Util.closeConnection(rs, ps, con);
 		}
 		return receiptList;
+	}
+
+	public ArrayList<ReceiptDetails> ReceiptReport(ReceiptDetails receipt, Admission admission, ArrayList<ReceiptDetails> receiptReportData) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ReceiptDetails receiptData=null;
+		try{
+			con = Util.getDBConnection();
+			String query;
+			if(receipt.getStud_name().isEmpty()){
+				query= "select * from receipt_details WHERE receipt_date BETWEEN ? AND ? AND received_by=? AND pay_mode=? AND RollNO IN (SELECT Rollno from admission WHERE acad_year=? AND standard=? AND branch=?)";
+			}else{
+				query= "select * from receipt_details WHERE receipt_date BETWEEN ? AND ? AND received_by=? AND pay_mode=? AND stud_name='"+receipt.getStud_name()+"' AND RollNO IN (SELECT Rollno from admission WHERE acad_year=? AND standard=? AND branch=?)";
+			}
+			ps = con.prepareStatement(query);
+			ps.setString(1, receipt.getFrom_date());
+			ps.setString(2, receipt.getTo_date());
+			ps.setString(3, receipt.getReceived_by());
+			ps.setString(4, receipt.getPay_mode());
+			ps.setString(5, admission.getAcad_year());
+			ps.setString(6, admission.getStandard());
+			ps.setString(7, admission.getBranch());
+			rs = ps.executeQuery();
+			while(rs.next()){
+				receiptData=new ReceiptDetails();
+				receiptData.setStud_name(rs.getString(2));
+				receiptData.setRollno(rs.getString(3));
+				receiptData.setContact(rs.getString(4));
+				receiptData.setReceipt_date(rs.getString(5));
+				receiptData.setReceipt_no(rs.getString(6));
+				receiptData.setPay_mode(rs.getString(7));
+				receiptData.setTrans_status(rs.getString(8));
+				receiptData.setTo_date(rs.getString(9));
+				receiptData.setReceived_by(rs.getString(10));
+				receiptData.setTotal_amt(rs.getLong(11));
+				receiptData.setReceived_amt(rs.getLong(12));
+				receiptData.setAmount(rs.getLong(13));
+				receiptReportData.add(receiptData);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return receiptReportData ;
 	}
 }
