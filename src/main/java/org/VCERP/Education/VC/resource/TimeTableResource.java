@@ -17,11 +17,14 @@ import javax.ws.rs.core.Response.Status;
 
 
 import org.VCERP.Education.VC.controller.TimeTableController;
+import org.VCERP.Education.VC.controller.EmployeeController;
 
 
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 
 import org.VCERP.Education.VC.model.TimeTable;
+
+import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("TimeTable")
@@ -74,6 +77,25 @@ public class TimeTableResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 	
+	@GET
+	@PermitAll
+	//@JWTTokenNeeded
+	@Path("/FetchLecturer")
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response FetchLecturer(){
+		try {
+			//var designation = "lecturer";
+			ArrayList<Employee> emp_desg=new ArrayList<>();
+			TimeTableController controller=new TimeTableController();
+			emp_desg=controller.FetchLecturer();
+			return Response.status(Status.OK).entity(emp_desg).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
 	
 	}
 	

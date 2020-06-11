@@ -3,11 +3,18 @@ var std;
 var div;
 var sub;
 var title;
+var start;
+var end;
+var slot;
 $(document).ready(function(){
 	getAcademicYear();
 	getAllStandard();
 	getAllDivision();
 	getSubject();
+	$('#multi_time').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
 	$('#div').focusout(function(){
 		var aca_year = document.getElementById('ay').value ;
 		var std = document.getElementById('std').value ;
@@ -16,6 +23,18 @@ $(document).ready(function(){
 		var title = aca_year+"|"+std+"|"+sub+"|"+div;
 		document.getElementById('title').value = title;
 		
+	});
+	
+	$('#end_time').focusout(function(){
+		var start = document.getElementById('start_time').value ;
+		var end = document.getElementById('end_time').value ;
+		var slot = start+"-"+end;
+		document.getElementById('time_slot').value = slot ;
+	});
+	
+	$('#time_slot_new').submit(function(){
+		
+		//InsertTimeSlot(slot);
 	});
 	
 //	InsertTimeTable(aca_year,std,div,sub,title);
@@ -94,4 +113,36 @@ function TimeTableList(){
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
+}
+
+
+function InsertTimeSlot(slot){
+	function callback(responseData, textStatus, request){
+		var mes = responseData.responseJSON.message;
+		showNotification("success",mes);
+		//clearModal();
+		
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+	var httpMethod = "POST";
+	var formData={
+		timeslot : slot
+	};
+	var relativeUrl;
+	//if(requestid==0){
+	//formData = $("#divisionForm").serialize()+"&branch="+branchSession;
+	relativeUrl = "/TimeSlot/InsertTimeSlot";
+	//}
+	//else{
+	//	formData = $("#divisionForm").serialize()+"&id="+requestid;
+	//	relativeUrl = "/Division/EditDivision";
+	//}
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+	
 }

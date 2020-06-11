@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 import org.VCERP.Education.VC.model.TimeTable;
+import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.utility.Util;
 
 public class TimeTableDAO{
@@ -70,4 +71,41 @@ public class TimeTableDAO{
 		}
 		return tt;
 	}
+	public ArrayList<Employee> FetchLecturer() {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		ArrayList<Employee> emp_des=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			
+			String query="select `emp_name` from employee where design=?";
+			st=con.prepareStatement(query);
+			st.setString(1, "lecturer");
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				Employee emp=new Employee();
+				//emp.setId(rs.getLong(1));
+				emp.setEmp_name(rs.getString(1));
+//				emp.setSubject(rs.getString(3));
+//				ttable.setAca_year(rs.getString(4));
+//				ttable.setCreated_date(rs.getString(5));
+//				ttable.setStd(rs.getString(6));
+//				ttable.setTitle(rs.getString(7));
+				
+				
+				emp_des.add(emp);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally{
+			Util.closeConnection(rs, st, con);
+		}
+		return emp_des;
+	}
+	
 }

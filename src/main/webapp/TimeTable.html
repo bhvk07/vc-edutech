@@ -5,10 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Time Table</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"
 	media="screen">
-	<script src="jquery/jquery-3.3.1.min.js"></script>
-<script src="jquery/bootstrap.min.js"></script>
+	
+<!-- <script src="jquery/bootstrap.min.js"></script> -->
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css"> -->
  <!--  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
@@ -21,19 +23,21 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
  <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="jquery/jquery-3.3.1.min.js"></script>
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css">
 <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
 
 	
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-
+<script src="assets/js/bootstrap-multiselect.js"></script>
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
 <script type="text/javascript" src="javascript/TimeTable.js"></script> 
 <script type="text/javascript" src="javascript/Helper.js"></script>
@@ -96,7 +100,7 @@ body {
 	margin-top: 2px;
 }
 
-table.table tr th, table.table tr td {
+timetable_table .table tr th, table.table tr td {
 	border-color: #e9e9e9;
 	padding: 12px 15px;
 	vertical-align: middle;
@@ -110,11 +114,11 @@ table.table tr th, table.table tr td {
 	width: 100px;
 }
 
-table.table-striped tbody tr:nth-of-type(odd) {
+timetable_table .table-striped tbody tr:nth-of-type(odd) {
 	background-color: #fcfcfc;
 }
 
-table.table-striped.table-hover tbody tr:hover {
+timetable_table .table-striped.table-hover tbody tr:hover {
 	background: #f5f5f5;
 }
 
@@ -580,7 +584,7 @@ font-size:16px;
                                  <th scope="col">REMOVE</th>
                         </tr>
                     </thead>
-                    <tbody id="tt-details">
+                    <tbody id="tt-details" class="tt-details">
                         <tr>
                             
                             <td>
@@ -599,12 +603,13 @@ font-size:16px;
                             <td>
                                 <div class="form-group">
                                     <div class="col-md-4 lesspadding">
-                                    <div class="input-group">
-                                        <select class="form-control" name="time-slot" style="width:100%;">
-                                            <option>10:30 - 11:30</option>
-                                        </select>
+                                    <div class="input-group" style="width:100%">
+                                        <select id="multi_time" class="form-control" name="time-slot" multiple="multiple" style="width:100%;">
+												<option>10</option>
+												<option>7</option>
+											</select>
                                          <span class="input-group-btn">
-                                           <button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#timeslot">
+                                           <button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addTimeModal">
                                                <span class="glyphicon glyphicon-plus"> </span>
                                            </button>
                                        </span>
@@ -616,9 +621,7 @@ font-size:16px;
                                 <div class="form-group">
                                    <div class="col-md-6 lesspadding">
                                     <div class="input-group">
-                                        <select class="form-control" name="lecturer" style="width:100%;">
-                                            <option>Bhavik</option>
-                                            <option>Divyakant</option>
+                                        <select class="form-control" name="lecturer" id="lecturer" style="width:100%;"> 
                                         </select>
                                     </div>
                                     </div>
@@ -658,10 +661,10 @@ font-size:16px;
 	
 	
 	<!-- subjectModal Modal HTML -->
-	<div id="timetableModal" class="modal fade">
+	<!-- <div id="timetableModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="divisionForm">
+				<form id="TimeSlotForm">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">TimeTable</h4>
@@ -684,7 +687,46 @@ font-size:16px;
 				</form>
 			</div>
 		</div>
+	</div> -->
+	
+	
+	<!--Time slot modal  -->
+	
+	<div id="addTimeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="time_slot_new">
+					<div class="modal-header">
+						<h4 class="modal-title">Time Slot</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Start Time</label> 
+							<input type="text" id="start_time" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>End Time</label> 
+							<input type="text" id="end_time" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Time Slot</label>
+							<input type=text id="time_slot" class="form-control" required>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							value="Cancel"> 
+							<input type="submit" class="btn btn-info time_submit" value="Save">
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+						
+	
+	
 	<!-- Edit Modal HTML -->
 	<!-- <div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
@@ -748,7 +790,76 @@ font-size:16px;
 		</div>
 	</div>
  -->	<!-- <script type="text/javascript" src="javascript/jquery-1.8.3.min.js" charset="UTF-8"></script> -->
-<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
+ 
+ <script>
+ var htmlCode = new Array();
+ var lecturers = new Array();
+loadTime();
+loadLecturer();
+	function loadTime() {
+		function callback(responseData, textStatus, request) {
+			for ( var i in responseData) {
+				htmlCode.push('<option value="' + responseData[i].slot + '" >'
+								+ responseData[i].slot + '</option>');
+			}
+			for (var i = 0; i < htmlCode.length; i++) {
+				$('#multi_time').append(htmlCode[i]);
+				//$('.feestype').append(htmlCode[i]);
+			}
+		}
+
+		function errorCallback(responseData, textStatus, request) {
+
+		}
+
+		var httpMethod = "GET";
+		var relativeUrl = "/TimeSlot/FetchTime";
+		ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+				errorCallback);
+		return false;
+	} 
+/*  var html = '<tr><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="day" style="width:100%;"><option>Monday</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group" style="width:100%"><select id="multi_time" class="form-control" name="time-slot" multiple="multiple" style="width:100%;">'
++ htmlCode 
++ '</select><span class="input-group-btn"><button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addTimeModal"><span class="glyphicon glyphicon-plus"></span></button></span></div></div></div></td><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="lecturer" style="width:100%;"><option>Bhavik</option><option>Divyakant</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group"><select class="form-control" name="status" style="width:100%;"><option>active</option><option>inactive</option></select></div></div></div></td><td><div class="col-md-2 lesspadding"><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></div></td></tr>'
+ $("#addrow").on("click", function() {
+		$("table .tt-details").append(html); */
+	//});
+	
+
+
+function loadLecturer() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			lecturers.push('<option value="' + responseData[i].emp_name + '" >'
+							+ responseData[i].emp_name + '</option>');
+		}
+		for (var i = 0; i < lecturers.length; i++) {
+			$('#lecturer').append(lecturers[i]);
+			//$('.feestype').append(htmlCode[i]);
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+
+	}
+
+	var httpMethod = "GET";
+	var relativeUrl = "/TimeTable/FetchLecturer";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+} 
+var html = '<tr><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="day" style="width:100%;"><option>Monday</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group" style="width:100%"><select id="multi_time" class="form-control" name="time-slot" multiple="multiple" style="width:100%;">'
++ htmlCode 
++ '</select><span class="input-group-btn"><button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addTimeModal"><span class="glyphicon glyphicon-plus"></span></button></span></div></div></div></td><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" id="lecturer" name="lecturer" style="width:100%;">'
++ lecturers
++ '</select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group"><select class="form-control" name="status" style="width:100%;"><option>active</option><option>inactive</option></select></div></div></div></td><td><div class="col-md-2 lesspadding"><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></div></td></tr>';
+$("#addrow").on("click", function() {
+	$("table .tt-details").append(html);
+});
+ </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->
 <script type="text/javascript" src="javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 
 
