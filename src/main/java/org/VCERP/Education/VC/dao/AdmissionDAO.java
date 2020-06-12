@@ -366,7 +366,7 @@ public class AdmissionDAO {
 		return install;
 	}
 
-	public Admission AdmissionReport(Admission admission) {
+	public ArrayList<Admission> AdmissionReport(Admission admission, ArrayList<Admission> admissionReportData) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -399,6 +399,7 @@ public class AdmissionDAO {
 				admissionData.setFees(rs.getLong(8));
 				admissionData.setPaid_fees(rs.getLong(9));
 				admissionData.setRemain_fees(rs.getLong(10));
+				admissionReportData.add(admissionData);
 			}			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -407,7 +408,7 @@ public class AdmissionDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return admissionData;
+		return admissionReportData;
 
 	}
 		

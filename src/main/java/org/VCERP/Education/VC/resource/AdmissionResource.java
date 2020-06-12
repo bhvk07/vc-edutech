@@ -353,10 +353,7 @@ public class AdmissionResource {
 							admission.setTo_date(to_date);
 							admission.setAcad_year(acad_year);
 							admission.setBranch(branch);
-							admissionData=controller.AdmissionReport(admission);
-							if(admissionData!=null){
-								admissionReportData.add(admissionData);
-							}
+							admissionReportData=controller.AdmissionReport(admission,admissionReportData);
 						}
 					}
 				}
