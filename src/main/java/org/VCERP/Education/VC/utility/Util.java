@@ -95,7 +95,7 @@ public class Util {
 	}
 	public static String[] symbolSeperatedString(String str)
 	{
-		String seperated[] = str.split("[|]");//.replaceAll("\\s+", "")
+		String seperated[] = str.replaceAll("\\s+", "").split("[|]");//
 		return seperated;
 	}
 	public static String[] commaSeperatedString(String str)
@@ -106,6 +106,11 @@ public class Util {
 	public static String[] hyphenSeperatedString(String str)
 	{
 		String seperated[] = str.split("[-]");//.replaceAll("\\s+", "")
+		return seperated;
+	}
+	public static String[] dollarSeperatedString(String str)
+	{
+		String seperated[] = str.replaceAll("\\s+", "").split("[$]");//.replaceAll("\\s+", "")
 		return seperated;
 	}
 

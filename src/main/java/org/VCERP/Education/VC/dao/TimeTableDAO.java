@@ -11,19 +11,39 @@ import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.utility.Util;
 
 public class TimeTableDAO{
-	public TimeTable addTimeTable(TimeTable tt){
+	public TimeTable addTimeTable(TimeTable tt, String tt_details){
 		Connection con=null;
 		PreparedStatement ps=null;
+		String[] dollarSeperated=Util.dollarSeperatedString(tt_details);
+		String createColumn="";
+		String createIndex="?";
+		int k=0;
+		String lecturer="";
 		try{
 		con=Util.getDBConnection();
-		String query="insert into time_table(`tt_title`,`aca_year`,`divi`,`subject`,`standard`,`created_date`)values(?,?,?,?,?,?)";
+		for(int i=1;i<dollarSeperated.length;i++)
+		{
+			String[] pipeSeperated=Util.symbolSeperatedString(dollarSeperated[i]);
+			createColumn+=",`"+pipeSeperated[0]+"`";
+			createIndex+=",?";
+			
+		}
+		String query="insert into time_table(`tt_title`,`aca_year`,`divi`,`subject`,`standard`,`created_date`"+createColumn+",`lecturer`,`branch`)values(?,?,?,?,?,"+createIndex+",?,?)";
 		ps=con.prepareStatement(query);
-		ps.setString(1, tt.getTitle());
-		ps.setString(2, tt.getAca_year());
-		ps.setString(3, tt.getDivision());
-		ps.setString(4, tt.getSubject());
-		ps.setString(5, tt.getStd());
-		ps.setString(6, Util.currentDate());
+		ps.setString(k+=1, tt.getTitle());
+		ps.setString(k+=1, tt.getAca_year());
+		ps.setString(k+=1, tt.getDivision());
+		ps.setString(k+=1, tt.getSubject());
+		ps.setString(k+=1, tt.getStd());
+		ps.setString(k+=1, Util.currentDate());
+		for(int i=1;i<dollarSeperated.length;i++)
+		{
+			String[] pipeSeperated=Util.symbolSeperatedString(dollarSeperated[i]);
+				ps.setString(k+=1,pipeSeperated[1]+"|"+pipeSeperated[3]);
+				lecturer=pipeSeperated[2];
+		}
+		ps.setString(k+=1,lecturer);
+		ps.setString(k+=1,tt.getBranch());
 		ps.executeUpdate();
 		}
 		catch(Exception e){

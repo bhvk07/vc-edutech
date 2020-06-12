@@ -9,9 +9,9 @@ import org.VCERP.Education.VC.model.TimeTable;
 import org.VCERP.Education.VC.model.Employee;
 public class TimeTableController{
 	
-	public TimeTable addSubject(TimeTable tt) {
+	public TimeTable addSubject(TimeTable tt, String tt_details) {
 		TimeTableDAO dao=new TimeTableDAO();
-		return dao.addTimeTable(tt);
+		return dao.addTimeTable(tt,tt_details);
 	}
 	public ArrayList<TimeTable> FetchTimeTable() {
 		TimeTableDAO dao=new TimeTableDAO();

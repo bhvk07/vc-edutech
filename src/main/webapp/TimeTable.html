@@ -416,8 +416,7 @@ font-size:16px;
 
 
 
-						<a href="#divisionModal" data-toggle="modal"
-							data-target="#divisionModal" class="btn btn-success"><i
+						<a href=""  class="btn btn-success" id="add"><i
 							class="material-icons">&#xE147;</i> <span>Add New</span></a>
 						<a href="" class="btn btn-success" id="edit"><i
 							class="material-icons">&#xE147;</i> <span>Edit</span></a>
@@ -496,7 +495,7 @@ font-size:16px;
 	            <h2 class="panel-title">Time Table</h2>
 	        </header>
 	        <div class="panel-body">
-	        <form>
+	        <form id="time-table">
 	            <div class="form-group">
 	                <div class="col-md-4">
 	                    <label class="control-label">Academic Year</label>
@@ -593,7 +592,9 @@ font-size:16px;
                                    <div class="col-md-6 lesspadding">
                                     <div class="input-group">
                                         <select class="form-control" name="day" style="width:100%;">
-                                            <option>Monday</option>
+                                            <option value="mon">Monday</option>
+                                            <option value="tue">tuesday</option>
+                                            <option value="wed">wednesday</option>
                                         </select>
                                     </div>
                                    
@@ -849,7 +850,7 @@ function loadLecturer() {
 			errorCallback);
 	return false;
 } 
-var html = '<tr><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="day" style="width:100%;"><option>Monday</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group" style="width:100%"><select id="multi_time" class="form-control" name="time-slot" multiple="multiple" style="width:100%;">'
+var html = '<tr><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="day" style="width:100%;"><option value="mon">Monday</option><option value="tue">Tuesday</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group" style="width:100%"><select id="multi_time" class="form-control" name="time-slot" multiple="multiple" style="width:100%;">'
 + htmlCode 
 + '</select><span class="input-group-btn"><button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addTimeModal"><span class="glyphicon glyphicon-plus"></span></button></span></div></div></div></td><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" id="lecturer" name="lecturer" style="width:100%;">'
 + lecturers

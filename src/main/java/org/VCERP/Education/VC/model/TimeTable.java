@@ -14,6 +14,7 @@ public class TimeTable{
 	private String subject;
 	private String std;
 	private String created_date;
+	private String branch;
 	public String getCreated_date() {
 		return created_date;
 	}
@@ -56,4 +57,11 @@ public class TimeTable{
 	public void setStd(String std) {
 		this.std = std;
 	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	
 }

@@ -35,8 +35,9 @@ public class TimeTableResource {
 	@Path("/NewTimeTable")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	
-	public Response addTimeTable(@FormParam("year") String aca_year,@FormParam("standard") String std,
-			@FormParam("division") String division,@FormParam("subject") String subject,@FormParam("tt_title") String title)
+	public Response addTimeTable(@FormParam("aca_year") String aca_year,@FormParam("standard") String std,
+			@FormParam("division") String division,@FormParam("subject") String subject,@FormParam("title") String title,
+			@FormParam("tt_details") String tt_details,@FormParam("branch") String branch)
 	{
 		TimeTable tt = null;
 		TimeTableController controller = null;
@@ -48,8 +49,8 @@ public class TimeTableResource {
 		tt.setStd(std);
 		tt.setSubject(subject);
 		tt.setTitle(title);
-		
-		controller.addSubject(tt);
+		tt.setBranch(branch);
+		controller.addSubject(tt,tt_details);
 		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
 	}
 	catch(Exception e){

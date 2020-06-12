@@ -31,9 +31,8 @@ $(document).ready(function(){
 		var slot = start+"-"+end;
 		document.getElementById('time_slot').value = slot ;
 	});
-	
-	$('#time_slot_new').submit(function(){
-		
+	$('#add').click(function(){
+		getTimeTableDetails();
 		//InsertTimeSlot(slot);
 	});
 	
@@ -44,8 +43,20 @@ $(document).ready(function(){
 	});
 	TimeTableList();
 });
-
-function InsertTimeTable(year,standard,div,subject,title){
+function getTimeTableDetails(){
+	var table=document.getElementById("tt");
+	var rowCount=$('#tt tr').length;
+	var tt_details="tt details";
+	for (var i = 1; i < rowCount; i++) {
+			var date = $(table.rows.item(i).cells[0]).find('select').val();
+			var time = $(table.rows.item(i).cells[1]).find('select').val();
+			var lecturer = $(table.rows.item(i).cells[2]).find('select').val();
+			var status = $(table.rows.item(i).cells[3]).find('select').val();
+			tt_details+="$"+date+"|"+time+"|"+lecturer+"|"+status;
+			}
+	InsertTimeTable(tt_details);
+}	
+function InsertTimeTable(tt_details){
 	function callback(responseData, textStatus, request){
 		var mes = responseData.responseJSON.message;
 		showNotification("success",mes);
@@ -58,23 +69,10 @@ function InsertTimeTable(year,standard,div,subject,title){
 		
 	}
 	var httpMethod = "POST";
-	var formData={
-		year : aca_year,
-		standard : std,
-		division : div,
-		subject : sub,
-		tt_title : title
-		
-	};
+	var formData=$("#time-table").serialize()+"&tt_details="+tt_details+"&branch="+branchSession;
+	alert(formData);
 	var relativeUrl;
-	//if(requestid==0){
-	//formData = $("#divisionForm").serialize()+"&branch="+branchSession;
 	relativeUrl = "/TimeTable/NewTimeTable";
-	//}
-	//else{
-	//	formData = $("#divisionForm").serialize()+"&id="+requestid;
-	//	relativeUrl = "/Division/EditDivision";
-	//}
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
