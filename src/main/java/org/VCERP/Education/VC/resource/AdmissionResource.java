@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.AcademicYearController;
 import org.VCERP.Education.VC.controller.AdmissionController;
+import org.VCERP.Education.VC.controller.AttendanceController;
 import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.controller.FeesPackageController;
 import org.VCERP.Education.VC.dao.AdmissionDAO;
@@ -51,6 +52,7 @@ public class AdmissionResource {
 		EnquiryController eqcontroller = null;
 		AdmissionController controller = null;
 		AcademicYearController acadcontroller = null;
+		AttendanceController studcontroller = null;
 		try {
 			admission = new Admission();
 			// admission.setId(Integer.parseInt(name[0]));
@@ -86,28 +88,12 @@ public class AdmissionResource {
 			admission.setBranch(branch);
 			admission.setStandard(getStandard(f_pack[0], branch));
 			admission.setFeesDetails(feestypeDetails);
-			/*
-			 * if(!newAmt.equals("0")) {
-			 */
-			// String[] commaSeperated=Util.commaSeperatedString(newAmt);
 
-			/*
-			 * for(int i=0;i<commaSeperated.length;i++) {
-			 */
-			// String a=commaSeperated[i];
 			String[] symbolSeperated = Util.symbolSeperatedString(newAmt);
 
 			admission.setDisccount(Integer.parseInt(symbolSeperated[0]));
 			admission.setFees(Integer.parseInt(symbolSeperated[1]));
-			// }
 
-			// }
-			/*
-			 * else{ admission.setDisccount(0);
-			 * admission.setFees(Integer.parseInt(f_pack[1])); }
-			 */
-			// admission.setPaid_fees(getPaidFees(installment));
-			// admission.setRemain_fees(Integer.parseInt(f_pack[1])-admission.getPaid_fees());
 			String[] commaSeperatedInstallment = Util.commaSeperatedString(installment);
 			if (commaSeperatedInstallment.length > 2) {
 				saveInstallment(commaSeperatedInstallment, branch);
@@ -115,6 +101,9 @@ public class AdmissionResource {
 			controller = new AdmissionController();
 			controller.StudentAdmission(admission);
 
+			studcontroller=new AttendanceController();
+			studcontroller.addNewAttendanceColumn(Rollno);
+			
 			acadcontroller = new AcademicYearController();
 			acadcontroller.updateAcademicDetails(Rollno, invoice_no, regno, acad_year, branch);
 

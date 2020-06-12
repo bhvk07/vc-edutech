@@ -164,4 +164,50 @@ public class AttendanceDAO {
 
 	}
 
+	public void checkRollNoColumnExist(String rollno) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		int count=0;
+		String[] hyphenSeperated=Util.hyphenSeperatedString(rollno);
+		try {
+			con=Util.getDBConnection();
+			String query="SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'attendance'";
+			ps=con.prepareStatement(query);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				count=rs.getInt(1);
+			}
+			
+			count=count-6;
+			if(Integer.parseInt(hyphenSeperated[1])>count){
+				createAttendanceColumn(Integer.parseInt(hyphenSeperated[1]));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+	}
+
+	private void createAttendanceColumn(int rollno) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="ALTER TABLE `attendance`  ADD `"+rollno+"` VARCHAR(20) NULL ";
+			ps=con.prepareStatement(query);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	}
+
 }

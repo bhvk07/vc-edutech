@@ -29,4 +29,10 @@ public class AttendanceController {
 		return dao.studentAttendanceReport(attend);
 	}
 
+	public void addNewAttendanceColumn(String rollno) {
+		AttendanceDAO dao=new AttendanceDAO();
+		dao.checkRollNoColumnExist(rollno);
+		
+	}
+
 }
