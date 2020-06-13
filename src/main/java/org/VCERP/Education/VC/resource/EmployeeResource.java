@@ -27,7 +27,7 @@ public class EmployeeResource {
 
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/NewEmployee")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addEmployee(@FormParam("emp_type") String emp_type,@FormParam("branch") String branch
@@ -57,14 +57,14 @@ public class EmployeeResource {
 			System.out.println(e);
 		}
 		
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to Insert Data.").build();
 	}
 	
 	
 	
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchAllEmployee")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)

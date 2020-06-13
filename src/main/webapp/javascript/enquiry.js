@@ -6,6 +6,7 @@ $(document).ready(function() {
 	getCaste();
 	FetchAllEmployee();
 	getAutoIncreamentedEnquiryNo()
+	$("#branch").val(branchSession);
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
 		}, "Only alphabetical characters");
@@ -210,11 +211,11 @@ $(document).ready(function() {
 		event.preventDefault();
 		sessionStorage.removeItem("EditData");
 	});
-	$("#Add_employee").click(function() {
+	/*$("#Add_employee").click(function() {
 		event.preventDefault();
 		AddEmployee();
-	});
-	$("#branch").val(branchSession);
+	});*/
+	
 	$("#feestype-form").submit(function() {
 		event.preventDefault();
 		addFeesType();
@@ -258,7 +259,7 @@ function EnquiryData() {
 		if(editData!=null){
 			sessionStorage.removeItem("EditData");
 		}
-		var mes=responseData.responseJSON.message;
+		var mes=responseData.message;
 		showNotification("success",mes);
 	}
 
@@ -283,17 +284,14 @@ function AddEmployee() {
 	document.getElementById('emp_type').disabled = false;
 	document.getElementById('branch').disabled = false;
 	function callback(responseData, textStatus, request) {
-		
-		// var message=responseData.response.JSON.message;
-		// alert(message);
+		 var message=responseData.responseJSON.message;
+		 showNotification("success",mes);
 		document.getElementById('emp_type').disabled = true;
 		document.getElementById('branch').disabled = true;
 	}
 	function errorCallback(responseData, textStatus, request) {
-		/*var mes=responseData.responseJSON.message;
-		showNotification("error",mes);*/
-		// var message=responseData.response.JSON.message;
-		// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var formData = $("#add_employee").serialize();
 	console.log(formData);
@@ -351,7 +349,7 @@ function addFeesType() {
 	var formData =$("#feestype-form").serialize()+"&branch="+branchSession;
 	alert(formData);
 	var relativeUrl = "/feesType/addNewFeesType";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
 }

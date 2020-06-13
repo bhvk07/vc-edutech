@@ -169,7 +169,7 @@ function FetchAllEmployee() {
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
