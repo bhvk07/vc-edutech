@@ -11,9 +11,9 @@ public class Installment {
 	private ArrayList<Integer> monthly_pay;
 	private ArrayList<String> due_date;
 	private ArrayList<String> fees_title;
-	private long paid_fees;
+	//private long paid_fees;
 	private ArrayList<Integer> remain_fees;
-	private ArrayList<String> paid;
+	private ArrayList<Integer> paid;
 	private String from_date;
 	private String to_date;
 	private String branch;
@@ -61,16 +61,10 @@ public class Installment {
 		this.fees_title = fees_title;
 	}
 	
-	public long getPaid_fees() {
-		return paid_fees;
-	}
-	public void setPaid_fees(long paid_fees) {
-		this.paid_fees = paid_fees;
-	}
-	public ArrayList<String> getPaid() {
+	public ArrayList<Integer> getPaid() {
 		return paid;
 	}
-	public void setPaid(ArrayList<String> paid) {
+	public void setPaid(ArrayList<Integer> paid) {
 		this.paid = paid;
 	}
 	public String getFrom_date() {

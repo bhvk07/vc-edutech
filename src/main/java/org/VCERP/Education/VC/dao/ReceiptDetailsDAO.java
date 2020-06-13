@@ -475,6 +475,8 @@ public class ReceiptDetailsDAO {
 		ArrayList<String> due_date=new ArrayList<>();
 		ArrayList<String> title=new ArrayList<>();
 		ArrayList<Integer> due_amt=new ArrayList<>();
+		ArrayList<Integer> remain_fees=new ArrayList<>();
+		ArrayList<Integer> paid_amt=new ArrayList<>();
 		try{
 			con = Util.getDBConnection();
 			String query;
@@ -489,7 +491,7 @@ public class ReceiptDetailsDAO {
 			ps.setString(3, admission.getAcad_year());
 			ps.setString(4, admission.getAdm_fees_pack());
 			ps.setString(5, admission.getStandard());
-			ps.setString(6, admission.getBranch());
+			ps.setString(6, admission.getDivision());
 			ps.setString(7, admission.getBranch());
 			rs = ps.executeQuery();
 			while(rs.next()){
@@ -500,13 +502,19 @@ public class ReceiptDetailsDAO {
 				due_amt.add(rs.getInt(5));
 				due_date.add(rs.getString(6));
 				title.add(rs.getString(7));
-				installmentData.setBranch(rs.getString(8));
+				paid_amt.add(rs.getInt(8));
+				remain_fees.add(rs.getInt(9));
+				installmentData.setBranch(rs.getString(11));
 			}
 			installmentData.setDue_date(due_date);
 			installmentData.setFees_title(title);
 			installmentData.setMonthly_pay(due_amt);
+			installmentData.setRemain_fees(remain_fees);
+			installmentData.setPaid(paid_amt);
 			Admission admissionData=new Admission();
 			admissionData=getAdmissionRelatedData(installmentData,admission);
+			admissionData.setInstallment(installmentData);
+			installReportData.add(admissionData);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -514,19 +522,19 @@ public class ReceiptDetailsDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return null ;
+		return installReportData ;
 
 	}
 
 	private Admission getAdmissionRelatedData(Installment installmentData, Admission admission) {
 
-	/*	Connection con=null;
+		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Admission AdmissionData=null;
 		try{
 			con = Util.getDBConnection();
-			String query = "select invoice_no,adm_fees_package,paid_fees from admission where Rollno=? and student_name=? and acad_year=? and standard=? and branch=?";
+			String query = "select invoice_no,adm_fees_pack,remain_fees from admission where Rollno=? and student_name=? and acad_year=? and standard=? and branch=?";
 			ps = con.prepareStatement(query);
 			ps.setString(1,installmentData.getRollno());
 			ps.setString(2,installmentData.getStud_name());
@@ -538,10 +546,7 @@ public class ReceiptDetailsDAO {
 				AdmissionData = new Admission();
 				AdmissionData.setInvoice_no(rs.getString(1));
 				AdmissionData.setAdm_fees_pack(rs.getString(2));
-				AdmissionData.setPaid_fees(rs.getLong(3));
-				details.setPay_mode(rs.getString(4));
-				details.setTotal_amt(rs.getLong(5));
-				receiptList.add(details);
+				AdmissionData.setRemain_fees(rs.getLong(3));
 			}
 		}
 		catch (Exception e) {
@@ -550,6 +555,6 @@ public class ReceiptDetailsDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-*/		return null;
+		return AdmissionData;
 	}
 }
