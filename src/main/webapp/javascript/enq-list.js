@@ -58,11 +58,11 @@ function showDashboard() {
 			var lead_stage = "";
 			var lead_source = responseData[i].lead_source;
 			var status = responseData[i].status;
-			var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
+			//var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 			table.row.add(
 					[ srno, enq_date, enq_no, sname, stud_cont, address,
-							enq_taken_by, lead_stage, lead_source, status,
-							delbutton ]).draw();
+							enq_taken_by, lead_stage, lead_source, status
+							]).draw();
 		}
 	}
 
@@ -77,7 +77,7 @@ function showDashboard() {
 	var httpMethod = "GET";
 	var relativeUrl = "/Enquiry/FetchAllEnquiryData?branch=" + branchSession;
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

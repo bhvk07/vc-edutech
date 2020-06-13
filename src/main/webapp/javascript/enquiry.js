@@ -2,7 +2,10 @@ var mes;
 var editData=sessionStorage.getItem("EditData");
 var request="";
 $(document).ready(function() {
+	validateLogin();
 	getCaste();
+	FetchAllEmployee();
+	getAutoIncreamentedEnquiryNo()
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
 		}, "Only alphabetical characters");
@@ -198,7 +201,6 @@ $(document).ready(function() {
 			  
 		  }
 	});
-	FetchAllEmployee();
 	if(editData!=null){
 		loadEditData(editData);
 		request="Edit"
@@ -253,25 +255,18 @@ $(document).ready(function() {
 function EnquiryData() {
 
 	function callback(responseData, textStatus, request) {
-		alert("suc");
 		if(editData!=null){
 			sessionStorage.removeItem("EditData");
 		}
-		/*var mes=responseData.responseJSON.message;
-		showNotification("success",mes);*/
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		alert("f");
-		/*var mes=responseData.responseJSON.message;
+		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-*/		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message); alert(message);
-		 */
 	}
 	var formData = $('#EnquiryForm').serialize()+"&branch="+branchSession;
-	alert(formData);
 	var httpMethod = "POST";
 	if(request==""){
 	var relativeUrl = "/Enquiry/EnquiryData";
@@ -359,4 +354,18 @@ function addFeesType() {
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
+}
+function getAutoIncreamentedEnquiryNo(){
+	function callback(responseData,textStatus,request)
+	{
+		document.getElementById("enq_no").value=responseData;
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Enquiry/IncrementedEnqNo?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;
 }

@@ -247,4 +247,29 @@ public class EnquiryDAO {
 		return enq;
 		
 	}
+
+	public String IncrementedEnqNo(String branch) {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		String count="";
+		try {
+			con=Util.getDBConnection();
+			String query="select enq_no from enquiry where branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, branch);
+			rs=st.executeQuery();
+			while(rs.next()){
+				count=rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, st, con);
+		}
+		return count;
+
+	}
 }

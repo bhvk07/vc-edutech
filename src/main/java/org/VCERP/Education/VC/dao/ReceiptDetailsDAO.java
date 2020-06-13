@@ -506,6 +506,7 @@ public class ReceiptDetailsDAO {
 				remain_fees.add(rs.getInt(9));
 				installmentData.setBranch(rs.getString(11));
 			}
+			if(due_date!=null){
 			installmentData.setDue_date(due_date);
 			installmentData.setFees_title(title);
 			installmentData.setMonthly_pay(due_amt);
@@ -515,6 +516,7 @@ public class ReceiptDetailsDAO {
 			admissionData=getAdmissionRelatedData(installmentData,admission);
 			admissionData.setInstallment(installmentData);
 			installReportData.add(admissionData);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

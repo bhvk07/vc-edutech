@@ -1,7 +1,8 @@
 /**
  * 
  */
-function validateLogin(token) {
+function validateLogin() {
+	var token=sessionStorage.getItem("token");
 	if (token === undefined || token.trim() == "") {
 		window.location.replace("../login.html");
 	} 

@@ -29,46 +29,41 @@ public class EnquiryResource {
 	@Path("/EnquiryData")
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	//@PreAuthorize("hasRole('desk')")
-	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EnquiryData(@Valid @BeanParam Enquiry enquiry){
+		EnquiryController controller=new EnquiryController();
 		try {
-			
-			//System.out.println(enquiry.getCaste());
-			EnquiryController controller=new EnquiryController();
 			controller.EnquiryData(enquiry);
-			return Response.status(Status.OK).build();
+			return Util.generateResponse(Status.ACCEPTED,"Student Enquiry Data Successfully Submited.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not Accepted.").build();
+		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data not submited.please try again or contact with administrator.").build();
 	}
 
 	@Path("/editEnquiryData")
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	//@PreAuthorize("hasRole('desk')")
 	//@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditEnquiryData(@Valid @BeanParam Enquiry enquiry){
+		EnquiryController controller=new EnquiryController();
 		try {
-			
-			//System.out.println(enquiry.getCaste());
-			EnquiryController controller=new EnquiryController();
 			controller.EditEnquiryData(enquiry);
-			return Response.status(Status.OK).build();
+			return Util.generateResponse(Status.ACCEPTED,"Student Enquiry Data Successfully Submited.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data Not updated.").build();
+		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data not submited.please try again or contact with administrator.").build();
 	}
 	
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchAllEnquiryData")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response FetchAllEnquiryData(@QueryParam("branch") String branch){
@@ -118,7 +113,7 @@ public class EnquiryResource {
 	}
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/EnquiryReport")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -155,6 +150,28 @@ public class EnquiryResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST,"Admission not done.").build();
 	}
-	
+	@GET
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/IncrementedEnqNo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response IncrementedEnqNo(@QueryParam("branch") String branch){
+		int id=0;
+		String enq_no="";
+		try {
+			EnquiryController controller=new EnquiryController();
+			enq_no=controller.IncrementedEnqNo(branch);
+			if(enq_no==null){
+				id=1;
+			}
+			else{
+				id=Integer.parseInt(enq_no)+1;
+			}
+			return Response.status(Status.ACCEPTED).entity(id).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST,"Unable to get Auto Incremented Enquiry Number.").build();
+	}
 
 }

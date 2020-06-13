@@ -1,4 +1,5 @@
 var requestid=0;
+var subject=new Array();
 $(document).ready(function(){
 	
 	
@@ -17,30 +18,16 @@ $(document).ready(function(){
 		        val: true
 		   },
 		   
-		  
-		   stdamt: {
-		        required: true,
-		        digits: true
-		   },
 		   subject: {
 		        required: true,
 		        
 		   },
-		   
-		   
-			
 		  },
 		 messages: {
 			 stdtname: {
 				required:'Please enter standard',	
 				val:'Please enter valid standard'
 			},
-			stdamt: {
-					required:'Please enter standard fees amount',	
-					
-				},
-				
-			
 		
 		  },
 		  submitHandler:function(form){
@@ -65,19 +52,21 @@ document.getElementById("Amount1").value=document.getElementById("stdamt").value
 document.getElementById("Amount2").value=document.getElementById("stdamt").value;
 });
 
-$("#edit").click(function(e){
+/*$("#edit").click(function(e){
 var table = $("#stdtable").DataTable();
-$('table .cbCheck').each(function(i, chk) {
-if (chk.checked==true) {
-requestid=$(this).val();
-var branch=table.rows({selected : true}).column(2).data()[i];
-var standard=table.rows({selected : true}).column(1).data()[i];
-var stdamt=table.rows({selected : true}).column(3).data()[i];
-var subject=table.rows({selected : true}).column(4).data()[i];
-loadStandard(branch,standard,stdamt,subject,e);
-}
-});
-});
+	$('table .cbCheck').each(function(i, chk) {
+		if (chk.checked==true) {
+			requestid=$(this).val();
+			alert(requestid);
+			var branch=table.rows({selected : true}).column(2).data()[i];
+			var standard=table.rows({selected : true}).column(1).data()[i];
+			var stdamt=table.rows({selected : true}).column(3).data()[i];
+			var subject=table.rows({selected : true}).column(4).data()[i];
+			loadStandard(branch,standard,stdamt,subject,e);
+		}
+	});
+	});
+	*/
 });
 function getAllStandardData() {
 function callback(responseData, textStatus, request) {
@@ -107,9 +96,9 @@ table.row.add(
 
 function errorCallback(responseData, textStatus, request) {
 /*
-* var message=responseData.responseJSON.message;
-* showNotification("error",message);
-*/
+ * var message=responseData.responseJSON.message;
+ * showNotification("error",message);
+ */
 var mes=responseData.responseJSON.message;
 showNotification("error",mes);
 }
@@ -142,9 +131,9 @@ var rowCount = table.rows.length;
 
 function errorCallback(responseData, textStatus, request) {
 /*
-* var message=responseData.responseJSON.message;
-* showNotification("error",message);
-*/
+ * var message=responseData.responseJSON.message;
+ * showNotification("error",message);
+ */
 var mes=responseData.responseJSON.message;
 showNotification("error",mes);
 }
@@ -159,10 +148,11 @@ return false;
 function loadSubject(){
 function callback(responseData, textStatus, request){
 for ( var i in responseData) {
-var htmlCode=('<option value="' + responseData[i].subject + '" >'
+subject.push('<option value="' + responseData[i].subject + '" >'
 + responseData[i].subject + '</option>');
-$('#multiple-checkboxes').append(htmlCode);
+
 }
+$('.subject').append(subject);
 }
 
 
@@ -203,32 +193,34 @@ fees.push(branch+"|"+branchamt);
 addStandard(fees,selected);
 }
 function addStandard(branchData,subject){
-function callback(responseData, textStatus, request){
-for ( var i in responseData) {
-console.log("suc");
+	function callback(responseData, textStatus, request){
+		for ( var i in responseData) {
+			console.log("suc");
+		}
+	}
+
+
+	function errorCallback(responseData, textStatus, request){
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+
+	var httpMethod = "POST";
+	var formData = $("#standard").serialize()+"&branchData="+branchData+"&sub="+subject;
+	alert(formData);
+	var relativeUrl = "/standard/addStandard";
+
+  ajaxUnauthenticatedRequest(httpMethod, relativeUrl,formData, callback,
+  errorCallback);
+  return false;
 }
-}
 
-
-function errorCallback(responseData, textStatus, request){
-var mes=responseData.responseJSON.message;
-showNotification("error",mes);
-
-}
-
-var httpMethod = "POST";
-var formData = $("#standard").serialize()+"&branchData="+branchData+"&sub="+subject;
-alert(formData);
-var relativeUrl = "/standard/addStandard";
-/*ajaxUnauthenticatedRequest(httpMethod, relativeUrl,formData, callback,
-errorCallback);
-*/return false;
-}
-
-function loadStandard(branch,standard,stdamt,subject,e){
+/*function loadStandard(branch,standard,stdamt,subject,e){
 document.getElementById("stdtname").value=standard;
 document.getElementById("stdamt").value=stdamt;
-//$('#multiple-checkboxes').val(subject);
+$("#multiple-checkboxes").css("display", "none");
+$("#multiple-checkboxes_selected").css("display", "block");
+// $('#multiple-checkboxes').val(subject);
 var select = document.getElementById("multiple-checkboxes");
     var count = 0;
     var i;
@@ -244,30 +236,27 @@ for(count = 0; count < subject.length; count += 1) {
 }
 // var element=document.getElementById('multiple-checkboxes');
 // for (var i = 0; i < element.options.length; i++) {
-//    element.options[i].selected = subject.indexOf(element.options[i].value) >= 0;
+// element.options[i].selected = subject.indexOf(element.options[i].value) >= 0;
 // }
 
 // Get Value
-/*var selectedItens = Array.from(element.selectedOptions)
-       .map(option => option.value)*/
-/*for(var i in subject) {
-   var optionVal = subject[i];
-   $("select").find("option[value="+optionVal+"]").prop("selected", "selected");
-}
-$("select").multiselect('reload');*/
-/*for (var option of document.getElementById('multiple-checkboxes').options) {
-  option.selected=false;
-alert(option.value+" "+option.selected);
-for(var i=0;i<subject.length;i++){    
-if(option.value==subject[i])
-{
-option.selected=true;
-}
-  }
-}*/
-/*if (option.selected) {
-     selected+="|"+option.value;
-   }*/
+
+ * var selectedItens = Array.from(element.selectedOptions) .map(option =>
+ * option.value)
+ 
+
+ * for(var i in subject) { var optionVal = subject[i];
+ * $("select").find("option[value="+optionVal+"]").prop("selected", "selected"); }
+ * $("select").multiselect('reload');
+ 
+
+ * for (var option of document.getElementById('multiple-checkboxes').options) {
+ * option.selected=false; alert(option.value+" "+option.selected); for(var i=0;i<subject.length;i++){
+ * if(option.value==subject[i]) { option.selected=true; } } }
+ 
+
+ * if (option.selected) { selected+="|"+option.value; }
+ 
 e.preventDefault();
 $('#standardmodal').modal({
         show: true,
@@ -275,3 +264,4 @@ $('#standardmodal').modal({
         keyboard: true
      });
 }
+*/
