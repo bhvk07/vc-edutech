@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.VCERP.Education.VC.dao.AdmissionDAO;
 import org.VCERP.Education.VC.dao.ReceiptDetailsDAO;
 import org.VCERP.Education.VC.model.Admission;
+import org.VCERP.Education.VC.model.Installment;
 import org.VCERP.Education.VC.model.ReceiptDetails;
 
 public class ReceiptDetailsController {
@@ -51,14 +52,20 @@ public class ReceiptDetailsController {
 		return dao.getStudReceiptList(rno);
 	}
 
-	public void updateInstallment(String rollno, String due_date, String branch, long received_amt) {
+	public void updateInstallment(String rollno, String due_date, String branch, long received_amt, long due_amt) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
-		dao.updateInstallment(rollno,due_date,branch,received_amt);
+		dao.updateInstallment(rollno,due_date,branch,received_amt,due_amt);
 	}
 
 	public ArrayList<ReceiptDetails> ReceiptReport(ReceiptDetails receipt, Admission admission,ArrayList<ReceiptDetails> receiptReportData) {
 		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
 		return dao.ReceiptReport(receipt,admission,receiptReportData);
+	}
+
+	public ArrayList<Admission> InstallmentDueReport(Installment installment, Admission admission,
+			ArrayList<Admission> installReportData) {
+		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
+		return dao.InstallmentDueReport(installment,admission,installReportData);
 	}
 
 }

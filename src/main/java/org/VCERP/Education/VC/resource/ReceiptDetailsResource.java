@@ -70,7 +70,9 @@ public class ReceiptDetailsResource {
 			@FormParam("receipt_date") String receipt_date,@FormParam("receipt_no") String receipt_no,
 			@FormParam("received_amt") long received_amt,@FormParam("pay_mode") String pay_mode
 			,@FormParam("trans_status") String trans_status,@FormParam("trans_date") String trans_date
-			,@FormParam("received_by") String received_by,@FormParam("due_date") String due_date,@FormParam("branch") String branch)
+			,@FormParam("received_by") String received_by,
+			@FormParam("due_amt") long due_amt,@FormParam("due_date") String due_date,
+			@FormParam("branch") String branch)
 	{
 		String[] stud_details=Util.symbolSeperatedString(stud_name);
 		ReceiptDetails details=null;
@@ -110,7 +112,7 @@ public class ReceiptDetailsResource {
 			adcontroller=new AdmissionController();
 			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain);
 			
-			controller.updateInstallment(stud_details[0],due_date,branch,received_amt);
+			controller.updateInstallment(stud_details[0],due_date,branch,received_amt,due_amt);
 			
 			return Util.generateResponse(Status.ACCEPTED, "Data Inserted").build();
 		} catch (Exception e) {
@@ -187,7 +189,6 @@ public class ReceiptDetailsResource {
 		 String[] commaSeperatedReceivedBy=Util.commaSeperatedString(received_by);
 		 String[] commaSeperatedPayMode=Util.commaSeperatedString(pay_mode);
 		 String[] commaSeperatedStandard=Util.commaSeperatedString(standard);
-		 //ReceiptDetails receiptData=new ReceiptDetails();
 		 ReceiptDetailsController controller=new ReceiptDetailsController();
 		 ArrayList<ReceiptDetails> receiptReportData=new ArrayList<>();
 		 try {
@@ -216,7 +217,7 @@ public class ReceiptDetailsResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
-	/*@Path("/InstallmentDueReport")
+	@Path("/InstallmentDueReport")
 	@POST
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
@@ -225,37 +226,35 @@ public class ReceiptDetailsResource {
 			@FormParam("division") String division,@FormParam("branch") String branch,
 			@FormParam("package") String fees_package,@FormParam("standard") String standard,
 			@FormParam("acad_year") String acad_year,@FormParam("stud_name") String stud_name){
-		// String[] commaSeperatedReceivedBy=Util.commaSeperatedString(received_by);
-		 String[] commaSeperatedPayMode=Util.commaSeperatedString(pay_mode);
+		 String[] commaSeperatedPackage=Util.commaSeperatedString(fees_package);
 		 String[] commaSeperatedStandard=Util.commaSeperatedString(standard);
-		 //ReceiptDetails receiptData=new ReceiptDetails();
+		 String[] commaSeperatedDivision=Util.commaSeperatedString(division);
 		 ReceiptDetailsController controller=new ReceiptDetailsController();
-		 ArrayList<ReceiptDetails> receiptReportData=new ArrayList<>();
+		 ArrayList<Admission> installReportData=new ArrayList<>();
 		 try {
-			 for(int i=0;i<commaSeperatedReceivedBy.length;i++){
-				 for(int j=0;j<commaSeperatedPayMode.length;j++){
-					 for(int k=0;k<commaSeperatedStandard.length;k++){
-						 ReceiptDetails receipt=new ReceiptDetails();
+			 for(int i=0;i<commaSeperatedPackage.length;i++){
+				 for(int j=0;j<commaSeperatedStandard.length;j++){
+					 for(int k=0;k<commaSeperatedDivision.length;k++){
+						 Installment installment=new Installment();
 						 Admission admission=new Admission();
-							receipt.setFrom_date(from_date);
-							receipt.setTo_date(to_date);
-							receipt.setReceived_by(commaSeperatedReceivedBy[i]);
-							receipt.setPay_mode(commaSeperatedPayMode[j]);
+							installment.setFrom_date(from_date);
+							installment.setTo_date(to_date);
+							installment.setStud_name(stud_name);
 							admission.setBranch(branch);
-							receipt.setStud_name(stud_name);
 							admission.setAcad_year(acad_year);
-							admission.setStandard(commaSeperatedStandard[k]);
-							receiptReportData=controller.ReceiptReport(receipt,admission,receiptReportData);
+							admission.setAdm_fees_pack(commaSeperatedPackage[i]);
+							admission.setStandard(commaSeperatedStandard[j]);
+							admission.setDivision(commaSeperatedDivision[k]);
+							installReportData=controller.InstallmentDueReport(installment,admission,installReportData);
 					 }
 				 }
 			 }
-			 if(receiptReportData!=null){
-			 return Response.status(Status.ACCEPTED).entity(receiptReportData).build();
+			 if(installReportData!=null){
+			 return Response.status(Status.ACCEPTED).entity(installReportData).build();
 			 }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
-*/
 }

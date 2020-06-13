@@ -110,9 +110,10 @@ public class ReceiptDetailsDAO {
 		ArrayList<String> title=new ArrayList<>();
 		ArrayList<Integer> payment=new ArrayList<>();
 		ArrayList<String> date=new ArrayList<>();
+		ArrayList<Integer> remain_fees=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query="select id,fees_title,monthly_payment,due_date from "
+			String query="select id,fees_title,monthly_payment,due_date,remain_fees from "
 					+ "installment where rollno=? and paid_status='0' and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setString(1, enq_stud);
@@ -124,11 +125,13 @@ public class ReceiptDetailsDAO {
 				title.add(rs.getString(2));
 				payment.add(rs.getInt(3));
 				date.add(rs.getString(4));
+				remain_fees.add(rs.getInt(5));
 			}
 			install.setId(id);
 			install.setFees_title(title);
 			install.setMonthly_pay(payment);
 			install.setDue_date(date);
+			install.setRemain_fees(remain_fees);
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -320,17 +323,28 @@ public class ReceiptDetailsDAO {
 		return ad;
 	}
 
-	public void updateInstallment(String rollno, String due_date, String branch, long received_amt) {
+	public void updateInstallment(String rollno, String due_date, String branch, long received_amt, long due_amt) {
 		Connection con=null;
 		PreparedStatement ps=null;
+		int status=0;
+		ArrayList<Long> install_data=getInstallmentRemainFees(rollno,due_date,branch);
+		long remain_fees=install_data.get(0);
+		long paid_amt=install_data.get(1);
+		if(received_amt==remain_fees){
+			status=1;
+		}
+		remain_fees=remain_fees-received_amt;
+		paid_amt=paid_amt+received_amt;
 		try {
 			con=Util.getDBConnection();
-			String query="update installment set paid_amount=?,paid_status='1' where rollno=? and due_date=? and branch=?";
+			String query="update installment set paid_amount=?,remain_fees=?,paid_status=? where rollno=? and due_date=? and branch=?";
 			ps=con.prepareStatement(query);
-			ps.setLong(1, received_amt);
-			ps.setString(2, rollno);
-			ps.setString(3, due_date);
-			ps.setString(4, branch);
+			ps.setLong(1, paid_amt);
+			ps.setLong(2, remain_fees);
+			ps.setInt(3, status);
+			ps.setString(4, rollno);
+			ps.setString(5, due_date);
+			ps.setString(6, branch);
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -342,6 +356,37 @@ public class ReceiptDetailsDAO {
 
 	}
 	
+	private ArrayList<Long> getInstallmentRemainFees(String rollno, String due_date, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<Long> installment_amt=new ArrayList<>();
+		long remain_amt=0;
+		long paid_amount=0;
+		try{
+			con = Util.getDBConnection();
+			String query = "select remain_fees,paid_amount from installment where RollNO=? and due_date=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, rollno);
+			ps.setString(2, due_date);
+			ps.setString(3, branch);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				remain_amt=rs.getLong(1);
+				paid_amount=rs.getLong(2);
+			}
+			installment_amt.add(remain_amt);
+			installment_amt.add(paid_amount);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return installment_amt;
+	}
+
 	public ArrayList<ReceiptDetails> getStudReceiptList(long rno){
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -419,5 +464,92 @@ public class ReceiptDetailsDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return receiptReportData ;
+	}
+
+	public ArrayList<Admission> InstallmentDueReport(Installment installment, Admission admission,
+			ArrayList<Admission> installReportData) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Installment installmentData=null;
+		ArrayList<String> due_date=new ArrayList<>();
+		ArrayList<String> title=new ArrayList<>();
+		ArrayList<Integer> due_amt=new ArrayList<>();
+		try{
+			con = Util.getDBConnection();
+			String query;
+			if(installment.getStud_name().isEmpty()){
+				query= "SELECT * FROM `installment` WHERE due_date BETWEEN ? AND ? AND rollno IN (SELECT Rollno from admission WHERE acad_year=? AND adm_fees_pack=? AND standard=? AND division=? AND branch=?) AND paid_status='0'";
+			}else{
+				query= "SELECT * FROM `installment` WHERE due_date BETWEEN ? AND ? AND stud_name='"+installment.getStud_name()+"' AND rollno IN (SELECT Rollno from admission WHERE acad_year=? AND adm_fees_pack=? AND standard=? AND division=? AND branch=?) AND paid_status='0'";
+			}
+			ps = con.prepareStatement(query);
+			ps.setString(1, installment.getFrom_date());
+			ps.setString(2, installment.getTo_date());
+			ps.setString(3, admission.getAcad_year());
+			ps.setString(4, admission.getAdm_fees_pack());
+			ps.setString(5, admission.getStandard());
+			ps.setString(6, admission.getBranch());
+			ps.setString(7, admission.getBranch());
+			rs = ps.executeQuery();
+			while(rs.next()){
+				installmentData=new Installment();
+				installmentData.setRollno(rs.getString(2));
+				installmentData.setStud_name(rs.getString(3));
+				installmentData.setTotal_fees(rs.getInt(4));
+				due_amt.add(rs.getInt(5));
+				due_date.add(rs.getString(6));
+				title.add(rs.getString(7));
+				installmentData.setBranch(rs.getString(8));
+			}
+			installmentData.setDue_date(due_date);
+			installmentData.setFees_title(title);
+			installmentData.setMonthly_pay(due_amt);
+			Admission admissionData=new Admission();
+			admissionData=getAdmissionRelatedData(installmentData,admission);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return null ;
+
+	}
+
+	private Admission getAdmissionRelatedData(Installment installmentData, Admission admission) {
+
+	/*	Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Admission AdmissionData=null;
+		try{
+			con = Util.getDBConnection();
+			String query = "select invoice_no,adm_fees_package,paid_fees from admission where Rollno=? and student_name=? and acad_year=? and standard=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1,installmentData.getRollno());
+			ps.setString(2,installmentData.getStud_name());
+			ps.setString(3,admission.getAcad_year());
+			ps.setString(4,admission.getStandard());
+			ps.setString(5,installmentData.getBranch());
+			rs = ps.executeQuery();
+			while(rs.next()){
+				AdmissionData = new Admission();
+				AdmissionData.setInvoice_no(rs.getString(1));
+				AdmissionData.setAdm_fees_pack(rs.getString(2));
+				AdmissionData.setPaid_fees(rs.getLong(3));
+				details.setPay_mode(rs.getString(4));
+				details.setTotal_amt(rs.getLong(5));
+				receiptList.add(details);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+*/		return null;
 	}
 }

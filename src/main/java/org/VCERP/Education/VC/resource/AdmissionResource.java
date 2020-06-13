@@ -95,7 +95,7 @@ public class AdmissionResource {
 			admission.setFees(Integer.parseInt(symbolSeperated[1]));
 
 			String[] commaSeperatedInstallment = Util.commaSeperatedString(installment);
-			if (commaSeperatedInstallment.length > 2) {
+			if (commaSeperatedInstallment.length > 1) {
 				saveInstallment(commaSeperatedInstallment, branch);
 			}
 			controller = new AdmissionController();
@@ -140,7 +140,7 @@ public class AdmissionResource {
 		ArrayList<String> installDate = new ArrayList<>();
 		ArrayList<String> fees_title = new ArrayList<>();
 		ArrayList<Integer> amt = new ArrayList<>();
-		for (int i = 2; i < commaSeperated.length; i++) {
+		for (int i = 1; i < commaSeperated.length; i++) {
 			String a = commaSeperated[i];
 			String[] symbolSeperated = Util.symbolSeperatedString(a);
 			installDate.add(symbolSeperated[0]);

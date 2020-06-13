@@ -63,6 +63,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		StudentReceipt();
 	});
+	$("#received_amt").focusout(function() {
+		var table = document.getElementById("InstallmentTable");
+		var received_mat=$("#received_amt").val();
+		$(table.rows.item(1).cells[7]).find('input').val(received_mat);
+	});
+
 	
 });
 
@@ -77,11 +83,12 @@ function SearchStudent(id){
 			document.getElementById('stud_details').value=stud_details;
 		var installment=responseData.installment;
 		var monthly_pay=installment.monthly_pay;
+		var remain_fees=installment.remain_fees;
 		if(monthly_pay!=""){
 			var table = document.getElementById("InstallmentTable");
 			var srno=0;
 			var j=monthly_pay.length;
-			for(var i=1;i<=j+1;i++)
+			for(var i=1;i<=j;i++)
 				{
 				var row = table.insertRow(i);
 				 var cell1 = row.insertCell(0);
@@ -91,21 +98,24 @@ function SearchStudent(id){
 			        var cell2 = row.insertCell(1);
 			        cell2.innerHTML = responseData.invoice_no;
 			        
-			        var cell2 = row.insertCell(2);
-			        cell2.innerHTML = installment.fees_title[j-1];
+			        var cell3 = row.insertCell(2);
+			        cell3.innerHTML = installment.fees_title[i-1];
 			        
-			        var cell2 = row.insertCell(3);
-			        cell2.innerHTML = responseData.fees;
+			        var cell4 = row.insertCell(3);
+			        cell4.innerHTML = responseData.fees;
 			        
-			        var cell2 = row.insertCell(4);
-			        cell2.innerHTML = installment.due_date[j-1];
+			        var cell5 = row.insertCell(4);
+			        cell5.innerHTML = installment.due_date[i-1];
 			        
-			        var cell2 = row.insertCell(5);
-			        cell2.innerHTML = monthly_pay[i-1];
+			        var cell6 = row.insertCell(5);
+			        cell6.innerHTML = monthly_pay[i-1];
 			        
-			        var cell3 = row.insertCell(6);
-			        cell3.innerHTML = '<input type="text" id="Amount" name="Amount" class="form-control text" value="0"></td>';
-			        j=j-1;
+			        var cell7 = row.insertCell(6);
+			        cell7.innerHTML = remain_fees[i-1];
+			        
+			        var cell8 = row.insertCell(7);
+			        cell8.innerHTML = '<input type="text" id="Amount" name="Amount" class="form-control text" value="0"></td>';
+			       // j=j-1;
 				}
 			document.getElementById("InstallmentTable").style.display = "block";
 		}
@@ -156,14 +166,18 @@ function receiptNumber(){
 function StudentReceipt(){
 	var table = document.getElementById("InstallmentTable");
 	var rowCount = table.rows.length;
-	var due_date;
-	for(var i=1;i<rowCount;i++){
-	var value=$(table.rows.item(i).cells[6]).find('input').val();
-	if(value!="0")
-		{
-		due_date=table.rows[i].cells[4].innerHTML;
-		}
-	}
+//	var value=$(table.rows.item(1).cells[6]).find('input').val();
+	var due_amt=table.rows.item(1).cells[5].innerHTML;
+	var due_date=table.rows[1].cells[4].innerHTML;
+	alert(due_amt)
+//	var
+//	for(var i=1;i<rowCount;i++){
+	
+	/*if(value!="0")
+		{*/
+		
+	//	}
+//	}
 	function callback(responseData,textStatus,request)
 	{
 		var mes=responseData.responseJSON.message;
@@ -177,11 +191,11 @@ function StudentReceipt(){
 	}
 	var httpMethod = "POST";
 	var formData;
-	if(due_date!=undefined){
-		formData=$("#receipt-form").serialize()+"&due_date="+due_date+"&branch="+branchSession;
-	}else{
-		formData=$("#receipt-form").serialize()+"&branch="+branchSession;
-	}
+	//if(due_date!=undefined){
+		formData=$("#receipt-form").serialize()+"&due_amt="+due_amt+"&due_date="+due_date+"&branch="+branchSession;
+//	}else{
+//		formData=$("#receipt-form").serialize()+"&branch="+branchSession;
+//	}
 	console.log(formData);
 	var relativeUrl = "/Receipt/ReceiptDetails";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
