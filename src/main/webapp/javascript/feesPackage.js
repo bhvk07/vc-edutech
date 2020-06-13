@@ -5,6 +5,73 @@ var std = "";
 $(document)
 		.ready(
 				function() {
+					jQuery.validator.addMethod("lettersonly", function(value, element) {
+						return this.optional(element) || /^[a-z\s]+$/i.test(value);
+						}, "Only alphabetical characters");
+					 jQuery.validator.addMethod("noSpace", function(value, element) { 
+						  return value.indexOf(" ") < 0 && value != ""; 
+						}, "No space please and don't leave it empty");
+					$('form[id="feespackage-form"]').validate({
+						  rules: {
+							fees_pack: {
+						    	required:true
+						    
+						    },
+						    searchforstand1: {
+						      required: true
+						    },
+						    searchforstand2: {
+							      required: true
+							    },
+							feestype: {
+						        required: true
+						    },
+						    amount: {
+						        required: true,
+						        number: true,
+						        noSpace: true
+							},
+							discount: {
+						        required: true,
+						        number: true,
+						        noSpace: true
+							},
+							tax: {
+								required: true,
+								noSpace: true
+							},
+							
+						  },
+						
+						  submitHandler:function(form){
+							  event.preventDefault();
+							  addNewFeesPackage();
+						  }
+					});
+					//feestype validation
+					jQuery.validator.addMethod("letterswithspace", function(value, element) {
+					    return this.optional(element) || /^[a-z\s]+$/i.test(value);
+					}, "Please enter letters only");
+					
+					
+					$('form[id="feestypeform"]').validate({
+						
+						
+						  rules: {
+						    
+							  feesType: {
+						        required: true,
+						        letterswithspace: true
+						   },
+							
+						  },
+						 
+						  submitHandler:function(form){
+							  event.preventDefault();
+							  addFeesType();
+							  
+						  }
+					});
 					getFeesPackage();
 					// loadFeesType();
 					loadBranchSpecificStandard();

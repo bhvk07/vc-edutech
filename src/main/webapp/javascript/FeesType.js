@@ -18,15 +18,8 @@ $(document).ready(function() {
 		   },
 			
 		  },
-		 messages: {
-			 division: {
-				required:'Division is required',	
-				letterswithspace:'Please enter letters only'
-			},
-			
-			
 		
-		  },
+			
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  

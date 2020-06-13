@@ -143,6 +143,61 @@ $(document).ready(function() {
 			  AddEmployee();
 		  }
 	});
+	//feespackage validation
+	$('form[id="feespackage"]').validate({
+		  rules: {
+			  fees_pack: {
+		    	required:true
+		    },
+		    searchforstand1: {
+		      required: true
+		    },
+		    searchforstand2: {
+			      required: true
+			    },
+			    feestype: {
+		        required: true
+		    },
+		    amount: {
+		        required: true,
+		        number: true,
+		        noSpace: true
+			},
+			discount: {
+		        required: true,
+		        number: true,
+		        noSpace: true
+			},
+			tax: {
+				required: true,
+				noSpace: true
+			},
+		  },
+		
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  
+		  }
+	});
+	//feestype validation
+	$('form[id="feestype-form"]').validate({
+		
+		
+		  rules: {
+		    
+			  feesTypeModal: {
+		        required: true,
+		        letterswithspace: true
+		   },
+			
+		  },
+		 
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  addFeesType();
+			  
+		  }
+	});
 	FetchAllEmployee();
 	if(editData!=null){
 		loadEditData(editData);
