@@ -48,19 +48,30 @@ $(document).ready(function() {
 		"pageLength" : 40
 	});
 
+	   var table= $('#attendance_report_table').DataTable( {
+	    	dom: 'Bfrtip',
+		    buttons: [
+		    	{extend: 'pdf', className: 'btn btn-info glyphicon glyphicon-file pdf-b'},
+		    	{extend: 'print', className: 'btn btn-warning glyphicon glyphicon-print'},
+		    	{extend: 'excel', className: 'btn btn-info glyphicon glyphicon-file pdf-b'},
+		    	{extend: 'csv', className: 'btn btn-warning glyphicon glyphicon-print'},
+		    ],
+		    "order": [],
+		    "columnDefs": [ {
+		    "targets"  : 'no-sort',
+		    "orderable": false,
+		    }],
+		   
+	    } );
+	 table.buttons().container()
+     .appendTo( '#table-style .col-sm-6:eq(1)' );
+	
 	var checkbox = $('table tbody input[type="checkbox"]');
 	checkbox.click(function() {
 		if (!this.checked) {
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	/*var select=document.getElementById("acad_year");
-	select.addEventListener('change', function() {
-		std=document.getElementById("standard").value;
-		acad_year=document.getElementById("acad_year").value;
-		acad_year=document.getElementById("division").value;
-		attendanceList(std,acad_year)
-	});*/
 	$("#attendance").submit(function(e) {
 		e.preventDefault();
 		std=document.getElementById("standard").value;
