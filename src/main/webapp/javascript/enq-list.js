@@ -24,8 +24,6 @@ $(document).ready(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked == true) {
 				enq_no = table.rows({selected : true}).column(2).data()[i];
-				alert(enq_no);
-				
 			}
 		});
 		Admission(enq_no, request);
@@ -117,7 +115,6 @@ function Admission(id, req) {
 			sessionStorage.setItem("EditData", enqData);
 			window.location.href = "enquiry.html";
 		} else {
-			alert("here1");
 			var feespack = responseData.fees_pack;
 			var fees=feespack.split("|");
 			var installment = "installment details";
@@ -134,8 +131,10 @@ function Admission(id, req) {
 			}
 			var newAmt = disc+"|"+fees[1];
 			var enq_taken = localStorage.getItem("user");
-			var date = today.getFullYear() + "-" + today.getMonth() + "-"
-					+ today.getDate();
+			var date= new Date(today.getTime() - (today.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
+			alert(date);
+			/*var date = today.getFullYear() + "-" + today.getMonth() + "-"
+					+ today.getDate();*/
 			var status = "active";
 			var division="null";
 			var acad_data = getIncrementalData();
@@ -207,10 +206,12 @@ function StudentAdmission(studentDetails, enq_taken, feespack, division ,status,
 		id_no, reg_no, invoice_no, date, acad_year, date, enqData, feespackdetails, installment,
 		newAmt, branchSession) {
 	function callback(responseData, textStatus, request) {
-		alert("done");
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("admission not done");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	formData = "stud_details=" + studentDetails + "&enq_taken_by=" + enq_taken
 			+ "&adm_fees_pack=" + feespack +"&division=" + division + "&status=" + status + "&date="

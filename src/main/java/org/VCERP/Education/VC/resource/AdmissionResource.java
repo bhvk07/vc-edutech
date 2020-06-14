@@ -32,10 +32,11 @@ import org.VCERP.Education.VC.utility.Util;
 
 @Path("Admission")
 public class AdmissionResource {
-	Admission admission = new Admission();
+	
 
 	@PermitAll
 	@POST
+	@JWTTokenNeeded
 	@Path("/StudentAdmission")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response StudentAdmission(@FormParam("stud_details") String student_name,
@@ -49,7 +50,8 @@ public class AdmissionResource {
 			@FormParam("branch") String branch) {
 		String[] name = Util.symbolSeperatedString(student_name);
 		String[] f_pack = Util.symbolSeperatedString(adm_fees_pack);
-		String[] personal = Util.commaSeperatedString(personalDetails);
+		String[] personal = Util.colanSeperatedString(personalDetails);
+		Admission admission = null;
 		EnquiryController eqcontroller = null;
 		AdmissionController controller = null;
 		AcademicYearController acadcontroller = null;
@@ -69,7 +71,6 @@ public class AdmissionResource {
 			admission.setLanguage(personal[8]);
 			admission.setContact(personal[16]);
 			admission.setFather_cont(personal[9]);
-			System.out.println(personal[10] + " " + personal[11]);
 			admission.setMother_cont(personal[10]);
 			admission.setAddress(personal[11]);
 			admission.setPin(personal[12]);
@@ -97,7 +98,7 @@ public class AdmissionResource {
 
 			String[] commaSeperatedInstallment = Util.commaSeperatedString(installment);
 			if (commaSeperatedInstallment.length > 1) {
-				saveInstallment(commaSeperatedInstallment, branch);
+				saveInstallment(commaSeperatedInstallment, branch,admission);
 			}
 			controller = new AdmissionController();
 			controller.StudentAdmission(admission);
@@ -109,27 +110,17 @@ public class AdmissionResource {
 			acadcontroller.updateAcademicDetails(Rollno, invoice_no, regno, acad_year, branch);
 
 			eqcontroller = new EnquiryController();
-			System.out.println(Long.parseLong(name[0]));
 			eqcontroller.Admission(Long.parseLong(name[0]));
 
+			Util.generateErrorResponse(Status.ACCEPTED, "Student Successfully Admitted").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to completed the process.Please try again or contact with Administrator").build();
 	}
 
-	/*
-	 * public int getPaidFees(String Installment){ String[]
-	 * commaSeperated=Util.commaSeperatedString(Installment); String
-	 * a=commaSeperated[1]; String[]
-	 * symbolSeperated=Util.symbolSeperatedString(a); int
-	 * paidAmt=Integer.parseInt(symbolSeperated[2]);
-	 * if(commaSeperated.length>2){ saveInstallment(commaSeperated); } return
-	 * paidAmt; }
-	 */
-
-	public String getStandard(String fees_pack, String branch) {
+	private String getStandard(String fees_pack, String branch) {
 		System.out.println(fees_pack + "  " + branch);
 		FeesPackage pack = new FeesPackage();
 		FeesPackageController controller = new FeesPackageController();
@@ -137,7 +128,7 @@ public class AdmissionResource {
 		return pack.getStandard();
 	}
 
-	public Response saveInstallment(String[] commaSeperated, String branch) {
+	private void saveInstallment(String[] commaSeperated, String branch,Admission admission) {
 		ArrayList<String> installDate = new ArrayList<>();
 		ArrayList<String> fees_title = new ArrayList<>();
 		ArrayList<Integer> amt = new ArrayList<>();
@@ -163,12 +154,11 @@ public class AdmissionResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not Save").build();
 	}
 
 	@Path("/SearchStudent")
 	@GET
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchStudent(@QueryParam("id") String enq_stud, @QueryParam("branch") String branch) {
@@ -192,6 +182,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
+	@JWTTokenNeeded
 	@Path("/FetchAllAdmittedStudent")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response fetchAllAdmittedStudent(@QueryParam("branch") String branch) {
@@ -270,11 +261,11 @@ public class AdmissionResource {
 			pack = controller.getFeesPackage(symbolSeperatedFees[0], branch);
 			String feesdetails = pack.getFees_details();
 			enq = dao.searchStudentFromAdmission(commaSeperatedId[i], branch);
-			String personalDetails = enq.getFname() + "," + enq.getLname() + "," + enq.getMname() + "," + enq.getUid()
-					+ "," + enq.getDob() + "," + enq.getGender() + "," + enq.getCaste() + "," + enq.getCategory() + ","
-					+ enq.getLanguage() + "," + enq.getFather_cont() + "," + enq.getMother_cont() + ","
-					+ enq.getAddress() + "," + enq.getPin() + "," + enq.getEmail() + "," + enq.getW_app_no() + ","
-					+ enq.getStudent_name() + "," + enq.getContact();
+			String personalDetails = enq.getFname() + ":" + enq.getLname() + ":" + enq.getMname() + ":" + enq.getUid()
+					+ ":" + enq.getDob() + ":" + enq.getGender() + ":" + enq.getCaste() + ":" + enq.getCategory() + ":"
+					+ enq.getLanguage() + ":" + enq.getFather_cont() + ":" + enq.getMother_cont() + ":"
+					+ enq.getAddress() + ":" + enq.getPin() + ":" + enq.getEmail() + ":" + enq.getW_app_no() + ":"
+					+ enq.getStudent_name() + ":" + enq.getContact();
 			String stud_details = enq.getId() + "|" + enq.getStudent_name() + " " + enq.getFname() + " "
 					+ enq.getLname() + "|" + enq.getContact() + "|" + enq.getStatus();
 			year = yearController.getCurrentAcademicYear(branch);
@@ -282,7 +273,7 @@ public class AdmissionResource {
 			String regno = year.getReg_prefix() + "-" + year.getRegistration();
 			String invoice = year.getInvoice_prefix() + "-" + year.getInvoice();
 			yearController.updateAcademicDetails(studId, invoice, regno, acad_year, branch);
-			String installment = "installment details,0|ActivityFees|0";
+			String installment = "installment details";
 			int disc = 0;
 			String[] commaSeperatedFeesDetails = Util.commaSeperatedString(feesdetails);
 			for (int j = 0; j < commaSeperatedFeesDetails.length; j++) {

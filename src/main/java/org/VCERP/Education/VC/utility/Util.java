@@ -103,6 +103,11 @@ public class Util {
 		String seperated[] = str.split("[,]");//.replaceAll("\\s+", "")
 		return seperated;
 	}
+	public static String[] colanSeperatedString(String str)
+	{
+		String seperated[] = str.split("[:]");//.replaceAll("\\s+", "")
+		return seperated;
+	}
 	public static String[] hyphenSeperatedString(String str)
 	{
 		String seperated[] = str.split("[-]");//.replaceAll("\\s+", "")
