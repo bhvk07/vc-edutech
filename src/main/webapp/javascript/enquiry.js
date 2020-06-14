@@ -185,8 +185,6 @@ $(document).ready(function() {
 	});
 	//feestype validation
 	$('form[id="feestype-form"]').validate({
-		
-		
 		  rules: {
 		    
 			  feesTypeModal: {
@@ -199,23 +197,17 @@ $(document).ready(function() {
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  addFeesType();
-			  
 		  }
 	});
 	if(editData!=null){
 		loadEditData(editData);
 		request="Edit"
-		document.getElementById("cancel").style.display = "block";
 	}
-	$("#cancel").click(function() {
+	$("#cancel_submission").click(function() {
 		event.preventDefault();
 		sessionStorage.removeItem("EditData");
+		window.location.href = "enq-list.html";
 	});
-	/*$("#Add_employee").click(function() {
-		event.preventDefault();
-		AddEmployee();
-	});*/
-	
 	$("#feestype-form").submit(function() {
 		event.preventDefault();
 		addFeesType();
@@ -294,7 +286,6 @@ function AddEmployee() {
 		showNotification("error",mes);
 	}
 	var formData = $("#add_employee").serialize();
-	console.log(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/Employee/NewEmployee";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
@@ -304,8 +295,7 @@ function AddEmployee() {
 
 
 function loadEditData(Data){
-	var data=Data.split(",");
-	alert(Data);
+	var data=Data.split(":");
 	document.getElementById("sname").value=data[15];
 	document.getElementById("lname").value=data[1];
 	document.getElementById("fname").value=data[0];

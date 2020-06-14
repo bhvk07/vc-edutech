@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.FeesPackageController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.FeesPackage;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -115,6 +116,7 @@ public class FeesPackageResource {
 	@Path("/getFeesPackageData")
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response getSpecificFeesPackageData(@FormParam("pack") String pack,@FormParam("branch") String branch)
 	{
@@ -128,7 +130,7 @@ public class FeesPackageResource {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to get Fees Package Data").build();
 	}
 	@Path("/EditFeesPackage")
 	@PermitAll

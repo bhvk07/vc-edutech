@@ -1,19 +1,21 @@
 var mes;
 var request;
+var table;
 $(document).ready(function() {
-	var selected = new Array();
-	var table = $("#enq_table").DataTable();
-	/*
-	 * var token=$.session.get('token'); validateLogin(token);
-	 */
+	validateLogin();
+	table = $("#enq_table").DataTable();
+	showDashboard();
+	var selected = new Array();	
 	$('#enq_table').DataTable({
 		"pageLength" : 40
 	});
+	
 	$('#btn-danger').click(function() {
+		var selected=new Array();
 		$("input:checkbox[name=type]:checked").each(function() {
-			deletemultiplerow($(this).val());
-			// selected.push($(this).val());
+			selected.push($(this).val());
 		});
+		deletemultiplerow(selected);
 
 	});
 	$("#admission").click(function() {
@@ -38,11 +40,11 @@ $(document).ready(function() {
 		});
 		Admission(enq_no, request);
 	});
-	showDashboard();
+	
 });
 function showDashboard() {
 	function callback(responseData, textStatus, request) {
-		var table = $("#enq_table").DataTable();
+		//var table = $("#enq_table").DataTable();
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
@@ -51,14 +53,13 @@ function showDashboard() {
 					+ '"><label for="checkbox1"></label></span>';
 			var enq_date = responseData[i].enq_date;
 			var enq_no = responseData[i].enq_no;
-			var sname = responseData[i].sname;
+			var sname = responseData[i].sname+" "+responseData[i].fname+" "+responseData[i].lname;
 			var stud_cont = responseData[i].stud_cont;
 			var address = responseData[i].address;
 			var enq_taken_by = responseData[i].enq_taken_by;
 			var lead_stage = "";
 			var lead_source = responseData[i].lead_source;
 			var status = responseData[i].status;
-			//var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 			table.row.add(
 					[ srno, enq_date, enq_no, sname, stud_cont, address,
 							enq_taken_by, lead_stage, lead_source, status
@@ -82,81 +83,36 @@ function showDashboard() {
 	return false;
 }
 
-function deleterow() {
-
-	var id = $('.cbCheck:checked').val();
-	function callback(responseData, textStatus, request) {
-		alert("data deleted");
-	}
-
-	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
-		var mes = responseData.responseJSON.message;
-		showNotification("error", mes);
-	}
-	var httpMethod = "DELETE";
-	var relativeUrl = "/Enquiry/DeleteEnquiryData?delete=" + id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}
-
 function deletemultiplerow(id) {
 	function callback(responseData, textStatus, request) {
-		alert("data deleted");
+		var message=responseData.responseJSON.message;
+		showNotification("success",message);
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
 	var httpMethod = "DELETE";
-	var relativeUrl = "/Enquiry/DeleteMultipleEnquiryData?delete=" + id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
+	var relativeUrl = "/Enquiry/DeleteMultipleEnquiryData?delete=" + id+"&branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	errorCallback);
 	return false;
 }
 
 function Admission(id, req) {
 	function callback(responseData, textStatus, request) {
-		var enqData = new Array();
+		var enqData;
 		var today = new Date();
 		var studentDetails = id + "|" + responseData.sname + " "
 				+ responseData.fname + " " + responseData.lname + "|"
 				+ responseData.stud_cont;
 
-		enqData.push(responseData.fname);
-		enqData.push(responseData.lname);
-		enqData.push(responseData.mname);
-		enqData.push(responseData.uid);
-		enqData.push(responseData.dob);
-		enqData.push(responseData.gender);
-		enqData.push(responseData.caste);
-		enqData.push(responseData.category);
-		enqData.push(responseData.lang);
-		/* enqData.push(responseData.stud_cont); */
-		enqData.push(responseData.father_cont);
-		enqData.push(responseData.mother_cont);
-		enqData.push(responseData.address);
-		enqData.push(responseData.pin);
-		enqData.push(responseData.email);
-		enqData.push(responseData.w_app_no);
-		enqData.push(responseData.sname);
-		enqData.push(responseData.stud_cont);
-		enqData.push(responseData.enq_date);
-		enqData.push(responseData.enq_no);
-		enqData.push(responseData.enq_taken_by);
-		enqData.push(responseData.lead_source);
-		enqData.push(responseData.remark);
-		enqData.push(responseData.fees_pack);
-		enqData.push(responseData.branch);
+		enqData=responseData.fname+":"+responseData.lname+":"+responseData.mname+":"+responseData.uid+":"+responseData.dob+":"+
+		responseData.gender+":"+responseData.caste+":"+responseData.category+":"+responseData.lang+":"+responseData.father_cont+":"+
+		responseData.mother_cont+":"+responseData.address+":"+responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+
+		responseData.sname+":"+responseData.stud_cont+":"+responseData.enq_date+":"+responseData.enq_no+":"+
+		responseData.enq_taken_by+":"+responseData.lead_source+":"+responseData.remark+":"+responseData.fees_pack+":"+responseData.branch;
 		if (req == "Edit") {
 			sessionStorage.setItem("EditData", enqData);
 			window.location.href = "enquiry.html";
@@ -164,7 +120,7 @@ function Admission(id, req) {
 			alert("here1");
 			var feespack = responseData.fees_pack;
 			var fees=feespack.split("|");
-			var installment = "installment details,0|ActivityFees|0";
+			var installment = "installment details";
 			var feespackname=feespack.split("|");
 			var feespackdetails=feespackagedetails(feespackname[0]);
 			//feespackdetails=feespackdetails.split(",");
@@ -193,7 +149,8 @@ function Admission(id, req) {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("admission not done");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/SearchStudent?id=" + id + "&branch="
@@ -209,10 +166,8 @@ function feespackagedetails(pack){
 		packdetails=responseData.fees_details;
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -237,12 +192,13 @@ function getIncrementalData() {
 		acad_data.push(responseData.registration);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("admission not done");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/getAutoIncrementedDetails?branch="
 			+ branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return acad_data;
 }

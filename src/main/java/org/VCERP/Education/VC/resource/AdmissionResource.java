@@ -21,6 +21,7 @@ import org.VCERP.Education.VC.controller.AttendanceController;
 import org.VCERP.Education.VC.controller.EnquiryController;
 import org.VCERP.Education.VC.controller.FeesPackageController;
 import org.VCERP.Education.VC.dao.AdmissionDAO;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.AcademicYear;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
@@ -173,16 +174,20 @@ public class AdmissionResource {
 	public Response searchStudent(@QueryParam("id") String enq_stud, @QueryParam("branch") String branch) {
 		Enquiry enquiry = new Enquiry();
 		AdmissionController controller = new AdmissionController();
-		enquiry = controller.searchStudent(enq_stud, branch);
 		FeesPackage pack = new FeesPackage();
 		FeesPackageController feescontroller = new FeesPackageController();
+		try{
+		enquiry = controller.searchStudent(enq_stud, branch);
 		String[] packname = Util.symbolSeperatedString(enquiry.getFees_pack());
 		pack = feescontroller.getFeesPackage(packname[0], branch);
 		enquiry.setFeesPack(pack);
 		if (enquiry != null) {
 			return Response.status(Status.ACCEPTED).entity(enquiry).build();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Unable to get student data.").build();
 	}
 
 	@PermitAll
@@ -206,6 +211,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
+	@JWTTokenNeeded
 	@Path("/getAutoIncrementedDetails")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAutoIncrementedDetails(@QueryParam("branch") String branch) {
@@ -219,7 +225,7 @@ public class AdmissionResource {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Unable to get academic year details.").build();
 	}
 
 	@Path("/getPromotionData")

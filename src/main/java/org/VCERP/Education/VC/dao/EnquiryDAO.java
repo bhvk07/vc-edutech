@@ -122,14 +122,15 @@ public class EnquiryDAO {
 		}
 	}
 
-	public void DeleteMultipleEnquiryData(Long id) {
+	public void DeleteMultipleEnquiryData(Long id, String branch) {
 		Connection con=null;
 		PreparedStatement st=null;
 		try {
 			con=Util.getDBConnection();
-			String query="delete from enquiry where id=?";
+			String query="delete from enquiry where id=? and branch=?";
 			st=con.prepareStatement(query);
 			st.setLong(1, id);
+			st.setString(2, branch);
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

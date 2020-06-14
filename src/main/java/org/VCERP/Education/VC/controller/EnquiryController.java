@@ -22,9 +22,9 @@ public class EnquiryController {
 		  dao.DeleteEnquiryData(id);
 	}
 
-	public void DeleteMultipleEnquiryData(Long id) {
+	public void DeleteMultipleEnquiryData(Long id, String branch) {
 		EnquiryDAO dao=new EnquiryDAO();
-		dao.DeleteMultipleEnquiryData(id);
+		dao.DeleteMultipleEnquiryData(id,branch);
 	}
 
 	public void Admission(long id) {

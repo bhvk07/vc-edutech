@@ -54,11 +54,11 @@ public class EnquiryResource {
 		EnquiryController controller=new EnquiryController();
 		try {
 			controller.EditEnquiryData(enquiry);
-			return Util.generateResponse(Status.ACCEPTED,"Student Enquiry Data Successfully Submited.").build();
+			return Util.generateResponse(Status.ACCEPTED,"Student Enquiry Data Successfully Updated.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Data not submited.please try again or contact with administrator.").build();
+		return Util.generateErrorResponse(Status.NOT_ACCEPTABLE,"Unable to update data.please try again or contact with administrator.").build();
 	}
 	
 	@GET
@@ -84,15 +84,18 @@ public class EnquiryResource {
 	@Path("/DeleteMultipleEnquiryData")
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response DeleteMultipleEnquiryData(@QueryParam("delete") Long id){
+	public Response DeleteMultipleEnquiryData(@QueryParam("delete") String ids,@QueryParam("branch") String branch){
+		EnquiryController controller=new EnquiryController();
 		try {
-			EnquiryController controller=new EnquiryController();
-			controller.DeleteMultipleEnquiryData(id);
-			return Util.generateResponse(Status.OK,"Data Deleted").build();
+			String[] commaSeperatedId=Util.commaSeperatedString(ids);
+			for(int i=0;i<commaSeperatedId.length;i++){
+			controller.DeleteMultipleEnquiryData(Long.parseLong(commaSeperatedId[i]),branch);
+			}
+			return Util.generateResponse(Status.ACCEPTED,"Data Successfully Deleted. ").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to delete data.please try again or contact with administrator.").build();
 	}
 	
 	@PUT
