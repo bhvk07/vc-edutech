@@ -73,7 +73,7 @@ public class ReceiptDetailsDAO {
 		Installment install=new Installment();
 		try {
 			con=Util.getDBConnection();
-			String query="select Rollno,student_name,contact,fees,invoice_no from "
+			String query="select Rollno,student_name,fname,lname,contact,fees,invoice_no,remain_fees from "
 					+ "admission where Rollno=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setString(1, enq_stud);
@@ -84,13 +84,18 @@ public class ReceiptDetailsDAO {
 				admission=new Admission();
 				admission.setRollno(rs.getString(1));
 				admission.setStudent_name(rs.getString(2));
-				admission.setContact(rs.getString(3));
-				admission.setFees(rs.getLong(4));
-				admission.setInvoice_no(rs.getString(5));
+				admission.setFname(rs.getString(3));
+				admission.setLname(rs.getString(4));
+				admission.setContact(rs.getString(5));
+				admission.setFees(rs.getLong(6));
+				admission.setInvoice_no(rs.getString(7));
+				admission.setRemain_fees(rs.getLong(8));
 			}
+			if(admission!=null){
 			install=getInstallmentDetails(enq_stud, branch);
 			if(install!=null){
-			admission.setInstallment(install);
+				admission.setInstallment(install);
+				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -267,9 +272,15 @@ public class ReceiptDetailsDAO {
 				receipt.setTotal_amt(rs.getLong(11));
 				receipt.setReceived_amt(rs.getLong(12));
 				receipt.setAmount(rs.getLong(13));
-				
-				ad=getAdmissionData(rollno);
+				receipt.setBranch(rs.getString(14));
+			}
+			if(receipt!=null)
+			{
+				ad=getAdmissionData(rollno,receipt.getBranch());
+				if(ad!=null)
+				{	
 				receipt.setAdmission(ad);
+				}
 				receiptData.add(receipt);
 			}
 		}catch (Exception e) {
@@ -282,16 +293,17 @@ public class ReceiptDetailsDAO {
 		return receiptData;
 	}	
 	
-	private Admission getAdmissionData(long rollno) {
+	private Admission getAdmissionData(long rollno,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Admission ad=null;
 		try {
 			con=Util.getDBConnection();
-			String query="select * from admission where RollNo=?";
+			String query="select * from admission where RollNo=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setLong(1, rollno);
+			ps.setString(2, branch);
 			rs=ps.executeQuery();
 			while(rs.next())
 			{	
@@ -558,5 +570,29 @@ public class ReceiptDetailsDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return AdmissionData;
+	}
+
+	public String ReceiptIncrementedNumber() {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String receipt_no="";
+		try{
+			con = Util.getDBConnection();
+			String query = "select id from receipt_details";
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				receipt_no=rs.getString(1);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return receipt_no;
+
 	}
 }

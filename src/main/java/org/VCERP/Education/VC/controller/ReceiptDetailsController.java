@@ -68,4 +68,9 @@ public class ReceiptDetailsController {
 		return dao.InstallmentDueReport(installment,admission,installReportData);
 	}
 
+	public String ReceiptIncrementedNumber() {
+		ReceiptDetailsDAO dao=new ReceiptDetailsDAO();
+		return dao.ReceiptIncrementedNumber();
+	}
+
 }

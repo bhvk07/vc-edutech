@@ -141,10 +141,11 @@ public class AdmissionResource {
 		}
 		AdmissionController controller = null;
 		Installment installment = null;
+		String stud_name=admission.getStudent_name()+" "+admission.getFname()+" "+admission.getMname();
 		try {
 			installment = new Installment();
 			installment.setRollno(admission.getRollno());
-			installment.setStud_name(admission.getStudent_name());
+			installment.setStud_name(stud_name);
 			installment.setTotal_fees(admission.getFees());
 			installment.setMonthly_pay(amt);
 			installment.setDue_date(installDate);

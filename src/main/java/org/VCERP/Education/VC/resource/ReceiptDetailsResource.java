@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.AdmissionController;
 import org.VCERP.Education.VC.controller.ReceiptDetailsController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.model.Installment;
@@ -27,6 +28,7 @@ public class ReceiptDetailsResource {
 	
 	@Path("/SearchStudent")
 	@GET
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchStudent(@QueryParam("id") String enq_stud,@QueryParam("branch") String branch){
@@ -44,26 +46,53 @@ public class ReceiptDetailsResource {
 	
 	@PermitAll
 	@GET
+	@JWTTokenNeeded
 	@Path("/FetchAllReceiptDetails")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response FetchAllReceiptDetails(@QueryParam("branch") String branch){
 		ArrayList<ReceiptDetails> receipt=null;
 		ReceiptDetailsController controller=null;
 		try {
-			System.out.println(branch);
 			receipt=new ArrayList<>();
 			controller=new ReceiptDetailsController();
 			receipt=controller.FetchAllReceiptDetails(branch);
+			if(receipt!=null){
 			return Response.status(Status.ACCEPTED).entity(receipt).build();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
+	@PermitAll
+	@GET
+	@JWTTokenNeeded
+	@Path("/ReceiptIncrementedNumber")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response ReceiptIncrementedNumber(){
+		String no="";
+		long receiptNo=1;
+		try {
+			ReceiptDetailsController controller=new ReceiptDetailsController();
+			no=controller.ReceiptIncrementedNumber();
+			if(no!=""){
+			receiptNo=Long.parseLong(no)+1;
+			return Response.status(Status.ACCEPTED).entity(receiptNo).build();
+			}
+			else{
+				return Response.status(Status.ACCEPTED).entity(receiptNo).build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Unable to get receipt no.").build();
+	}
 	
 	@PermitAll
 	@POST
+	@JWTTokenNeeded
 	@Path("/ReceiptDetails")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response ReceiptDetailsForm(@FormParam("stud_details") String stud_name,
@@ -114,12 +143,12 @@ public class ReceiptDetailsResource {
 			
 			controller.updateInstallment(stud_details[0],due_date,branch,received_amt,due_amt);
 			
-			return Util.generateResponse(Status.ACCEPTED, "Data Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "Receipt Details Successfully Inserted.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to insert data.Please try again or contact with administrator").build();
 	}
 	
 	@Path("/getReceiptAdmissionData")
@@ -138,29 +167,6 @@ public class ReceiptDetailsResource {
 				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 			}
 	}
-/*	@Path("/demo")
-	@POST
-	@PermitAll
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response demo(@FormParam("id") ArrayList<String> rollno){
-		for(int i=0;i<rollno.size();i++)
-		{
-			System.out.println(rollno.indexOf(i));
-		}
-		return null;
-		
-//		 ArrayList<ReceiptDetails> admission=new ArrayList<>();
-//			ReceiptDetailsController controller=new ReceiptDetailsController();
-//			admission=controller.getReceiptAdmissionData(rollno,receiptno);
-//			if(admission!=null)
-//			{
-//				return Response.status(Status.ACCEPTED).entity(admission).build();
-//			}
-//			else{
-//				return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
-//			}
-	}*/
-
 	@Path("/getStudReceiptList")
 	@GET
 	@PermitAll

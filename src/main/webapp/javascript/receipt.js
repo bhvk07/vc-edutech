@@ -1,7 +1,12 @@
 var mes;
 var today=new Date();
-var date=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var date= new Date(today.getTime() - (today.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
 $(document).ready(function(){
+	validateLogin();
+	getIncrementedReceiptNumber();
+	FetchAllEmployee();
+	document.getElementById('receipt_date').value=date;
+	document.getElementById('trans_date').value=date;
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
 		}, "Only alphabetical characters");
@@ -22,7 +27,6 @@ $(document).ready(function(){
 			},
 			stud_details:{
 				required: true,
-				noSpace: true
 			},
 			received_amt:{
 				required: true,
@@ -47,40 +51,46 @@ $(document).ready(function(){
 			  StudentReceipt();
 		  }
 	});
-	receiptNumber();
-	FetchAllEmployee();
-	
-	//document.getElementById('receipt_date').value=date;
+
 	$("#stud_id").focusout(function() {
 		var id=document.getElementById('stud_id').value;
 		event.preventDefault();
+		if(id!=""){
+		removeInstallmentTableRow();
 		SearchStudent(id);
+		}else{
+			
+		}
 	});
-/*	$("#stud_id").keydown(function() {
-		document.getElementById('stud_id').value="";
-	});*/
-	$("#receipt").click(function() {
+	$("#cancel").focusout(function() {
+		window.location.href = "receipt-list.html";
+		removeInstallmentTableRow();
+		document.getElementById("InstallmentTable").style.display = "none";
+		clearModal();
+	});
+/*	$("#receipt").click(function() {
 		event.preventDefault();
 		StudentReceipt();
 	});
-	$("#received_amt").focusout(function() {
+*/	$("#received_amt").focusout(function() {
 		var table = document.getElementById("InstallmentTable");
-		var received_mat=$("#received_amt").val();
-		$(table.rows.item(1).cells[7]).find('input').val(received_mat);
+		var received_amt=$("#received_amt").val();
+		if(parseInt(received_amt)!=0){
+		$(table.rows.item(1).cells[7]).find('input').val(received_amt);
+		}
 	});
-
-	
 });
 
 function SearchStudent(id){
 	function callback(responseData,textStatus,request)
 	{
 		var Rollno=responseData.Rollno;
-		var name=responseData.student_name;
+		var name=responseData.student_name+" "+responseData.fname+" "+responseData.lname;
 		var contact=responseData.contact;
 		var fees=responseData.fees;
 		var stud_details=Rollno +" | "+name+ " | "+contact+ " | "+fees;
 			document.getElementById('stud_details').value=stud_details;
+			$("#net_receive").val(responseData.remain_fees);
 		var installment=responseData.installment;
 		var monthly_pay=installment.monthly_pay;
 		var remain_fees=installment.remain_fees;
@@ -114,7 +124,7 @@ function SearchStudent(id){
 			        cell7.innerHTML = remain_fees[i-1];
 			        
 			        var cell8 = row.insertCell(7);
-			        cell8.innerHTML = '<input type="text" id="Amount" name="Amount" class="form-control text" value="0"></td>';
+			        cell8.innerHTML = '<input type="text" id="Amount" name="Amount" class="form-control text" value="0" readonly></td>';
 			       // j=j-1;
 				}
 			document.getElementById("InstallmentTable").style.display = "block";
@@ -124,60 +134,29 @@ function SearchStudent(id){
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-		
-			// var message=responseData.response.JSON.message;
-			// alert(message);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Receipt/SearchStudent?id="+id+"&branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
-function receiptNumber(){
-	var receipt_no=01;
+function getIncrementedReceiptNumber(){
 	function callback(responseData,textStatus,request)
 	{
-		if(responseData==null||responseData=="")
-			{
-			document.getElementById('receipt_no').value=parseInt(receipt_no);
-			}
-		else{
-			for (var i in responseData)
-			{
-				//alert(responseData[i].id);
-				document.getElementById('receipt_no').value=parseInt(responseData[i].id)+1;
-			}
-		}
-		
+		$("#receipt_no").val(responseData);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
 	}
 	var httpMethod = "GET";
-	var relativeUrl = "/Receipt/FetchAllReceiptDetails";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	var relativeUrl = "/Receipt/ReceiptIncrementedNumber";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
 function StudentReceipt(){
-	var table = document.getElementById("InstallmentTable");
-	var rowCount = table.rows.length;
-//	var value=$(table.rows.item(1).cells[6]).find('input').val();
-	var due_amt=table.rows.item(1).cells[5].innerHTML;
-	var due_date=table.rows[1].cells[4].innerHTML;
-	alert(due_amt)
-//	var
-//	for(var i=1;i<rowCount;i++){
-	
-	/*if(value!="0")
-		{*/
-		
-	//	}
-//	}
 	function callback(responseData,textStatus,request)
 	{
 		var mes=responseData.responseJSON.message;
@@ -186,19 +165,38 @@ function StudentReceipt(){
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
 	}
+	
+	var receive_amt=document.getElementById("received_amt").value;
+	var net_amt=document.getElementById("net_receive").value;
+	
+	if(parseInt(receive_amt)<=parseInt(net_amt) && parseInt(net_amt)!=0){
+	var table = document.getElementById("InstallmentTable");
+	var due_amt=table.rows.item(1).cells[5].innerHTML;
+	var due_date=table.rows[1].cells[4].innerHTML;
+	
 	var httpMethod = "POST";
-	var formData;
-	//if(due_date!=undefined){
-		formData=$("#receipt-form").serialize()+"&due_amt="+due_amt+"&due_date="+due_date+"&branch="+branchSession;
-//	}else{
-//		formData=$("#receipt-form").serialize()+"&branch="+branchSession;
-//	}
-	console.log(formData);
+	var formData=$("#receipt-form").serialize()+"&due_amt="+due_amt+"&due_date="+due_date+"&branch="+branchSession;
 	var relativeUrl = "/Receipt/ReceiptDetails";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
-			errorCallback);
+	//ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	}else{
+		var message="Receive amount should be less than or equals to Net amount";
+		showNotification("error",message);
+	}
 	return false;
+}
+function clearModal(){
+	$("#stud_details").val("");
+	$("#net_receive").val("");
+	$("#received_amt").val("");
+	$("#stud_details").val("");
+}
+function removeInstallmentTableRow(){
+	var table = document.getElementById("InstallmentTable");
+	var rowCount = table.rows.length;
+	var i = 1;
+	while (rowCount > i) {
+		document.getElementById("InstallmentTable").deleteRow(rowCount - 1);
+		rowCount = rowCount - 1;
+	}
 }

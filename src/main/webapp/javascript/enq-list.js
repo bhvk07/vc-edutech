@@ -132,7 +132,6 @@ function Admission(id, req) {
 			var newAmt = disc+"|"+fees[1];
 			var enq_taken = localStorage.getItem("user");
 			var date= new Date(today.getTime() - (today.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
-			alert(date);
 			/*var date = today.getFullYear() + "-" + today.getMonth() + "-"
 					+ today.getDate();*/
 			var status = "active";

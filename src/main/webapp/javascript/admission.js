@@ -199,7 +199,7 @@ function StudentAdmission(){
 	var table=document.getElementById("installment_table");
 	var rowCount=$('#installment_table tr').length;
 	var installment="installment details";
-	for (var i = 1; i < rowCount-1; i++) {
+	for (var i = 1; i < rowCount; i++) {
         var date = $(table.rows.item(i).cells[0]).find('input').val();
         var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
         var amt = $(table.rows.item(i).cells[2]).find('input').val();
