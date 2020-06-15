@@ -9,14 +9,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">  -->
 <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-<script src="jquery/bootstrap.min.js"></script>
+<!-- <script src="jquery/bootstrap.min.js"></script> -->
 <script src="jquery/jquery-3.3.1.min.js"></script>
 
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 <!--  <link rel="stylesheet" href="css/bootstrap.min.css">  -->
  
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
 
 
 <script type="text/javascript" src="core/noty.js"></script>
@@ -307,6 +307,14 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }
+
+.tab-content{
+padding:15px;
+
+}
+table.table{
+ max-width:none important!;
+}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -439,7 +447,7 @@ table.table .avatar {
 									<!-- <div class="nav nav-tabs"> -->
 										<li class="active"><a href="#invoice" data-toggle="tab">Invoice/Overview</a></li>
 										<li><a href="#edit" data-toggle="tab">Receipt</a></li>
-										
+										<li><a href="#admission_details" data-toggle="tab">Admission Details</a></li>
 									<!-- </div> -->
 								</ul>
 							<!-- </div> -->
@@ -553,7 +561,229 @@ table.table .avatar {
 
 
 <!--  end -->
+<!-- admission details start  -->
+			<div id="admission_details" class="tab-pane">
+			 <div id="table-wrapper">
+              <div class="row">
+                                  <div class="col-md-5">
+                                      <div class="form-group">
+                                          <div class="col-md-12">
+                                              <table class="table table-hover table-bordered mb-none">
+                                                  <thead>
+                                                      <tr class="bg-default">
+                                                          <td colspan="2">
+                                                              <label class="panel-title">Student Details</label>
+                                                          </td>
+                                                          
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                          <td>
+                                                              Student Name
+                                                          </td>
+                                                          <td>
+                                                              <label id="stud_name"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Birth Date
+                                                          </td>
+                                                          <td>
+                                                              <label id="dob"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Id Card No
+                                                          </td>
+                                                          <td>
+                                                              <label id="roll_no"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                             Registeration No
+                                                          </td>
+                                                          <td>
+                                                              <label id="reg_no"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                            Invoice No
+                                                          </td>
+                                                          <td>
+                                                              <label id="invoice_no"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Course Package Details
+                                                          </td>
+                                                          <td>
+                                                              <label id="course_pack"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Division
+                                                          </td>
+                                                          <td>
+                                                              <label id="div"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                             Academic Year
+                                                          </td>
+                                                          <td>
+                                                              <label id="aca_year"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Mobile No.
+                                                          </td>
+                                                          <td>
+                                                              <label id="phone"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Email Id
+                                                          </td>
+                                                          <td>
+                                                              <label id="email"></label>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              Admission Taken By
+                                                          </td>
+                                                          <td>
+                                                              <label id="taken_by"></label>
+                                                          </td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <div class="col-md-12">
+                                              <table class="table table-hover table-bordered mb-none">
+                                                  <thead>
+                                                      <tr class="bg-default">
+                                                          <td colspan="2">
+                                                              <label class="panel-title">Parents Details</label>
+                                                          </td>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr>
+                                                          <td>Father's Name</td>
+                                                          <td><label id="father"></label></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>Mother's Name</td>
+                                                          <td><label id="mother"></label></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>Contact</td>
+                                                          <td><label id="contact"></label></td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-7">
+<!--
+                                     <div class="col-md-4">
+                                         <div id="stud_pic">
+                                             
+                                         </div>
+-->
+                                   
+                                      <div class="form-group">
+                                          <div class="col-md-8">
+                                              <table class="table table-hover table-bordered mb-none">
+                                                  <thead>
+                                                     <tr class="bg-default">
+                                                         <td colspan="5">
+                                                             <label class="panel-title">Installment</label>
+                                                         </td>
+                                                     </tr>
+                                                     
+                                                     <tr>
+                                                         <th>#</th>
+                                                         <th>Due Date</th>
+                                                         <th>Amount</th>
+                                                         <th>Paid</th>
+                                                         <th>Balance</th>
+                                                     </tr>
+                                                      
+                                                  </thead>
+                                                  <tbody>
+                                                      
+                                                  </tbody>
+                                                  <tfoot>
+                                                     <tr>
+                                                         <td colspan="2">
+                                                             <label class="strong">Total</label>
+                                                         </td>
+                                                         <td>
+                                                             <strong>
+                                                                 <span id="amount"></span>
+                                                             </strong>
+                                                         </td>
+                                                         <td>
+                                                             <strong>
+                                                                 <span id="paid"></span>
+                                                             </strong>
+                                                         </td>
+                                                         <td>
+                                                             <span id="balance"></span>
+                                                         </td>
+                                                     </tr> 
+                                                  </tfoot>
+                                              </table>
+                                          </div>
+                                      </div>
+                                         <div class="form-group">
+                                          <div class="col-md-8">
+                                              <div class="form-group">
+                                                  <table class="table table-hover table-bordered mb-none">
+                                                      <thead>
+                                                          <tr class="bg-default">
+                                                              <td colspan="5">
+                                                                  <label class="panel-title">Standard Details</label>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <th>#</th>
+                                                              <th>Subject Name</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          <tr class="bg-default">
+                                                              <td colspan="2" id="std"></td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </div>
+                                          </div>
+                                          </div>
+<!--                                      </div>-->
+<!--                                        </div>-->
+                                  </div>
 
+              </div>
+           </div>
+	</div>
+
+<!-- end  -->
 
 
 </div>     <!-- end of tab-content div -->
