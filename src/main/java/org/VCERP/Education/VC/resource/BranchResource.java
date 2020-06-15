@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.BranchController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Branch;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -23,26 +24,28 @@ public class BranchResource {
 
 	@Path("/addNewBranch")
 	@POST
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addNewBranch(@BeanParam Branch branch) {
-		try {
-			BranchController controller = new BranchController();
+		BranchController controller = new BranchController();
+		try {		
 			controller.addNewBranch(branch);
-			return Util.generateResponse(Status.ACCEPTED, "Data Save").build();
+			return Util.generateResponse(Status.ACCEPTED, "New Branch Successfully Created.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not Save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to save create new branch.Please try again or contact with administrator.").build();
 	}
 
 	@Path("/getBranch")
 	@GET
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBranchDetails(@QueryParam("branch") String branch) {
+		BranchController controller = new BranchController();
 		try {
-			BranchController controller = new BranchController();
 			Branch b = controller.getBranchDetails(branch);
 			if (b != null) {
 				return Response.status(Status.ACCEPTED).entity(b).build();
@@ -50,16 +53,17 @@ public class BranchResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not Found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to get branch details").build();
 	}
 	
 	@Path("/getAllBranch")
 	@GET
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllBranchDetails() {
+		BranchController controller = new BranchController();
 		try {
-			BranchController controller = new BranchController();
 			ArrayList<Branch> branch = controller.getAllBranchDetails();
 			if (branch != null) {
 				return Response.status(Status.ACCEPTED).entity(branch).build();
@@ -67,20 +71,21 @@ public class BranchResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not Found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to get branch details").build();
 	}
 	@Path("/editBranch")
 	@POST
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response editBranch(@BeanParam Branch branch) {
 		try {
 			BranchController controller = new BranchController();
 			controller.editBranch(branch);
-			return Util.generateResponse(Status.ACCEPTED, "Data Save").build();
+			return Util.generateResponse(Status.ACCEPTED, "Branch Details Successfully Updated.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Not updated").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to update branch details.Please try again or contact with administrator.").build();
 	}
 }

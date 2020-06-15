@@ -1,6 +1,7 @@
 var request;
 $(document).ready(function(){
-	
+	validateLogin();
+	getBranch();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		  return this.optional(element) || /^[a-z]+$/i.test(value);
 		}, "Please enter letters only");
@@ -10,8 +11,6 @@ $(document).ready(function(){
 	}, "Please enter letters only");
 	
 	$('form[id="branchForm"]').validate({
-		
-		
 		  rules: {
 		    
 			  branch_name: {
@@ -23,33 +22,23 @@ $(document).ready(function(){
 			title: {
 		        required: true,
 		        lettersonly: true
-		        
-		      
 			},
 			subTitle: {
 		        required: true,
 		        lettersonly: true
-		      
-		        
 			},
 			
 			branchCode: {
 		        required: true,
 		        digits:true
-		  
-		        
+
 			},
 			address: {
 		        required: true,
-		       
-		        
 			},
 			email: {
 		        required: true,
 		        email:true
-		        
-		      
-		        
 			},
 			contact: {
 		        required: true,
@@ -61,24 +50,13 @@ $(document).ready(function(){
 			
 		  },
 		  messages: {
-			  contact:'Please enter correct mobile number',
-				
-			
-			
-		
+			  contact:'Please enter correct mobile number',		
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  addNewBranch();
-			  
 		  }
 	});
-	
-	
-	getBranch();
-	/*$("#branch-form").submit(function(){
-		addNewBranch();
-	});*/
 	var table=$('#branchtable').DataTable();
 	$("#edit").click(function(e){
 		request="Edit";
@@ -116,7 +94,7 @@ function addNewBranch(){
 	else{
 		var relativeUrl = "/branch/editBranch";
 	}
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -139,10 +117,11 @@ function getBranch(){
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/branch/getBranch?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
+
 function loadBranch(code,e,req){
 	function callback(responseData, textStatus, request){
 		document.getElementById("branch_name").value=responseData.Branch;
@@ -167,7 +146,7 @@ function loadBranch(code,e,req){
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/branch/getBranch?branch="+code;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
