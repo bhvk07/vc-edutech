@@ -1,7 +1,8 @@
 var mes;
 var requestid=0;
 $(document).ready(function() {
-	
+	validateLogin();
+	getFeesType();
 	jQuery.validator.addMethod("letterswithspace", function(value, element) {
 	    return this.optional(element) || /^[a-z\s]+$/i.test(value);
 	}, "Please enter letters only");
@@ -9,35 +10,25 @@ $(document).ready(function() {
 	
 	$('form[id="feestypeForm"]').validate({
 		
-		
 		  rules: {
-		    
 			  feesType: {
 		        required: true,
 		        letterswithspace: true
-		   },
-			
-		  },
-		
-			
+		   },	
+		  },	
 		  submitHandler:function(form){
+			  event.preventDefault();  
 			  event.preventDefault();
-			  
-			  
+			  addFeesType();
 		  }
 	});
-	
-	
-	
-	
-	getFeesType();
+/*	
 	$("#feestype").submit(function() {
 		// var token=sessionStorage.getItem("token");
 		// validateLogin(token);
 		//		 
-		event.preventDefault();
-		addFeesType();
-	});
+
+	});*/
 	$("#edit").click(function(e) {		 
 		var table = $('#feestypetable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
@@ -67,28 +58,27 @@ $(document).ready(function() {
 function addFeesType() {
 	function callback(responseData,textStatus,request)
 	{
-//		var mes=responseData.responseJSON.message;
-//		showNotification("success",mes);
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "POST";
 	var formData;
 	var relativeUrl;
 	if(requestid==0){
-	formData =$('#feestype').serialize()+"&branch="+branchSession;
+	formData =$('#feestypeForm').serialize()+"&branch="+branchSession;
 	relativeUrl = "/feesType/addNewFeesType";
 	}else{
-		formData =$('#feestype').serialize()+"&id="+requestid+"&branch="+branchSession;
+		formData =$('#feestypeForm').serialize()+"&id="+requestid+"&branch="+branchSession;
 		relativeUrl = "/feesType/EditFeesType";
+		alert(formData)
 	}
 		
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
 }
@@ -104,37 +94,33 @@ function getFeesType() {
 						+ '"><label for="checkbox1"></label></span>';
 				var createdDate = responseData[i].createdDate;
 				var feesType = responseData[i].feesType;
-				//var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 				table.row.add(
 						[createdDate,feesType, srno]).draw();
 			}
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/feesType/getFeesType?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 
 function deleteFeesType(id) {
 	function callback(responseData,textStatus,request)
 	{
-	
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "DELETE";
 	var relativeUrl = "/feesType/deleteFeesType?id="+id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 

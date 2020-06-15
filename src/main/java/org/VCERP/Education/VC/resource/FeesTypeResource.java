@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.FeesTypeController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.FeesType;
 import org.VCERP.Education.VC.utility.Util;
 import org.apache.logging.log4j.LogManager;
@@ -28,33 +29,35 @@ public class FeesTypeResource {
 	
 	@POST
 	@Path("/addNewFeesType")
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addNewFeesType(@FormParam("feesType") String feesType,@FormParam("branch") String branch)
 	{
-		try{
 		FeesType type=new FeesType();
 		type.setCreatedDate(Util.currentDate());
 		type.setFeesType(feesType);
 		type.setBranch(branch);
 		FeesTypeController controller=new FeesTypeController();
+		try{
 		controller.addNewFeesType(type);
-		return Util.generateResponse(Status.ACCEPTED, "Data save").build();
+		return Util.generateResponse(Status.ACCEPTED, "New FeesType Successfully Created.").build();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new FeesType.please try again or contact with administrator.").build();
 	}
 	@GET
 	@Path("/getFeesType")
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFeesType(@QueryParam("branch") String branch)
 	{
-		try{
 		ArrayList<FeesType> type=new ArrayList<>();
 		FeesTypeController controller=new FeesTypeController();
+		try{
 		type=controller.getFeesType(branch);
 		if(type!=null)
 		{
@@ -64,43 +67,45 @@ public class FeesTypeResource {
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not found").build();
 	}
 	
 	@POST
 	@Path("/EditFeesType")
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditFeesType(@FormParam("feesType") String feesType,@FormParam("id") Long id,@FormParam("branch") String branch)
 	{
-		try{
 		FeesType type=new FeesType();
 		type.setFeesType(feesType);
 		type.setId(id);
 		type.setBranch(branch);
 		FeesTypeController controller=new FeesTypeController();
+		try{
 		controller.EditFeesType(type);
-		return Util.generateResponse(Status.ACCEPTED, "Data save").build();
+		return Util.generateResponse(Status.ACCEPTED, "FeesType Successfully Updated.").build();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 	@DELETE
 	@Path("/deleteFeesType")
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteFeesType(@QueryParam("id") String id)
 	{
-		try{
 		FeesTypeController controller=new FeesTypeController();
+		try{
 		controller.deleteFeesType(id);
-		return Response.status(Status.ACCEPTED).build();
+		return Util.generateResponse(Status.ACCEPTED, "FeesType Successfully Deleted.").build();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 }
