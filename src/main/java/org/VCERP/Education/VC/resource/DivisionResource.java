@@ -28,6 +28,7 @@ public class DivisionResource {
 	
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/NewDivision")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addDivision(@FormParam("division") String division,@FormParam("branch") String branch){
@@ -39,19 +40,20 @@ public class DivisionResource {
 			div.setDivision(division);
 			div.setBranch(branch);
 			controller.addDivision(div);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "New Division Successfully Created.").build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create division.please try again or contact to administrator.").build();
 	}
 	
 	
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/DivisionList")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response FetchAllDivision(@QueryParam("branch") String branch){
@@ -91,6 +93,7 @@ public class DivisionResource {
 	*/
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/EditDivision")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditDivision(@FormParam("division") String division,@FormParam("id") Long id){
@@ -102,29 +105,30 @@ public class DivisionResource {
 			div.setDivision(division);
 			div.setId(id);
 			controller.EditDivision(div);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Updated.").build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 	@DELETE
 	@Path("/deleteDivision")
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteDivision(@QueryParam("id") String id)
-	{
-		try{
+	{	
 		DivisionController controller=new DivisionController();
+		try{
 		controller.deleteDivision(id);
-		return Response.status(Status.ACCEPTED).build();
+		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Deleted.").build();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 	}

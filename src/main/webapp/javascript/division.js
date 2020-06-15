@@ -1,7 +1,8 @@
 var mes;
 requestid=0;
 $(document).ready(function(){
-	
+	validateLogin();
+	FetchAllDiv();
 	$.validator.addMethod("alphanum", function(value, element) {
         return this.optional(element) || /^[a-z0-9\\]+$/i.test(value);
     }, " must contain only letters");
@@ -9,42 +10,30 @@ $(document).ready(function(){
 	
 	$('form[id="divisionForm"]').validate({
 		
-		
 		  rules: {
 		    
 			  division: {
 		        required: true,
 		        alphanum: true
 		   },
-			
 		  },
 		 messages: {
 			 division: {
 				required:'Division is required',	
 				alphanum:'Please enter letters or numbers only'
 			},
-			
-			
-		
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  InsertDivision();
-			  
 		  }
 	});
 	
-	
-	
-	
-	FetchAllDiv();
 	$('#divisiontable').DataTable({
 		"pageLength" : 40
 	});
 	
-/*	$("#division_master").submit(function(){
-		InsertDivision();
-	});*/
+
 	$("#edit").click(function(e){
 		var table = $('#divisiontable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
@@ -92,7 +81,7 @@ function InsertDivision(){
 		formData = $("#divisionForm").serialize()+"&id="+requestid;
 		relativeUrl = "/Division/EditDivision";
 	}
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 	
@@ -118,24 +107,23 @@ function FetchAllDiv(){
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Division/DivisionList?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
 function deleteDivision(id) {
 	function callback(responseData,textStatus,request)
 	{
-	
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "DELETE";
 	var relativeUrl = "/Division/deleteDivision?id="+id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 function loadDivision(div,e){
