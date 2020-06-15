@@ -1,7 +1,8 @@
 var mes;
 var requestid=0;
 $(document).ready(function(){
-	
+	validateLogin()
+	FetchAllAcademic();
 	 $("#aca_year").keypress(function (e) {
 	     //if the letter is not digit then display error and don't type anything
 		 if (e.which != 8 && e.which != 0 && String.fromCharCode(e.which) != '-' && (e.which < 48 || e.which > 57))
@@ -11,18 +12,6 @@ $(document).ready(function(){
 	               return false;
 	    }
 	   });
-	
-	 /*function checkDate() {
-		   var selectedText = document.getElementById('aca_start').value;
-		   var selectedDate = new Date(selectedText);
-		   var now = new Date();
-		   if (selectedDate < now) {
-		    alert("Date must be in the future");
-		   }
-		 }*/
-	/* jQuery.validator.addMethod("noSpace", function(value, element) { 
-		    return value.indexOf(" ") < 0 && value != ""; 
-		  }, "Space are not allowed");*/
 
 	jQuery.validator.addMethod("minDate", function (value, element) {
 	    var now = new Date();
@@ -128,19 +117,19 @@ $(document).ready(function(){
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  FetchAllAcademic();
+			  InsertYear();
 			  
 		  }
 	});
 	
-	FetchAllAcademic();
+	
 	$('#academictable').DataTable({
 		"pageLength" : 40
 	});
 
-	$("#academicYear").submit(function(){
+	/*$("#academicYear").submit(function(){
 		InsertYear();
-	});
+	});*/
 	$("#edit").click(function(e){
 		$("input:checkbox[name=type]:checked").each(function() {
 			requestid=$(this).val();
@@ -177,7 +166,7 @@ function InsertYear(){
 		formData = $("#academicYear").serialize()+"&id="+requestid+"&branch="+branchSession;
 		relativeUrl = "/AcademicYear/editAcademicYear";
 	}
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 	
@@ -207,7 +196,7 @@ function FetchAllAcademic() {
 	//var formData = $("#academicYear").serialize();
 	var httpMethod = "GET";
 	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 	
@@ -239,7 +228,7 @@ function loadAcadData(id,e)
 	//var formData = $("#academicYear").serialize();
 	var httpMethod = "GET";
 	var relativeUrl = "/AcademicYear/SpecificAcademicData?id="+id+"&branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

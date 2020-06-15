@@ -25,6 +25,7 @@ public class AcademicYearResource{
 	
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/NewAcademic")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addAcademic(@FormParam("aca_year") String aca_year, @FormParam("aca_start") String aca_start,
@@ -49,24 +50,24 @@ public class AcademicYearResource{
 			year.setRegistration(regno);
 			year.setBranch(branch);
 			controller.addAcademicYear(year);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "New Academic Year Successfully Created.").build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new academic year.please try again or contact with administrator").build();
 	}
 	
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/AcademicList")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response FetchAllAcademic(@QueryParam("branch") String branch){
-		
+		ArrayList<AcademicYear> academiclist = new ArrayList<>();
 		AcademicYearController controller = null;
 		try{
-			ArrayList<AcademicYear> academiclist = new ArrayList<>();
 			controller = new AcademicYearController();
 			academiclist = controller.AcademicList(branch);
 			return Response.status(Status.OK).entity(academiclist).build();
@@ -79,13 +80,13 @@ public class AcademicYearResource{
 	}
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/SpecificAcademicData")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response SpecificAcademicData(@QueryParam("id") String id,@QueryParam("branch") String branch){
-		
+		AcademicYear academiclist = new AcademicYear();
 		AcademicYearController controller = null;
 		try{
-			AcademicYear academiclist = new AcademicYear();
 			controller = new AcademicYearController();
 			academiclist = controller.SpecificAcademicData(id,branch);
 			return Response.status(Status.OK).entity(academiclist).build();
@@ -98,6 +99,7 @@ public class AcademicYearResource{
 	}
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/editAcademicYear")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response editAcademicYear(@FormParam("aca_year") String aca_year, @FormParam("aca_start") String aca_start,
@@ -129,7 +131,7 @@ public class AcademicYearResource{
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Updated").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 
 
