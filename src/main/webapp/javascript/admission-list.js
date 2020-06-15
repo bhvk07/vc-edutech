@@ -3,12 +3,25 @@ $(document).ready(function(){
 	var info;
     $('#admission_table').DataTable({
 		"pageLength" : 40,
-		"stateSave" : true
-		/*"initComplete": function (settings, json) {//here is the tricky part 
-			info = $('#admission_table tbody tr').length;
-			
-	        }*/
-	});
+		"stateSave" : true,
+		dom: 'Bfrtip',
+    });
+    var table = $('#admission_table').DataTable({
+    buttons: [
+	    	{extend: 'pdf', className: 'btn btn-info glyphicon glyphicon-file pdf-b'},
+	    	{extend: 'print', className: 'btn btn-warning glyphicon glyphicon-print'},
+	    	{extend: 'excel', className: 'btn btn-info glyphicon glyphicon-file pdf-b'},
+	    	{extend: 'csv', className: 'btn btn-warning glyphicon glyphicon-print'},
+	    ],
+	    "order": [],
+	    "columnDefs": [ {
+	    "targets"  : 'no-sort',
+	    "orderable": false,
+	    }]
+    });
+
+    table.buttons().container()
+    .appendTo( '#table-style .col-sm-6:eq(1)' );
 	showAdmissionTable();
 	
 	
