@@ -35,6 +35,7 @@ public class LeadSourceDAO {
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		LeadSource ls=null;
 		ArrayList<LeadSource> sourceList = new ArrayList<LeadSource>();
 		try{
 			
@@ -43,7 +44,8 @@ public class LeadSourceDAO {
 			st = con.prepareStatement(query);
 			rs = st.executeQuery();
 			while(rs.next()){
-				LeadSource ls = new LeadSource();
+			  ls= new LeadSource();
+			  ls.setId(rs.getLong(1));
 			  ls.setSource(rs.getString(2));
 			  ls.setCreated_date(rs.getString(3));
 			  sourceList.add(ls);

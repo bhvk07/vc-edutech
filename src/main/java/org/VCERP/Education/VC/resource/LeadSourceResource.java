@@ -27,6 +27,7 @@ public class LeadSourceResource {
 	
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/NewSource")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addLeadSource(@FormParam("leadsource") String source){
@@ -36,28 +37,27 @@ public class LeadSourceResource {
 			lead = new LeadSource();
 			controller = new LeadSourceController();
 			lead.setSource(source);
-			/*lead.setCreated_date(Util.currentDate());*/
 			controller.addLeadSource(lead);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "Lead Source Successfully Inserted").build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new lead source.please try again or contact with administrator.").build();
 	}
 	
 	
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/LeadSourceList")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response FetchAllSource(){
-		
+		ArrayList<LeadSource> sourceList = new ArrayList<>();
 		LeadSourceController controller = null;
 		try{
-			ArrayList<LeadSource> sourceList = new ArrayList<>();
 			controller = new LeadSourceController();
 			sourceList = controller.FetchAllSource();
 			return Response.status(Status.OK).entity(sourceList).build();
@@ -68,62 +68,4 @@ public class LeadSourceResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
-	/*@GET
-	@PermitAll
-	@Path("/getDivision")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response GetDivision(@QueryParam("id") String id){
-		
-		DivisionController controller = null;
-		try{
-			Division division= new Division();
-			controller = new DivisionController();
-			division = controller.GetDivision(id);
-			return Response.status(Status.OK).entity(division).build();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
-		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
-	}
-	*/
-	/*@POST
-	@PermitAll
-	@Path("/EditDivision")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response EditDivision(@FormParam("division") String division,@FormParam("id") Long id){
-		Division div = null;
-		DivisionController controller = null;
-		try{
-			div = new Division();
-			controller = new DivisionController();
-			div.setDivision(division);
-			div.setId(id);
-			controller.EditDivision(div);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		}
-		
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
-	}
-*/	/*@DELETE
-	@Path("/deleteDivision")
-	@PermitAll
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteDivision(@QueryParam("id") String id)
-	{
-		try{
-		DivisionController controller=new DivisionController();
-		controller.deleteDivision(id);
-		return Response.status(Status.ACCEPTED).build();
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
-	}*/
-	}
+}

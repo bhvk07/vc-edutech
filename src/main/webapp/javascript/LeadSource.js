@@ -1,6 +1,8 @@
 var mes;
 requestid=0;
 $(document).ready(function(){
+	validateLogin();
+	LeadSourceList();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
 		}, "Only alphabetical characters");
@@ -17,13 +19,10 @@ $(document).ready(function(){
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  LeadSourceList();
+			  InsertLeadSource();
 		  }
 	});
-	$("#LeadSourceForm").submit(function(){
-		InsertLeadSource();
-});
-	LeadSourceList();
+	
 	$('#leadsourcetable').DataTable({
 		"pageLength" : 40
 	});
@@ -51,7 +50,7 @@ function InsertLeadSource(){
 		formData = $("#LeadSourceForm").serialize()+"&id="+requestid;
 		relativeUrl = "/LeadSource/EditLeadSource";
 	}
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 	
@@ -76,9 +75,8 @@ function LeadSourceList(){
 		
 	}
 	var httpMethod = "GET";
-	//var formData = ''
 	var relativeUrl = "/LeadSource/LeadSourceList";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl,null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
 }

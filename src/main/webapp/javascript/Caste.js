@@ -14,9 +14,7 @@ $(document).ready(function() {
 			  caste: {
 		        required: true,
 		        lettersonly: true
-		   },
-		
-			
+		   },	
 		  },
 		 messages: {
 			 subjectname: {
@@ -32,14 +30,7 @@ $(document).ready(function() {
 			  
 		  }
 	});
-	
-	
-	
-	
-/*	$("#caste-form").submit(function() {
-		event.preventDefault();
-		
-	});*/
+
 	$("#edit").click(function(e) {		 
 		var table = $('#caste-table').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
