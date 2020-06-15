@@ -1,6 +1,8 @@
 var mes;
 var requestid=0;
 $(document).ready(function() {
+	validateLogin();
+	getAllCaste();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		  return this.optional(element) || /^[a-z]+$/i.test(value);
 		}, "Please enter letters only");
@@ -26,18 +28,18 @@ $(document).ready(function() {
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			 
+			  addCaste();
 			  
 		  }
 	});
 	
 	
 	
-	getAllCaste();
-	$("#caste-form").submit(function() {
+	
+/*	$("#caste-form").submit(function() {
 		event.preventDefault();
-		addCaste();
-	});
+		
+	});*/
 	$("#edit").click(function(e) {		 
 		var table = $('#caste-table').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
@@ -66,15 +68,13 @@ $(document).ready(function() {
 function addCaste() {
 	function callback(responseData,textStatus,request)
 	{
-//		var mes=responseData.responseJSON.message;
-//		showNotification("success",mes);
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "POST";
 	var formData;
@@ -87,7 +87,7 @@ function addCaste() {
 		relativeUrl = "/caste/EditCaste";
 	}
 		
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
 	
 }
@@ -103,40 +103,35 @@ function getAllCaste() {
 						+ '"><label for="checkbox1"></label></span>';
 				var createdDate = responseData[i].Created_Date;
 				var caste = responseData[i].Caste;
-				//var delbutton = '<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a><button id="delete" class="delete" onclick="deleterow()" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>';
 				table.row.add(
 						[createdDate,caste, srno]).draw();
 			}
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
-	}
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		}
 	var httpMethod = "GET";
 	var relativeUrl = "/caste/getCaste?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 function deleteCaste(id) {
 	function callback(responseData,textStatus,request)
 	{
-	
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);	
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "DELETE";
 	var relativeUrl = "/caste/deleteCaste?id="+id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 function loadCaste(caste,e){
-	alert(caste);
 	document.getElementById("caste").value=caste;
 	e.preventDefault();
 	$('#CasteModal').modal({
