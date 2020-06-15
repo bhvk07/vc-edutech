@@ -60,4 +60,43 @@ public class LeadSourceDAO {
 		}
 		return sourceList;
 	}
+
+	public void EditLeadSource(LeadSource lead) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			con = Util.getDBConnection();
+			String query = "update lead_source set source=? where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, lead.getSource());
+			ps.setLong(2, lead.getId());
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		
+	}
+
+	public void deleteSource(String id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from lead_source where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
 }

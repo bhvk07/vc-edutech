@@ -17,5 +17,13 @@ public class LeadSourceController {
 		LeadSourceDAO dao=new LeadSourceDAO();
 		return dao.FetchAllSource();
 	}
+	public void EditLeadSource(LeadSource lead) {
+		LeadSourceDAO dao=new LeadSourceDAO();
+		dao.EditLeadSource(lead);
+	}
+	public void deleteSource(String id) {
+		LeadSourceDAO dao=new LeadSourceDAO();
+		dao.deleteSource(id);
+	}
 	
 }

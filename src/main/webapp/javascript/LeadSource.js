@@ -26,6 +26,28 @@ $(document).ready(function(){
 	$('#leadsourcetable').DataTable({
 		"pageLength" : 40
 	});
+	$("#edit").click(function(e) {		 
+		var table = $('#leadsourcetable').DataTable();
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			requestid=$(this).val();
+			source = table.rows({selected : true}).column(1).data()[i];
+			loadSource(source,e);
+			}
+		});
+	});
+	$("#Delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			deleteSource(idarray);
+			}
+		});
+	});
+	$("#cancel").click(function() {
+		clearModal()
+	});
 	
 });
 function InsertLeadSource(){
@@ -79,4 +101,33 @@ function LeadSourceList(){
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
+}
+function loadSource(source,e){
+	document.getElementById("leadsource").value=source;
+	e.preventDefault();
+	$('#leadsourceModal').modal({
+        show: true, 
+        backdrop: 'static',
+        keyboard: true
+     })
+}
+function deleteSource(id) {
+	function callback(responseData,textStatus,request)
+	{
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);	
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/LeadSource/deleteSource?id="+id;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;	
+}
+
+function clearModal(){
+	document.getElementById("leadsource").value="";
+	requestid=0;
 }
