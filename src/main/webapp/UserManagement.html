@@ -5,33 +5,29 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Management</title>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/> -->
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.full.min.js"></script>-->
+
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
+
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 <link rel="stylesheet" href="css/um.css">
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
+<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/UserMgmt.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+
+
 <style type="text/css">
 body {
 	color: #566787;
@@ -465,7 +461,7 @@ table.table .avatar {
 
 							<div id="edit" class="tab-pane active">
 								<h4 class="mb-xlg">Personal Information</h4>
-								<form id="createAc">
+								<form id="createAc" method="post">
 									<fieldset id="new-user-info">
 										<div class="form-group">
 											<label class="control-label col-md-4"> User Type </label>
@@ -556,12 +552,8 @@ table.table .avatar {
 										<div class="row">
 											<div class="col-md-12">
 												<div class="pull-right">
-													<button type="button" id="btnSave"
-														class="btn btn-success ladda-button">
-														<b> <i class="fa fa-check margin-right-10"></i>
-														</b> <span class="ladda-label">Save User</span>
-													</button>
-												</div>
+													<input type="submit" id="btnSave"
+														class="btn btn-success ladda-button" value="save user">												</div>
 											</div>
 										</div>
 									</div>

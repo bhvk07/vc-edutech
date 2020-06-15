@@ -133,18 +133,14 @@ function fetchAllBranch()
 			console.log(responseData[i].Branch);
 			$('.branch').append(htmlCode);
 		}
-		// var message=responseData.response.JSON.message;
-		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-		// var message=responseData.response.JSON.message;
-		// alert(message);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/branch/getAllBranch";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -158,14 +154,10 @@ function FetchAllEmployee() {
 			$('#enq_taken').append(htmlCode);
 			$('.enq_taken').append(htmlCode);
 		}
-		// var message=responseData.response.JSON.message;
-		// alert(message);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-		// var message=responseData.response.JSON.message;
-		// alert(message);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Employee/FetchAllEmployee?branch="+branchSession;
@@ -185,7 +177,8 @@ function getFeesPackage() {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
@@ -204,7 +197,8 @@ function getAcademicYear() {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/AcademicYear/AcademicList?branch="+branchSession;
@@ -223,7 +217,8 @@ function getSubject() {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Subject/FetchAllSubject?branch="+branchSession;
@@ -240,20 +235,15 @@ function getAllStandard() {
 			//$('#standard').append(htmlCode);
 			$('.standard').append(htmlCode);
 		}
-
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/standard/getAllStandard?branch=" + branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -269,16 +259,12 @@ function getAllDivision() {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Division/DivisionList?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -293,16 +279,12 @@ function getCaste() {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/caste/getCaste?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

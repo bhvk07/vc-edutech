@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.configuration.SigningKeyGenerator;
 import org.VCERP.Education.VC.controller.UserController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.User;
 import org.VCERP.Education.VC.model.LoginHistory;
 import org.VCERP.Education.VC.utility.SecureUtil;
@@ -40,17 +41,9 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@FormParam("userid") String userid, @FormParam("password") String password)
 			throws NoSuchAlgorithmException {
-		// System.out.println(userid+""+password);
-		// String
-		// message=UserResourceValidation.validateAuthenticateUser(userid,password);
-		
 		User user = new User();
-		// if(message=="accepted"){
 		UserController controller = new UserController();
 		user = controller.authenticateUser(userid, password);
-		// }else{
-		// return Response.status(Status.BAD_REQUEST).entity(message).build();
-		// }
 		if (user == null) {
 			return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		} else {
@@ -70,7 +63,7 @@ public class UserResource {
 
 	@POST
 	@PermitAll
-	// @JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/createEmployeeAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response createEmployeeAccount(@FormParam("emp_type") String emp_type, @FormParam("branch") String branch,
@@ -88,17 +81,17 @@ public class UserResource {
 			user.setUserid(userid);
 			user.setPassword(password);
 			controller.createEmployeeAccount(user);
-			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+			return Util.generateResponse(Status.ACCEPTED, "User Account Successfully Created.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create user account.Please try again or contact with Administrator").build();
 	}
 
 	@GET
 	@PermitAll
-	// @JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/getAllAccount")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllAccount(@QueryParam("branch") String branch) {
@@ -106,7 +99,7 @@ public class UserResource {
 		UserController controller = new UserController();
 		user = controller.getAllAccount(branch);
 		if (user == null) {
-			return Util.generateErrorResponse(Status.NOT_FOUND, "Not Found").build();
+			return Util.generateErrorResponse(Status.NOT_FOUND, "Data Not Found").build();
 		} else {
 			return Response.status(Status.ACCEPTED).entity(user).build();
 		}
@@ -114,6 +107,7 @@ public class UserResource {
 	
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/LoginHistoryList")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getLoginHistoryList(){
@@ -130,41 +124,42 @@ public class UserResource {
 	
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/EditEmployeeAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditEmployeeAccount(@FormParam("role") String role, @FormParam("emp_name") String emp_name,
 			@FormParam("userid") String userid,@FormParam("password") String password,@FormParam("id") Long id){
-		
+		User user=new User();
+		UserController controller=new UserController();
+		user.setId(id);
+		user.setRole(role);
+		user.setName(emp_name);
+		user.setUserid(userid);
+		user.setPassword(password);
 		try {
-			User user=new User();
-			UserController controller=new UserController();
-			user.setId(id);
-			user.setRole(role);
-			user.setName(emp_name);
-			user.setUserid(userid);
-			user.setPassword(password);
 			controller.EditEmployeeAccount(user);
-			return Response.status(Status.ACCEPTED).build();
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "User Account Successfully Updated.").build();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Updated").build();
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Failed to complete updation task.Please try again or contact with administrator.").build();
 		}
+	
 	@DELETE
 	@PermitAll
+	@JWTTokenNeeded
 	@Path("/DeactivateAccount")
 	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response DeactivateEmployeeAccount(@QueryParam("id") Long id){
-		
+		UserController controller=new UserController();
 		try {
-			UserController controller=new UserController();
 			controller.DeactivateEmployeeAccount(id);
-			return Response.status(Status.ACCEPTED).build();
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "User Account Deactivated.").build();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Updated").build();
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Failed to complete task.").build();
 		}
 }
