@@ -1,6 +1,6 @@
 var mes;
 $(document).ready(function(){
-	var info;
+	showAdmissionTable();
     $('#admission_table').DataTable({
 		"pageLength" : 40,
 		"stateSave" : true,
@@ -20,9 +20,7 @@ $(document).ready(function(){
 	    }]
     });
 
-    table.buttons().container()
-    .appendTo( '#table-style .col-sm-6:eq(1)' );
-	showAdmissionTable();
+    table.buttons().container().appendTo( '#table-style .col-sm-6:eq(1)' );
 	
 	
 $('#admission_table tbody tr').on('click', '.cbCheck', function() {
@@ -42,7 +40,14 @@ $('#Edit').click(function() {
 		}
 	});	
 });
-	
+$('#Viewbtn').click(function(e) {
+	$('table .cbCheck').each(function(i,chk){
+	if (chk.checked) {
+		var id = $(this).val();
+		getInvoiceOfSpecificStudent(id,e);
+		}
+	});	
+});
 });
 
 function showAdmissionTable(){
@@ -88,7 +93,7 @@ function showAdmissionTable(){
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/FetchAllAdmittedStudent?branch="+branchSession;
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -184,4 +189,50 @@ function getAdmissionDetailsOfSpecificStudent(id){
 			errorCallback);
 	return false;
 }
-
+function getInvoiceOfSpecificStudent(id,e){
+	
+	function callback(responseData, textStatus, request) {
+		e.preventDefault();
+		var no=0;
+		var feesDetails=responseData.feesDetails.split(",");
+		for(var i=0;i<feesDetails.length;i++){
+			var individualFeesDetails=feesDetails[i].split("|");
+				no+=1
+				var tableRow='<tr><td class="no">'+no+'</td><td class="text-left"><h3><a target="_blank" href="#">'+individualFeesDetails[0]+'</a></h3></td><td class="unit">'+individualFeesDetails[1]+'</td><td class="qty">'+individualFeesDetails[2]+'</td><td class="total">'+individualFeesDetails[3]+'</td></tr>';
+				$("#invoice_table tbody").append(tableRow);
+		}
+		var tableFooterRow='<tr><td colspan="2"></td><td colspan="2">Total Discount</td><td>'+responseData.disccount+'</td></tr><tr><td colspan="2"></td><td colspan="2">Grand Total</td><td>'+responseData.fees+'</td></tr><tr><td colspan="2"></td><td colspan="2">Payment</td><td>'+responseData.paid_fees+'</td></tr><tr><td colspan="2"></td><td colspan="2">Balance Due</td><td>'+responseData.remain_fees+'</td></tr>';
+		$("#invoice_table tfoot").append(tableFooterRow);
+		var branchDetails=getInvoiceBranchDetails();
+		document.getElementById("company_name").innerHTML = branchDetails[0];
+		document.getElementById("company_address").innerHTML = branchDetails[1];
+		document.getElementById("invoice_no").innerHTML ="INVOICE NO : " +responseData.invoice_no;
+		document.getElementById("invoice_to").innerHTML ="INVOICE TO : "+responseData.student_name+" "+responseData.fname+" "+responseData.lname;
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Admission/getAdmissionDetailsOfSpecificStudent?id=" + id + "&branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function getInvoiceBranchDetails(){
+	var branchDetails=new Array();
+	function callback(responseData, textStatus, request){
+		branchDetails.push(responseData.Branch);
+		branchDetails.push(responseData.Address);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/branch/getBranch?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return branchDetails;
+}

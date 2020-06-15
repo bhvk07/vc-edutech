@@ -230,6 +230,9 @@ public class AdmissionDAO {
 				admission.setJoin_date(rs.getString(30));
 				admission.setFees(rs.getLong(31));
 				admission.setFeesDetails(rs.getString(32));
+				admission.setDisccount(rs.getLong(33));
+				admission.setPaid_fees(rs.getLong(34));
+				admission.setRemain_fees(rs.getLong(35));
 			}
 			
 		}catch (Exception e) {

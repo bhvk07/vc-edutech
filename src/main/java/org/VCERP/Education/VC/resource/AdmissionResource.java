@@ -295,14 +295,16 @@ public class AdmissionResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAdmissionDetailsOfSpecificStudent(@QueryParam("id") String id,
 			@QueryParam("branch") String branch) {
-
+		Admission admission = new Admission();
+		AdmissionController controller = new AdmissionController();
 		try {
-			Admission admission = new Admission();
-			AdmissionController controller = new AdmissionController();
 			admission = controller.searchStudentFromAdmission(id, branch);
+			if(admission!=null){
+				System.out.println(admission.getRollno());
 			Installment installment = controller.getInstallment(admission.getRollno(), branch);
 			admission.setInstallment(installment);
 			return Response.status(Status.ACCEPTED).entity(admission).build();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
