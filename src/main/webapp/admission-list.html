@@ -421,6 +421,10 @@ table.table{
 	
 	<!-- View Tab -->
 	<section class="panel panel-2" id="datatable-view-2">
+	<button onclick="generate()">
+		PDF
+	</button>
+	
 		<div class ="panel">
 			<div class="panel-heading panel-visible">
 				<div class="panel-title">
@@ -862,11 +866,76 @@ table.table{
 	</div>
 	</div>
 	<!-- <script type="text/javascript" src="javascript/financial.js"></script>  -->
-	<!-- <script src = "assests/js/anime.2.2.0.js"></script> -->
+	 <script src = "assests/js/anime.2.2.0.js"></script> 
+	
+	<!-- <script type="text/javascript" src="assets/js/jspdf.debug.js"></script> -->
+	
 	<link rel="assets/css/animejs.css" type="stylesheet">
 	<script src="assets/js/anime.min.js"></script>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script>
+	<!-- <script type="text/javascript" src="assets/js/html2canvas.js"></script>-->
+	<!--  <script type="text/javascript" src="assets/js/jspdf.min.js"></script>   -->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+	<script>
+	
+	
+	 generate = function(){
+		
+		 html2canvas(document.getElementById("edit"), {
+	            onrendered: function(canvas) {
+
+	                var imgData = canvas.toDataURL('image/JPEG');
+	                console.log('Report Image URL: '+imgData);
+	                var doc = new jsPDF('p', 'mm', 'a4'); //210mm wide and 297mm high
+	                
+	                doc.addImage(imgData, 'JPEG', 10, 10);
+	                doc.save('sample.pdf');
+	            }
+	        });
+		
+		
+		 /* html2canvas(document.getElementById('edit')).then(canvas => {
+	
+	    let pdf = new jsPDF('p', 'mm', 'a4');
+	    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
+	    pdf.save(sample.pdf); 
+	}); */
+	
+	}
+	 /* margins = {
+			  top: 10,
+			  bottom: 40,
+			  left: 30,
+			  width: 550
+			};
+		generate = function(){
+			var pdf = new jsPDF('p', 'pt', 'a4');
+			  pdf.setFontSize(18);
+			  pdf.addHTML(document.getElementById('invoice'), 
+			    margins.left, // x coord
+			    margins.top,
+			    {
+			      // y coord
+			      width: margins.width// max width of content on PDF
+			    },
+			     function(dispose) {
+			       headerFooterFormatting(pdf)  
+			    }, 
+			    margins);
+			    
+			   var iframe = document.createElement('iframe');
+			  iframe.setAttribute('style','position:absolute;right:0; top:0; bottom:0; height:100%; width:650px; padding:20px;');
+			  document.body.appendChild(iframe);
+			  iframe.src = pdf.output('datauristring'); s
+			  pdf.save('sample.pdf');
+		}
+	  */
+	
+	</script>
+	
+	
 	<!-- <script src="assets/js/anime.player.js"></script> -->
 	<!-- <script type="text/javascript" src="javascript/ViewRecAnime.js"></script> -->
 	<!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.js"></script> -->
