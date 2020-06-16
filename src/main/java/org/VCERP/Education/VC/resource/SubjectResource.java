@@ -27,7 +27,7 @@ import org.VCERP.Education.VC.utility.Util;
 public class SubjectResource {
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/NewSubject")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addSubject(@FormParam("subjectname") String subjectname,@FormParam("timeline") String timeline,
@@ -42,22 +42,21 @@ public class SubjectResource {
 		sub.setTimeline(timeline);
 		sub.setBranch(branch);
 		controller.addSubject(sub);
-		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+		return Util.generateResponse(Status.ACCEPTED, "New Subject Successfully Created.").build();
 	}
 	catch(Exception e){
 		e.printStackTrace();
 		System.out.println(e);
 	}
-	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new subject.Please try again or contact with administrator.").build();
 	}
 	
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchAllSubject")
 	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response FetchAllSubject(@QueryParam("branch") String branch){
 		try {
 			ArrayList<Subject> sub=new ArrayList<>();
@@ -72,7 +71,7 @@ public class SubjectResource {
 	
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/EditSubject")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditSubject(@FormParam("subjectname") String subjectname,@FormParam("timeline") String timeline,
@@ -88,29 +87,30 @@ public class SubjectResource {
 		sub.setTimeline(timeline);
 		sub.setBranch(branch);
 		controller.EditSubject(sub);
-		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Updated").build();
 	}
 	catch(Exception e){
 		e.printStackTrace();
 		System.out.println(e);
 	}
-	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Unabled to complete this task.").build();
 	}
 	@DELETE
 	@Path("/deleteSubject")
 	@PermitAll
+	@JWTTokenNeeded
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteSubject(@QueryParam("id") String id)
 	{
 		try{
 		SubjectController controller=new SubjectController();
 		controller.deleteSubject(id);
-		return Response.status(Status.ACCEPTED).build();
+		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Updated").build();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "data not deleted").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unabled to complete this task.").build();
 	}
 	
 }

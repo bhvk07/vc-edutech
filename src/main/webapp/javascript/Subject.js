@@ -1,13 +1,13 @@
 var mes;
 var requestid=0;
 $(document).ready(function(){
-	
+	validateLogin();
+	SubjectList();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		  return this.optional(element) || /^[a-z]+$/i.test(value);
 		}, "Please enter letters only");
 	
 	$('form[id="subjectForm"]').validate({
-		
 		
 		  rules: {
 		    
@@ -29,8 +29,6 @@ $(document).ready(function(){
 				required:'Timeline is required',	
 				digits:'Please enter only digits'
 			},
-			
-		
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
@@ -39,10 +37,6 @@ $(document).ready(function(){
 		  }
 	});
 	
-	
-	
-	
-	SubjectList();
 	$('#subjecttable').DataTable({
 		"pageLength" : 40
 	});
@@ -68,13 +62,13 @@ $(document).ready(function(){
 		});	
 	});
 	$("#Delete").click(function() {
+		var idarray=new Array();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
-			var idarray=new Array();
 			idarray.push($(this).val());
-			deleteSubject(idarray);
 			}
 		});
+		deleteSubject(idarray);
 	});
 	$("#cancel").click(function(){
 		clearModal();	
@@ -106,7 +100,7 @@ function createSubject(){
 		var formData=$("#subjectForm").serialize()+"&id="+requestid+"&branch="+branchSession;
 		var relativeUrl = "/Subject/EditSubject";
 	}
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -139,24 +133,24 @@ function SubjectList(){
 	var httpMethod = "GET";
 	//var formData = ''
 	var relativeUrl = "/Subject/FetchAllSubject?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl,null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
 }
 function deleteSubject(id) {
 	function callback(responseData,textStatus,request)
 	{
-	
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
+	alert(id);
 	var httpMethod = "DELETE";
-	var relativeUrl = "/Subject/deleteSubject?id="+id;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	var relativeUrl = "/Subject/deleteSubject?id="+id+"&branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;	
 }
 function loadSubject(subject,time,e){
