@@ -22,9 +22,6 @@ $(document).ready(function(){
 			  attemptLogin();
 		  }
 	});
-		 /* $("#btn-login").click(function(){
-			  
-		  });*/
 });
 
 
