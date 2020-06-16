@@ -343,6 +343,8 @@ public class AdmissionDAO {
 		ArrayList<Integer> monthly=new ArrayList<>();
 		ArrayList<String> due=new ArrayList<>();
 		ArrayList<String> title=new ArrayList<>();
+		ArrayList<Integer> paid=new ArrayList<>();
+		ArrayList<Integer> remain=new ArrayList<>();
 		Installment install=new Installment();
 		
 		try {
@@ -357,10 +359,14 @@ public class AdmissionDAO {
 				monthly.add(rs.getInt(5));
 				due.add(rs.getString(6));
 				title.add(rs.getString(7));
+				paid.add(rs.getInt(8));
+				remain.add(rs.getInt(9));
 			}
 			install.setMonthly_pay(monthly);
 			install.setDue_date(due);
-			install.setFees_title(title);			
+			install.setFees_title(title);
+			install.setPaid(paid);
+			install.setRemain_fees(remain);
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
