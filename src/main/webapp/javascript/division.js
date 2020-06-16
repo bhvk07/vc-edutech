@@ -5,7 +5,7 @@ $(document).ready(function(){
 	FetchAllDiv();
 	$.validator.addMethod("alphanum", function(value, element) {
         return this.optional(element) || /^[a-z0-9\\]+$/i.test(value);
-    }, " must contain only letters");
+    }, " must contain only letters or digits");
 
 	
 	$('form[id="divisionForm"]').validate({

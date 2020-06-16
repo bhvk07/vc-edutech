@@ -15,10 +15,12 @@ $(document).ready(function(){
 
 	jQuery.validator.addMethod("minDate", function (value, element) {
 	    var now = new Date();
+	    now.setHours(0,0,0,0);
 	    var myDate = new Date(value);
-	    return this.optional(element) || myDate > now;
+	    
+	    return this.optional(element) || myDate >= now;
 	 });
-	jQuery.validator.addMethod("maxDate", function (value, element) {
+	/*jQuery.validator.addMethod("maxDate", function (value, element) {
 		var startDate = new Date($('#aca_start').val());
 		var endDate = new Date($('#aca_end').val());
 
@@ -26,8 +28,23 @@ $(document).ready(function(){
 			 $("#errmsg1").html("!").show();
              return false;
 		}
-	 });
+	 });*/
 	
+	
+	jQuery.validator.addMethod("greaterThan", 
+			function(value, element, params) {
+
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) > new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) > Number($(params).val())); 
+			},'Must be greater than Starting date.');
+	
+	$.validator.addMethod("alphanum", function(value, element) {
+        return this.optional(element) || /^[a-z0-9\\]+$/i.test(value);
+    }, " must contain only letters or digits");
 	
 	$('form[id="academicYearForm"]').validate({
 		
@@ -47,18 +64,21 @@ $(document).ready(function(){
 			aca_start: {
 		        required: true,
 		        date:true,
-		       // minDate: true
+		       minDate: true
 		      
 			},
 			aca_end: {
 		        required: true,
 		        date:true,
-		      //  maxDate: true
+	/*	       maxDate: true,*/
+		        greaterThan:"#aca_start"
+		       
 		        
 			},
 			
 			prefix_id_card: {
-		        required: true
+		        required: true,
+		        alphanum:true
 		  
 		        
 			},
@@ -71,6 +91,7 @@ $(document).ready(function(){
 			},
 			prefix_invoice: {
 		        required: true,
+		        alphanum:true
 		        
 		      
 		        
@@ -84,7 +105,8 @@ $(document).ready(function(){
 		        
 			},
 			prefix_regno: {
-		        required: true
+		        required: true,
+		        alphanum:true
 		   
 		        
 		        
@@ -110,7 +132,7 @@ $(document).ready(function(){
 			},
 			aca_end:{
 				required:'End date is required',		
-				maxDate:'End date should be greater than start date'
+				/*maxDate:'End date should be greater than start date'*/
 			},
 			
 		

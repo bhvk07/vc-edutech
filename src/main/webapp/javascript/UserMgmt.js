@@ -11,15 +11,26 @@ $(document).ready(function() {
 		return this.optional(element) || /^[a-z]+$/i.test(value);
 	}, "Please enter letters only");
 
-	/*jQuery.validator.addMethod("futureDate", function(value, element) {
-		 var now = new Date();
-		 var myDate = new Date(value);
-		 return this.optional(element) || myDate > now;
-	});*/
 	jQuery.validator.addMethod("futureDate", function(value, element) {
-		return this.optional(element) || Date.parse(value) > new Date().getTime(); 
-		}, "Date cannot be a future Date");
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate < now;
+	});
+	
+	jQuery.validator.addMethod("greaterThan", 
+			function(value, element, params) {
 
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) > new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) > Number($(params).val())); 
+			},'Must be greater than your Date of birth.');
+	
+	
+	
 	$('form[id="createAc"]').validate({
 		rules : {
 
@@ -95,7 +106,8 @@ $(document).ready(function() {
 
 			join_date : {
 				required : true,
-				date : true
+				date : true,
+				greaterThan:"#dob"
 
 			},
 			design : {
@@ -104,7 +116,8 @@ $(document).ready(function() {
 		},
 		messages : {
 
-			contact : 'Please enter correct mobile number'
+			contact : 'Please enter correct mobile number',
+				dob:'Date of birth cannot be a future date'
 		},
 		submitHandler : function(form) {
 			event.preventDefault();
