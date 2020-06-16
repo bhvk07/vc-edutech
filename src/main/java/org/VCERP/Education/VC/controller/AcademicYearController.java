@@ -31,4 +31,8 @@ public class AcademicYearController {
 		AcademicYearDAO dao=new AcademicYearDAO();
 		dao.editAcademicYear(year);		
 	}
+	public void DeleteAcadYear(String id, String branch) {
+		AcademicYearDAO dao=new AcademicYearDAO();
+		dao.DeleteAcadYear(id,branch);
+	}
 }

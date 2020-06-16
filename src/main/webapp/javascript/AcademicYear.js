@@ -47,13 +47,13 @@ $(document).ready(function(){
 			aca_start: {
 		        required: true,
 		        date:true,
-		        minDate: true
+		       // minDate: true
 		      
 			},
 			aca_end: {
 		        required: true,
 		        date:true,
-		        maxDate: true
+		      //  maxDate: true
 		        
 			},
 			
@@ -136,6 +136,15 @@ $(document).ready(function(){
 			loadAcadData(requestid,e);
 		});
 	});
+	$("#delete").click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			var idarray=new Array();
+			idarray.push($(this).val());
+			}
+			deleteAcadYear(idarray);
+		});
+	});
 	$("#cancel").click(function(){
 		clearModel();
 	});
@@ -160,10 +169,10 @@ function InsertYear(){
 	var httpMethod = "POST";
 	
 	if(requestid==0){
-	formData = $("#academicYear").serialize()+"&branch="+branchSession;
+	formData = $("#academicYearForm").serialize()+"&branch="+branchSession;
 	relativeUrl = "/AcademicYear/NewAcademic";
 	}else{
-		formData = $("#academicYear").serialize()+"&id="+requestid+"&branch="+branchSession;
+		formData = $("#academicYearForm").serialize()+"&id="+requestid+"&branch="+branchSession;
 		relativeUrl = "/AcademicYear/editAcademicYear";
 	}
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
@@ -244,4 +253,20 @@ function clearModel(){
 	document.getElementById("prefix_regno").value="";
 	document.getElementById("regno").value="";
 	requestid=0;
+}
+function deleteAcadYear(idarray){
+	function callback(responseData, textStatus, request){
+		var msg = responseData.responseJSON.message;
+		showNotification("success",mes);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/AcademicYear/DeleteAcadYear?id="+idarray+"&branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
 }

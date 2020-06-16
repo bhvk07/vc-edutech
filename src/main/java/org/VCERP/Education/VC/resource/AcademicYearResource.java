@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -133,6 +134,23 @@ public class AcademicYearResource{
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
-
+	@DELETE
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/DeleteAcadYear")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response DeleteAcadYear(@QueryParam("id") String id,@QueryParam("branch") String branch){
+		AcademicYearController controller = null;
+		try{
+			controller = new AcademicYearController();
+			controller.DeleteAcadYear(id,branch);
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Deleted").build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Unable to complete task.").build();
+	}
 
 }

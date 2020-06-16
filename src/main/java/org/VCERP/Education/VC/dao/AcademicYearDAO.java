@@ -202,4 +202,23 @@ public class AcademicYearDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+
+	public void DeleteAcadYear(String id, String branch) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from academic_year_master where id=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.setString(2, branch);
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

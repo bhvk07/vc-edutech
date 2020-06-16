@@ -41,8 +41,8 @@ $(document).ready(function(){
 			if(chk.checked){
 			var idarray=new Array();
 			idarray.push($(this).val());
-			deleteSource(idarray);
 			}
+			deleteSource(idarray);
 		});
 	});
 	$("#cancel").click(function() {

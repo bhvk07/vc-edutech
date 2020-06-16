@@ -33,32 +33,11 @@ $(document).ready(function() {
 		var table = $('#receipt_table').DataTable();
 		if (this.checked == true) {
 			val = table.row(this.closest('tr')).data();
-//			myArray.push(val);
 			var rno = val[5];
-			
 			var receiptno = val[2];
-//			myArray.push(rno+"|"+receiptno);
 			getVeiwReceiptData(rno, receiptno);
-			/*
-			 * r_date = val[1]; r_no = val[2]; r_stud = val[3]; r_mob = val[4];
-			 * r_in = val[6]; r_amt = val[7];
-			 */
 		}
-//		ReceiptData(myArray);
-//		var iterator = myArray.values(); 
-//		  
-//		// Here all the elements of the array is being printed. 
-//		for (let elements of iterator) { 
-//		  console.log(elements); 
-//		} 
 	});
-	/*
-	 * $("#btn-view").click(function(){ alert("btn");
-	 * localStorage.setItem("amount", r_amt); localStorage.setItem("rec_no1",
-	 * r_no); localStorage.setItem("stud_name", r_stud);
-	 * localStorage.setItem("rec_date", r_date); localStorage.setItem("rec_in",
-	 * r_in); });
-	 */
 });
 
 function showReceiptTable() {
@@ -81,12 +60,6 @@ function showReceiptTable() {
 			var received_by = responseData[i].received_by;
 			var trans_date = responseData[i].trans_date;
 			var trans_status = responseData[i].trans_status;
-			// var delbutton = '<a href="#editEmployeeModal" class="edit"
-			// data-toggle="modal"><i class="material-icons"
-			// data-toggle="tooltip" title="Edit">&#xE254;</i></a><button
-			// id="delete" class="delete" onclick="deleterow()" ><i
-			// class="material-icons" data-toggle="tooltip"
-			// title="Delete">&#xE872;</i></button>';
 			table.row.add(
 					[ srno, receipt_date, receipt_no, stud_name, contact,
 							Rollno, pay_mode, received_amt, received_by,

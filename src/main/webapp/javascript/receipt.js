@@ -76,7 +76,7 @@ $(document).ready(function(){
 		var table = document.getElementById("InstallmentTable");
 		var received_amt=$("#received_amt").val();
 		if(parseInt(received_amt)!=0){
-		$(table.rows.item(1).cells[7]).find('input').val(received_amt);
+			placeReceiveAmountInInstallmentTable(parseInt(receive_amt));
 		}
 	});
 });
@@ -199,4 +199,10 @@ function removeInstallmentTableRow(){
 		document.getElementById("InstallmentTable").deleteRow(rowCount - 1);
 		rowCount = rowCount - 1;
 	}
+}
+
+function placeReceiveAmountInInstallmentTable(received_amt){
+	var table = document.getElementById("InstallmentTable");
+	var rowCount=table.rows.length;
+	$(table.rows.item(1).cells[7]).find('input').val(received_amt);
 }

@@ -49,8 +49,8 @@ $(document).ready(function(){
 			if(chk.checked){
 			var idarray=new Array();
 			idarray.push($(this).val());
-			deleteDivision(idarray);
 			}
+			deleteDivision(idarray);
 		});
 	});
 	$("#cancel").click(function(){
