@@ -4,16 +4,19 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.StandardController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Standard;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -23,7 +26,8 @@ public class StandardResource {
 	@Path("/getAllStandard")
 	@GET
 	@PermitAll
-	@Consumes(MediaType.APPLICATION_JSON)
+	@JWTTokenNeeded
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllStandard(@QueryParam("branch") String branch){
 		
 		try{
@@ -36,35 +40,52 @@ public class StandardResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.ACCEPTED, "NOT Found").build();
+		return Util.generateErrorResponse(Status.ACCEPTED, "Data Not Found").build();
 	}
 
 	
 	@Path("/addStandard")
 	@POST
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addStandard(@FormParam("stdname") String stdname,@FormParam("stdamt") String stdamt,
 			@FormParam("sub") String sub,@FormParam("branchData") String branchData){
-		
+		StandardController controller=new StandardController();
 		try{
 			String[] commaSeperated=Util.commaSeperatedString(branchData);
-			ArrayList<String> branch=new ArrayList<>();
 			for(int i=0;i<commaSeperated.length;i++)
 			{
-				String[] symbolSeperated=Util.symbolSeperatedString(commaSeperated[i]);
-				branch.add(symbolSeperated[0]);
+				String[] colanSeperated=Util.colanSeperatedString(commaSeperated[i]);
+				Standard std=new Standard();
+				std.setStandard(stdname);
+				std.setStd_fees(stdamt);
+				std.setSubject(sub);
+				std.setBranch(colanSeperated[0]);
+				controller.addStandard(std);
 			}
-			Standard std=new Standard();
-			std.setStandard(stdname);
-			std.setStd_fees(stdamt);
-			std.setSubject(sub);
-			StandardController controller=new StandardController();
-			controller.addStandard(std,branch);
-			return Util.generateResponse(Status.ACCEPTED, "Data Save").build();
+			return Util.generateResponse(Status.ACCEPTED, "New Standard Successfully Created.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.ACCEPTED, "Data Save").build();
+		return Util.generateErrorResponse(Status.ACCEPTED, "Unable to create new standard.Please try again or contact with administrator").build();
+	}
+	@Path("/deleteStandard")
+	@DELETE
+	@JWTTokenNeeded
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteStandard(@QueryParam("id") Long id,@QueryParam("branch") String branch){
+		Standard standard=new Standard();
+		StandardController controller=new StandardController();
+		try{
+			standard.setId(id);
+			standard.setBranch(branch);
+			controller.deleteStandard(standard);
+			return Util.generateResponse(Status.ACCEPTED, "Standard Successfully Deleted.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.ACCEPTED, "Unable to complete this task.").build();
 	}
 }

@@ -13,10 +13,15 @@ public class StandardController {
 		
 	}
 	
-	public void addStandard(Standard std, ArrayList<String> branch) {
+	public void addStandard(Standard std) {
 		StandardDAO dao=new StandardDAO();
-		dao.addStandard(std,branch);
+		dao.addStandard(std);
 		
+	}
+
+	public void deleteStandard(Standard standard) {
+		StandardDAO dao=new StandardDAO();
+		dao.deleteStandard(standard);
 	}
 
 	

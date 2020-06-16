@@ -5,21 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Standard</title>
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="jquery/jquery-3.3.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="core/noty.js"></script>
-<link rel="stylesheet" type="text/css" href="css/noty.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+	
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 
@@ -28,10 +25,13 @@
 
 <script
 	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
+<script type="text/javascript" src="javascript/ValidateLogin.js"></script> 
 <script type="text/javascript" src="javascript/standard.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
+
 <style type="text/css">
 body {
 	color: #566787;
@@ -353,11 +353,11 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 
 						<a href="#subjectModal" data-toggle="modal"
 							data-target="#standardmodal" class="btn btn-success"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
+							class="material-icons">&#xE147;</i> <span>Add New</span></a> <!-- <a
 							href="" class="btn btn-danger" id="edit"><i
-							class="material-icons">&#xE15C;</i> <span>Edit</span></a><a
-							href="#deleteEmployeeModal" class="btn btn-danger"
-							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
+							class="material-icons">&#xE15C;</i> <span>Edit</span></a> --><a
+							href="" class="btn btn-danger"
+							id="delete"><i class="material-icons">&#xE15C;</i>
 							<span>Delete</span></a>
 					</div>
 				</div>
@@ -398,8 +398,8 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 
 
 
-
-			<!----code for selecting all check boxes---->
+<!-- 
+			--code for selecting all check boxes--
 			<script type="text/javascript">
 				$('#selectall').click(
 						function(event) { //on click
@@ -417,7 +417,7 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 						});
 			</script>
 
-
+ -->
 		</div>
 	</div>
 
@@ -425,7 +425,7 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 	<div id="standardmodal" class="modal fade">
 		<div class="modal-body">
 			<div class="modal-content">
-				<form id="standardForm">
+				<form id="standardForm" method="post">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">STANDARD</h4>
@@ -442,7 +442,7 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 						<div class="form-group">
 							<label>Standard Fees Amount<font color="red">*</font></label> <input
 								type="number" class="form-control" id="stdamt" name="stdamt"
-								required>
+								value="0">
 						</div>
 
 						<div class="form-group">
@@ -460,12 +460,12 @@ class="label-xs hidden-xs hidden-sm p5">edit</span>
 										</div>
 									</div>
 								</div>
-								<!-- <div class="col-sm-6">
+<!-- 								 <div class="col-sm-6">
 									<div class="form-group has-search">
 										<div class="input-group">
 											<input type="text" class="form-control" placeholder="Search">
 											<label>Subject<font color="red">*</font></label> <select
-												id="multiple-checkboxes_selected" class="sub_selected" name="subject" multiple="multiple">
+												id="multiple-checkboxes" class="sub_selected" name="sub_selected" multiple="multiple">
 
 											</select>
 
@@ -570,30 +570,5 @@ class="form-control text" value="0"></td>
 			</div>
 		</div>
 	</div>
-	<!-- <script>
-function GetSelectedTextValue(mySelect) {
-var selectedText = mySelect.options[mySelect.selectedIndex].innerHTML;
-
-var x = document.getElementById("mySelect2");
-var option = document.createElement("option");
-option.text = selectedText;
-x.add(option);
-var x1 = document.getElementById("mySelect");
-x1.remove(x1.selectedIndex);
-}
-
-function GetSelectedTextValue2(mySelect2) {
-var selectedText1 = mySelect2.options[mySelect2.selectedIndex].innerHTML;
-var x2 = document.getElementById("mySelect2");
-x2.remove(x2.selectedIndex);
-
-var x3 = document.getElementById("mySelect");
-var option1 = document.createElement("option");
-option1.text = selectedText1;
-x3.add(option1);
-
-}
-</script> -->
-
 </body>
 </html>

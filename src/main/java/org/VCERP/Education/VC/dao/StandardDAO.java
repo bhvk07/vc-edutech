@@ -44,28 +44,47 @@ public class StandardDAO {
 	}
 
 	
-	public void addStandard(Standard std, ArrayList<String> branch) {
+	public void addStandard(Standard std) {
 		Connection conn=null;
 		PreparedStatement ps=null;
 		try{
 			conn=Util.getDBConnection();
 			String query="insert into standard_master(`standard`,`standard_fees`,`subject`,`branch`,`created_date`)values(?,?,?,?,?)";
 			ps=conn.prepareStatement(query);
-			for(int i=0;i<branch.size();i++)
-			{
 			ps.setString(1, std.getStandard());
 			ps.setString(2, std.getStd_fees());
 			ps.setString(3, std.getSubject());
-			ps.setString(4, branch.get(i));
+			ps.setString(4, std.getBranch());
 			ps.setString(5, Util.currentDate());
 			ps.executeUpdate();
-			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
 			Util.closeConnection(null, ps, conn);
 		}
+	}
+
+
+	public void deleteStandard(Standard standard) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String id=""+standard.getId();
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from standard_master where id=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.setString(2, standard.getBranch());
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	
