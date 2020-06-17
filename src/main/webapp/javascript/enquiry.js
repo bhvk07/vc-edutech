@@ -1,5 +1,6 @@
 var mes;
 var editData=sessionStorage.getItem("EditData");
+alert(editData);
 var request="";
 $(document).ready(function() {
 	validateLogin();
@@ -200,6 +201,7 @@ $(document).ready(function() {
 		  }
 	});
 	if(editData!=null){
+		alert("here");
 		loadEditData(editData);
 		request="Edit"
 	}

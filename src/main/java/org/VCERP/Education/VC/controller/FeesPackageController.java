@@ -37,4 +37,9 @@ public class FeesPackageController {
 		dao.EditFeesPackage(pack);
 	}
 
+	public void deleteFeesPackage(FeesPackage pack) {
+		FeesPackageDAO dao=new FeesPackageDAO();
+		dao.deleteFeesPackage(pack);
+		}
+
 }

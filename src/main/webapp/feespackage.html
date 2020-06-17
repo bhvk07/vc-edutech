@@ -5,25 +5,24 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admission-List</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
-<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script> -->
+<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/feesPackage.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
 <style type="text/css">
 body {
 	color: #566787;
@@ -376,6 +375,11 @@ table.table .avatar {
 									<!--							<div id="demo2">-->
 									<button type="button" style="background-color: #53b700;"
 										class="btn btn-danger popconfirm  margin-right-sm ladda-button"
+										id="delete">
+										<b><i class=" padding-right-sm fs14"></i></b><span>Delete</span>
+									</button>
+									<button type="button" style="background-color: #53b700;"
+										class="btn btn-danger popconfirm  margin-right-sm ladda-button"
 										id="edit">
 										<b><i class=" padding-right-sm fs14"></i></b><span>Edit</span>
 									</button>
@@ -641,7 +645,7 @@ table.table .avatar {
 												</td>
 												<td>
 													<div class="w3-padding w3-xlarge w3-teal">
-														<button type="button" id="remove-row" class="remove-row">
+														<button type="button" id="remove-row">
 															<i class="glyphicon glyphicon-trash"></i>
 														</button>
 													</div>
@@ -739,45 +743,6 @@ table.table .avatar {
 			});
 		});
 	</script>
-
-
-	<!--
-    <script type="text/javascript">
-        document.getElementById("form2").style.display = "none";
-        document.getElementById("demo").style.display = "none";
-
-		$('#btnMarkAdd').on('click',function(event) { //on click
-
-			document.getElementById("demo2").style.display = "none";
-			document.getElementById("demo").style.display = "block";
-		
-			document.getElementById("form1").style.display = "none";
-			document.getElementById("form2").style.display = "block";
-			
-
-		});
-    </script>
--->
-
-
-
-	<!--
-<script type="text/javascript">
-	
-		$('#close').on('click',function(event) { //on click
-
-			document.getElementById("demo").style.display = "none";
-			document.getElementById("demo2").style.display = "block";
-			document.getElementById("form1").style.display = "block";
-			document.getElementById("form2").style.display = "none";
-	
-
-		});
-    </script>
--->
-
-
-
 
 	<script>
 		var htmlCode = new Array();

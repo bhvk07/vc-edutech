@@ -159,13 +159,13 @@ $(document).ready(function(){
 		});
 	});
 	$("#delete").click(function() {
+		var idarray=new Array();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
-			var idarray=new Array();
 			idarray.push($(this).val());
 			}
-			deleteAcadYear(idarray);
 		});
+		deleteAcadYear(idarray);
 	});
 	$("#cancel").click(function(){
 		clearModel();

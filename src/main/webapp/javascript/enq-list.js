@@ -99,19 +99,20 @@ function deletemultiplerow(id) {
 }
 
 function Admission(id, req) {
+	var enqData="";
 	function callback(responseData, textStatus, request) {
-		var enqData;
 		var today = new Date();
 		var studentDetails = id + "|" + responseData.sname + " "
 				+ responseData.fname + " " + responseData.lname + "|"
 				+ responseData.stud_cont;
-
 		enqData=responseData.fname+":"+responseData.lname+":"+responseData.mname+":"+responseData.uid+":"+responseData.dob+":"+
 		responseData.gender+":"+responseData.caste+":"+responseData.category+":"+responseData.lang+":"+responseData.father_cont+":"+
 		responseData.mother_cont+":"+responseData.address+":"+responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+
 		responseData.sname+":"+responseData.stud_cont+":"+responseData.enq_date+":"+responseData.enq_no+":"+
 		responseData.enq_taken_by+":"+responseData.lead_source+":"+responseData.remark+":"+responseData.fees_pack+":"+responseData.branch;
+		
 		if (req == "Edit") {
+			alert("here");
 			sessionStorage.setItem("EditData", enqData);
 			window.location.href = "enquiry.html";
 		} else {
@@ -153,7 +154,7 @@ function Admission(id, req) {
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/SearchStudent?id=" + id + "&branch="
 			+ branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
