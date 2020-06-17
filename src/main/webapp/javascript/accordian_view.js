@@ -1,4 +1,25 @@
+$(document).ready(function(){
+	
+
+
+$('#multi_status_select').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	
+	$('#multi_course').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	$('#multi_div').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	
+});
+
 $(function() {
+
 	var Accordion = function(el, multiple) {
 		this.el = el || {};
 		this.multiple = multiple || false;
