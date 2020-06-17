@@ -18,8 +18,7 @@
 <!--  <link rel="stylesheet" href="css/bootstrap.min.css">  -->
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <script type="text/javascript" src="core/noty.js"></script>
@@ -385,6 +384,10 @@ table.table {
 							data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Edit</span></a>
 						<a href="" class="btn btn-success" id="Viewbtn"><i
 							class="material-icons">&#xE147;</i> <span>View </span></a>
+						<button class="btn btn-info" id="pdf" onclick="invoice_pdf()"><i class="fa fa-file-pdf-o"></i> Inovice PDF</button>
+						<button class="btn btn-info" id="pdf" onclick="admission_pdf()"><i class="fa fa-file-pdf-o"></i> Admission PDF</button>
+						<button class="btn btn-info" id="pdf" onclick="invoice_print()"><i class="fa fa-file-print-o"></i> Print Invoice</button>
+						<button class="btn btn-info" id="pdf" onclick="admission_print()"><i class="fa fa-file-print-o"></i> Print Admission</button>
 					</div>
 				</div>
 			</div>
@@ -433,7 +436,7 @@ table.table {
 
 		<!-- View Tab -->
 		<section class="panel panel-2" id="datatable-view-2">
-			<button onclick="generate()">PDF</button>
+			<!-- <button onclick="generation()">PDF</button> -->
 
 			<div class="panel">
 				<div class="panel-heading panel-visible">
@@ -480,7 +483,7 @@ table.table {
         </div>
         <hr>
     </div> -->
-								<div class="invoice overflow-auto">
+								<div class="invoice overflow-auto" id="inv">
 									<div style="min-width: 600px">
 										<header>
 											<div class="row">
@@ -821,19 +824,85 @@ table.table {
 
 	<!-- <script type="text/javascript" src="assets/js/jspdf.debug.js"></script> -->
 
-	<link rel="assets/css/animejs.css" type="stylesheet">
+	<!-- <link rel="assets/css/animejs.css" type="stylesheet">
 	<script src="assets/js/anime.min.js"></script>
-
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script>
+ -->
+	<!-- <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script> -->
 	<!-- <script type="text/javascript" src="assets/js/html2canvas.js"></script>-->
-	<!--  <script type="text/javascript" src="assets/js/jspdf.min.js"></script>   -->
+	  <!-- <script type="text/javascript" src="assets/js/jspdf.min.js"></script> -->  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+	
+		
+		<script type="text/javascript" src="assets/js/divjs.js"></script>
 	<script>
-		generate = function() {
+	 
+	function invoice_pdf()
+	  {
+	       alert("hie");
+	   
+	   html2canvas(document.getElementById('inv'),{
+	   onrendered:function(canvas){
+
+	   var img=canvas.toDataURL("image/png", wid = canvas.width, hgt = canvas.height );
+	   var hratio = hgt/wid;
+	   var doc = new jsPDF('p','mm','a4');
+	   var width = doc.internal.pageSize.width;  
+	   height = hratio * width;
+
+	   doc.addImage(img,'JPEG',10,20,width-20,height-10);
+	   doc.save('successss.pdf');
+	   }
+
+	   });
+
+	  }  
+	
+	
+	function invoice_print(){
+		
+		$('.invoice').printElement({
+	    });
+
+	}
+	   
+	function admission_pdf()
+	  {
+	       alert("hie");
+	   
+	   html2canvas(document.getElementById('admission_details'),{
+	   onrendered:function(canvas){
+
+	   var img=canvas.toDataURL("image/png", wid = canvas.width, hgt = canvas.height );
+	   var hratio = hgt/wid;
+	   var doc = new jsPDF('p','mm','a4');
+	   //doc.internal.scaleFactor = 1.33;
+	   var width = doc.internal.pageSize.width; 
+	   //var height = doc.internal.pageSize.height; 
+	   height = hratio * width;
+
+	   doc.addImage(img,'JPEG',10,20,width-10,height-10);
+	   doc.save('successss.pdf');
+	   }
+
+	   });
+
+	  }  
+	   
+function admission_print(){
+		
+		$('#admission_details').printElement({
+	    });
+
+	}
+	   
+	
+	
+		/* generate = function() {
 
 			html2canvas(document.getElementById("edit"), {
 				onrendered : function(canvas) {
@@ -852,9 +921,9 @@ table.table {
 			let pdf = new jsPDF('p', 'mm', 'a4');
 			pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
 			pdf.save(sample.pdf); 
-			}); */
+			}); 
 
-		}
+		} */
 		/* margins = {
 			  top: 10,
 			  bottom: 40,

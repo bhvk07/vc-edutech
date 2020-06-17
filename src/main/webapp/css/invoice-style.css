@@ -153,6 +153,7 @@
         overflow: hidden!important
     }
 
+
     .invoice footer {
         position: absolute;
         bottom: 10px;
@@ -161,5 +162,6 @@
 
     .invoice>div:last-child {
         page-break-before: always;
+        page-break-after: auto;
     }
 }
