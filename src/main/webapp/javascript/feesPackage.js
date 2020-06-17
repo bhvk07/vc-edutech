@@ -5,97 +5,112 @@ var std = "";
 $(document)
 		.ready(
 				function() {
-					jQuery.validator.addMethod("lettersonly", function(value, element) {
-						return this.optional(element) || /^[a-z\s]+$/i.test(value);
-						}, "Only alphabetical characters");
-					 jQuery.validator.addMethod("noSpace", function(value, element) { 
-						  return value.indexOf(" ") < 0 && value != ""; 
-						}, "No space please and don't leave it empty");
-					$('form[id="feespackage-form"]').validate({
-						  rules: {
-							fees_pack: {
-						    	required:true
-						    
-						    },
-						    searchforstand1: {
-						      required: true
-						    },
-						    searchforstand2: {
-							      required: true
-							    },
-							feestype: {
-						        required: true
-						    },
-						    amount: {
-						        required: true,
-						        number: true,
-						        noSpace: true
-							},
-							discount: {
-						        required: true,
-						        number: true,
-						        noSpace: true
-							},
-							tax: {
-								required: true,
-								noSpace: true
-							},
-							
-						  },
-						
-						  submitHandler:function(form){
-							  event.preventDefault();
-							  addNewFeesPackage();
-						  }
-					});
-					//feestype validation
-					jQuery.validator.addMethod("letterswithspace", function(value, element) {
-					    return this.optional(element) || /^[a-z\s]+$/i.test(value);
-					}, "Please enter letters only");
-					
-					
-					$('form[id="feestypeform"]').validate({
-						
-						
-						  rules: {
-						    
-							  feesType: {
-						        required: true,
-						        letterswithspace: true
-						   },
-							
-						  },
-						 
-						  submitHandler:function(form){
-							  event.preventDefault();
-							  addFeesType();
-							  
-						  }
-					});
+					validateLogin();
 					getFeesPackage();
-					// loadFeesType();
 					loadBranchSpecificStandard();
 					loadFeesPackage();
-					$("#submit").click(
-							function() {
-								$('#standard input:checked').each(
+					jQuery.validator.addMethod("lettersonly", function(value,
+							element) {
+						return this.optional(element)
+								|| /^[a-z\s]+$/i.test(value);
+					}, "Only alphabetical characters");
+					jQuery.validator.addMethod("noSpace", function(value,
+							element) {
+						return value.indexOf(" ") < 0 && value != "";
+					}, "No space please and don't leave it empty");
+					$('form[id="feespackage-form"]').validate({
+						rules : {
+							fees_pack : {
+								required : true
+
+							},
+							searchforstand1 : {
+								required : true
+							},
+							searchforstand2 : {
+								required : true
+							},
+							feestype : {
+								required : true
+							},
+							amount : {
+								required : true,
+								number : true,
+								noSpace : true
+							},
+							discount : {
+								required : true,
+								number : true,
+								noSpace : true
+							},
+							tax : {
+								required : true,
+								noSpace : true
+							},
+
+						},
+
+						submitHandler : function(form) {
+							event.preventDefault();
+						}
+					});
+
+					jQuery.validator.addMethod("letterswithspace", function(
+							value, element) {
+						return this.optional(element)
+								|| /^[a-z\s]+$/i.test(value);
+					}, "Please enter letters only");
+
+					$('form[id="feestypeform"]').validate({
+						rules : {
+
+							feesType : {
+								required : true,
+								letterswithspace : true
+							},
+
+						},
+
+						submitHandler : function(form) {
+							event.preventDefault();
+							addFeesType();
+
+						}
+					});
+
+					$("#submit").click(function() {
+						standardData = new Array();
+						branchData = new Array();
+						$('#standard input:checked')
+								.each(
 										function() {
-											var std = $(this).closest('tr')
-													.find('td:nth-child(2)')
+											var std = $(
+													this)
+													.closest(
+															'tr')
+													.find(
+															'td:nth-child(2)')
 													.text();
-											standardData = new Array();
-											standardData.push(std);
+
+											standardData
+													.push(std);
 										});
-								$('#branchTable input:checked').each(
+						$('#branchTable input:checked')
+								.each(
 										function() {
-											var branch = $(this).closest('tr')
-													.find('td:nth-child(2)')
+											var branch = $(
+													this)
+													.closest(
+															'tr')
+													.find(
+															'td:nth-child(2)')
 													.text();
-											branchData = new Array();
-											branchData.push(branch);
+											branchData
+													.push(branch);
 										});
-								addNewFeesPackage(standardData, branchData);
-							});
+						addNewFeesPackage(standardData,branchData);
+
+					});
 					$("#loadBranch")
 							.click(
 									function() {
@@ -160,17 +175,20 @@ $(document)
 												.getElementById("grand-t").value;
 										$(this).closest('tr').remove();
 									})
-					$("#feestypeform").submit(function() {
-						// var token=sessionStorage.getItem("token");
-						// validateLogin(token);
-						//		 
-						event.preventDefault();
-						addFeesType();
+					$("#delete").click(function() {
+						var idarray = new Array();
+						$('table .cbCheck').each(function(i, chk) {
+							if (chk.checked) {
+								idarray.push($(this).val());
+							}
+						});
+						deleteFeesPackage(idarray);
 					});
 					$("#cancel").click(function(e) {
 						clearModal();
 					});
 				});
+
 function addNewFeesPackage(standardData, branchData) {
 	var table = document.getElementById("feestypetable");
 	var rowCount = $('#feestypetable tr').length;
@@ -185,11 +203,14 @@ function addNewFeesPackage(standardData, branchData) {
 	}
 	document.getElementById("inputDisabledAmt").disabled = false;
 	function callback(responseData, textStatus, request) {
-		console.log("save");
+		var mes = responseData.responseJSON.message;
+		showNotification("success", mes);
 		document.getElementById("inputDisabledAmt").disabled = true;
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not save");
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+		document.getElementById("inputDisabledAmt").disabled = true;
 	}
 	var httpMethod = "POST";
 	var formData;
@@ -254,7 +275,8 @@ function loadBranchSpecificStandard() {
 
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/FeesPackage/getBranchSpecificStandard?branch="
@@ -290,7 +312,8 @@ function loadBranch(std) {
 
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/FeesPackage/loadBranch?std=" + std;
@@ -316,7 +339,8 @@ function loadFeesPackage() {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/FeesPackage/getFeesPackage?branch=" + branchSession;
@@ -326,7 +350,7 @@ function loadFeesPackage() {
 }
 function loadFeesPackageData(pack, branch) {
 	function callback(responseData, textStatus, request) {
-		document.getElementById('fees-pack').value = responseData.feesPackage;
+		document.getElementById('fees_pack').value = responseData.feesPackage;
 		document.getElementById('inputDisabledAmt').value = responseData.total_amt;
 		std = responseData.standard;
 		var table = document.getElementById("standard");
@@ -369,7 +393,8 @@ function loadFeesPackageData(pack, branch) {
 		$("#datatable-view-2").show();
 	}
 	function errorCallback(responseData, textStatus, request) {
-		console.log("not found");
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -384,14 +409,12 @@ function loadFeesPackageData(pack, branch) {
 
 function addFeesType() {
 	function callback(responseData, textStatus, request) {
-		// var mes=responseData.responseJSON.message;
-		// showNotification("success",mes);
+		var mes = responseData.responseJSON.message;
+		showNotification("success", mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-		// var mes=responseData.responseJSON.message;
-		// showNotification("error",mes);
-		// var message=responseData.response.JSON.message;
-		// alert(message);
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData;
@@ -399,13 +422,28 @@ function addFeesType() {
 	formData = $('#feestypeform').serialize() + "&branch=" + branchSession;
 	alert(formData);
 	relativeUrl = "/feesType/addNewFeesType";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
-
+function deleteFeesPackage(id) {
+	function callback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("success", mes);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "DELETE";
+	var relativeUrl = "/FeesPackage/deleteFeesPackage?id=" + id + "&branch="
+			+ branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
 function clearModal() {
-	document.getElementById('fees-pack').value = "";
+	document.getElementById('fees_pack').value = "";
 	document.getElementById('inputDisabledAmt').value = "";
 	std = "";
 	var table = document.getElementById("standard");

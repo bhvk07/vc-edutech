@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,49 +23,44 @@ import org.VCERP.Education.VC.utility.Util;
 @Path("FeesPackage")
 public class FeesPackageResource {
 	
-	@Path("/addNewFeesPackage")
-	@PermitAll
 	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/addNewFeesPackage")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addNewFeesPackage(@FormParam("fees-pack") String fees_pack,
+	public Response addNewFeesPackage(@FormParam("fees_pack") String fees_pack,
 	@FormParam("finalamt") String finalamt,@FormParam("standardData") String standardData,
 	@FormParam("branchData") String branchData,@FormParam("fees_details") String fees_details
 	,@FormParam("createdby") String createdby)
 	{
-		/*String[] commaSeperatedFeesDetails=Util.commaSeperatedString(fees_details);
-		for(int i=1;i<commaSeperatedFeesDetails.length;i++){
-			//String a=commaSeperatedFeesDetails;
-			String[] symbolSeperatedFeesDetails=Util.symbolSeperatedString(commaSeperatedFeesDetails[i]);
-				feesType.add(symbolSeperatedFeesDetails[0]);
-				amt.add(symbolSeperatedFeesDetails[1]);
-				discount.add(symbolSeperatedFeesDetails[2]);
-				totalFeesTypeAmt.add(symbolSeperatedFeesDetails[3]);		
-		}*/
-		try{
+		String standard=standardData.replace(",", "-");
 		FeesPackage pack=new FeesPackage();
 		pack.setFeesPackage(fees_pack);
-		pack.setStandard(standardData);
+		pack.setStandard(standard);
 		pack.setBranch(branchData);
 		pack.setTotal_amt(finalamt);
 		pack.setFees_details(fees_details);
 		pack.setCreated_by(createdby);
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		controller.addNewFeesPackage(pack);
-		return Util.generateResponse(Status.ACCEPTED, "DATA save").build();
+		return Util.generateResponse(Status.ACCEPTED, "New Course Package Successfully Cretaed.").build();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new course package.Please try again or contact with administrator.").build();
 	}
-	@Path("/getBranchSpecificStandard")
+	
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
+	@Path("/getBranchSpecificStandard")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBranchSpecificStandard(@QueryParam("branch") String branch)
 	{
-		try{
 		ArrayList<String> std=new ArrayList<>();
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		std=controller.getBranchSpecificStandard(branch);
 		if(std!=null){
 		return Response.status(Status.ACCEPTED).entity(std).build();
@@ -72,18 +68,19 @@ public class FeesPackageResource {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to get standard data").build();
 	}
 	
-	@Path("/loadBranch")
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
+	@Path("/loadBranch")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response loadBranch(@QueryParam("std") String std)
 	{
-		try{
 		ArrayList<String> branch=new ArrayList<>();
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		branch=controller.loadBranch(std);
 		if(branch!=null){
 		return Response.status(Status.ACCEPTED).entity(branch).build();
@@ -91,18 +88,19 @@ public class FeesPackageResource {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to load branch.").build();
 	}
 	
-	@Path("/getFeesPackage")
 	@GET
 	@PermitAll
+	@JWTTokenNeeded
+	@Path("/getFeesPackage")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFeesPackage(@QueryParam("branch") String branch)
 	{
-		try{
 		ArrayList<FeesPackage> pack=new ArrayList<>();
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		pack=controller.getFeesPackage(branch);
 		if(pack!=null){
 		return Response.status(Status.ACCEPTED).entity(pack).build();
@@ -110,19 +108,20 @@ public class FeesPackageResource {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found.").build();
 	}
 	
-	@Path("/getFeesPackageData")
+	
 	@POST
-	@PermitAll
 	@JWTTokenNeeded
+	@PermitAll
+	@Path("/getFeesPackageData")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response getSpecificFeesPackageData(@FormParam("pack") String pack,@FormParam("branch") String branch)
 	{
-		try{
 		FeesPackage fees=new FeesPackage();
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		fees=controller.getFeesPackage(pack,branch);
 		if(fees!=null){
 		return Response.status(Status.ACCEPTED).entity(fees).build();
@@ -132,25 +131,18 @@ public class FeesPackageResource {
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to get Fees Package Data").build();
 	}
-	@Path("/EditFeesPackage")
-	@PermitAll
+	
+	
 	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/EditFeesPackage")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response EditFeesPackage(@FormParam("fees-pack") String fees_pack,
+	public Response EditFeesPackage(@FormParam("fees_pack") String fees_pack,
 	@FormParam("finalamt") String finalamt,@FormParam("standardData") String standardData,
 	@FormParam("branchData") String branchData,@FormParam("fees_details") String fees_details
 	,@FormParam("createdby") String createdby,@FormParam("id") Long id)
 	{
-		/*String[] commaSeperatedFeesDetails=Util.commaSeperatedString(fees_details);
-		for(int i=1;i<commaSeperatedFeesDetails.length;i++){
-			//String a=commaSeperatedFeesDetails;
-			String[] symbolSeperatedFeesDetails=Util.symbolSeperatedString(commaSeperatedFeesDetails[i]);
-				feesType.add(symbolSeperatedFeesDetails[0]);
-				amt.add(symbolSeperatedFeesDetails[1]);
-				discount.add(symbolSeperatedFeesDetails[2]);
-				totalFeesTypeAmt.add(symbolSeperatedFeesDetails[3]);		
-		}*/
-		try{
 		FeesPackage pack=new FeesPackage();
 		pack.setId(id);
 		pack.setFeesPackage(fees_pack);
@@ -160,11 +152,31 @@ public class FeesPackageResource {
 		pack.setFees_details(fees_details);
 		pack.setCreated_by(createdby);
 		FeesPackageController controller=new FeesPackageController();
+		try{
 		controller.EditFeesPackage(pack);
-		return Util.generateResponse(Status.ACCEPTED, "DATA save").build();
+		return Util.generateResponse(Status.ACCEPTED, "Course Package Successfully Updated.").build();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.BAD_REQUEST, "not save").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
+	}
+	@DELETE
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/deleteFeesPackage")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteFeesPackage(@QueryParam("id") Long id,@QueryParam("branch") String branch)
+	{
+		FeesPackage pack=new FeesPackage();
+		pack.setId(id);
+		pack.setBranch(branch);
+		FeesPackageController controller=new FeesPackageController();
+		try{
+		controller.deleteFeesPackage(pack);
+		return Util.generateResponse(Status.ACCEPTED, "Course Package Successfully Deleted.").build();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
 	}
 }

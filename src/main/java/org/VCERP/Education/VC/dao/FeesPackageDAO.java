@@ -176,4 +176,24 @@ public class FeesPackageDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+
+	public void deleteFeesPackage(FeesPackage pack) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String id=""+pack.getId();
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from fees_package where id=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.setString(2, pack.getBranch());
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
