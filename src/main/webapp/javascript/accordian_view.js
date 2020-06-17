@@ -15,6 +15,18 @@ $('#multi_status_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
 	});
+	$('#multi_employee').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	$('#multi_rec_status').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	$('#multi_pay_mode').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
 	
 });
 
