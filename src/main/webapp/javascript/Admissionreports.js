@@ -52,7 +52,7 @@ $(document).ready(function() {
 		    
 			  admission_from_date: {
 		        required: true,
-		       date:required,
+		       date:true,
 		       minDate:true
 		   },
 		   admission_till_date:{

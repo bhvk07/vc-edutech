@@ -3,7 +3,11 @@
 
 <head>
 <meta charset="ISO-8859-1">
+<link
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
 <script src="jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
 <!-- <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <link rel="stylesheet"
@@ -305,7 +309,7 @@ table.table .avatar {
 	font-weight: normal;
 }
 </style>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		// Activate tooltip
 		$('[data-toggle="tooltip"]').tooltip();
@@ -329,7 +333,7 @@ table.table .avatar {
 			}
 		});
 	});
-</script>
+</script> -->
 	<script>
 	$(function() {
 		$("#navbar").load("nav-bar.html");
@@ -430,7 +434,8 @@ table.table .avatar {
 															<div class="input-group status" style="width: 100%;">
 																<select id="multi_status_select" name="status[]"
 																	class="form-control" multiple="multiple" Required>
-																	
+																	<option>Active</option>
+																	<option>Inactive</option>
 																</select>
 															</div>
 
@@ -443,7 +448,7 @@ table.table .avatar {
 																class="titleYear">Standard</span> <span
 																class="text-danger" style="color:red">*</span>
 															</label>
-															<div class="input-group" style="width: 100%;">
+															<div class="input-group select" style="width: 100%;">
 																<select name="standard" id="standard"
 																	class="form-control standard">
 
@@ -460,7 +465,7 @@ table.table .avatar {
 															</label>
 															<div class="input-group" style="width: 100%">
 																<select id="multi_div" name="division[]"
-																	class="form-control" multiple="multiple" Required>
+																	class="form-control division" multiple="multiple" Required>
 																	
 																</select>
 															</div>
@@ -486,7 +491,7 @@ table.table .avatar {
 															</label>
 															<div class="input-group" style="width: 100%">
 																<select id="multi_course" name="course"
-																	class="form-control" multiple="multiple" Required>
+																	class="form-control fees" multiple="multiple" Required>
 																	
 																</select>
 															</div>
@@ -560,7 +565,7 @@ table.table .avatar {
 															<tr>
 																<th>Roll No</th>
 																<th>Student Name</th>
-																<th>Invoice #</th>
+																<th>Invoice</th>
 																<th>Received Amount</th>
 																<th>Receivable Amount</th>
 																<th>Grand Total</th>
@@ -593,13 +598,23 @@ table.table .avatar {
 					<!-- col-md-12 div -->
 			<!-- section role-main -->
 		</div>
+		<script>
+		  $(document).ready(function(){
+			  getFeesPackage();
+			  getAllDivision();
+			  getAcademicYear();
+			  getAllStandard();
+		  });
+		
+		</script>
 		<!-- table wrapper div close -->
 	<!--        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- <script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
 	<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
 	
-	<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
+	
+	
 </body>
 </html>
