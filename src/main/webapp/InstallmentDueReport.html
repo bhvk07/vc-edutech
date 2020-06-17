@@ -43,11 +43,12 @@
 <script src="assets/js/bootstrap-multiselect.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
-<script src="javascript/Admissionreports.js"></script>
+<script src="javascript/InstallmentDueReport.js"></script>
+<script src="javascript/accordian_view.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
 
-<title>Admission Report</title>
+<title>Installment Due Fees Report</title>
 <style>
 .table-wrapper {
 	background: #fff;
@@ -348,7 +349,7 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							<b>Admission Report</b>
+							<b>Installment Due Report</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
@@ -382,7 +383,7 @@ table.table .avatar {
 															<div class="form-group">
 								
 									<label class="control-label"> <span
-										class="course_title">Admission from date</span> <span
+										class="course_title">Installment from date</span> <span
 										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
@@ -395,7 +396,7 @@ table.table .avatar {
 																		<div class="form-group">
 								
 									<label class="control-label"> <span
-										class="course_title">Admission Till date</span> <span
+										class="course_title">Installment Till date</span> <span
 										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
@@ -496,6 +497,48 @@ table.table .avatar {
 															</div>
 														</div>
 													</div>
+													
+													
+													<div class="col-md-3">
+														
+														<div class="form-group">
+															<label class="control-label"> <span
+																class="titleDiv">Admission Status</span>
+															</label>
+															<div class="input-group" style="width: 100%">
+																<select id="multi_status" name="status[]"
+																	class="form-control" multiple="multiple" Required>
+																	<option value="active">Active</option>
+																</select>
+															</div>
+														</div>
+											
+													</div>
+												
+													
+													
+							
+							<div class="col-md-3">
+														<div class="form-group">
+							<label>Student name</label>
+							<input type="text" class="form-control" id="stdname"
+								name="stdname" required>
+						</div>
+
+													</div>
+														
+													<div class="col-md-3">
+													
+													<div class="form-group">
+													<label class="control-label"> <span
+																class="titleDiv">Partial Received Amount</span>
+															</label>
+															<div class="col-md-1">
+							<input type="text" class="form-control" id="start_partial_amt" name="start_partial_amt" required>	</div>
+				<div class="col-md-1">			<span class="input-group-addon" id="bhvk"><label class="control-label"> <span class="titleDiv">to</span></label> </span></div>
+						<div class="col-md-1">	<input type="text" class="form-control" id="end_partial_amt" name="end_partial_amt" required>	</div>
+														</div>
+														</div>
 							
 								
 								<div class="row">
@@ -503,7 +546,7 @@ table.table .avatar {
 													<div class="col-md-12">
 
 														<div class="pull-right">
-															<button type="button" id="btnDisplay"
+																<button type="button" id="btnDisplay"
 																data-style="zoom-in"
 																class="btn btn-warning margin-right-sm">
 																Display</button>
@@ -550,16 +593,18 @@ table.table .avatar {
 																		<input type="checkbox" id="selectAll" name="options[]"
 																		value="0"> <label for="checkbox1"></label>
 																</span></th>
-																<th>Invoice</th>
-																<th>Admision date</th>
 																<th>Student name</th>
+																<th>Invoice</th>
+																<th>ID card number</th>
+																<th>Installment due date</th>
 																<th>Course package</th>
-																<th>Counsellor</th>
-																<th>Net total</th>
-																<th>Tax amount</th>
-																<th>Grand total</th>
-																<th>Payment</th>
-																<th>Balance</th>
+																<th>Fees type</th>
+																<th>Installment due amount</th>
+																<th>Branch</th>
+																<th>Installment amount</th>
+																<th>Received amount</th>
+																<th>Overall due amount</th>
+																
 															</tr>
 														</thead>
 													</table>
