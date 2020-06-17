@@ -7,25 +7,24 @@
 <title>Employee Attendance</title>
 
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="jquery/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="assets/css/wickedpicker.min.css">
-<script type="text/javascript" src="core/noty.js"></script>
-<link rel="stylesheet" type="text/css" href="css/noty.css" />
+<!-- <link rel="stylesheet" href="assets/css/wickedpicker.min.css"> -->
 
 <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 	
-<!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script>-->
+<script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/EmployeeAttendance.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
 
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
 
 <style type="text/css">
 body {
@@ -376,7 +375,7 @@ table.table .avatar {
 					<div class="panel-heading">Advanced Tables</div>
 					<div class="panel-body">
 						<div class="table-responsive">
-							<form id="attendance_stat_form" action="">
+							<form id="attendance_stat_form" method="post">
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>From Date</label> <input type="date" id="from_date"
@@ -516,7 +515,6 @@ table.table .avatar {
 			</div>
 		</div>
 		</section>		
-		
 	</div>
 </body>
 </html>

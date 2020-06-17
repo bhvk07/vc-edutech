@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.EmployeeAttendanceController;
+import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 //import org.VCERP.Education.VC.controller.EmployeeController;
 //import org.VCERP.Education.VC.model.Attendance;
 import org.VCERP.Education.VC.model.Employee;
@@ -25,18 +26,15 @@ import org.VCERP.Education.VC.utility.Util;
 @Path("Attendance")
 public class EmpAttendanceResource {
 	
-	@Path("/getEmpAttendaceList")
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
-	
-	//@PreAuthorize("hasRole('desk')")
+	@JWTTokenNeeded
+	@Path("/getEmpAttendaceList")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response getEmpAttendanceList(@QueryParam("branch") String branch){
-		try {
-			ArrayList<Employee> em=new ArrayList<>();
-			EmployeeAttendanceController controller=new EmployeeAttendanceController();
+		ArrayList<Employee> em=new ArrayList<>();
+		EmployeeAttendanceController controller=new EmployeeAttendanceController();
+		try {			
 			em=controller.getEmpAttendanceList(branch);
 			return Response.status(Status.OK).entity(em).build();
 		} catch (Exception e) {
@@ -46,9 +44,11 @@ public class EmpAttendanceResource {
 	}
 	
 	
-	@Path("/employeeAttendance")
+	
 	@POST
+	@JWTTokenNeeded
 	@PermitAll
+	@Path("/employeeAttendance")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response employeeAttendance(@FormParam("Attendance") String attendance,@FormParam("branch") String branch )
 	{		
@@ -68,26 +68,24 @@ public class EmpAttendanceResource {
 		try {
 			EmployeeAttendanceController controller=new EmployeeAttendanceController();
 			controller.employeeAttendance(empcode,intime,outtime,attend,branch);
-			return Response.status(Status.ACCEPTED).build();
+			return Util.generateResponse(Status.ACCEPTED,"Employee Attendance Successfully Submitted.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not save.").build();
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to submit employee attendance.please try again or contact with administrator..").build();
 	}
-	@Path("/getEmpAttendaceStat")
+	
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
-	
-	//@PreAuthorize("hasRole('desk')")
+	@JWTTokenNeeded
+	@Path("/getEmpAttendaceStat")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response getEmpAttendanceStat(@FormParam("from_date") String from_date,@FormParam("to_date") String to_date,
 			@FormParam("branch") String branch){
+		Employee employee=new Employee();
+		ArrayList<Employee> em=new ArrayList<>();
+		EmployeeAttendanceController controller=new EmployeeAttendanceController();
 		try {
-			Employee employee=new Employee();
-			ArrayList<Employee> em=new ArrayList<>();
-			EmployeeAttendanceController controller=new EmployeeAttendanceController();
 			em=controller.getEmpAttendanceList(branch);
 			ArrayList<Employee> employeeattendancestat=new ArrayList<>();
 			Employee emp=null;
@@ -111,14 +109,12 @@ public class EmpAttendanceResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
 	
-@Path("/getEmpAttendaceReport")
+
 @POST
 @PermitAll
-//@JWTTokenNeeded
-
-//@PreAuthorize("hasRole('desk')")
+@JWTTokenNeeded
+@Path("/getEmpAttendaceReport")
 @Produces(MediaType.APPLICATION_JSON)
-//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 public Response getEmpAttendanceReport(@FormParam("id") String id,@FormParam("from_date") String from_date,
 		@FormParam("to_date") String to_date,@FormParam("branch") String branch){
 	Employee emp=new Employee();

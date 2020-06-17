@@ -1,10 +1,7 @@
 var mes;
 var attendance;
-var today;
-var time;
 $(document).ready(function() {
-	today = new Date();
-	time = today.getHours() + ":" + today.getMinutes();
+	validateLogin();
 	attendanceList();
 	$('#EmpAttendance_table').DataTable({
 		"pageLength" : 40
@@ -37,16 +34,16 @@ $(document).ready(function() {
 });
 
 function attendanceList() {
+	var today = new Date();
+	var time = today.getHours() + ":" + today.getMinutes();
 	function callback(responseData, textStatus, request) {
 		var table = $("#EmpAttendance_table").DataTable();
 		table.rows().remove().draw();
 		for ( var i in responseData) {
 			var present = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="P"><label for="checkbox1"></label></span>';
 			var absent = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheckAbs" name="type" value="A"><label for="checkbox1"></label></span>';
-			var intime = '<input type="time" name="time" id="intime" class="time" value="'
-					+ time + '"/>';
-			var outtime = '<input type="time" name="time" id="outitme" class="time" value="'
-					+ time + '"/>';
+			var intime = '<input type="time" name="time" id="intime" class="time" value="'+time+'"/>';
+			var outtime = '<input type="time" name="time" id="outtime" class="time" value="'+time+'"/>';
 			var emp_code = responseData[i].emp_unq_code;
 			var emp_name = responseData[i].emp_name;
 			table.row.add(
@@ -57,17 +54,12 @@ function attendanceList() {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
 	var httpMethod = "GET";
-	//var formData = $("#attendance").serialize();
 	var relativeUrl = "/Attendance/getEmpAttendaceList?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -81,10 +73,8 @@ function getAttendance() {
 					var code = table.rows({
 						selected : true
 					}).column(1).data()[i];
-					var intime = table.cell(i, 4).nodes().to$().find('input')
-							.val();
-					var out = table.cell(i, 5).nodes().to$().find('input')
-							.val();
+					var intime = table.cell(i, 4).nodes().to$().find('input').val();
+					var out = table.cell(i, 5).nodes().to$().find('input').val();
 					attendance = attendance + "," + code + "|" + intime + "|"
 							+ out + "|" + chk.value;
 				}
@@ -95,8 +85,7 @@ function getAttendance() {
 					var code = table.rows({
 						selected : true
 					}).column(1).data()[i];
-					var intime = "null";/*table.cell(i, 4).nodes().to$().find('input')
-							.val();*/
+					var intime = "null";
 					var out = "null";/*table.cell(i, 5).nodes().to$().find('input')
 							.val();*/
 					attendance = attendance + "," + code + "|" + intime + "|"
@@ -108,19 +97,13 @@ function getAttendance() {
 }
 function saveAttendance(attendance) {
 	function callback(responseData, textStatus, request) {
-
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
+		  var message=responseData.responseJSON.message;
+		  showNotification("error",message);
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
+		  var message=responseData.responseJSON.message;
+		  showNotification("error",message);
 	}
 
 	var httpMethod = "POST";
@@ -130,7 +113,7 @@ function saveAttendance(attendance) {
 	}
 	console.log(formData);
 	var relativeUrl = "/Attendance/employeeAttendance";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -157,17 +140,13 @@ function getEmployeeAttendanceStat(e) {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
-		var mes = responseData.responseJSON.message;
-		showNotification("error", mes);
+		  var message=responseData.responseJSON.message;
+		  showNotification("error",message);
 	}
 	var httpMethod = "POST";
 	var formData = $("#attendance_stat_form").serialize()+"&branch="+branchSession;
 	var relativeUrl = "/Attendance/getEmpAttendaceStat";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -199,17 +178,13 @@ function getEmployeeAttendanceReport(id,e) {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
-		var mes = responseData.responseJSON.message;
-		showNotification("error", mes);
+		  var message=responseData.responseJSON.message;
+		  showNotification("error",message);
 	}
 	var httpMethod = "POST";
 	var formData = $("#attendance_stat_form").serialize()+"&id="+id+"&branch="+branchSession;
 	var relativeUrl = "/Attendance/getEmpAttendaceReport";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
