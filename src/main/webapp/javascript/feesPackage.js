@@ -24,8 +24,14 @@ $(document)
 								required : true
 
 							},
+							inputDisabledAmt:
+								{
+								 required:true,
+								 number:true
+								},
 							searchforstand1 : {
-								required : true
+								required : true,
+								noSpace:true
 							},
 							searchforstand2 : {
 								required : true
@@ -45,7 +51,8 @@ $(document)
 							},
 							tax : {
 								required : true,
-								noSpace : true
+								noSpace : true,
+								digits:true
 							},
 
 						},
@@ -73,7 +80,7 @@ $(document)
 
 						submitHandler : function(form) {
 							event.preventDefault();
-							addFeesType();
+						
 
 						}
 					});

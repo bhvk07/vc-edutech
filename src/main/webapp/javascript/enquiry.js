@@ -14,6 +14,12 @@ $(document).ready(function() {
 	 jQuery.validator.addMethod("noSpace", function(value, element) { 
 		  return value.indexOf(" ") < 0 && value != ""; 
 		}, "No space please and don't leave it empty");
+	 jQuery.validator.addMethod("futureDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate < now;
+	});
 	$('form[id="EnquiryForm"]').validate({
 		  rules: {
 		    sname: {
@@ -42,6 +48,11 @@ $(document).ready(function() {
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
+			},
+			dob:{
+				required:true,
+				date:true,
+				futureDate:true
 			},
 			stud_cont: {
 		        required: true,
@@ -85,11 +96,12 @@ $(document).ready(function() {
 		        noSpace: true
 			},
 		  },
-		 /* messages: {
-			sname: {
-				required:'your name is required'
+		 messages: {
+			dob: {
+				futureDate:'future date not allowed'
 			},
-			lname: {
+		 },
+			/*lname: {
 				required:'Surname is required'
 		    },
 		    fname: {
@@ -132,7 +144,8 @@ $(document).ready(function() {
 			},
 			dob:{
 				required:true,
-				date:true
+				date:true,
+				futureDate:true
 			},
 			join_date:{
 				required:true,
@@ -142,7 +155,11 @@ $(document).ready(function() {
 				required:true
 			},
 		  },
-		
+		  messages: {
+				dob: {
+					futureDate:'future date not allowed'
+				},
+			 },
 		  submitHandler:function(form){
 			  event.preventDefault();
 			  AddEmployee();
@@ -197,7 +214,7 @@ $(document).ready(function() {
 		 
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  addFeesType();
+			  
 		  }
 	});
 	if(editData!=null){
