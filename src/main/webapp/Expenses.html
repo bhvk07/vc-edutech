@@ -17,7 +17,7 @@
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
-<script type="text/javascript" src="javascript/LeadSource.js"></script> 
+<script type="text/javascript" src="javascript/Expense.js"></script> 
 <script type="text/javascript" src="core/noty.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 
@@ -382,7 +382,7 @@ table.table .avatar {
 	<div id="expenseModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="LeadSourceForm" id="form">
+				<form id="ExpenseForm" id="form">
 					<div class="modal-header"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">Expense</h4>
@@ -392,19 +392,35 @@ table.table .avatar {
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Expense Date<font color="red">*</font></label>
-							<input type="date" class="form-control" id="exp_date" name="leadsource"required>
+							<input type="date" class="form-control" id="exp_date" name="exp_date"required>
 						</div>
 						<div class="form-group">
 							<label>Amount<font color="red">*</font></label>
-							<input type="text" class="form-control" id="exp_amt" name="leadsource"required>
+							<input type="text" class="form-control" id="exp_amt" name="exp_amt"required>
 						</div>
 						<div class="form-group">
 							<label>Vendor<font color="red">*</font></label>
-							<input type="text" class="form-control" id="vendor" name="leadsource"required>
+							<select class="form-control" name="vendor" id="vendor_list">
+								<option>Electrician</option>
+							</select>
+							<span class="input-group-btn">
+								<button class="btn btn-primary" id="add-btn" type="button"
+									data-toggle="modal" data-target="#vendorModal">
+										<span class="glyphicon glyphicon-plus"> </span>
+								</button>
+						    </span>
 						</div>
 						<div class="form-group">
 							<label>Payment Mode<font color="red">*</font></label>
-							<input type="text" class="form-control" id="exp_mode" name="leadsource"required>
+							<select class="form-control" name="pay_mode" id="pay_mode">
+								<option>Cash</option>
+								<option>Cheque</option>
+								<option>Google Pay</option>
+								<option>Phone Pay</option>
+								<option>PayTM</option>
+								<option>Credit Card</option>
+								<option>Debit Card</option>
+							</select>
 						</div>
 						
 
@@ -419,5 +435,39 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
+	
+	<div id="vendorModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="vendorForm" id="form">
+					<div class="modal-header"
+						style="background-color: #53b700; color: aliceblue">
+						<h4 class="modal-title">Vendor</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Vendor Name/Things<font color="red">*</font></label>
+							<input type="text" class="form-control" id="ven" name="ven"required>
+						</div>			
+
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" id="cancel" data-dismiss="modal"
+							value="Cancel"> 
+							<input type="submit" class="btn btn-success" value="Save"
+							style="background-color: #53b700; color: aliceblue">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
+
+<script>
+
+
+
+</script>
 </html>

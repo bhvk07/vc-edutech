@@ -1,0 +1,125 @@
+package org.VCERP.Education.VC.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import org.VCERP.Education.VC.model.Expense;
+import org.VCERP.Education.VC.model.Vendor;
+import org.VCERP.Education.VC.utility.Util;
+
+public class ExpenseDAO{
+	
+	public Expense addExpense(Expense exp){
+		Connection con=null;
+		PreparedStatement ps=null;
+		try{
+		con=Util.getDBConnection();
+		String query="insert into expenses(`exp_date`,`amount`,`vendor`,`pay_mode`,`branch`)values(?,?,?,?,?)";
+		ps=con.prepareStatement(query);
+		ps.setString(1, exp.getExp_date());
+		ps.setString(2, exp.getAmt());
+		ps.setString(3, exp.getVend());
+		ps.setString(4, exp.getPay_mode());
+		ps.setString(5, exp.getBranch());
+		ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return exp;
+	}
+	
+	public ArrayList<Expense> FetchAllExpense(String branch) {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		ArrayList<Expense> exp_list=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select `id`,`exp_date`,`amount`,`vendor`,`pay_mode` from expenses where branch=?";
+				//	+ "where branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, branch);
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				Expense exp=new Expense();
+				exp.setId(rs.getLong(1));
+				exp.setExp_date(rs.getString(2));
+				exp.setAmt(rs.getString(3));
+				exp.setVend(rs.getString(4));
+				exp.setPay_mode(rs.getString(5));
+				exp_list.add(exp);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally{
+			Util.closeConnection(rs, st, con);
+		}
+		return exp_list;
+	}
+	
+	
+	public Vendor addVendor(Vendor ven){
+		Connection con=null;
+		PreparedStatement ps=null;
+		try{
+		con=Util.getDBConnection();
+		String query="insert into vendor(`vendors`)values(?)";
+		ps=con.prepareStatement(query);
+		ps.setString(1, ven.getVendor());
+		
+		ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+		return ven;
+	}
+	
+	public ArrayList<Vendor> LoadVendor() {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		ArrayList<Vendor> ven_list=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="select `id`,`vendors` from vendor";
+				//	+ "where branch=?";
+			st=con.prepareStatement(query);
+			
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				Vendor ven=new Vendor();
+				ven.setId(rs.getLong(1));
+				ven.setVendor(rs.getString(2));
+				
+				ven_list.add(ven);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally{
+			Util.closeConnection(rs, st, con);
+		}
+		return ven_list;
+	}
+	
+	
+}
