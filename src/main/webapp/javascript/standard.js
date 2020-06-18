@@ -8,7 +8,9 @@ $(document).ready(function(){
 	jQuery.validator.addMethod("val", function(value, element) {
 	    return this.optional(element) || /^[a-zA-Z0-9\s+]+$/i.test(value);
 	}, "Please enter valid standard");
-	
+	jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
 	
 	$('form[id="standardForm"]').validate({
 		
@@ -17,13 +19,17 @@ $(document).ready(function(){
 		    
 			  stdtname: {
 		        required: true,
-		        val: true
+		        val: true,
+		        noSpace:true
 		   },
 		   
 		   subject: {
-		        required: true,
+		        required: true
 		        
 		   },
+		   stdamt:{
+			   required:true
+		   }
 		  },
 		 messages: {
 			 stdtname: {
@@ -34,7 +40,7 @@ $(document).ready(function(){
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  getStandardData();
+			  //getStandardData();
 		  }
 	});
 
