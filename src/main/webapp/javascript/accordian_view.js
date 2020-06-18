@@ -15,6 +15,10 @@ $('#multi_status_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
 	});
+	$('#multi_standard').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
 	$('#multi_employee').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true

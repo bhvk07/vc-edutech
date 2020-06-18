@@ -1,14 +1,20 @@
 var ids=new Array();
 $(document).ready(function() {
 	
-	
+	validateLogin();
 	FetchAllEmployee();
 	getAcademicYear();
 	getFeesPackage();
 	getAllDivision();
 	getAllStandard();
+	fetchAllBranch();
+	$(".branch").val(branchSession);
 	
 	$('#multi_status_select').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	$('#multi_standard_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
 	});
@@ -74,14 +80,75 @@ $(document).ready(function() {
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  InsertDivision();
 		  }
+	});
+	$("#btnDisplay").click(function(){
+		viewAdmissionReport();
 	});
 	
 	
 	
-	
 });
+function viewAdmissionReport(){
+	document.getElementById("branch").disabled=false;
+	var fees_package=new Array();
+	var standard=new Array();
+	var div=new Array();
+	var adm_taken=new Array();
+	alert($("#multi_standard_select").val());
+	for (var option of document.getElementById('multi_course').options) {
+		if (option.selected) {
+			fees_package.push(option.value);
+		}
+	}
+	for (var option of document.getElementById('multi_standard_select').options) {
+		if (option.selected) {
+			standard.push(option.value);
+		}
+	}
+	for (var option of document.getElementById('multi_div').options) {
+		if (option.selected) {
+			div.push(option.value);
+		}
+	}
+	for (var option of document.getElementById('multi_status_select').options) {
+		if (option.selected) {
+			adm_taken.push(option.value);
+		}
+	}
+	if(div==""){
+		div="null";
+	}
+	function callback(responseData, textStatus, request){
+		var table = $("#admission-report").DataTable();
+		table.rows().remove().draw();
+		for ( var i in responseData) {
+			var invoice=responseData[i].invoice_no;
+			var date=responseData[i].admission_date;
+			var name=responseData[i].student_name+" "+responseData[i].fname+" "+responseData[i].lname;
+			var fees_pack=responseData[i].adm_fees_pack;
+			var net_total=responseData[i].fees;
+			var grand_total=parseInt(responseData[i].fees)+parseInt(responseData[i].disccount);
+			var payment=responseData[i].paid_fees;
+			var balance=responseData[i].remain_fees;
+				table.row.add(
+						[  invoice, date, name ,fees_pack, net_total,grand_total, payment,balance]).draw();	
+			//}
+		}document.getElementById("branch").disabled=true;
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+		var httpMethod = "POST";
+		var formData = $("#AdmReportForm").serialize()+"&package="+fees_package+"&standard="+standard+"&division="+div
+		+"&adm_taken_by="+adm_taken;
+		var relativeUrl = "/Admission/AdmissionReport";	
+		ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+		errorCallback);
+	return false;
+}
 $(function() {
 	var Accordion = function(el, multiple) {
 		this.el = el || {};
