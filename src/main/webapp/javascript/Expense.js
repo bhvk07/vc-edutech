@@ -2,6 +2,58 @@ var mes;
 var requestid=0;
 var vendors = new Array();
 $(document).ready(function(){
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
+	 jQuery.validator.addMethod("futureDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate >= now;
+	});
+	$('form[id="ExpenseForm"]').validate({
+		  rules: {
+			exp_date:{
+				required:true,
+				date:true,
+				futureDate:true
+			},
+			exp_amt: {
+		        required: true,
+		        number: true,
+		        noSpace: true
+			},
+			vendor_list: {
+		        required: true,
+		        
+			},
+			pay_mode: {
+		        required: true,
+		        
+			},
+					  },
+		 messages: {
+			 exp_date: {
+				futureDate:'Past date not allowed'
+			},
+		 },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			
+		  }
+	});
+	$('form[id="vendorForm"]').validate({
+		  rules: {
+			  ven:{
+				required:true,
+				maxlength: 30
+			},
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			
+		  }
+	});
 	$('#expense_table').DataTable({
 		"pageLength" : 40
 	});
