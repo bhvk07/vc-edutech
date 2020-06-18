@@ -223,9 +223,11 @@ public class ReceiptDetailsResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
-	@Path("/InstallmentDueReport")
+	
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
+	@Path("/InstallmentDueReport")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response InstallmentDueReport(@FormParam("from_date") String from_date,@FormParam("to_date") String to_date,
@@ -241,6 +243,7 @@ public class ReceiptDetailsResource {
 			 for(int i=0;i<commaSeperatedPackage.length;i++){
 				 for(int j=0;j<commaSeperatedStandard.length;j++){
 					 for(int k=0;k<commaSeperatedDivision.length;k++){
+						 String[] pipeSeperated=Util.symbolSeperatedString(commaSeperatedPackage[i]);
 						 Installment installment=new Installment();
 						 Admission admission=new Admission();
 							installment.setFrom_date(from_date);
@@ -248,7 +251,7 @@ public class ReceiptDetailsResource {
 							installment.setStud_name(stud_name);
 							admission.setBranch(branch);
 							admission.setAcad_year(acad_year);
-							admission.setAdm_fees_pack(commaSeperatedPackage[i]);
+							admission.setAdm_fees_pack(pipeSeperated[0]);
 							admission.setStandard(commaSeperatedStandard[j]);
 							admission.setDivision(commaSeperatedDivision[k]);
 							installReportData=controller.InstallmentDueReport(installment,admission,installReportData);

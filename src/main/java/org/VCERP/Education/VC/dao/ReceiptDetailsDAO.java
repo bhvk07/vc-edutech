@@ -525,8 +525,10 @@ public class ReceiptDetailsDAO {
 			installmentData.setRemain_fees(remain_fees);
 			installmentData.setPaid(paid_amt);
 			Admission admissionData=new Admission();
+			if(installmentData!=null){
 			admissionData=getAdmissionRelatedData(installmentData,admission);
 			admissionData.setInstallment(installmentData);
+			}
 			installReportData.add(admissionData);
 			}
 		}
@@ -548,13 +550,12 @@ public class ReceiptDetailsDAO {
 		Admission AdmissionData=null;
 		try{
 			con = Util.getDBConnection();
-			String query = "select invoice_no,adm_fees_pack,remain_fees from admission where Rollno=? and student_name=? and acad_year=? and standard=? and branch=?";
+			String query = "select invoice_no,adm_fees_pack,remain_fees from admission where Rollno=? and acad_year=? and standard=? and branch=?";
 			ps = con.prepareStatement(query);
 			ps.setString(1,installmentData.getRollno());
-			ps.setString(2,installmentData.getStud_name());
-			ps.setString(3,admission.getAcad_year());
-			ps.setString(4,admission.getStandard());
-			ps.setString(5,installmentData.getBranch());
+			ps.setString(2,admission.getAcad_year());
+			ps.setString(3,admission.getStandard());
+			ps.setString(4,installmentData.getBranch());
 			rs = ps.executeQuery();
 			while(rs.next()){
 				AdmissionData = new Admission();
