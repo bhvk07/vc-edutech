@@ -73,9 +73,6 @@ $(document).ready(function() {
 
 function viewInstallmentReport(){
 	document.getElementById("branch").disabled=false;
-/*	var fees_package=document.getElementById("multi_course").value;
-	var standard=document.getElementById("multi_standard").value;
-	var div=document.getElementById("multi_div").value;*/
 	var fees_package=new Array()
 	var standard=new Array()
 	var div=new Array()
@@ -122,6 +119,7 @@ function viewInstallmentReport(){
 				table.row.add(
 						[  stud_name, invoice, rollno, due_date,fees_package, title,due_amt,branch,remain,paid,total_fees ]).draw();	
 			}
+			document.getElementById("branch").disabled=true;
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {

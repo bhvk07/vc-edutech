@@ -314,6 +314,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@POST
+	@JWTTokenNeeded
 	@Path("/AdmissionReport")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -326,16 +327,16 @@ public class AdmissionResource {
 		String[] commaSeperatedStandard = Util.commaSeperatedString(standard);
 		String[] commaSeperatedDivision = Util.commaSeperatedString(division);
 		AdmissionController controller = new AdmissionController();
-		Admission admissionData=new Admission();
 		ArrayList<Admission> admissionReportData=new ArrayList<>();
 		try {
 			for(int i=0;i<commaSeperatedTaken.length;i++){
 				for(int j=0;j<commaSeperatedPackage.length;j++){
 					for(int k=0;k<commaSeperatedStandard.length;k++){
 						for(int l=0;l<commaSeperatedDivision.length;l++){
+							String[] symbolSeperated=Util.symbolSeperatedString(commaSeperatedPackage[j]);
 							Admission admission=new Admission();
 							admission.setEnq_taken_by(commaSeperatedTaken[i]);
-							admission.setAdm_fees_pack(commaSeperatedPackage[j]);
+							admission.setAdm_fees_pack(symbolSeperated[0]);
 							admission.setStandard(commaSeperatedStandard[k]);
 							admission.setDivision(commaSeperatedDivision[l]);
 							admission.setFrom_date(from_date);
