@@ -8,7 +8,7 @@ import org.VCERP.Education.VC.model.Expense;
 import org.VCERP.Education.VC.model.Vendor;
 public class ExpenseController{
 	
-	public Expense addSubject(Expense exp) {
+	public Expense addExpenses(Expense exp) {
 		ExpenseDAO dao=new ExpenseDAO();
 		return dao.addExpense(exp);
 	}
@@ -24,5 +24,13 @@ public class ExpenseController{
 	public ArrayList<Vendor> LoadVendor() {
 		ExpenseDAO dao=new ExpenseDAO();
 		return dao.LoadVendor();
+	}
+	public void EditExpenses(Expense exp) {
+		ExpenseDAO dao=new ExpenseDAO();
+		 dao.EditExpenses(exp);
+	}
+	public void DeleteExpenses(String id,String Branch) {
+		ExpenseDAO dao=new ExpenseDAO();
+		 dao.DeleteExpenses(id,Branch);
 	}
 }

@@ -46,7 +46,24 @@ $(document).ready(function(){
 
 $('#multiple-checkboxes').multiselect({
         includeSelectAllOption: true,
-      });
+});
+$('#multiple-subject-selected').multiselect({
+    includeSelectAllOption: true,
+});
+/*var select = document.getElementById('multiple-checkboxes');
+$('#multiple-checkboxes').change( function(e) {
+	e.preventDefault();
+	var html="subject";
+	for (var option of document.getElementById('multiple-checkboxes').options) {
+		
+		if (option.selected) {
+			html=html+","+option.value;
+			//html.push('<option value="'+option.value+'" selected>'+option.value+'</option>')
+		}
+	}
+	markSubject(html);
+//		$("#multiple-subject-selected").append(html);	
+});*/
 /*
  * $("#savestd").click(function(){
  * 
@@ -77,6 +94,14 @@ $("#delete").click(function() {
  * }); });
  */
 });
+/*function markSubject(html){
+	var html=html.split(",");
+	var htmlCode=new Array();
+	for(var i=1;i<html.length;i++){
+		htmlCode.push('<option value="'+html[i]+'" selected>'+html[i]+'</option>');
+	}
+	$("#multiple-subject-selected").append(htmlCode);
+}*/
 function getAllStandardData() {
 	function callback(responseData, textStatus, request) {
 		var table = $("#stdtable").DataTable();

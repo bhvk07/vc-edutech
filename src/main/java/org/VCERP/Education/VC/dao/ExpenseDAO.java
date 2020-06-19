@@ -120,6 +120,48 @@ public class ExpenseDAO{
 		}
 		return ven_list;
 	}
+
+	public void EditExpenses(Expense exp) {
+		Connection con=null;
+		PreparedStatement st=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update expenses set exp_date=?,amount=?,vendor=?,pay_mode=? where id=? and branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, exp.getExp_date());
+			st.setString(2, exp.getAmt());
+			st.setString(3, exp.getVend());
+			st.setString(4, exp.getPay_mode());
+			st.setLong(5, exp.getId());
+			st.setString(6, exp.getBranch());
+			st.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally{
+			Util.closeConnection(null, st, con);
+		}
+	}
+	public void DeleteExpenses(String id,String branch) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from expenses where id=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.setString(2, branch);
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 }

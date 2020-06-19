@@ -2,6 +2,9 @@ var mes;
 var requestid=0;
 var vendors = new Array();
 $(document).ready(function(){
+	validateLogin();
+	ExpenseList();
+	loadvendor();
 	 jQuery.validator.addMethod("noSpace", function(value, element) { 
 		  return value.indexOf(" ") < 0 && value != ""; 
 		}, "No space please and don't leave it empty");
@@ -65,16 +68,36 @@ $(document).ready(function(){
 	});
 	
 	$("#ExpenseForm").submit(function(){
-		alert("success");
 		InsertExpense();
 	});
 	$("#vendorForm").submit(function(){
-		alert("success");
 		InsertVendor();
 	});
-	
-	ExpenseList();
-	loadvendor();
+	$("#edit").click(function(e) {		 
+		var table = $('#expense_table').DataTable();
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			requestid=$(this).val();
+			var date = table.rows({selected : true}).column(0).data()[i];
+			var expenses=table.rows({selected : true}).column(1).data()[i];
+			var vendor=table.rows({selected : true}).column(2).data()[i];
+			var pay_mode=table.rows({selected : true}).column(3).data()[i];
+			loadExpenses(date,expenses,vendor,pay_mode,e);
+			}
+		});
+	});
+	$("#Delete").click(function() {
+		var idarray=new Array();
+		$('table .cbCheck').each(function(i, chk) {
+			if(chk.checked){
+			idarray.push($(this).val());
+			}
+		});
+		deleteExpenses(idarray);
+	});
+	$("#cancel").click(function(){
+		clearModal();
+	})
 });
 
 
@@ -92,10 +115,8 @@ function InsertExpense(){
 	var httpMethod = "POST";
 	var formData;
 	var relativeUrl;
-	alert(requestid);
 	if(requestid==0){
 	var formData=$("#ExpenseForm").serialize()+"&branch="+branchSession;
-	//+"&branch="+branchSession;
 	var relativeUrl = "/Expense/NewExpense";
 	}
 	else{
@@ -133,9 +154,7 @@ function ExpenseList(){
 	}
 	
 	var httpMethod = "GET";
-	//var formData = ''
 	var relativeUrl = "/Expense/FetchAllExpense?branch="+branchSession;
-			//"?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
 			errorCallback);
 	return false;
@@ -156,16 +175,8 @@ function InsertVendor(){
 	var httpMethod = "POST";
 	var formData;
 	var relativeUrl;
-	alert(requestid);
-	if(requestid==0){
 	var formData=$("#vendorForm").serialize();
-	//+"&branch="+branchSession;
 	var relativeUrl = "/Expense/NewVendor";
-	}
-	/*else{
-		var formData=$("#vendorForm").serialize();
-		var relativeUrl = "/Expense/EditExpense";
-	}*/
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
@@ -180,12 +191,12 @@ function loadvendor() {
 		}
 		for (var i = 0; i < vendors.length; i++) {
 			$('#vendor_list').append(vendors[i]);
-			//$('.feestype').append(htmlCode[i]);
 		}
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 
 	var httpMethod = "GET";
@@ -193,5 +204,39 @@ function loadvendor() {
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
-} 
+}
+function deleteExpenses(id) {
+	function callback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("success",mes);
+	}
 
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+	}
+
+	var httpMethod = "DELETE";
+	var relativeUrl = "/Expense/DeleteExpense?id="+id+"&branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function loadExpenses(date,expenses,vendor,pay_mode,e){
+	document.getElementById("exp_date").value=date;
+	document.getElementById("exp_amt").value=expenses;
+	$("#vendor_list").val(vendor);
+	$("#pay_mode").val(pay_mode);
+	e.preventDefault();
+	$('#expenseModal').modal({
+        show: true, 
+        backdrop: 'static',
+        keyboard: true
+     })
+}
+function clearModal(){
+	document.getElementById("exp_date").value="";
+	document.getElementById("exp_amt").value="";
+	requestid=0;
+}
