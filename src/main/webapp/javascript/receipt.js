@@ -76,7 +76,7 @@ $(document).ready(function(){
 		var table = document.getElementById("InstallmentTable");
 		var received_amt=$("#received_amt").val();
 		if(parseInt(received_amt)!=0){
-			placeReceiveAmountInInstallmentTable(parseInt(receive_amt));
+			placeReceiveAmountInInstallmentTable(parseInt(received_amt));
 		}
 	});
 });
@@ -178,7 +178,7 @@ function StudentReceipt(){
 	var httpMethod = "POST";
 	var formData=$("#receipt-form").serialize()+"&due_amt="+due_amt+"&due_date="+due_date+"&branch="+branchSession;
 	var relativeUrl = "/Receipt/ReceiptDetails";
-	//ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	}else{
 		var message="Receive amount should be less than or equals to Net amount";
 		showNotification("error",message);

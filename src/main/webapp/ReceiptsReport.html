@@ -4,19 +4,23 @@
 <head>
 <meta charset="ISO-8859-1">
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- <script src="jquery/jquery-3.3.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!--<link href="style.css" rel="stylesheet" type="text/css">-->
+<link href="style.css" rel="stylesheet" type="text/css"> -->
 <link rel="stylesheet" href="css/promote.css" type="text/css">
-
+<!-- 
 <link
 	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
-
+ -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
@@ -24,11 +28,11 @@
 <!-- <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
  -->
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
-
+<!-- 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css" />
 
-
+ -->
 <link rel="stylesheet" href="css/bootstrap-multiselect.css">
 
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
@@ -38,14 +42,18 @@
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
 
-
-<script src="core/popper.min.js"></script>
+<!-- <script src="core/popper.min.js"></script> -->
 <script src="assets/js/bootstrap-multiselect.js"></script>
+
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
+<script type="text/javascript" src="javascript/ReceiptReport.js"></script>
 <script src="javascript/accordian_view.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+
+<script type="text/javascript" src="core/noty.js"></script>
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
+
 
 <title>Report</title>
 <style>
@@ -374,23 +382,23 @@ table.table .avatar {
 									<div class="accordion-content">
 										<div class="panel">
 											<div class="panel-body">
-											<form id="getTimeTableData">
+											<form id="Receipt_Report_Form" method="post">
 												<div class="form-group">
-													  <div class="col-md-3">
+													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleYear">Academic Year</span> <span
 																class="text-danger" style="color:red">*</span>
 															</label>
-															<div class="input-group select" style="width: 100%;">
-																<select name="acad_year" id="studacad_year"
+															<div class="input-group select" style="width:100%;">
+																<select name="acad_year" id="acad_year"
 																	class="form-control acad_year">
 
 																</select>
 															</div>
+															</div>
 
 														</div>
-													</div>
 													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
@@ -400,8 +408,8 @@ table.table .avatar {
 															<div class="input-group date form_date1" data-date=""
 															data-date-format="YYYY-MM-DD" data-link-field="rec_from"
 															data-link-format="yyyy-mm-dd">
-															<input type="date" class="form-control" id="rec_from"
-																name="rec_from" required>
+															<input type="date" class="form-control" id="from_date"
+																name="from_date" required>
 														</div>
 
 														</div>
@@ -415,8 +423,8 @@ table.table .avatar {
 															<div class="input-group date form_date1" data-date=""
 																data-date-format="YYYY-MM-DD" data-link-field="rec_till"
 																data-link-format="yyyy-mm-dd">
-																<input type="date" class="form-control" id="rec_till"
-																	name="rec_till" required>
+																<input type="date" class="form-control" id="to_date"
+																	name="to_date" required>
 															</div>
 
 														</div>
@@ -428,7 +436,7 @@ table.table .avatar {
 																class="text-danger" style="color:red">*</span>
 															</label>
 															<div class="input-group select" style="width:100%;">
-																<select name="employee" id="multi_employee"
+																<select name="received_by" id="multi_employee"
 																	class="form-control enq_taken" multiple="multiple">
 
 																</select>
@@ -444,17 +452,17 @@ table.table .avatar {
 																class="titleYear">Standard</span> <span
 																class="text-danger" style="color:red">*</span>
 															</label>
-															<div class="input-group select" style="width: 100%;">
-																<select name="standard" id="standard"
-																	class="form-control standard">
+															<div class="input-group select" style="width:100%;">
+																<select name="standard" id="multi_standard"
+																	class="form-control standard" multiple="multiple">
 
 																</select>
 															</div>
+															</div>
 
 														</div>
-													</div>
 													
-													<div class="col-md-3">
+<!-- 													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleYear">Status</span> <span
@@ -468,29 +476,31 @@ table.table .avatar {
 															</div>
 															</div>
 
-														</div>
+														</div> -->
 													
-													<div class="col-md-3">
+<!-- 													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
-																class="titleDiv">Div</span>
+																class="titleYear">Division</span> <span
+																class="text-danger" style="color:red">*</span>
 															</label>
-															<div class="input-group" style="width: 100%">
-																<select id="division" name="division"
-																	class="form-control division">
-																	<!-- <option value="null">Select Division</option> -->
+															<div class="input-group select" style="width:100%;">
+																<select name="division" id="division"
+																	class="form-control division" multiple="multiple">
+
 																</select>
 															</div>
-														</div>
-													</div>
+															</div>
+
+														</div> -->
 													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleDiv">Branch</span>
 															</label>
 															<div class="input-group" style="width: 100%">
-																<select id="branch" name="branch_list"
-																	class="form-control branch">
+																<select id="branch" name="branch"
+																	class="form-control branch" disabled>
 																	
 																</select>
 															</div>
@@ -504,8 +514,8 @@ table.table .avatar {
 																class="titleDiv">Student Name</span>
 															</label>
 															<div class="input-group" style="width: 100%">
-																<input type="text" class="form-control" id="student"
-																	name="student" required>
+																<input type="text" class="form-control" id="stud_name"
+																	name="stud_name" required>
 															</div>
 														</div>
 													</div>
@@ -515,9 +525,10 @@ table.table .avatar {
 																class="titleDiv">Pay Mode</span>
 															</label>
 															<div class="input-group select" style="width:100%;">
-																<select name="employee" id="multi_pay_mode"
+																<select name="pay_mode" id="multi_pay_mode"
 																	class="form-control pay_mode" multiple="multiple">
-
+																	<option value="cash">cash</option>
+																	<option value="cheque">cheque</option>
 																</select>
 															</div>
 														</div>
@@ -529,7 +540,6 @@ table.table .avatar {
 																data-style="zoom-in"
 																class="btn btn-warning margin-right-sm">
 																Display</button>
-
 														</div>
 													</div>
 												</div>
@@ -609,9 +619,9 @@ table.table .avatar {
 		</div>
 		<!-- table wrapper div close -->
 	<!--        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-	<script
+	<!-- <script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
+ -->	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
 	<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
 	
 	<!-- <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->

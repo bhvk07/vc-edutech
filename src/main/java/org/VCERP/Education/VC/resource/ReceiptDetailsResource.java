@@ -120,14 +120,14 @@ public class ReceiptDetailsResource {
 			details.setTrans_status(trans_status);
 			details.setTrans_date(trans_date);
 			details.setReceived_by(received_by);
-			details.setTotal_amt(Long.parseLong(stud_details[3]));
+			details.setTotal_amt(Long.parseLong(stud_details[3].trim()));
 			details.setReceived_amt(received_amt);		
 			details.setBranch(branch);
 			controller=new ReceiptDetailsController();
 			r_amt=controller.updateRemainingAmount(stud_details[0]);
 			if(r_amt==null)
 			{
-				remainAmount=Long.parseLong(stud_details[3])-received_amt;
+				remainAmount=Long.parseLong(stud_details[3].trim())-received_amt;
 				details.setAmount(remainAmount);
 			}
 			else{

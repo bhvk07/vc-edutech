@@ -466,7 +466,15 @@ public class ReceiptDetailsDAO {
 				receiptData.setTotal_amt(rs.getLong(11));
 				receiptData.setReceived_amt(rs.getLong(12));
 				receiptData.setAmount(rs.getLong(13));
-				receiptReportData.add(receiptData);
+				if(receiptData!=null){
+					Admission invoice=new Admission();
+					invoice=getAdmissionRelatedData(receiptData.getRollno(),admission.getBranch(),admission);
+					if(invoice!=null){
+						receiptData.setInvoice(invoice.getInvoice_no());	
+					}
+					receiptReportData.add(receiptData);	
+				}
+				
 			}
 		}
 		catch (Exception e) {
@@ -526,7 +534,7 @@ public class ReceiptDetailsDAO {
 			installmentData.setPaid(paid_amt);
 			Admission admissionData=new Admission();
 			if(installmentData!=null){
-			admissionData=getAdmissionRelatedData(installmentData,admission);
+			admissionData=getAdmissionRelatedData(installmentData.getRollno(),installmentData.getBranch(),admission);
 			admissionData.setInstallment(installmentData);
 			}
 			installReportData.add(admissionData);
@@ -542,7 +550,7 @@ public class ReceiptDetailsDAO {
 
 	}
 
-	private Admission getAdmissionRelatedData(Installment installmentData, Admission admission) {
+	private Admission getAdmissionRelatedData(String Rollno,String Branch, Admission admission) {
 
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -552,10 +560,11 @@ public class ReceiptDetailsDAO {
 			con = Util.getDBConnection();
 			String query = "select invoice_no,adm_fees_pack,remain_fees from admission where Rollno=? and acad_year=? and standard=? and branch=?";
 			ps = con.prepareStatement(query);
-			ps.setString(1,installmentData.getRollno());
+			
+			ps.setString(1,Rollno);
 			ps.setString(2,admission.getAcad_year());
 			ps.setString(3,admission.getStandard());
-			ps.setString(4,installmentData.getBranch());
+			ps.setString(4,Branch);
 			rs = ps.executeQuery();
 			while(rs.next()){
 				AdmissionData = new Admission();

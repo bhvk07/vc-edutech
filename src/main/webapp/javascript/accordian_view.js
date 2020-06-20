@@ -6,7 +6,7 @@ $('#multi_status_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
 	});
-	
+
 	$('#multi_course').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
