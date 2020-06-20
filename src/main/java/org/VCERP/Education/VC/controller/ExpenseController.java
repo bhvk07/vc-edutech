@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 
 import org.VCERP.Education.VC.dao.ExpenseDAO;
+
+
 import org.VCERP.Education.VC.model.Expense;
+
 import org.VCERP.Education.VC.model.Vendor;
 public class ExpenseController{
 	
@@ -32,5 +35,11 @@ public class ExpenseController{
 	public void DeleteExpenses(String id,String Branch) {
 		ExpenseDAO dao=new ExpenseDAO();
 		 dao.DeleteExpenses(id,Branch);
+	}
+	
+	
+	public ArrayList<Expense> ExpenseReport(Expense exp,ArrayList<Expense> expenseReportData) {
+		ExpenseDAO dao=new ExpenseDAO();
+		return dao.ExpenseReport(exp,expenseReportData);
 	}
 }

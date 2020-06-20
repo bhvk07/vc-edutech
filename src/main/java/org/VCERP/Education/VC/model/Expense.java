@@ -13,6 +13,23 @@ public class Expense{
 	private String vend;
 	private String pay_mode;
 	private String branch;
+	private String from_date;
+	private String to_date;
+	//private Admission admission;
+	public String getFrom_date() {
+		return from_date;
+	}
+	public void setFrom_date(String from_date) {
+		this.from_date = from_date;
+	}
+	public String getTo_date() {
+		return to_date;
+	}
+	public void setTo_date(String to_date) {
+		this.to_date = to_date;
+	}
+
+	
 	public String getBranch() {
 		return branch;
 	}

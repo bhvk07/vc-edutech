@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Expense;
+
 import org.VCERP.Education.VC.model.Vendor;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -43,7 +44,7 @@ public class ExpenseDAO{
 		try {
 			con=Util.getDBConnection();
 			String query="select `id`,`exp_date`,`amount`,`vendor`,`pay_mode` from expenses where branch=?";
-				//	+ "where branch=?";
+			
 			st=con.prepareStatement(query);
 			st.setString(1, branch);
 			rs=st.executeQuery();
@@ -161,6 +162,43 @@ public class ExpenseDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Expense> ExpenseReport(Expense exp,ArrayList<Expense> expenseReportData) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Expense exp_r=null;
+		try{
+			con = Util.getDBConnection();
+			String query;
+
+				query= "select * from expenses WHERE exp_date BETWEEN ? AND ? AND vendor=? AND pay_mode=? AND branch=?";
+		
+			ps = con.prepareStatement(query);
+			ps.setString(1, exp.getFrom_date());
+			ps.setString(2, exp.getTo_date());
+			ps.setString(3, exp.getVend());
+			ps.setString(4, exp.getPay_mode());
+			ps.setString(5, exp.getBranch());
+			
+			rs = ps.executeQuery();
+			while(rs.next()){
+				exp_r=new Expense();
+				exp_r.setExp_date(rs.getString(2));;
+				exp_r.setVend(rs.getString(4));
+				exp_r.setAmt(rs.getString(3));
+				
+				expenseReportData.add(exp_r);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return expenseReportData ;
 	}
 	
 	

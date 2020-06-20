@@ -17,9 +17,12 @@ import javax.ws.rs.core.Response.Status;
 
 
 import org.VCERP.Education.VC.controller.ExpenseController;
+import org.VCERP.Education.VC.controller.ReceiptDetailsController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Vendor;
+import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Expense;
+import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("Expense")
@@ -163,5 +166,44 @@ public class ExpenseResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}
+	
+	
+	@Path("/ExpenseReport")
+	@POST
+	@PermitAll
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response ReceiptReport(@FormParam("from_date") String from_date,@FormParam("to_date") String to_date,
+			@FormParam("vendor") String vendor,@FormParam("branch") String branch,
+			@FormParam("pay_mode") String pay_mode){
+		 String[] commaSeperatedVendor=Util.commaSeperatedString(vendor);
+		 String[] commaSeperatedPayMode=Util.commaSeperatedString(pay_mode);
+		
+		 ExpenseController controller=new ExpenseController();
+		 ArrayList<Expense> expenseReportData=new ArrayList<>();
+		 try {
+			 for(int i=0;i<commaSeperatedVendor.length;i++){
+				 for(int j=0;j<commaSeperatedPayMode.length;j++){
+					
+						 Expense exp=new Expense();
+						 //Admission admission=new Admission();
+							exp.setFrom_date(from_date);
+							exp.setTo_date(to_date);
+							exp.setVend(commaSeperatedVendor[i]);
+							exp.setPay_mode(commaSeperatedPayMode[j]);
+							exp.setBranch(branch);
+							
+							expenseReportData=controller.ExpenseReport(exp,expenseReportData);
+					 
+				 }
+			 }
+			 if(expenseReportData!=null){
+			 return Response.status(Status.ACCEPTED).entity(expenseReportData).build();
+			 }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
 }
