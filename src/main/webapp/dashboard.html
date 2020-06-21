@@ -13,7 +13,8 @@ Website: http://www.webthemez.com/
 <title>Dashoard</title>
 
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <script src="jquery/bootstrap.min.js"></script>
 
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
@@ -23,7 +24,10 @@ Website: http://www.webthemez.com/
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap.js"></script>
 <!-- Bootstrap Styles-->
-<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<!-- <link href="assets/css/bootstrap.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+
+<!-- <link href="assests/css/jquery.comiseo.daterangepicker.css" rel="stylesheet" type="text/css"> -->
 <!-- FontAwesome Styles-->
 <link href="assets/css/font-awesome.css" rel="stylesheet" />
 <!-- Morris Chart Styles-->
@@ -34,7 +38,13 @@ Website: http://www.webthemez.com/
 
 
 <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+
+<script src="assets/js/jquery.comiseo.daterangepicker.js"></script>
 <!--  <script src="javascript/admission-list.js"></script>  -->
 
 <script src="javascript/Helper.js"></script>
@@ -45,6 +55,88 @@ Website: http://www.webthemez.com/
 		$("#navbar").load("nav-bar.html");
 	});
 </script>
+<style>
+  .mr-sm{
+   margin-right:10px !important;
+  
+  }
+  .comiseo-daterangepicker {
+	position: absolute;
+	padding: 5px;
+}
+.comiseo-daterangepicker-presets,
+.comiseo-daterangepicker-calendar {
+	display: table-cell;
+	vertical-align: top;
+	height: 230px;
+}
+.comiseo-daterangepicker-right .comiseo-daterangepicker-presets {
+	padding: 2px 7px 7px 2px;
+}
+
+.comiseo-daterangepicker-left .comiseo-daterangepicker-presets {
+	padding: 2px 2px 7px 7px;
+}
+.comiseo-daterangepicker-presets .ui-menu {
+	padding: 2px; /* fix v1.11 */
+	white-space: nowrap;
+}
+
+.comiseo-daterangepicker-presets .ui-menu-item { /* fix v1.11 */
+	padding: 0;
+}
+
+.comiseo-daterangepicker-presets .ui-menu-item > * { /* fix v1.11 */
+	text-decoration: none;
+	display: block;
+	padding: 2px 0.4em;
+	line-height: 1.5;
+	min-height: 0; /* support: IE7 */
+}
+
+.comiseo-daterangepicker .ui-widget-content,
+.comiseo-daterangepicker .ui-datepicker .ui-state-highlight {
+	border-width: 0;
+}
+
+.comiseo-daterangepicker > .comiseo-daterangepicker-main.ui-widget-content {
+	border-bottom-width: 1px;
+}
+
+.comiseo-daterangepicker .ui-datepicker .ui-datepicker-today .ui-state-highlight {
+	border-width: 1px;
+}
+
+.comiseo-daterangepicker-right .comiseo-daterangepicker-calendar {
+	border-left-width: 1px;
+	padding-left: 5px;
+}
+.comiseo-daterangepicker-right .comiseo-daterangepicker-buttonpanel {
+	float: left;
+}
+
+.comiseo-daterangepicker-left .comiseo-daterangepicker-buttonpanel {
+	float: right;
+}
+
+.comiseo-daterangepicker-buttonpanel > button  {
+	margin-top: 6px;
+}
+
+.comiseo-daterangepicker-right .comiseo-daterangepicker-buttonpanel > button {
+	margin-right: 6px;
+}
+
+.comiseo-daterangepicker-left .comiseo-daterangepicker-buttonpanel > button {
+	margin-left: 6px;
+}
+
+.right-wrapper{
+	margin:0;
+	text-align:right;
+	padding: 38px 22px 32px 0;
+}
+</style>
 </head>
 <body>
 	<div id="wrapper">
@@ -132,9 +224,40 @@ Website: http://www.webthemez.com/
 
 		<div id="page-wrapper">
 			<div class="header">
+			
+			
+			<div class="right-wrapper pull-right mt-sm mr-sm mb-lg">
+					<div class="form-group">
+					<div class="pull-right">
+					<div class="input-group">
+						 <div class="input-group">
+						    <span class="input-group-addon" style="border-radius:0 !important"><i class="fa fa-calendar"></i></span>
+						     <input id="e2" name="e2" class="form-control" type="text" style="border-radius:0 !important">
+						  </div>
+						 
+					</div>
+					
+					
+					</div>
+					</div>
+					</div>
+					
+					
+					
 				<h1 class="page-header">
 					Dashboard <small>Welcome John Doe</small>
 				</h1>
+				<!-- calendar options -->
+				<!-- <div class="right-wrapper pull-right mt-sm mr-sm mb-lg">
+					<div class="form-group">
+					<div class="pull-right">
+					<i class="fa fa-calendar"></i>
+					<input id="e2" name="e2">
+					</div>
+					</div>
+					</div> -->
+				<!-- end  -->
+				
 				<ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Dashboard</a></li>
@@ -412,7 +535,15 @@ Website: http://www.webthemez.com/
 	<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script> -->
 	<!-- <script src="javascript/admission-list.js"></script>  -->
 	<!-- <script src="javascript/financial.js"></script>  -->
+	<script>
+	$("#e2").daterangepicker({
+	     datepickerOptions : {
+	         numberOfMonths : 2
+	     }
+	 });
 
+	
+	</script>
 </body>
 
 </html>
