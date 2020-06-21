@@ -196,20 +196,21 @@ public class EnquiryDAO {
 		
 	}
 
-	public Enquiry EnquiryReport(Enquiry enquiry) {
+	public ArrayList<Enquiry> EnquiryReport(Enquiry enquiry, ArrayList<Enquiry> enqData) {
 		Connection con=null;
 		PreparedStatement st=null;
 		ResultSet rs=null;
 		Enquiry enq=new Enquiry();
 		try {
 			con=Util.getDBConnection();
-			String query="select * from enquiry where enq_date BETWEEN ? AND ? AND branch=? AND enq_taken=? AND status=?";
+			String query="select * from enquiry where enq_date BETWEEN ? AND ? AND branch=? AND enq_taken=? AND status=? AND fees_pack=?";
 			st=con.prepareStatement(query);
 			st.setString(1, enquiry.getFrom_date());
 			st.setString(2, enquiry.getTo_date());
 			st.setString(3, enquiry.getBranch());
 			st.setString(4, enquiry.getEnq_taken_by());
 			st.setString(5, enquiry.getStatus());
+			st.setString(6, enquiry.getFees_pack());
 			rs=st.executeQuery();
 			while(rs.next()){
 				enq.setId(rs.getLong(1));
@@ -237,6 +238,9 @@ public class EnquiryDAO {
 				enq.setLead_source(rs.getString(23));
 				enq.setRemark(rs.getString(24));
 				enq.setStatus(rs.getString(25));
+				if(enq!=null){
+					enqData.add(enq);	
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,7 +249,7 @@ public class EnquiryDAO {
 		finally {
 			Util.closeConnection(rs, st, con);
 		}
-		return enq;
+		return enqData;
 		
 	}
 

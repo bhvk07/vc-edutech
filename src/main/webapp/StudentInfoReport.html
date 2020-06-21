@@ -4,30 +4,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!--<link href="style.css" rel="stylesheet" type="text/css">-->
-<link rel="stylesheet" href="css/promote.css" type="text/css">
-
-<link
-	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-
-<!-- <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
- -->
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css" />
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="css/bootstrap-multiselect.css">
 
@@ -37,17 +15,18 @@
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
-
-
-<script src="core/popper.min.js"></script>
 <script src="assets/js/bootstrap-multiselect.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
+<script src="javascript/StudentInfoReport.js"></script>
 <script src="javascript/accordian_view.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script src="javascript/StudentInfoReport.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
 
-<script type="text/javascript" src="core/jquerysession.js"></script>
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
+
+
 
 <title>Student Info Report</title>
 <style>
@@ -402,7 +381,7 @@ table.table .avatar {
 																data-date-format="YYYY-MM-DD" data-link-field="aca_start"
 																data-link-format="yyyy-mm-dd">
 																<input type="date" class="form-control" id="till_date"
-																	name="till_date" required>
+																	name="to_date" required>
 															</div>
 
 														</div>
@@ -420,15 +399,15 @@ table.table .avatar {
 															</div>
 														</div>
 													</div>
-														<div class="col-md-3">
+<!-- 														<div class="col-md-3">
 														<div class="form-group">
 															<label>Student name</label> <input type="text"
 																class="form-control" id="stdname" name="stud_name"
 																required>
 														</div>
 
-													</div>
-													<div class="col-md-3">
+													</div> -->
+<!-- 													<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleDiv">Caste</span>
@@ -441,7 +420,7 @@ table.table .avatar {
 															</div>
 														</div>
 													</div>
-													
+													 -->
 													
 													<div class="col-md-3">
 														<div class="form-group">
@@ -457,7 +436,7 @@ table.table .avatar {
 															</div>
 														</div>
 													</div>
-												<div class="col-md-3">
+<!-- 												<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleDiv">Gender</span>
@@ -471,7 +450,7 @@ table.table .avatar {
 																</select>
 															</div>
 														</div>
-													</div>
+													</div> -->
 												<div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
@@ -486,6 +465,20 @@ table.table .avatar {
 														</div>
 													</div>
 													<div class="col-md-3">
+														<div class="form-group">
+															<label class="control-label"> <span
+																class="titleDiv">Enquiry Status</span>
+															</label>
+															<div class="input-group" style="width: 100%">
+																<select id="multi_status" name="status" class="form-control enq_status"
+																	multiple="multiple" Required>
+																		<option value="Admitted">Admitted</option>
+																		<option value="Non Admitted">Non Admitted</option>	
+																</select>
+															</div>
+														</div>
+													</div>
+													<!-- <div class="col-md-3">
 														<div class="form-group">
 															<label class="control-label"> <span
 																class="titleDiv">Lead Source</span>
@@ -511,7 +504,7 @@ table.table .avatar {
 															</div>
 														</div>
 													</div>
-												
+ -->												
 												
 												</div>
 											
@@ -569,15 +562,18 @@ table.table .avatar {
 												<div class="table-responsive">
 													<table
 														class="table table-striped table-bordered table-hover"
-														id="expense_report">
+														id="stud_info_report">
 														<thead>
 															<tr>
 																<th>Enquiry Date</th>
 																<th>Student name</th>
 																<th>Gender</th>
-																<th>Course package</th>
-																<th>Enquiry package amount</th>
-																
+																<th>Birth Date</th>
+																<th>Contact</th>
+																<th>Address</th>
+																<th>Course Package</th>
+																<th>Enquiry Package Amount</th>
+																<th>Counsellor</th>
 															</tr>
 														</thead>
 													</table>
@@ -598,16 +594,5 @@ table.table .avatar {
 				</section>
 			
 		</div>
-					<!-- col-md-12 div -->
-			<!-- section role-main -->
-		<!--  </div>-->
-		<!-- table wrapper div close -->
-	<!--        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
-	<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
-	
-	<!-- <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->
 </body>
 </html>

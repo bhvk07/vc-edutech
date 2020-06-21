@@ -37,9 +37,9 @@ public class EnquiryController {
 		dao.EditEnquiryData(enquiry);
 	}
 
-	public Enquiry EnquiryReport(Enquiry enquiry) {
+	public  ArrayList<Enquiry> EnquiryReport(Enquiry enquiry, ArrayList<Enquiry> enq) {
 		EnquiryDAO dao=new EnquiryDAO();
-		return dao.EnquiryReport(enquiry);
+		return dao.EnquiryReport(enquiry,enq);
 	}
 
 	public String IncrementedEnqNo(String branch) {

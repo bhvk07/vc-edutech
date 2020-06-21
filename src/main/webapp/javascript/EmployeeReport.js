@@ -95,7 +95,7 @@ function fetchEmployeeReport(e){
 			design.push(option.value);
 		}
 	}
-	var emp_name=document.getElementById("empname").value;
+	//var emp_name=document.getElementById("empname").value;
 	function callback(responseData, textStatus, request){
 		var table = $("#employee-report").DataTable();
 		var value = 0;
