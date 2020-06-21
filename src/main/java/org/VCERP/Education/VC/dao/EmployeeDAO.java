@@ -79,6 +79,46 @@ public class EmployeeDAO {
 			return employee;
 	}
 
-	
-
+	public ArrayList<Employee> FetchEmployeeReport(Employee employee, ArrayList<Employee> empData) {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		String query="";
+		try {
+			con=Util.getDBConnection();
+			if(employee.getEmp_name().isEmpty()){
+			query="select * from employee where design=? and branch=?";
+			}
+			else{
+				query="select * from employee where emp_name='"+employee.getEmp_name()+"' and design=? and branch=?";
+			}
+			st=con.prepareStatement(query);
+			st.setString(1, employee.getDesign());
+			st.setString(2, employee.getBranch());
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				Employee emp=new Employee();
+				emp.setId(rs.getLong(1));
+				emp.setEmp_type(rs.getString(2));
+				emp.setBranch(rs.getString(3));
+				emp.setEmp_name(rs.getString(4));
+				emp.setEmp_unq_code(rs.getString(5));
+				emp.setEmail(rs.getString(6));
+				emp.setAddress(rs.getString(7));
+				emp.setContact(rs.getString(8));
+				emp.setDob(rs.getString(9));
+				emp.setJoin_date(rs.getString(10));
+				emp.setDesign(rs.getString(11));
+				empData.add(emp);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, st, con);
+		}
+		return empData;
+	}
 }

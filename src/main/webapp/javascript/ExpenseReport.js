@@ -3,7 +3,8 @@ var requestid=0;
 var vendors = new Array();
 $(document).ready(function(){
 	loadvendor();
-	/*fetchAllBranch();*/
+	fetchAllBranch();
+	$("#branch").val(branchSession);
 	$('#multi_vendor_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true

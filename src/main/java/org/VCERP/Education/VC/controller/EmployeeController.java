@@ -18,5 +18,10 @@ public class EmployeeController {
 		return dao.FetchAllEmployee(branch);
 	}
 
+	public ArrayList<Employee> FetchEmployeeReport(Employee employee, ArrayList<Employee> emp) {
+		EmployeeDAO dao=new EmployeeDAO();
+		return dao.FetchEmployeeReport(employee,emp);
+	}
+
 	
 }

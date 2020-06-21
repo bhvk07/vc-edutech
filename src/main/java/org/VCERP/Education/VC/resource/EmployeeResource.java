@@ -80,6 +80,35 @@ public class EmployeeResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
-	
+
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/FetchEmployeeReport")
+	//@PreAuthorize("hasRole('desk')")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response FetchEmployeeReport(@FormParam("branch") String branch,@FormParam("emp_name") String emp_name,
+			@FormParam("design") String design){
+		Employee employee=null;
+		ArrayList<Employee> emp=new ArrayList<>();
+		EmployeeController controller=new EmployeeController();
+		String[] commaSeperatedDesign=Util.commaSeperatedString(design);
+		try {	
+			for(int i=0;i<commaSeperatedDesign.length;i++){
+				employee=new Employee();
+				employee.setBranch(branch);
+				employee.setEmp_name(emp_name);
+				employee.setDesign(commaSeperatedDesign[i]);
+				emp=controller.FetchEmployeeReport(employee,emp);
+			}
+			if(emp!=null){
+				return Response.status(Status.OK).entity(emp).build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
+	}	
 	
 }
