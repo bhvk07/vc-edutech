@@ -19,19 +19,19 @@ import javax.ws.rs.core.Response.Status;
 import org.VCERP.Education.VC.controller.TimeTableController;
 import org.VCERP.Education.VC.controller.EmployeeController;
 
-
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 
 import org.VCERP.Education.VC.model.TimeTable;
 
 import org.VCERP.Education.VC.model.Employee;
+
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("TimeTable")
 public class TimeTableResource {
 	@POST
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/NewTimeTable")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	
@@ -41,37 +41,45 @@ public class TimeTableResource {
 	{
 		TimeTable tt = null;
 		TimeTableController controller = null;
+		String[] dollarSeperatedTT=Util.dollarSeperatedString(tt_details);
 	try{
 		tt = new TimeTable();
 		controller = new TimeTableController();
+		for(int i=1;i<dollarSeperatedTT.length;i++){
+		String[] pipeSeperatedTT=Util.symbolSeperatedString(dollarSeperatedTT[i]);
 		tt.setAca_year(aca_year);
 		tt.setDivision(division);
 		tt.setStd(std);
 		tt.setSubject(subject);
 		tt.setTitle(title);
+		tt.setDay(pipeSeperatedTT[0]);
+		tt.setTime_slot(pipeSeperatedTT[1]);
+		tt.setLecturer(pipeSeperatedTT[2]);
+		tt.setStatus(pipeSeperatedTT[3]);
 		tt.setBranch(branch);
-		controller.addSubject(tt,tt_details);
-		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Inserted").build();
+		controller.addTimeTable(tt);
+		}
+		return Util.generateResponse(Status.ACCEPTED, "New TimeTable Successfully Inserted").build();
 	}
 	catch(Exception e){
 		e.printStackTrace();
 		System.out.println(e);
 	}
-	return Util.generateErrorResponse(Status.BAD_REQUEST, "Data not Inserted").build();
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new time table.Please try agin or contact with administrator").build();
 	}
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchTimeTable")
-	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response FetchTimeTable(){
+	public Response FetchTimeTable(@QueryParam("branch") String branch){
+		ArrayList<TimeTable> ttable=new ArrayList<>();
+		TimeTableController controller=new TimeTableController();
 		try {
-			ArrayList<TimeTable> ttable=new ArrayList<>();
-			TimeTableController controller=new TimeTableController();
-			ttable=controller.FetchTimeTable();
+			ttable=controller.FetchTimeTable(branch);
+			if(ttable!=null){
 			return Response.status(Status.OK).entity(ttable).build();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,23 +88,149 @@ public class TimeTableResource {
 	
 	@GET
 	@PermitAll
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchLecturer")
-	//@PreAuthorize("hasRole('desk')")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response FetchLecturer(){
+	public Response FetchLecturer(@QueryParam("branch") String branch){
+		ArrayList<String> emp_desg=new ArrayList<>();
+		TimeTableController controller=new TimeTableController();
 		try {
-			//var designation = "lecturer";
-			ArrayList<Employee> emp_desg=new ArrayList<>();
-			TimeTableController controller=new TimeTableController();
-			emp_desg=controller.FetchLecturer();
-			return Response.status(Status.OK).entity(emp_desg).build();
+			emp_desg=controller.FetchLecturer(branch);
+			if(emp_desg!=null){
+				return Response.status(Status.OK).entity(emp_desg).build();	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Lecturer Data Not Found.").build();
+	}
+
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/InsertTimeSlot")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response InsertTimeSlot(@FormParam("time_slot") String slot,@FormParam("branch") String Branch)
+	{
+		TimeTable timetable=null;
+		TimeTableController controller = null;
+		try{
+		timetable = new TimeTable();
+		controller = new TimeTableController();
+		timetable.setTime_slot(slot);
+		timetable.setBranch(Branch);
+		controller.InsertTimeSlot(timetable);
+		return Util.generateResponse(Status.ACCEPTED, "Time Slot Successfully Inserted.").build();
+		}
+		catch(Exception e){
+		e.printStackTrace();
+		System.out.println(e);
+	}
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to insert new time slot").build();
+	}
+	
+	@GET
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/FetchTime")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response loadTime(@QueryParam("branch") String branch){
+		ArrayList<String> tslot=new ArrayList<>();
+		TimeTableController controller=new TimeTableController();
+		try {
+			tslot=controller.loadTime(branch);
+			if(tslot!=null){
+				return Response.status(Status.OK).entity(tslot).build();	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Time Slot Not Found.").build();
+	}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/getSpecificTimeTable")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response getSpecificTimeTable(@FormParam("created_date") String created_date,
+			@FormParam("title") String title,@FormParam("branch") String branch){
+		ArrayList<TimeTable> tslot=new ArrayList<>();
+		TimeTableController controller=new TimeTableController();
+		try {
+			tslot=controller.getSpecificTimeTable(created_date,title,branch);
+			if(tslot!=null){
+				return Response.status(Status.OK).entity(tslot).build();	
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/EditTimeTable")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	
+	public Response EditTimeTable(@FormParam("aca_year") String aca_year,@FormParam("standard") String std,
+			@FormParam("division") String division,@FormParam("subject") String subject,@FormParam("title") String title,
+			@FormParam("tt_details") String tt_details,@FormParam("created_date") String created_date,
+			@FormParam("branch") String branch)
+	{
+		TimeTable tt = null;
+		TimeTableController controller = null;
+		String[] dollarSeperatedTT=Util.dollarSeperatedString(tt_details);
+		int j=0;
+	try{
+		tt = new TimeTable();
+		controller = new TimeTableController();
+		for(int i=1;i<dollarSeperatedTT.length;i++){
+		String[] pipeSeperatedTT=Util.symbolSeperatedString(dollarSeperatedTT[i]);
+		tt.setAca_year(aca_year);
+		tt.setDivision(division);
+		tt.setStd(std);
+		tt.setSubject(subject);
+		tt.setTitle(title);
+		tt.setDay(pipeSeperatedTT[0]);
+		tt.setTime_slot(pipeSeperatedTT[1]);
+		tt.setLecturer(pipeSeperatedTT[2]);
+		tt.setStatus(pipeSeperatedTT[3]);
+		tt.setCreated_date(created_date);
+		tt.setBranch(branch);
+		while(j<1)
+		{
+			controller.EditTimeTable(tt);
+			j++;
+		}
+		controller.addTimeTable(tt);
+		}
+		return Util.generateResponse(Status.ACCEPTED, "Data Successfully Updated.").build();
 	}
+	catch(Exception e){
+		e.printStackTrace();
+		System.out.println(e);
+	}
+	return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable ot complete the task.").build();
+	}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/deleteTimeTable")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response deleteTimeTable(@FormParam("created_date") String created_date,
+			@FormParam("title") String title,@FormParam("branch") String branch){
+		TimeTable tt=new TimeTable();
+		TimeTableController controller=new TimeTableController();
+		try {
+			tt.setCreated_date(created_date);
+			tt.setTitle(title);
+			tt.setBranch(branch);
+			controller.deleteTimeTable(tt);
+			return Util.generateResponse(Status.ACCEPTED,"Data Successfully Deleted.").build();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to complete the task.").build();
+	}
+}
 	

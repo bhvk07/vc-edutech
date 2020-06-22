@@ -14,7 +14,36 @@ public class TimeTable{
 	private String subject;
 	private String std;
 	private String created_date;
+	private String day;
+	private String status;
+	private String lecturer;
+	private String time_slot;
 	private String branch;
+	
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getLecturer() {
+		return lecturer;
+	}
+	public void setLecturer(String lecturer) {
+		this.lecturer = lecturer;
+	}
+	public String getTime_slot() {
+		return time_slot;
+	}
+	public void setTime_slot(String time_slot) {
+		this.time_slot = time_slot;
+	}
 	public String getCreated_date() {
 		return created_date;
 	}
