@@ -6,18 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Receipt-List</title>
 <script src="jquery/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="jquery/bootstrap.min.js"></script> 
+<!-- 
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="jquery/bootstrap.min.js"></script>
-
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="jquery/bootstrap.min.js"></script> -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- glyh lib -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+<!-- glyh lib -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/>
 
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
-<link href="assets/js/dataTables/dataTables.bootstrap.css"
-	rel="stylesheet" />
+<link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 	
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
@@ -324,7 +329,6 @@ table.table .avatar {
 <body>
 <div class="wrapper">
 <div id="navbar">
-
 </div>
 	<div class="table-wrapper" id="table-style">
 		<div class="table-title">
@@ -336,19 +340,20 @@ table.table .avatar {
 				</div>
 				<div class="col-sm-6">
 					<a href="enquiry.html" class="btn btn-success"><i
-						class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
-						href="" class="btn btn-success" id="admission"><i
-						class="material-icons">&#xE147;</i> <span>Addmission </span></a> <a
-						href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
-						data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-					<a href="view-receipt.html" class="btn btn-success" id="btn-view"><i
-						class="material-icons">&#xE15C;</i> <span>View</span></a>
+						class="fa fa-plus"></i> <span>Add New</span></a>
+						<a href="enquiry.html" class="btn btn-warning"><i
+						class="fa fa-plus" id="editBtn"></i> <span>Edit</span></a>
+						 <a href="" class="btn btn-success" id="admission">
+						<i class="fa fa-university" aria-hidden="true"></i><span>Addmission </span></a> <a
+						href="#deleteEmployeeModal" id="deleteBtn" class="btn btn-danger" id="btn-danger"
+						data-toggle="modal"><i class="fa fa-minus" aria-hidden="true"></i> <span>Delete</span></a>
+					<a href="view-receipt.html" class="btn btn-success" id="btn-view" >
+					<i class="fa fa-eye" aria-hidden="true"></i> <span>View</span></a>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<!-- Advanced Tables -->
 				<div class="panel panel-default">
 					<!-- <div class="panel-heading">Advanced Tables</div> -->
 					<div class="panel-body">
@@ -371,18 +376,14 @@ table.table .avatar {
 										<th class="no-sort">RECEIVED BY</th>
 										<th>CHEQUE DATE/CLEAR DATE</th>
 										<th class="no-sort">STATUS</th>
-
 									</tr>
 								</thead>
 							</table>
 						</div>
-
 					</div>
-			</div> 
-				<!--End Advanced Tables -->
+				</div> 
 			</div>
 		</div>
-
 	</div>
 
 	<!-- Edit Modal HTML -->
@@ -427,8 +428,8 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form>
-					<div class="modal-header">
-						<h4 class="modal-title">Delete Employee</h4>
+					<div class="modal-header" style="background-color:#d9534f;color:white">
+						<h4 class="modal-title" >Delete Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>

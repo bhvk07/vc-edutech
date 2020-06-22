@@ -9,7 +9,7 @@
 <script src="jquery/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="assets/js/dataTables/dataTables.bootstrap.css"
 	rel="stylesheet" />
 
@@ -332,27 +332,16 @@ table.table .avatar {
 							<b>Fees Type</b>
 						</h2>
 					</div>
-					<div class="col-sm-6">
-
-						<!-- <button type="button" id="btnMarkDelete" onclick="DeleteData();"
-							data-style="zoom-out" style="display: none;" title=""
-							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
-							data-original-title="Delete This Fees Type">
-							<b><i class=" padding-right-sm fs14"></i></b><span
-								class="label-xs hidden-xs hidden-sm p5">edit</span>
-						</button> -->
-
-
-
+					<div class="col-sm-6" id="bb">
 
 						<a href="#feestypeModal" data-toggle="modal"
 							data-target="#feestypeModal" class="btn btn-success"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
-							href="" class="btn btn-danger" id="edit"
-							data-toggle="modal" ><i class="material-icons">&#xE15C;</i>
-							<span>Edit</span></a><a href=""
-							class="btn btn-danger" id="Delete" data-toggle="modal"><i
-							class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+							class="fa fa-plus"></i> <span>Add New</span></a> 
+							<a href="#feestypeModal" class="btn btn-warning" id="editBtn" 
+							data-toggle="modal" ><i class="fa fa-plus"></i>
+							<span>Edit</span></a>
+							<a href="" class="btn btn-danger" id="deleteBtn"  data-toggle="modal"><i
+							class="fa fa-minus"></i> <span>Delete</span></a>
 					</div>
 				</div>
 			</div>
@@ -371,7 +360,7 @@ table.table .avatar {
 											<th>CREATED DATE</th>
 											<th>FEES TYPE</th>
 											<th class="no-sort"><span class="custom-checkbox">
-													<input type="checkbox" id="selectAll" name="options[]"
+													<input type="checkbox"  id="selectAll" name="options[]"
 													value="0"> <label for="checkbox1"></label>
 											</span></th>
 										</tr>
@@ -380,6 +369,7 @@ table.table .avatar {
 							</div>
 
 						</div>
+												
 						<!-- </div> -->
 						<!--End Advanced Tables -->
 					</div>
@@ -387,28 +377,6 @@ table.table .avatar {
 
 			</div>
 
-
-<!-- 
-
-			--code for selecting all check boxes--
-			<script type="text/javascript">
-				$('#selectall').click(
-						function(event) { //on click
-
-							var checkboxes = $(this).closest('#FeesTypeList')
-									.find(':checkbox');
-							if ($(this).is(':checked')) {
-								checkboxes.prop('checked', true);
-								CheckSelection();
-
-							} else {
-								checkboxes.prop('checked', false);
-								CheckSelection();
-							}
-						});
-			</script>
-
- -->
 		</div>
 	</div>
 
@@ -441,5 +409,46 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	
+					    $(document).ready(function() {
+					        var chk = 'input[id="checkbox"]';
+					        var $edit = $("#editBtn").hide();
+					        var $del = $("#deleteBtn").hide();
+					        
+					      
+					          
+					          $(document).on('change','#feestypetable input:checkbox',function () {
+						  		    if($('#feestypetable input:checkbox:checked').length > 1 ){
+						  		    	$('#editBtn').hide();
+						  		    	 $('#deleteBtn').show();
+						  		    	
+						  		    }
+						  		    else  if($('#feestypetable input:checkbox:checked').length == 0) {
+						  		    
+						  		    	$('#deleteBtn').hide();
+						  		    	$('#editBtn').hide();
+						  		    	
+						  		    }
+						  		    else  {
+						  		    	$('#edit').show();
+						  		    	 $('#deleteBtn').show();
+						  		    	
+						  		    }
+
+						  		   
+						  		});
+					          
+					          
+					   
+					  		
+					  		
+					  		
+					      });
+
+						
+						</script>
+	
+	
 </body>
 </html>
