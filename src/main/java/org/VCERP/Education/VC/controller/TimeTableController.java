@@ -40,4 +40,8 @@ public class TimeTableController{
 		TimeTableDAO dao=new TimeTableDAO();
 		dao.DeleteTimeTable(tt);
 	}
+	public ArrayList<TimeTable> TimeTableReport(TimeTable tt, ArrayList<TimeTable> time_table) {
+		TimeTableDAO dao=new TimeTableDAO();
+		return dao.TimeTableReport(tt,time_table);
+	}
 }

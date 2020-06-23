@@ -232,5 +232,35 @@ public class TimeTableResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to complete the task.").build();
 	}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/TimeTableReport")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response TimeTableReport(@FormParam("branch") String branch,@FormParam("lecturer") String lecturer,
+			@FormParam("tt_title") String tt_title){
+		System.out.println(branch+" "+lecturer+" "+tt_title);
+		String[] commaSeperatedTitle=Util.commaSeperatedString(tt_title);
+		//String[] commaSeperatedLecturer=Util.commaSeperatedString(lecturer);
+		TimeTable tt=new TimeTable();
+		TimeTableController controller=new TimeTableController();
+		ArrayList<TimeTable> time_table=new ArrayList<>();
+		try {
+			for(int i=0;i<commaSeperatedTitle.length;i++){
+				//for(int j=0;j<commaSeperatedLecturer.length;j++){
+					tt.setTitle(commaSeperatedTitle[i]);
+					tt.setLecturer(lecturer);
+					tt.setBranch(branch);
+					time_table=controller.TimeTableReport(tt,time_table);
+				//}
+			}
+			if(time_table!=null){
+			return Response.status(Status.ACCEPTED).entity(time_table).build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to complete the task.").build();
+	}
 }
 	

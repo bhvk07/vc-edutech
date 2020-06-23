@@ -206,5 +206,46 @@ public class TimeTableDAO{
 		}
 	}
 
+	public ArrayList<TimeTable> TimeTableReport(TimeTable tt, ArrayList<TimeTable> time_table) {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		String query="";
+		try {
+			con=Util.getDBConnection();
+			if(tt.getLecturer().isEmpty()){
+			query="select time,day,lecturer,standard,divi,subject from time_table WHERE tt_title=? AND branch=?";
+			}else{
+			query="select time,day,lecturer,standard,divi,subject from time_table WHERE tt_title=? AND lecturer='"+tt.getLecturer()+"' AND branch=?";
+			}
+			st=con.prepareStatement(query);
+			st.setString(1, tt.getTitle());
+			st.setString(2, tt.getBranch());
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				TimeTable ttable=new TimeTable();
+				ttable.setTime_slot(rs.getString(1));
+				ttable.setDay(rs.getString(2));
+				ttable.setLecturer(rs.getString(3));
+				ttable.setStd(rs.getString(4));
+				ttable.setDivision(rs.getString(5));
+				ttable.setSubject(rs.getString(6));
+				if(ttable!=null){
+					time_table.add(ttable);	
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally{
+			Util.closeConnection(rs, st, con);
+		}
+		return time_table;
+
+	}
+
 	
 }

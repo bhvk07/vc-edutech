@@ -1,5 +1,8 @@
 var requestid=0;
 var date;
+var htmlCode = new Array();
+var lecturers = new Array();
+var all_time_slot=new Array();
 $(document).ready(function() {
 	validateLogin();
 	TimeTableList();
@@ -7,10 +10,26 @@ $(document).ready(function() {
 	getAllStandard();
 	getAllDivision();
 	getSubject();
+	fetchAllBranch();
+	load_TT_Title();
+	loadTime();
+	loadLecturer();
+	$("#branch").val(branchSession);
 	$("#timetable_table").DataTable({
 		"pageLength" : 40
 	});
-	
+	$('#multi_tt_title').multiselect({
+		includeSelectAllOption : true,
+		enableFiltering : true
+	});
+	var html = '<tr><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" name="day" style="width:100%;"><option value="monday">Monday</option><option value="tuesday">Tuesday</option><option value="wednesday">Wednesday</option><option value="thursday">Thursday</option><option value="friday">Friday</option><option value="saturday">Saturday</option><option value="sunday">Sunday</option></select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group" style="width:100%"><select id="multi_time" class="form-control" name="time-slot" style="width:100%;">'
+	+ htmlCode 
+	+ '</select><span class="input-group-btn"><button class="btn btn-primary" id="add-btn" type="button" data-toggle="modal" data-target="#addTimeModal"><span class="glyphicon glyphicon-plus"></span></button></span></div></div></div></td><td><div class="form-group"><div class="col-md-6 lesspadding"><div class="input-group"><select class="form-control" id="lecturer" name="lecturer" style="width:100%;">'
+	+ lecturers
+	+ '</select></div></div></div></td><td><div class="form-group"><div class="col-md-4 lesspadding"><div class="input-group"><select class="form-control" name="status" style="width:100%;"><option>active</option><option>inactive</option></select></div></div></div></td><td><div class="col-md-2 lesspadding"><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></div></td></tr>';
+	$("#addrow").on("click", function() {
+		$("table .tt-details").append(html);
+	});
 	$('#div').focusout(function() {
 		var aca_year = document.getElementById('acad_year').value;
 		var std = document.getElementById('std').value;
@@ -63,6 +82,9 @@ $(document).ready(function() {
 	$('#tt').on('click','.remove-row',function(e) {
 				$(this).closest('tr').remove();
 		});
+	$("#btnDisplay").click(function(e){
+		tt_report();
+	})
 });
 function getTimeTableDetails() {
 	var table = document.getElementById("tt");
@@ -216,3 +238,138 @@ function removeTableRow(){
 		rowCount = rowCount - 1;
 	}
 }
+
+function load_TT_Title(){
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode=('<option value="' + responseData[i].title + '" >'
+							+ responseData[i].title + '</option>');
+			$('#multi_tt_title').append(htmlCode);
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+
+	}
+
+	var httpMethod = "GET";
+	var relativeUrl = "/TimeTable/FetchTimeTable?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+function tt_report(){
+	document.getElementById("branch").disabled=false;
+	var tt_title=new Array()
+	for (var option of document.getElementById('multi_tt_title').options) {
+		if (option.selected) {
+			tt_title.push(option.value);
+		}
+	}
+	function callback(responseData, textStatus, request) {
+		document.getElementById("branch").disabled=true;
+		var table = $("#timetable_report").DataTable();
+		table.rows().remove().draw();
+
+			for(var j=0;j<all_time_slot.length;j++){
+				var time="", mon="", tue="", wed="", thu="", fri="",sat="",sun="";
+				for ( var i in responseData) {
+					if(all_time_slot[j]==responseData[i].time_slot){
+					time = responseData[i].time_slot;
+					var lecturer = responseData[i].lecturer;
+					var division=responseData[i].division;
+					var std = responseData[i].std;
+					var day = responseData[i].day;
+					var subject = responseData[i].subject;
+					switch (day) {
+					  case "monday":
+					    mon='<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "tuesday":
+						  tue = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "wednesday":
+					     wed = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "thursday":
+						  thu = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "friday":
+					    fri = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "saturday":
+						  sat = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					    break;
+					  case "sunday":
+						  sun = '<center>'+subject+'<br>'+std+'<br>'+division+'<br>'+lecturer+'</center>';
+					}
+				}
+			}
+				table.row.add([ time, mon, tue, wed, thu, fri,sat,sun ])
+				.draw();
+			
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+
+	}
+
+	var httpMethod = "POST";
+	var formData=$("#getTimeTableData").serialize()+"&tt_title="+tt_title;
+	var relativeUrl = "/TimeTable/TimeTableReport";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+
+}
+function loadTime() {
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			htmlCode.push('<option value="' + responseData[i] + '" >'
+							+ responseData[i] + '</option>');
+		all_time_slot.push(responseData[i]);
+		}
+		for (var i = 0; i < htmlCode.length; i++) {
+			$('#multi_time').append(htmlCode[i]);
+		}
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+
+	var httpMethod = "GET";
+	var relativeUrl = "/TimeTable/FetchTime?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+} 
+function loadLecturer() {
+function callback(responseData, textStatus, request) {
+	for ( var i in responseData) {
+		lecturers.push('<option value="' + responseData[i] + '" >'
+						+ responseData[i] + '</option>');
+	}
+	for (var i = 0; i < lecturers.length; i++) {
+		$('#lecturer').append(lecturers[i]);
+	}
+}
+
+function errorCallback(responseData, textStatus, request) {
+	var mes = responseData.responseJSON.message;
+	showNotification("error", mes);
+}
+
+var httpMethod = "GET";
+var relativeUrl = "/TimeTable/FetchLecturer?branch="+branchSession;
+ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+		errorCallback);
+return false;
+} 
