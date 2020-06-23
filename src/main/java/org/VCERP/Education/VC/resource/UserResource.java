@@ -5,6 +5,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,7 +32,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Path("user")
 public class UserResource {
-
+	public static String role="";
+	public static String branch="";
 	@Context 
 	HttpServletRequest request;
 	
@@ -45,8 +47,11 @@ public class UserResource {
 		UserController controller = new UserController();
 		user = controller.authenticateUser(userid, password);
 		if (user == null) {
+			
 			return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		} else {
+			role=user.getRole();
+			branch=user.getBranch();
 			LoginHistory history=new LoginHistory();
 			
 			history.setBranch(user.getBranch());
@@ -62,7 +67,7 @@ public class UserResource {
 	}
 
 	@POST
-	@PermitAll
+	@RolesAllowed("CREATE_NEW_USER_ACCOUNT")
 	@JWTTokenNeeded
 	@Path("/createEmployeeAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

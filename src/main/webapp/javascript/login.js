@@ -33,23 +33,16 @@ function attemptLogin(){
 		alert(token);
 		var role = responseData.role;
 		var name = responseData.name;
-		if(role=="desk")
+		if(role!="")
 			{
-			
 			window.location.href="dashboard.html";
-			localStorage.setItem("user",name);
-			}
-		else if(role=="desk")
-			{
-			
-			window.location.href="dashboard.html";
-			localstorage.setItem("user",name);
+			sessionStorage.setItem("user",name);
 			}
 		else
 			{
-			mesasge="Role Not Assign.";
+			messasge="Role Not Assign.";
+			showNotification("error",message);
 			}
-		/*LoginHistory();*/
 	}
 	
 	function errorCallback(responseData,textStatus,request){
@@ -64,21 +57,3 @@ function attemptLogin(){
 			errorCallback);
 	return false;
 }
-
-/*function LoginHistory(){
-	function callback(responseData,textStatus,request){
-	
-	}
-	function errorCallback(responseData,textStatus,request){
-		var mes=responseData.responseJSON.message;
-		showNotification("error",mes);
-	}
-	var formData = $('#signin').serialize();
-	var httpMethod="GET";
-	var relativeUrl="/user/getLoginHistory?branch="+branchSession+"&user="+user;
-
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
-			errorCallback);
-	return false;
-}
-*/

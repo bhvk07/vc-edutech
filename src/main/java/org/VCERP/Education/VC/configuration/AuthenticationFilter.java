@@ -1,32 +1,25 @@
 package org.VCERP.Education.VC.configuration;
 //import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-//import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-//import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
-//import org.jboss.resteasy.core.Headers;
-//import org.jboss.resteasy.core.ServerResponse;
-//import org.jboss.resteasy.spi.Failure;
-//import org.jboss.resteasy.spi.HttpRequest;
-//import org.jboss.resteasy.spi.metadata.ResourceMethod;
-//import org.jboss.resteasy.util.Base64;
-
-import org.glassfish.jersey.internal.util.Base64;
+import org.VCERP.Education.VC.resource.UserResource;
+import org.VCERP.Education.VC.utility.Util;
 
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter
@@ -36,10 +29,10 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     private ResourceInfo resourceInfo;
      
     private static final String AUTHORIZATION_PROPERTY = "X-Authorization";
-    private static final String AUTHENTICATION_SCHEME = "Bearer";
-    private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED).build();
+    //private static final String AUTHENTICATION_SCHEME = "Bearer";
+    private static final Response ACCESS_DENIED = Util.generateErrorResponse(Status.UNAUTHORIZED, "You Are UNAUTHORIZED To PerForm This Task.").build();
     private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN).build();
-    private static final Response SERVER_ERROR = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    //private static final Response SERVER_ERROR = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 
       
     @Override
@@ -68,38 +61,12 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                  requestContext.abortWith(ACCESS_DENIED);
                  return;
              }
-               
-             //Get encoded username and password
-             final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
-               
-             //Decode username and password
-             String usernameAndPassword = null;
-             try {
-                 usernameAndPassword = "";
-             } catch (Exception e) {
-                 requestContext.abortWith(SERVER_ERROR);
-                 return;
-             }
-   
-             //Split username and password tokens
-             final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-             final String username = tokenizer.nextToken();
-             final String password = tokenizer.nextToken();
-               
-             //Verifying Username and password
-             if(!(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password"))){
-                 requestContext.abortWith(ACCESS_DENIED);
-                 return;
-             }
-               
-             //Verify user access
              if(method.isAnnotationPresent(RolesAllowed.class))
              {
                  RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
-                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-                   
-                 //Is user valid?
-                 if( ! isUserAllowed(username, password, rolesSet))
+                 String[] roles=rolesAnnotation.value();
+                 
+                 if( ! isUserAllowed(roles[0],getUserPermission()))
                  {
                      requestContext.abortWith(ACCESS_DENIED);
                      return;
@@ -107,21 +74,38 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
              }
          }
      }
-     private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) 
+     private boolean isUserAllowed( final String roles, ArrayList<String> permission) 
      {
          boolean isAllowed = false;
-           
-         //Step 1. Fetch password from database and match with password in argument
-         //If both match then get the defined role for user from database and continue; else return isAllowed [false]
-         //Access the database and do this part yourself
-         //String userRole = userMgr.getUserRole(username);
-         String userRole = "ADMIN";
-           
-         //Step 2. Verify user role
-         if(rolesSet.contains(userRole))
+
+         if(permission.contains(roles))
          {
              isAllowed = true;
          }
          return isAllowed;
+     }
+     
+     private ArrayList<String> getUserPermission(){
+    	 Connection con=null;
+    	 PreparedStatement st=null;
+    	 ResultSet rs=null;
+    	 ArrayList<String> permisison=new ArrayList<>();
+    	 try {
+			con=Util.getDBConnection();
+			String query="select permission from role_permission where role=? and branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, UserResource.role);
+			st.setString(2, UserResource.branch);
+			rs=st.executeQuery();
+			while(rs.next()){
+				permisison.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	 finally {
+			Util.closeConnection(rs, st, con);
+		}
+    	 return permisison;
      }
 }
