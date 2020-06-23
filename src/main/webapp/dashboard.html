@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <!-- 
 Template Name: BRILLIANT Bootstrap Admin Template
 Version: 4.5.6
@@ -227,6 +228,7 @@ Website: http://www.webthemez.com/
 			
 			
 			<div class="right-wrapper pull-right mt-sm mr-sm mb-lg">
+			<form id="chart_data">
 					<div class="form-group">
 					<div class="pull-right">
 					<div class="input-group">
@@ -240,8 +242,9 @@ Website: http://www.webthemez.com/
 					
 					</div>
 					</div>
+					</form>	
 					</div>
-					
+				
 					
 					
 				<h1 class="page-header">
@@ -381,7 +384,35 @@ Website: http://www.webthemez.com/
 						</div>
 					</div>
 				</div>
-
+				<div class="row">
+					<div class="col-sm-6 col-xs-12">
+						<div class="panel panel-default chartJs">
+							<div class="panel-heading">
+								<div class="card-title">
+									<div class="title">Expense Chart</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<canvas id="Exp_chart" class="chart" width="400" height="400" style=""></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-xs-12">
+						<div class="panel panel-default chartJs">
+							<div class="panel-heading">
+								<div class="card-title">
+									<div class="title">Receipt Chart</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<canvas id="Rec_chart" class="chart" width="400" height="400" style=""></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="col-xs-6 col-md-3">
 						<div class="panel panel-default">
@@ -536,11 +567,7 @@ Website: http://www.webthemez.com/
 	<!-- <script src="javascript/admission-list.js"></script>  -->
 	<!-- <script src="javascript/financial.js"></script>  -->
 	<script>
-	$("#e2").daterangepicker({
-	     datepickerOptions : {
-	         numberOfMonths : 2
-	     }
-	 });
+	
 
 	
 	</script>

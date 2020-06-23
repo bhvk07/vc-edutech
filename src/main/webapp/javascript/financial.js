@@ -1,105 +1,236 @@
+
+
 var payDate=new Array();
+var expDate;
+var exp_amt;
+var rec_date;
+var rec_amt;
 var paymentValue=new Array();
 var title="payment";
+var dates;
+var splitted_start_date;
+var splitted_end_date;
 $(document).ready(function(){
-	getChartData();
-    //BuildChart(payDate,paymentValue,title);
+	
+	$("#e2").daterangepicker({
+	     datepickerOptions : {
+	         numberOfMonths : 2
+	     }
+	 });
+	$('#e2').on('change', function()
+	{ 
+		expDate = new Array();
+		exp_amt = new Array(); 
+		rec_date = new Array();
+		rec_amt =  new Array(); 
+		var d_val = $(this).val().split(',');
+		//alert("date="+d_val);
+		
+				const search = '"';
+				const replaceWith = '';
+			  var start = d_val[0]; 
+			  var new_s_date = start.split(':');
+			 
+			  var trimmed_start_date = new_s_date[1];
+			  
+			  var splitted_start_date = trimmed_start_date.split(search).join(replaceWith);
+			  //alert(splitted_start_date);
+			  
+			  var end = d_val[1];
+			  var new_e_date = end.split(':');
+			  var e_date = new_e_date[1];
+			  var final_e_split = e_date.split('}');
+			  var trimmed_end_date = final_e_split[0];
+			  var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
+			  //alert(splitted_end_date);
+			  getExpenseChart(splitted_start_date, splitted_end_date);
+			  getReceiptChart(splitted_start_date, splitted_end_date);
+			 
+	});
+	
+	//getChartData();
+	
+   
 });
-/*
- * function show_rows1(){ var table = $("#admission_table").DataTable(); headers =
- * []; d= []; json = []; var cell_count = table.columns().header().length; //14
- * var ro = table.rows().data().length; //8 var ro_data = table.rows().data();
- * //var dat = table.rows().indexes(); table.columns().every( function () {
- * headers.push(this.header().innerHTML); //working
- * //alert(this.header().innerHTML); }); ro_data.each(function(value,index){
- * d.push(value); }); //alert("data"+d[3]);
- * 
- * 
- * 
- * 
- * for (var i = 0; i < ro; i++) { var tableRow = d[i]; //alert(tableRow); var
- * rowData = {}; for (var j = 0; j < cell_count; j++) {
- * //alert(tableRow[j].value[1]); rowData[headers[j+1]] = tableRow[j+1]; }
- * json.push(rowData); }
- * 
- * final_json = JSON.stringify(json); //alert(JSON.stringify(json)); //working
- * 
- * var labels = json.map(function(e){ return e.DATE; }); var label_list =
- * JSON.stringify(labels); localStorage.setItem("lab",label_list);
- * alert("labels"+JSON.stringify(labels)); //working (converted to get " ")
- * 
- * var values = json.map(function(e){ return e.PAYMENT; });
- * JSON.stringify(values);
- * //sessionStorage.setItem("chartData",labels+"|"+values);
- * console.log(labels+"|"+values); return labels+"|"+values; //var chart =
- * BuildChart(labels,values,"Payments"); }
- */  
+
+function Expense_chart() {
+	  var ctx, data, myBarChart, option_bars;
+	  Chart.defaults.global.responsive = true;
+	  ctx = $('#Exp_chart').get(0).getContext('2d'); //done
+	  option_bars = {
+	    scaleBeginAtZero: true,
+	    scaleShowGridLines: false,
+	    scaleGridLineColor: "rgba(0,0,0,.05)",
+	    scaleGridLineWidth: 1,
+	    scaleShowHorizontalLines: true,
+	    scaleShowVerticalLines: false,
+	    barShowStroke: true,
+	    barStrokeWidth: 1,
+	    barValueSpacing: 5,
+	    barDatasetSpacing: 3,
+	    /*scales: {
+		      xAxes: [{
+		        stacked: true,
+		      }]
+		      
+		  }*/
+	    //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	  };
+	  data = {
+		//type: 'horizontalBar',
+	    labels: expDate,
+	    datasets: [
+	      {
+	    	  
+	    	/*barPercentage: 0.1,
+	    	 barThickness: 6,
+	    	 maxBarThickness: 8,
+	         minBarLength: 2,*/
+	        label: "My First dataset",
+	        fillColor: "rgba(26, 188, 156,0.6)",
+	        strokeColor: "#1ABC9C",
+	        pointColor: "#1ABC9C",
+	        pointStrokeColor: "#fff",
+	        pointHighlightFill: "#fff",
+	        pointHighlightStroke: "#1ABC9C",
+	        data: exp_amt
+	      } 
+	     
+	    ]
+	  
+	  };
+	 /* options: {
+		  scales: {
+		      xAxes: [{
+		        stacked: true,
+		      }]
+		      yAxes: [{
+		        stacked: true
+		      }]
+		  }
+	  }*/
+	  myBarChart = new Chart(ctx).Bar(data, option_bars);
+	  //alert("chartdata="+data);
+	}
 
 
 
-function getChartData(){
+function Receipt_chart() {
+	  var ctx, data, myBarChart, option_bars;
+	  Chart.defaults.global.responsive = true;
+	  ctx = $('#Rec_chart').get(0).getContext('2d'); //done
+	  option_bars = {
+	    scaleBeginAtZero: true,
+	    scaleShowGridLines: false,
+	    scaleGridLineColor: "rgba(0,0,0,.05)",
+	    scaleGridLineWidth: 1,
+	    scaleShowHorizontalLines: true,
+	    scaleShowVerticalLines: false,
+	    barShowStroke: true,
+	    barStrokeWidth: 1,
+	    barValueSpacing: 5,
+	    barDatasetSpacing: 3,
+	    
+	  };
+	  data = {
+		
+	    labels: rec_date,
+	    datasets: [
+	      {
+	    	  
+	    	
+	        label: "My First dataset",
+	        fillColor: "rgba(26, 188, 156,0.6)",
+	        strokeColor: "#1ABC9C",
+	        pointColor: "#1ABC9C",
+	        pointStrokeColor: "#fff",
+	        pointHighlightFill: "#fff",
+	        pointHighlightStroke: "#1ABC9C",
+	        data: rec_amt
+	      } 
+	     
+	    ]
+	  
+	  };
+	 
+	  myBarChart = new Chart(ctx).Bar(data, option_bars);
+	  
+	}
+
+
+
+
+
+
+function getExpenseChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
+		//alert("hie");
+		alert("len"+responseData.length);
 		for ( var i in responseData) {
-			payDate.push(responseData[i].date);
-			paymentValue.push(responseData[i].payment);
+			
+			alert("date = "+responseData[i].date + responseData[i].amount);
+			expDate.push(responseData[i].date);
+			exp_amt.push(responseData[i].amount);
+			
+			//alert("date = "+responseData[i].date + responseData[i].amount)
 		}
+		/* $.each(exp_amt, function(key, value){
+	           exp_amt1.push(value);
+	        });*/
+		 Expense_chart();
 	}
 	function errorCallback(responseData, textStatus, request){
 		
 	}
-	var httpMethod = "GET";
-	var relativeUrl = "/chart/getChartData";
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	alert("data"+splitted_start_date+ splitted_end_date+branchSession);
+	var relativeUrl = "/chart/getExpenseChart";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
-        /*  function BuildChart(labels,values,chartTitle){
-        	  alert(labels+"     "+values+"    ");
-        	  var ctx = $('#mychart').get(0).getContext('2d');
-        	  var mychart = new Chart(ctx,{
-        		  type: 'bar',
-        		  data:{
-        			  labels:labels,
-        			  datasets: [{
-        				  label: chartTitle,  Name the series 
-        			        data: values,   Our values 
-        			        backgroundColor: [   Specify custom colors 
-        			          'rgba(255, 99, 132, 0.2)',
-        			          'rgba(54, 162, 235, 0.2)',
-        			          'rgba(255, 206, 86, 0.2)',
-        			          'rgba(75, 192, 192, 0.2)',
-        			          'rgba(153, 102, 255, 0.2)',
-        			          'rgba(255, 159, 64, 0.2)'
-        			        ],
-        			        borderColor: [   Add custom color borders 
-        			            'rgba(255,99,132,1)',
-        			            'rgba(54, 162, 235, 1)',
-        			            'rgba(255, 206, 86, 1)',
-        			            'rgba(75, 192, 192, 1)',
-        			            'rgba(153, 102, 255, 1)',
-        			            'rgba(255, 159, 64, 1)'
-        			        ],
-        			        borderWidth: 1   Specify bar border width 
-        			  }]
-        		  },
-        		  options:{
-        			  responsive:true,
-        			  maintainAspectRatio: false,
-        		  }
-        		  
-        	  });
-        	  return mychart;
-          }
-          
- */
-      
+function getReceiptChart(splitted_start_date, splitted_end_date){
+	function callback(responseData, textStatus, request){
+		
+		alert("len"+responseData.length);
+		for ( var i in responseData) {
+			
+			alert("date = "+responseData[i].date + responseData[i].amount);
+			rec_date.push(responseData[i].date);
+			rec_amt.push(responseData[i].amount);
+			
+			
+		}
+		
+		Receipt_chart();
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	
+	var relativeUrl = "/chart/getReceiptChart";
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
 
 
-//
 
-$(function() {
+function mychart() {
 	  var ctx, data, myBarChart, option_bars;
 	  Chart.defaults.global.responsive = true;
 	  ctx = $('#mychart').get(0).getContext('2d'); //done
@@ -114,6 +245,15 @@ $(function() {
 	    barStrokeWidth: 1,
 	    barValueSpacing: 5,
 	    barDatasetSpacing: 3,
+	    barPercentage: 0.1,
+	    /*scales: {
+	    	  xAxes: [{
+	    		  barPercentage: 0.1,
+	    		  gridLines: {
+	    	            display:false
+	    	        }
+	    	  }]
+	    	}*/
 	    //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 	  };
 	  data = {
@@ -129,37 +269,92 @@ $(function() {
 	        pointHighlightStroke: "#1ABC9C",
 	        data: paymentValue
 	      }, 
-	     /* {
-	        label: "My Second dataset",
-	        fillColor: "rgba(34, 167, 240,0.6)",
-	        strokeColor: "#22A7F0",
-	        pointColor: "#22A7F0",
-	        pointStrokeColor: "#fff",
-	        pointHighlightFill: "#fff",
-	        pointHighlightStroke: "#22A7F0",
-	        data: [28, 48, 40, 19, 86, 27, 90]
-	      }*/
-	    ]
+	     
+	    ],
+	    
 	  };
 	  myBarChart = new Chart(ctx).Bar(data, option_bars);
-	});
+	}
 
 
+
+
+
+
+/*
+          function BuildChart(labels,values,chartTitle){
+        	  alert(labels+"     "+values+"    ");
+        	  var ctx = $('#Exp_chart').get(0).getContext('2d');
+        	  var mychart1 = new Chart(ctx,{
+        		  type: 'bar',
+        		  data:{
+        			  labels:labels,
+        			  datasets: [{
+        				  label: chartTitle, 
+        			        data: values,  
+        			        fillColor: "rgba(26, 188, 156,0.6)",
+        			        strokeColor: "#1ABC9C",
+        			        pointColor: "#1ABC9C",
+        			        pointStrokeColor: "#fff",
+        			        pointHighlightFill: "#fff",
+        			        pointHighlightStroke: "#1ABC9C",
+        			        backgroundColor: [   
+        			          'rgba(255, 99, 132, 0.2)',
+        			          'rgba(54, 162, 235, 0.2)',
+        			          'rgba(255, 206, 86, 0.2)',
+        			          'rgba(75, 192, 192, 0.2)',
+        			          'rgba(153, 102, 255, 0.2)',
+        			          'rgba(255, 159, 64, 0.2)'
+        			        ],
+        			        borderColor: [  
+        			            'rgba(255,99,132,1)',
+        			            'rgba(54, 162, 235, 1)',
+        			            'rgba(255, 206, 86, 1)',
+        			            'rgba(75, 192, 192, 1)',
+        			            'rgba(153, 102, 255, 1)',
+        			            'rgba(255, 159, 64, 1)'
+        			        ],
+        			        borderWidth: 1 
+        			  }]
+        		  },
+        		  options:{
+        			  scaleBeginAtZero: true,
+        			    scaleShowGridLines: false,
+        			    scaleGridLineColor: "rgba(0,0,0,.05)",
+        			    scaleGridLineWidth: 1,
+        			    scaleShowHorizontalLines: true,
+        			    scaleShowVerticalLines: false,
+        			    barShowStroke: true,
+        			    barStrokeWidth: 1,
+        			    barValueSpacing: 5,
+        			    barDatasetSpacing: 3
+        		  }
+        		  
+        	  });
+        	  return mychart1;
+          }
+          
+ 
+      */
+/*function getChartData(){
+	function callback(responseData, textStatus, request){
+		for ( var i in responseData) {
+			payDate.push(responseData[i].date);
+			paymentValue.push(responseData[i].payment);
+		}
+		
+		mychart();
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/chart/getChartData";
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}*/
 
 //
 
-/*
- * $(document).ready(function(){ //var table =
- * $("#admission_table").DataTable(); //var count =
- * localStorage.getItem("count"); //var arr = []; count.each(function(){
- * arr.push(this); }) var json = []; var headers = []; for (var i = 0; i <
- * table.rows.cells.length; i++) { headers[i] =
- * table.rows.cells[i].innerHTML.toLowerCase().replace(/ /gi, ''); } for (var i =
- * 1; i < table.rows.length; i++) { var tableRow = table.rows[i]; var rowData =
- * {}; for (var j = 0; j < tableRow.cells.length; j++) { rowData[headers[j]] =
- * tableRow.cells[j].innerHTML; }
- * 
- * json.push(rowData); } alert(json); });
- * 
- * //count = table.rows
- */
