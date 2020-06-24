@@ -23,6 +23,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 import org.VCERP.Education.VC.configuration.SigningKeyGenerator;
 import org.VCERP.Education.VC.controller.UserController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
@@ -36,6 +40,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Path("user")
 public class UserResource {
+	
+	private static final Logger logger = LogManager.getLogger(UserResource.class.getName());
+	
 	public static String user_role="";
 	public static String user_branch="";
 	@Context 
@@ -47,6 +54,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@FormParam("userid") String userid, @FormParam("password") String password)
 			throws NoSuchAlgorithmException {
+		ThreadContext.put("tag", "LOGIN");
 		User user = new User();
 		UserController controller = new UserController();
 		user = controller.authenticateUser(userid, password);
@@ -57,7 +65,7 @@ public class UserResource {
 			user_role=user.getRole();
 			user_branch=user.getBranch();
 			LoginHistory history=new LoginHistory();
-			
+			logger.info("In User Login");
 			history.setBranch(user.getBranch());
 			history.setEmployee(user.getName());
 			history.setIp(request.getRemoteAddr());
