@@ -44,4 +44,14 @@ public class UserController {
 		UserDAO dao=new UserDAO();
 		dao.DeactivateEmployeeAccount(id);
 	}
+
+	public boolean checkAccountExist(User user) {
+		UserDAO dao=new UserDAO();
+		return dao.checkAccountExist(user);
+	}
+
+	public boolean checkUsernameExist(User user) {
+		UserDAO dao=new UserDAO();
+		return dao.checkUsernameExist(user);
+	}
 }

@@ -204,6 +204,58 @@ public class UserDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+
+	public boolean checkAccountExist(User user) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs=null;
+		boolean status=false;
+		try {
+			con=Util.getDBConnection();
+			String query = "select * from user_db where name=? and branch=? and active='1'";
+			ps = con.prepareStatement(query);
+			ps.setString(1,user.getName());
+			ps.setString(2,user.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next()){
+				status=true;
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return status;
+	}
+
+	public boolean checkUsernameExist(User user) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs=null;
+		boolean status=false;
+		try {
+			con=Util.getDBConnection();
+			String query = "select * from user_db where username=? and branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1,user.getUserid());
+			ps.setString(2,user.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next()){
+				status=true;
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return status;
+	}
 }
 
 

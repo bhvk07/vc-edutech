@@ -32,8 +32,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Path("user")
 public class UserResource {
-	public static String role="";
-	public static String branch="";
+	public static String user_role="";
+	public static String user_branch="";
 	@Context 
 	HttpServletRequest request;
 	
@@ -50,8 +50,8 @@ public class UserResource {
 			
 			return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		} else {
-			role=user.getRole();
-			branch=user.getBranch();
+			user_role=user.getRole();
+			user_branch=user.getBranch();
 			LoginHistory history=new LoginHistory();
 			
 			history.setBranch(user.getBranch());
@@ -167,4 +167,42 @@ public class UserResource {
 		}
 			return Util.generateErrorResponse(Status.BAD_REQUEST, "Failed to complete task.").build();
 		}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/checkAccountExist")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response checkAccountExist(@FormParam("emp_name") String emp_name,@FormParam("branch") String branch){
+		User user=new User();
+		UserController controller=new UserController();
+		user.setName(emp_name);
+		user.setBranch(branch);
+		boolean status;
+		status=controller.checkAccountExist(user);
+		if(status==false){
+		return Response.status(Status.ACCEPTED).build();
+		}else{
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Account already existed for selected Employee.").build();
+		}
+		
+	}
+	@GET
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/checkUsernameExist")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkUsernameExist(@QueryParam("userid") String userid,@QueryParam("branch") String branch){
+		User user=new User();
+		UserController controller=new UserController();
+		user.setUserid(userid);
+		user.setBranch(branch);
+		boolean status;
+		status=controller.checkUsernameExist(user);
+		if(status==false){
+		return Util.generateResponse(Status.ACCEPTED, "Username is available.").build();
+		}else{
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Username already Existed.").build();
+		}
+		
+	}
 }

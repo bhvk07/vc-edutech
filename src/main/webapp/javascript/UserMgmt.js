@@ -6,7 +6,7 @@ $(document).ready(function() {
 	FetchAllEmployee();
 	EmployeeList();
 	$(".branch").val(branchSession);
-
+	$("#userid").val("");
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z]+$/i.test(value);
 	}, "Please enter letters only");
@@ -135,17 +135,6 @@ $(document).ready(function() {
 			$("#selectAll").prop("checked", false);
 		}
 	});
-
-/*	$("#Add_employee").click(function() {
-		event.preventDefault();
-		AddEmployee();
-	});
-*/
-/*	$("#btnSave").click(function() {
-		event.preventDefault();
-		
-	});
-*/
 	$("#edit").click(function(e) {
 		event.preventDefault();
 		$("table .cbCheck").each(function(i, chk) {
@@ -161,11 +150,22 @@ $(document).ready(function() {
 		$("table .cbCheck").each(function(i, chk) {
 			if (chk.checked) {
 				requestid = $(this).val();
-				alert("here" + requestid);
 				deactivateUserAccount();
 			}
 		});
 	});
+	var select = document.getElementById('enq_taken');
+	select.addEventListener('change', function() {
+		var emp_name=document.getElementById("enq_taken").value;
+		document.getElementById("ebranch").disabled=false;
+		var branch=document.getElementById("ebranch").value;
+		document.getElementById("ebranch").disabled=true;
+		checkAccountExist(emp_name,branch);
+	});
+	$("#userid").focusout(function(){
+		var username=document.getElementById("userid").value;
+		checkUsernameExist(username);
+	})
 });
 
 function EmployeeList() {
@@ -196,7 +196,6 @@ function EmployeeList() {
 	}
 
 	var httpMethod = "GET";
-	// var formData = ''
 	var relativeUrl = "/user/getAllAccount?branch=" + branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
@@ -227,19 +226,20 @@ function AddEmployee() {
 }
 
 function createEmployeeAccount() {
+	var message;
 	document.getElementById("emp_type").disabled = false;
 	document.getElementById("ebranch").disabled = false;
 	function callback(responseData, textStatus, request) {
 
-		 var message=responseData.responseJSON.message;
-		 showNotification("success",mes);
-		 document.getElementById('emp_type').disabled = true;
+		message=responseData.responseJSON.message;
+		showNotification("success",mes);
+		document.getElementById('emp_type').disabled = true;
 		document.getElementById('branch').disabled = true;
 		clearModal();
 	}
 	function errorCallback(responseData, textStatus, request) {
-		  var mes=responseData.responseJSON.message;
-		  showNotification("error",mes);
+		  message=responseData.responseJSON.message;
+		  showNotification("error",message);
 	}
 	var httpMethod = "POST";
 	var formData;
@@ -277,14 +277,12 @@ function loadUserAccount(i, e) {
 
 function clearModal() {
 	$("#enq_taken").val(user);
-//	$("#role").val("");
 	document.getElementById("userid").value = "";
 	document.getElementById("password").value = "";
 	requestid = 0;
 }
 
 function deactivateUserAccount() {
-	alert(requestid);
 	function callback(responseData, textStatus, request) {
 		  var mes=responseData.responseJSON.message;
 		  showNotification("success",mes);
@@ -298,5 +296,35 @@ function deactivateUserAccount() {
 	var relativeUrl = "/user/DeactivateAccount?id=" + requestid;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
+	return false;
+}
+function checkAccountExist(emp_name,branch){
+	function callback(responseData, textStatus, request) {
+			
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		  showNotification("error",mes);
+	}
+	var httpMethod = "POST";
+	var formData={
+			emp_name : emp_name,
+			branch : branch
+	}
+	var relativeUrl = "/user/checkAccountExist";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	return false;
+}
+function checkUsernameExist(username){
+	function callback(responseData, textStatus, request) {
+		document.getElementById('btnSave').disabled = false;
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes=responseData.responseJSON.message;
+		  showNotification("error",mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/user/checkUsernameExist?userid="+username+"&branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
 	return false;
 }

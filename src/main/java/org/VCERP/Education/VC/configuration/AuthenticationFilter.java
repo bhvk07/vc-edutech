@@ -94,8 +94,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 			con=Util.getDBConnection();
 			String query="select permission from role_permission where role=? and branch=?";
 			st=con.prepareStatement(query);
-			st.setString(1, UserResource.role);
-			st.setString(2, UserResource.branch);
+			st.setString(1, UserResource.user_role);
+			st.setString(2, UserResource.user_branch);
 			rs=st.executeQuery();
 			while(rs.next()){
 				permisison.add(rs.getString(1));
