@@ -87,5 +87,28 @@ public class StandardDAO {
 		
 	}
 
+
+	public void EditStandard(Standard std) {
+		Connection conn=null;
+		PreparedStatement ps=null;
+		try{
+			conn=Util.getDBConnection();
+			String query="update standard_master set standard=?,standard_fees=?,subject=?,branch=? where id=? and branch=?";
+			ps=conn.prepareStatement(query);
+			ps.setString(1, std.getStandard());
+			ps.setString(2, std.getStd_fees());
+			ps.setString(3, std.getSubject());
+			ps.setString(4, std.getBranch());
+			ps.setLong(5,std.getId());
+			ps.setString(6,std.getBranch());
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(null, ps, conn);
+		}
+	}
+
 	
 }

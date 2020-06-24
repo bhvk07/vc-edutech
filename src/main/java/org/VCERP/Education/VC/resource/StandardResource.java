@@ -40,7 +40,7 @@ public class StandardResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.ACCEPTED, "Data Not Found").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
 	}
 
 	
@@ -68,7 +68,7 @@ public class StandardResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.ACCEPTED, "Unable to create new standard.Please try again or contact with administrator").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to create new standard.Please try again or contact with administrator").build();
 	}
 	@Path("/deleteStandard")
 	@DELETE
@@ -86,6 +86,33 @@ public class StandardResource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Util.generateErrorResponse(Status.ACCEPTED, "Unable to complete this task.").build();
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete this task.").build();
+	}
+	@Path("/EditStandard")
+	@POST
+	@JWTTokenNeeded
+	@PermitAll
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditStandard(@FormParam("stdname") String stdname,@FormParam("stdamt") String stdamt,
+			@FormParam("sub") String sub,@FormParam("branchData") String branchData,@FormParam("id") Long id){
+		StandardController controller=new StandardController();
+		try{
+			String[] commaSeperated=Util.commaSeperatedString(branchData);
+			for(int i=0;i<commaSeperated.length;i++)
+			{
+				String[] colanSeperated=Util.colanSeperatedString(commaSeperated[i]);
+				Standard std=new Standard();
+				std.setId(id);
+				std.setStandard(stdname);
+				std.setStd_fees(stdamt);
+				std.setSubject(sub);
+				std.setBranch(colanSeperated[0]);
+				controller.EditStandard(std);
+			}
+			return Util.generateResponse(Status.ACCEPTED, "Standard Successfully Updated.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete this task.").build();
 	}
 }

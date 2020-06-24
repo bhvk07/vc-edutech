@@ -24,6 +24,11 @@ public class StandardController {
 		dao.deleteStandard(standard);
 	}
 
+	public void EditStandard(Standard std) {
+		StandardDAO dao=new StandardDAO();
+		dao.EditStandard(std);
+	}
+
 	
 
 }
