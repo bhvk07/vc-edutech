@@ -1,4 +1,4 @@
-.btn-success , .addNew , #saveBtn{
+.btn-success , .headerClass , #saveBtn{
 	background-color:#53b700 !important ;
 	border-color:#53b700 !important;
 }
@@ -9,13 +9,27 @@ color:#fff;
 
 .btn-warning{
 	background-color:#ff793f !important ;
-	border-color:#ff793f !important;
-	
+	border-color:#ff793f !important;	
 }
-
 
 .btn-danger{
 	background-color:#d43f3a !important ;
 	border-color:#d43f3a !important;
 	
+}
+.btn-info{
+	background-color:#34ace0 !important ;
+	border-color:#34ace0 !important;		
+}
+.btn-secondary{
+	background-color:#218c74 !important ;
+	border-color:#218c74 !important;		
+}
+
+.TableClass{
+  overflow:   scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
