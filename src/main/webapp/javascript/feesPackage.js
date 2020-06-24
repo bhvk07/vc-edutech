@@ -88,69 +88,30 @@ $(document)
 					$("#submit").click(function() {
 						standardData = new Array();
 						branchData = new Array();
-						$('#standard input:checked')
-								.each(
-										function() {
-											var std = $(
-													this)
-													.closest(
-															'tr')
-													.find(
-															'td:nth-child(2)')
-													.text();
-
-											standardData
-													.push(std);
-										});
-						$('#branchTable input:checked')
-								.each(
-										function() {
-											var branch = $(
-													this)
-													.closest(
-															'tr')
-													.find(
-															'td:nth-child(2)')
-													.text();
-											branchData
-													.push(branch);
-										});
+						$('#standard input:checked').each(function() {
+							var std = $(this).closest('tr').find('td:nth-child(2)').text();
+							standardData.push(std);
+							});
+						$('#branchTable input:checked').each(function() {
+							var branch = $(this).closest('tr').find('td:nth-child(2)').text();
+							branchData.push(branch);
+							});
 						addNewFeesPackage(standardData,branchData);
 
 					});
-					$("#loadBranch")
-							.click(
-									function() {
-										var stdarray = new Array();
-										var stdamt = 0;
-										$('input:checked')
-												.each(
-														function() {
-															var std = $(this)
-																	.closest(
-																			'tr')
-																	.find(
-																			'td:nth-child(2)')
-																	.text();
-															stdamt = stdamt
-																	+ Number($(
-																			this)
-																			.closest(
-																					'tr')
-																			.find(
-																					'td:nth-child(3)')
-																			.text());
-															document
-																	.getElementById("amount").value = stdamt;
-															document
-																	.getElementById("total-amt").value = stdamt;
-															document
-																	.getElementById("grand-t").value = stdamt;
-															document
-																	.getElementById("inputDisabledAmt").value = stdamt;
-															loadBranch(std);
-														});
-									});
+					$("#loadBranch").click(function() {
+							var stdarray = new Array();
+							var stdamt = 0;
+							$('input:checked').each(function() {
+									var std = $(this).closest('tr').find('td:nth-child(2)').text();
+									stdamt = stdamt+ Number($(this).closest('tr').find('td:nth-child(3)').text());
+									document.getElementById("amount").value = stdamt;
+									document.getElementById("total-amt").value = stdamt;
+									document.getElementById("grand-t").value = stdamt;
+									document.getElementById("inputDisabledAmt").value = stdamt;
+									loadBranch(std);
+							});
+					});
 					$("#edit").click(function(e) {
 						var table = $("#feespackage").DataTable();
 						$('table .cbCheck').each(function(i, chk) {
@@ -167,21 +128,12 @@ $(document)
 							}
 						});
 					});
-					$('#feestypetable')
-							.on(
-									'click',
-									'.remove-row',
-									function(e) {
-										var val = $(this).closest('tr').find(
-												'#total-amt').val();
-										document.getElementById("grand-t").value = document
-												.getElementById("grand-t").value
-												- val;
-										document
-												.getElementById("inputDisabledAmt").value = document
-												.getElementById("grand-t").value;
-										$(this).closest('tr').remove();
-									})
+					$('#feestypetable').on('click','.remove-row',function(e) {
+							var val = $(this).closest('tr').find('#total-amt').val();
+							document.getElementById("grand-t").value = document.getElementById("grand-t").value- val;
+							document.getElementById("inputDisabledAmt").value = document.getElementById("grand-t").value;
+							$(this).closest('tr').remove();
+					})
 					$("#delete").click(function() {
 						var idarray = new Array();
 						$('table .cbCheck').each(function(i, chk) {
@@ -241,22 +193,9 @@ function addNewFeesPackage(standardData, branchData) {
 	return false;
 }
 
-/*
- * function loadFeesPackage() {
- * 
- * function callback(responseData, textStatus, request) { for ( var i in
- * responseData) { var htmlCode=('<option value="' +
- * responseData[i].feesPackage+"|" +responseData[i].total_amt+ '" >' +
- * responseData[i].feesPackage+"-" +responseData[i].total_amt + '</option>');
- * $('#fees').append(htmlCode); } } function errorCallback(responseData,
- * textStatus, request) { console.log("not found"); } var httpMethod = "GET";
- * var relativeUrl = "/FeesPackage/getFeesPackage?branch="+branchSession;
- * ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
- * errorCallback); return false; }
- */
 function loadBranchSpecificStandard() {
 	var table = document.getElementById("standard");
-
+	var db_std=new Array();
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
 
@@ -266,19 +205,22 @@ function loadBranchSpecificStandard() {
 			var stdamt = standardData[1];
 			var rowCount = table.rows.length;
 			var row = table.insertRow(rowCount);
-			if (standard == std) {
+			if(requestid!=0){
 				var cell1 = row.insertCell(0);
 				cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck" checked>';
-			} else {
+				//db_std.push(standard);
+			}else{
 				var cell1 = row.insertCell(0);
-				cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck">';
+				cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck">';			
 			}
 			var cell2 = row.insertCell(1);
 			cell2.innerHTML = standard;
 
 			var cell3 = row.insertCell(2);
 			cell3.innerHTML = stdamt;
+
 		}
+		//loadStandardForEdit(db_std,std);
 
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -392,7 +334,6 @@ function loadFeesPackageData(pack, branch) {
 						feespipeseperated[2]);
 				$(table.rows.item(i + 1).cells[5]).find('input').val(
 						feespipeseperated[3]);
-				// document.getElementById('amount').value=feespipeseperated[1];
 			}
 		}
 		document.getElementById('grand-t').value = responseData.total_amt;
@@ -481,3 +422,26 @@ function clearModal() {
 	document.getElementById('grand-t').value = "0";
 	requestid = 0;
 }
+/*function loadStandardForEdit(db_std,std){
+	var commonStd=new Array()
+	var stdData=new Array();
+	std=std.split("-");
+	for(var i=0;i<std.length;i++){
+		stdData.push(std[i]);
+	}
+    i = 0, 
+    j = 0;  
+	while (i < db_std.length && j < stdData.length) {
+	    while (db_std[i] < stdData[j]) {       
+	        ++i;                               
+	    }
+	    while (stdData[j] < db_std[i]) {       
+	        ++j;                               
+	    }
+	    if (db_std[i] === stdData[j]) { 
+	    	commonSTd.push(db_std[i]);
+	        ++i;                               
+	        ++j;
+	    }
+	}
+}*/
