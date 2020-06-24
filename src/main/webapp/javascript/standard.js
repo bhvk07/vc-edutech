@@ -64,11 +64,11 @@ $('#multiple-checkboxes').change( function(e) {
 	markSubject(html);
 //		$("#multiple-subject-selected").append(html);	
 });*/
-/*
- * $("#savestd").click(function(){
- * 
- * });
- */
+
+/*  $("#savestd").click(function(){
+  
+  });*/
+ 
 $("#stdamt").focusout(function(){
 	var stdamt=document.getElementById("stdamt").value;
 	$(".Amount").val(stdamt);
@@ -83,16 +83,18 @@ $("#delete").click(function() {
 		deleteStandard(idarray);
 	});
 });
-/*
- * $("#edit").click(function(e){ var table = $("#stdtable").DataTable();
- * $('table .cbCheck').each(function(i, chk) { if (chk.checked==true) {
- * requestid=$(this).val(); alert(requestid); var branch=table.rows({selected :
- * true}).column(2).data()[i]; var standard=table.rows({selected :
- * true}).column(1).data()[i]; var stdamt=table.rows({selected :
- * true}).column(3).data()[i]; var subject=table.rows({selected :
- * true}).column(4).data()[i]; loadStandard(branch,standard,stdamt,subject,e); }
- * }); });
- */
+
+  $("#edit").click(function(e){ var table = $("#stdtable").DataTable();
+  $('table .cbCheck').each(function(i, chk) { if (chk.checked==true) {
+  requestid=$(this).val(); alert(requestid); var branch=table.rows({selected :
+  true}).column(2).data()[i]; var standard=table.rows({selected :
+  true}).column(1).data()[i]; var stdamt=table.rows({selected :
+  true}).column(3).data()[i]; 
+  var subject=table.rows({selected : true}).column(4).data()[i]; loadStandard(branch,standard,stdamt,subject,e); 
+  	alert("sub"+subject);
+  }
+  }); });
+ 
 });
 /*function markSubject(html){
 	var html=html.split(",");
@@ -128,10 +130,10 @@ function getAllStandardData() {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-/*
- * var message=responseData.responseJSON.message;
- * showNotification("error",message);
- */
+
+  /*var message=responseData.responseJSON.message;
+  showNotification("error",message);*/
+ 
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 	}
@@ -163,10 +165,10 @@ var rowCount = table.rows.length;
 }
 
 	function errorCallback(responseData, textStatus, request) {
-/*
- * var message=responseData.responseJSON.message;
- * showNotification("error",message);
- */
+
+  /*var message=responseData.responseJSON.message;
+  showNotification("error",message);*/
+ 
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 	}
@@ -268,40 +270,52 @@ function deleteStandard(id){
   return false;
 }
 
-/*
- * function loadStandard(branch,standard,stdamt,subject,e){
- * document.getElementById("stdtname").value=standard;
- * document.getElementById("stdamt").value=stdamt;
- * $("#multiple-checkboxes").css("display", "none");
- * $("#multiple-checkboxes_selected").css("display", "block"); //
- * $('#multiple-checkboxes').val(subject); var select =
- * document.getElementById("multiple-checkboxes"); var count = 0; var i;
- * 
- * for(count = 0; count < subject.length; count += 1) { for(i = 0; i <
- * select.options.length; i += 1) { if(select.options[i].value ===
- * subject[count]) { alert("here"+select.options[i].value);
- * select.options[i].selected = true; alert(select.options[i].checked); } } } //
- * var element=document.getElementById('multiple-checkboxes'); // for (var i =
- * 0; i < element.options.length; i++) { // element.options[i].selected =
- * subject.indexOf(element.options[i].value) >= 0; // }
- *  // Get Value
- * 
- * var selectedItens = Array.from(element.selectedOptions) .map(option =>
- * option.value)
- * 
- * 
- * for(var i in subject) { var optionVal = subject[i];
- * $("select").find("option[value="+optionVal+"]").prop("selected", "selected"); }
- * $("select").multiselect('reload');
- * 
- * 
- * for (var option of document.getElementById('multiple-checkboxes').options) {
- * option.selected=false; alert(option.value+" "+option.selected); for(var i=0;i<subject.length;i++){
- * if(option.value==subject[i]) { option.selected=true; } } }
- * 
- * 
- * if (option.selected) { selected+="|"+option.value; }
- * 
- * e.preventDefault(); $('#standardmodal').modal({ show: true, backdrop:
- * 'static', keyboard: true }); }
- */
+
+  function loadStandard(branch,standard,stdamt,subject,e){
+  document.getElementById("stdtname").value=standard;
+  document.getElementById("stdamt").value=stdamt;
+ /* $("#multiple-checkboxes").css("display", "none");
+  $("#multiple-checkboxes_selected").css("display", "block"); //
+  $('#multiple-checkboxes').val(subject); var select =
+  document.getElementById("multiple-checkboxes"); var count = 0; var i;
+  
+  for(count = 0; count < subject.length; count += 1) { for(i = 0; i <
+  select.options.length; i += 1) { if(select.options[i].value ===
+  subject[count]) { alert("here"+select.options[i].value);
+  select.options[i].selected = true; alert(select.options[i].checked); } } } //
+  var element=document.getElementById('multiple-checkboxes'); // for (var i =
+  0; i < element.options.length; i++) { // element.options[i].selected =
+  subject.indexOf(element.options[i].value) >= 0; // }
+   // Get Value
+  
+  var selectedItens = Array.from(element.selectedOptions) .map(option =>
+  option.value)
+  
+  
+  for(var i in subject) { var optionVal = subject[i];
+  $("select").find("option[value="+optionVal+"]").prop("selected", "selected"); }
+  $("select").multiselect('reload');*/
+  
+  
+  for (var option of document.getElementById('multiple-checkboxes').options) {
+	  //option.selected=true; 
+	 // alert(option.value); geometry
+	  //	alert(option.value+" "+option.selected); 
+	  	for(var i=0;i<subject.length;i++){
+		  if(option.value==subject[i]) 
+		  { 
+			  var sel = option.value;
+			  alert(subject[i]);
+			  $("#multiple-checkboxes option[value='" + sel + "']").attr("selected", 1);
+			  $("#multiple-checkboxes").multiselect("refresh");
+			  
+		  } 
+	  	} 
+  }
+  
+  
+  if (option.selected) { selected+="|"+option.value; }
+  
+  e.preventDefault(); $('#standardmodal').modal({ show: true, backdrop:
+  'static', keyboard: true }); }
+ 
