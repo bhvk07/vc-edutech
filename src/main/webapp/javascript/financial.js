@@ -2,6 +2,7 @@ var payDate=new Array();
 var expDate;
 var exp_amt;
 var rec_date;
+var conversion;
 var rec_amt;
 var adm_date;
 var adm_amt;
@@ -25,6 +26,7 @@ $(document).ready(function(){
 		rec_amt =  new Array();
 		adm_date = new Array();
 		adm_amt =  new Array();
+		conversion = new Array();
 		
 		var d_val = $(this).val().split(',');
 		//alert("date="+d_val);
@@ -47,9 +49,9 @@ $(document).ready(function(){
 			  var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
 			  //alert(splitted_end_date);
 			  //getExpenseChart(splitted_start_date, splitted_end_date);
-			  getReceiptChart(splitted_start_date, splitted_end_date);
-			  getAdmissionChart(splitted_start_date, splitted_end_date);
-			 
+			 // getReceiptChart(splitted_start_date, splitted_end_date);
+			 // getAdmissionChart(splitted_start_date, splitted_end_date);
+			  getConversionChart(splitted_start_date,splitted_end_date);
 	});
 	
 	//getChartData();
@@ -72,24 +74,15 @@ function Expense_chart() {
 	    barStrokeWidth: 1,
 	    barValueSpacing: 5,
 	    barDatasetSpacing: 3,
-	    /*scales: {
-		      xAxes: [{
-		        stacked: true,
-		      }]
-		      
-		  }*/
-	    //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	    
 	  };
 	  data = {
-		//type: 'horizontalBar',
+		
 	    labels: expDate,
 	    datasets: [
 	      {
 	    	  
-	    	/*barPercentage: 0.1,
-	    	 barThickness: 6,
-	    	 maxBarThickness: 8,
-	         minBarLength: 2,*/
+	    	
 	        label: "My First dataset",
 	        fillColor: "rgba(26, 188, 156,0.6)",
 	        strokeColor: "#1ABC9C",
@@ -103,18 +96,9 @@ function Expense_chart() {
 	    ]
 	  
 	  };
-	 /* options: {
-		  scales: {
-		      xAxes: [{
-		        stacked: true,
-		      }]
-		      yAxes: [{
-		        stacked: true
-		      }]
-		  }
-	  }*/
+	 
 	  myBarChart = new Chart(ctx).Bar(data, option_bars);
-	  //alert("chartdata="+data);
+	  
 	}
 
 
@@ -207,6 +191,42 @@ function Admission_chart() {
 
 
 
+
+
+function getConversionChart(splitted_start_date, splitted_end_date){
+	function callback(responseData, textStatus, request){
+		
+		alert("len"+responseData.length);
+		for ( var i in responseData) {
+			
+			alert("percentage = "+responseData[i].conv_percent);
+			conversion.push(responseData[i].conv_percent);
+			
+			
+			
+		}
+		
+		conversion_chart();
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	
+	var relativeUrl = "/chart/getConversionChart";
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+
+
+
 function getAdmissionChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
 		
@@ -240,19 +260,19 @@ function getAdmissionChart(splitted_start_date, splitted_end_date){
 }
 function getExpenseChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		//alert("hie");
+		
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			//alert("date = "+responseData[i].date + responseData[i].amount);
+			
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
 			
 			//alert("date = "+responseData[i].date + responseData[i].amount)
 		}
-		/* $.each(exp_amt, function(key, value){
-	           exp_amt1.push(value);
-	        });*/
+		// $.each(exp_amt, function(key, value){
+	    //       exp_amt1.push(value);
+	     //   });
 		 Expense_chart();
 	}
 	function errorCallback(responseData, textStatus, request){
@@ -306,55 +326,108 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 
 
 
-function mychart() {
-	  var ctx, data, myBarChart, option_bars;
-	  Chart.defaults.global.responsive = true;
-	  ctx = $('#mychart').get(0).getContext('2d'); //done
-	  option_bars = {
-	    scaleBeginAtZero: true,
-	    scaleShowGridLines: true,
-	    scaleGridLineColor: "rgba(0,0,0,.05)",
-	    scaleGridLineWidth: 1,
-	    scaleShowHorizontalLines: true,
-	    scaleShowVerticalLines: false,
-	    barShowStroke: true,
-	    barStrokeWidth: 1,
-	    barValueSpacing: 5,
-	    barDatasetSpacing: 3,
-	    barPercentage: 0.1,
-	    /*scales: {
-	    	  xAxes: [{
-	    		  barPercentage: 0.1,
-	    		  gridLines: {
-	    	            display:false
-	    	        }
-	    	  }]
-	    	}*/
-	    //legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-	  };
-	  data = {
-	    labels: payDate,
-	    datasets: [
-	      {
-	        label: "My First dataset",
-	        fillColor: "rgba(26, 188, 156,0.6)",
-	        strokeColor: "#1ABC9C",
-	        pointColor: "#1ABC9C",
-	        pointStrokeColor: "#fff",
-	        pointHighlightFill: "#fff",
-	        pointHighlightStroke: "#1ABC9C",
-	        data: paymentValue
-	      }, 
-	     
-	    ],
-	    
-	  };
-	  myBarChart = new Chart(ctx).Bar(data, option_bars);
-	}
 
 
 
+//		trying speedo
+function conversion_chart(){
+Highcharts.chart('container', {
 
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+
+    title: {
+        text: 'Conversion Ratio'
+    },
+
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
+
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 100,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: '%'
+        },
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }, {
+            from: 120,
+            to: 160,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 160,
+            to: 200,
+            color: '#DF5353' // red
+        }]
+    },
+
+    series: [{
+        name: 'Percentage Conversion',
+        data: conversion,
+        tooltip: {
+            valueSuffix: '%'
+        }
+    }]
+
+});
+
+
+}
 
 
 /*
@@ -432,5 +505,5 @@ function mychart() {
 	return false;
 }*/
 
-//
+
 

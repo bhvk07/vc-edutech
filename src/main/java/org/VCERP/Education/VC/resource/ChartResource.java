@@ -146,4 +146,38 @@ return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 }
 
 
+@POST
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getConversionChart")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+public Response getConversionData(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch)
+{
+	Chart ch = null;
+	ChartController controller = new ChartController();
+	ArrayList<Chart> conv_chart = new ArrayList<>();
+try{
+	ch = new Chart();
+	 
+	ch.setS_date(start_date);
+	ch.setE_date(end_date);
+	ch.setBranch(branch);
+	conv_chart = controller.getConversionData(ch, conv_chart);
+	//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
+
+	if(conv_chart!=null){
+		
+		System.out.println("notttttttt successssss");
+	return Response.status(Status.ACCEPTED).entity(conv_chart).build();	
+}
+}
+catch(Exception e){
+	e.printStackTrace();
+	System.out.println(e);
+}
+return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+}
+
+
 }

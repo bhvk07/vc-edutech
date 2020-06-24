@@ -11,6 +11,14 @@ public class Chart {
 	private String branch;
 	private String payment;
 	private String amount;
+	private String conv_percent;
+	
+	public String getConv_percent() {
+		return conv_percent;
+	}
+	public void setConv_percent(String conv_percent) {
+		this.conv_percent = conv_percent;
+	}
 	public String getAmount() {
 		return amount;
 	}

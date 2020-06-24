@@ -25,5 +25,10 @@ public class ChartController {
 		ChartDAO dao=new ChartDAO();
 		return dao.getAdmissionData(ch, adm_chart);
 	}
+	public ArrayList<Chart> getConversionData(Chart ch, ArrayList<Chart> conv_chart) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getConversionData(ch, conv_chart);
+	}
+	
 
 }
