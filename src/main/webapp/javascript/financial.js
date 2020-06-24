@@ -26,7 +26,7 @@ $(document).ready(function(){
 		rec_amt =  new Array();
 		adm_date = new Array();
 		adm_amt =  new Array();
-		conversion = new Array();
+		
 		
 		var d_val = $(this).val().split(',');
 		//alert("date="+d_val);
@@ -200,8 +200,8 @@ function getConversionChart(splitted_start_date, splitted_end_date){
 		for ( var i in responseData) {
 			
 			alert("percentage = "+responseData[i].conv_percent);
-			conversion.push(responseData[i].conv_percent);
-			
+			conversion = parseInt(responseData[i].conv_percent);
+			alert("succ"+ typeof(conversion));
 			
 			
 		}
@@ -331,21 +331,28 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 
 //		trying speedo
 function conversion_chart(){
+/*var arr = '11';
+var parr = parseInt(arr);
+alert("val"+typeof(parr));*/
 Highcharts.chart('container', {
 
     chart: {
         type: 'gauge',
-        plotBackgroundColor: null,
+        /*plotBackgroundColor: null,
         plotBackgroundImage: null,
         plotBorderWidth: 0,
-        plotShadow: false
+        plotShadow: false*/
     },
 
     title: {
         text: 'Conversion Ratio'
     },
-
     pane: {
+        startAngle: -150,
+        endAngle: 150
+    },
+
+    /*pane: {
         startAngle: -150,
         endAngle: 150,
         background: [{
@@ -376,14 +383,14 @@ Highcharts.chart('container', {
             outerRadius: '105%',
             innerRadius: '103%'
         }]
-    },
+    },*/
 
     // the value axis
     yAxis: {
         min: 0,
         max: 100,
 
-        minorTickInterval: 'auto',
+       /* minorTickInterval: 'auto',
         minorTickWidth: 1,
         minorTickLength: 10,
         minorTickPosition: 'inside',
@@ -393,12 +400,12 @@ Highcharts.chart('container', {
         tickWidth: 2,
         tickPosition: 'inside',
         tickLength: 10,
-        tickColor: '#666',
-        labels: {
+        tickColor: '#666',*/
+       /* labels: {
             step: 2,
             rotation: 'auto'
-        },
-        title: {
+        },*/
+        /*title: {
             text: '%'
         },
         plotBands: [{
@@ -413,21 +420,42 @@ Highcharts.chart('container', {
             from: 160,
             to: 200,
             color: '#DF5353' // red
-        }]
+        }]*/
+    },
+    plotOptions: {
+        gauge: {
+            dial: {
+                radius: '100%',
+                backgroundColor: 'silver',
+                borderColor: 'black',
+                borderWidth: 1,
+                baseWidth: 10,
+                topWidth: 1,
+                baseLength: '90%', // of radius
+                rearLength: '50%'
+            }
+        }
     },
 
     series: [{
         name: 'Percentage Conversion',
-        data: conversion,
-        tooltip: {
+        data: [conversion]
+        /*tooltip: {
             valueSuffix: '%'
-        }
+        }*/
     }]
 
 });
 
 
+
+
+
+
+
 }
+
+
 
 
 /*
