@@ -110,4 +110,40 @@ catch(Exception e){
 }
 return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 }
+
+
+@POST
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getAdmissionChart")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+public Response getAdmissionData(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch)
+{
+	Chart ch = null;
+	ChartController controller = new ChartController();
+	ArrayList<Chart> adm_chart = new ArrayList<>();
+try{
+	ch = new Chart();
+	 
+	ch.setS_date(start_date);
+	ch.setE_date(end_date);
+	ch.setBranch(branch);
+	adm_chart = controller.getAdmissionData(ch, adm_chart);
+	//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
+
+	if(adm_chart!=null){
+		
+		System.out.println("notttttttt successssss");
+	return Response.status(Status.ACCEPTED).entity(adm_chart).build();	
+}
+}
+catch(Exception e){
+	e.printStackTrace();
+	System.out.println(e);
+}
+return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
+}
+
+
 }

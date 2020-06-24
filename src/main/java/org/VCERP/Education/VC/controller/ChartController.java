@@ -21,5 +21,9 @@ public class ChartController {
 		return dao.getReceiptData(ch, rec_chart);
 	}
 	
+	public ArrayList<Chart> getAdmissionData(Chart ch, ArrayList<Chart> adm_chart) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getAdmissionData(ch, adm_chart);
+	}
 
 }

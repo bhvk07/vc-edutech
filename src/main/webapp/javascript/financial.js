@@ -1,10 +1,10 @@
-
-
 var payDate=new Array();
 var expDate;
 var exp_amt;
 var rec_date;
 var rec_amt;
+var adm_date;
+var adm_amt;
 var paymentValue=new Array();
 var title="payment";
 var dates;
@@ -22,7 +22,10 @@ $(document).ready(function(){
 		expDate = new Array();
 		exp_amt = new Array(); 
 		rec_date = new Array();
-		rec_amt =  new Array(); 
+		rec_amt =  new Array();
+		adm_date = new Array();
+		adm_amt =  new Array();
+		
 		var d_val = $(this).val().split(',');
 		//alert("date="+d_val);
 		
@@ -43,8 +46,9 @@ $(document).ready(function(){
 			  var trimmed_end_date = final_e_split[0];
 			  var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
 			  //alert(splitted_end_date);
-			  getExpenseChart(splitted_start_date, splitted_end_date);
+			  //getExpenseChart(splitted_start_date, splitted_end_date);
 			  getReceiptChart(splitted_start_date, splitted_end_date);
+			  getAdmissionChart(splitted_start_date, splitted_end_date);
 			 
 	});
 	
@@ -157,18 +161,90 @@ function Receipt_chart() {
 	  
 	}
 
+function Admission_chart() {
+	  var ctx, data, myBarChart, option_bars;
+	  Chart.defaults.global.responsive = true;
+	  ctx = $('#Adm_chart').get(0).getContext('2d'); //done
+	  option_bars = {
+	    scaleBeginAtZero: true,
+	    scaleShowGridLines: false,
+	    scaleGridLineColor: "rgba(0,0,0,.05)",
+	    scaleGridLineWidth: 1,
+	    scaleShowHorizontalLines: true,
+	    scaleShowVerticalLines: false,
+	    barShowStroke: true,
+	    barStrokeWidth: 1,
+	    barValueSpacing: 5,
+	    barDatasetSpacing: 3,
+	    
+	  };
+	  data = {
+		
+	    labels: adm_date,
+	    datasets: [
+	      {
+	    	  
+	    	
+	        label: "My First dataset",
+	        fillColor: "rgba(26, 188, 156,0.6)",
+	        strokeColor: "#1ABC9C",
+	        pointColor: "#1ABC9C",
+	        pointStrokeColor: "#fff",
+	        pointHighlightFill: "#fff",
+	        pointHighlightStroke: "#1ABC9C",
+	        data: adm_amt
+	      } 
+	     
+	    ]
+	  
+	  };
+	 
+	  myBarChart = new Chart(ctx).Bar(data, option_bars);
+	  
+	}
 
 
 
 
 
+function getAdmissionChart(splitted_start_date, splitted_end_date){
+	function callback(responseData, textStatus, request){
+		
+		alert("len"+responseData.length);
+		for ( var i in responseData) {
+			
+			alert("date = "+responseData[i].date + responseData[i].amount);
+			adm_date.push(responseData[i].date);
+			adm_amt.push(responseData[i].amount);
+			
+			
+		}
+		
+		Admission_chart();
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	
+	var relativeUrl = "/chart/getAdmissionChart";
+
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
 function getExpenseChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
 		//alert("hie");
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			alert("date = "+responseData[i].date + responseData[i].amount);
+			//alert("date = "+responseData[i].date + responseData[i].amount);
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
 			
@@ -202,7 +278,7 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			alert("date = "+responseData[i].date + responseData[i].amount);
+			//alert("date = "+responseData[i].date + responseData[i].amount);
 			rec_date.push(responseData[i].date);
 			rec_amt.push(responseData[i].amount);
 			

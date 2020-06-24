@@ -101,4 +101,37 @@ public class ChartDAO {
 		}
 		return rec_chart;
 	}
+	
+	
+	public ArrayList<Chart> getAdmissionData(Chart ch, ArrayList<Chart> adm_chart) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		
+		try {
+			con=Util.getDBConnection();
+			String query="select  admission_date, SUM(fees) from admission WHERE admission_date BETWEEN ? AND ? AND branch=? GROUP BY admission_date";
+			ps=con.prepareStatement(query);
+			ps.setString(1, ch.getS_date());
+			ps.setString(2, ch.getE_date());
+			ps.setString(3, ch.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				Chart chart=new Chart();
+				chart.setDate(rs.getString(1));
+				chart.setAmount(rs.getString(2));
+				
+				
+				adm_chart.add(chart);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return adm_chart;
+	}
 }
