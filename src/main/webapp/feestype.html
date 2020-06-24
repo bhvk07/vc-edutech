@@ -19,12 +19,22 @@
 
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/FeesType.js"></script>
+<script type="text/javascript" src="javascript/ButtonHideDisplay.js"></script>
 <script type="text/javascript" src="core/noty.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css" />
 
 <style type="text/css">
+#feestypetable{
+  overflow:   scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 body {
 	color: #566787;
 	background: #f5f5f5;
@@ -287,6 +297,9 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }
+
+
+
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -385,7 +398,7 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form id="feestypeForm" method="post">
-					<div class="modal-header"
+					<div class="modal-header addNew"
 						style="background-color: #53b700; color: aliceblue">
 						<h4 class="modal-title">Add Fees type</h4>
 						<button type="button" class="close" data-dismiss="modal"
@@ -397,19 +410,24 @@ table.table .avatar {
 							<input type="text" class="form-control" id="feesType"
 								name="feesType" required>
 						</div>
+						
+						
+						
 
 					</div>
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancel"
+						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancelBtn"
 							value="Cancel"> <input type="submit"
-							class="btn btn-success" value="Save"
+							class="btn btn-success" value="Save" id="saveBtn"
 							style="background-color: #53b700; color: aliceblue">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	
+	
+	<!--  <script type="text/javascript">
 	
 					    $(document).ready(function() {
 					        var chk = 'input[id="checkbox"]';
@@ -447,8 +465,6 @@ table.table .avatar {
 					      });
 
 						
-						</script>
-	
-	
+						</script>  -->
 </body>
 </html>

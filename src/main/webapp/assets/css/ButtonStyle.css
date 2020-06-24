@@ -1,0 +1,21 @@
+.btn-success , .addNew , #saveBtn{
+	background-color:#53b700 !important ;
+	border-color:#53b700 !important;
+}
+#cancelBtn:hover {
+background-color: #F44336;
+color:#fff;
+}
+
+.btn-warning{
+	background-color:#ff793f !important ;
+	border-color:#ff793f !important;
+	
+}
+
+
+.btn-danger{
+	background-color:#d43f3a !important ;
+	border-color:#d43f3a !important;
+	
+}
