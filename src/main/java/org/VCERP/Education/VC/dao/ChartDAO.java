@@ -44,7 +44,7 @@ public class ChartDAO {
 		
 		try {
 			con=Util.getDBConnection();
-			String query="select exp_date, GROUP_CONCAT(amount) from expenses where exp_date BETWEEN ? AND ? AND branch=? GROUP BY exp_date";
+			String query="select exp_date, SUM(amount) from expenses where exp_date BETWEEN ? AND ? AND branch=? GROUP BY exp_date";
 			ps=con.prepareStatement(query);
 			ps.setString(1, ch.getS_date());
 			ps.setString(2, ch.getE_date());

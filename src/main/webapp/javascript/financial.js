@@ -1,3 +1,4 @@
+
 var payDate=new Array();
 var expDate;
 var exp_amt;
@@ -48,9 +49,9 @@ $(document).ready(function(){
 			  var trimmed_end_date = final_e_split[0];
 			  var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
 			  //alert(splitted_end_date);
-			  //getExpenseChart(splitted_start_date, splitted_end_date);
-			 // getReceiptChart(splitted_start_date, splitted_end_date);
-			 // getAdmissionChart(splitted_start_date, splitted_end_date);
+			  getExpenseChart(splitted_start_date, splitted_end_date);
+			 getReceiptChart(splitted_start_date, splitted_end_date);
+			 getAdmissionChart(splitted_start_date, splitted_end_date);
 			  getConversionChart(splitted_start_date,splitted_end_date);
 	});
 	
@@ -268,7 +269,7 @@ function getExpenseChart(splitted_start_date, splitted_end_date){
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
 			
-			//alert("date = "+responseData[i].date + responseData[i].amount)
+			alert("date = "+responseData[i].date + responseData[i].amount)
 		}
 		// $.each(exp_amt, function(key, value){
 	    //       exp_amt1.push(value);
@@ -298,7 +299,7 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			//alert("date = "+responseData[i].date + responseData[i].amount);
+			alert("date = "+responseData[i].date + responseData[i].amount);
 			rec_date.push(responseData[i].date);
 			rec_amt.push(responseData[i].amount);
 			
@@ -352,7 +353,7 @@ Highcharts.chart('container', {
         endAngle: 150
     },
 
-    /*pane: {
+    pane: {
         startAngle: -150,
         endAngle: 150,
         background: [{
@@ -383,14 +384,14 @@ Highcharts.chart('container', {
             outerRadius: '105%',
             innerRadius: '103%'
         }]
-    },*/
+    },
 
     // the value axis
     yAxis: {
         min: 0,
         max: 100,
 
-       /* minorTickInterval: 'auto',
+        minorTickInterval: 'auto',
         minorTickWidth: 1,
         minorTickLength: 10,
         minorTickPosition: 'inside',
@@ -400,12 +401,12 @@ Highcharts.chart('container', {
         tickWidth: 2,
         tickPosition: 'inside',
         tickLength: 10,
-        tickColor: '#666',*/
-       /* labels: {
+        tickColor: '#666',
+        labels: {
             step: 2,
             rotation: 'auto'
-        },*/
-        /*title: {
+        },
+        title: {
             text: '%'
         },
         plotBands: [{
@@ -420,9 +421,9 @@ Highcharts.chart('container', {
             from: 160,
             to: 200,
             color: '#DF5353' // red
-        }]*/
+        }]
     },
-    plotOptions: {
+    /*plotOptions: {
         gauge: {
             dial: {
                 radius: '100%',
@@ -435,7 +436,7 @@ Highcharts.chart('container', {
                 rearLength: '50%'
             }
         }
-    },
+    },*/
 
     series: [{
         name: 'Percentage Conversion',
@@ -446,73 +447,56 @@ Highcharts.chart('container', {
     }]
 
 });
+}
 
+/*function Expense_chart(){
+Highcharts.chart('Exp_chart', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Expense'
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com'
+    },
+    xAxis: {
+        categories: expDate,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Expense',
+        data: exp_amt
 
-
-
+    }]
+});
 
 
 
 }
+*/
 
 
-
-
-/*
-          function BuildChart(labels,values,chartTitle){
-        	  alert(labels+"     "+values+"    ");
-        	  var ctx = $('#Exp_chart').get(0).getContext('2d');
-        	  var mychart1 = new Chart(ctx,{
-        		  type: 'bar',
-        		  data:{
-        			  labels:labels,
-        			  datasets: [{
-        				  label: chartTitle, 
-        			        data: values,  
-        			        fillColor: "rgba(26, 188, 156,0.6)",
-        			        strokeColor: "#1ABC9C",
-        			        pointColor: "#1ABC9C",
-        			        pointStrokeColor: "#fff",
-        			        pointHighlightFill: "#fff",
-        			        pointHighlightStroke: "#1ABC9C",
-        			        backgroundColor: [   
-        			          'rgba(255, 99, 132, 0.2)',
-        			          'rgba(54, 162, 235, 0.2)',
-        			          'rgba(255, 206, 86, 0.2)',
-        			          'rgba(75, 192, 192, 0.2)',
-        			          'rgba(153, 102, 255, 0.2)',
-        			          'rgba(255, 159, 64, 0.2)'
-        			        ],
-        			        borderColor: [  
-        			            'rgba(255,99,132,1)',
-        			            'rgba(54, 162, 235, 1)',
-        			            'rgba(255, 206, 86, 1)',
-        			            'rgba(75, 192, 192, 1)',
-        			            'rgba(153, 102, 255, 1)',
-        			            'rgba(255, 159, 64, 1)'
-        			        ],
-        			        borderWidth: 1 
-        			  }]
-        		  },
-        		  options:{
-        			  scaleBeginAtZero: true,
-        			    scaleShowGridLines: false,
-        			    scaleGridLineColor: "rgba(0,0,0,.05)",
-        			    scaleGridLineWidth: 1,
-        			    scaleShowHorizontalLines: true,
-        			    scaleShowVerticalLines: false,
-        			    barShowStroke: true,
-        			    barStrokeWidth: 1,
-        			    barValueSpacing: 5,
-        			    barDatasetSpacing: 3
-        		  }
-        		  
-        	  });
-        	  return mychart1;
-          }
-          
- 
-      */
 /*function getChartData(){
 	function callback(responseData, textStatus, request){
 		for ( var i in responseData) {
