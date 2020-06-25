@@ -4,6 +4,7 @@ var standardData;
 var branchData;
 var today = new Date();
 var date = today.getFullYear()+'-0'+(today.getMonth()+1)+'-0'+today.getDate();
+var admitted_fees_pack;
 $(document).ready(function(){
 	//admissionDetails();
 	
@@ -45,24 +46,22 @@ $(document).ready(function(){
 		event.preventDefault();
 		AddEmployee();
 	});
-	$("#feestype").submit(function() {
-		// var token=sessionStorage.getItem("token");
-		// validateLogin(token);
-		//		 
+	$("#feestype").submit(function() {		 
 		event.preventDefault();
 		addFeesType();
 	});
 	var select = document.getElementById('fees');
-	//var outputElem = document.getElementById('amount');
 	select.addEventListener('change', function() {
 		var feespack=select.value.split("|");
-		alert(feespack[0]);
 		getFeesPackageDetails(feespack[0]);
-		/*var fees_amt=select.value.split("|");
-		outputElem.value = fees_amt[1];
-		document.getElementById('total-amt').value=fees_amt[1];
-		document.getElementById('amt_installment').value=fees_amt[1];
-		document.getElementById('grand-t').value=fees_amt[1];*/
+		alert(select.value+" "+admitted_fees_pack);
+		if(admitted_fees_pack!=select.value){
+			document.getElementById("admission").disabled=false;
+		}
+		else{
+			document.getElementById("admission").disabled=true;
+			showNotification("error","Student Already Admitteed For This Course.");
+		}
 	});
 	$("#discount").focusout(function() {
 		var amount = document.getElementById('amount').value;
@@ -151,26 +150,23 @@ function SearchStudent(id){
 		enqData.push(responseData.stud_cont);
 		$("#fees").val(responseData.fees_pack);
 		var feespack=responseData.feesPack;
-/*		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'
-			+ htmlCode
-			+'</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" id="total-amt" disabled></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"';
-*/		var feesdetails = feespack.fees_details;
+		var feesdetails = feespack.fees_details;
 		
 		createFeesTypeRow(feesdetails,responseData.fees_pack);
-
-			//alert(document.getElementById('stud_details').value);
+		if(status=="Admitted")
+			{
+			admitted_fees_pack=responseData.fees_pack;
+			showNotification("error","Student Already Admitteed For This Course.");
+			document.getElementById("admission").disabled=true;
+			}
 	}
-	function errorCallback(responseData, textStatus, request) {
-		
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-		
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+	function errorCallback(responseData, textStatus, request) {		
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/SearchStudent?id="+id+"&branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -183,13 +179,12 @@ function getAutoIncrementedDetails(){
 		document.getElementById("reg_no").value=responseData.reg_prefix+"-"+responseData.registration;
 	}
 	function errorCallback(responseData, textStatus, request) {
-		alert("Data not Found");
-			// var message=responseData.response.JSON.message;
-			// alert(message);
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/Admission/getAutoIncrementedDetails?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }
@@ -222,7 +217,6 @@ function StudentAdmission(){
 	        g_total=g_total+parseInt(total);
 	}
 	newAmt=disc+"|"+g_total;
-	alert(newAmt);
 	function callback(responseData,textStatus,request)
 	{
 		var mes=responseData.responseJSON.message;
@@ -231,18 +225,33 @@ function StudentAdmission(){
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
 	}
+//	var status=checkInstallmentData(installment,document.getElementById("admission_date").value);
+//	if(status==false){
 	var httpMethod = "POST";
 	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&feestypeDetails="+feestypeDetails+"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
-	alert(formData);
 	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	//}
 	return false;
 }
-
-function AddNewEnquiryStudent(){
+/*function checkInstallmentData(installment,admission_date){
+	var status=false;
+	installment=installment.split(",");
+	for(var i=1;i<installment.length;i++){
+		var installmentDate=installment[i].split("|");
+		if(installmentDate[0]<admission_date){
+			alert(installmentDate[0]+" "+admission_date)
+			status=true;
+		}
+	}
+	alert(status);
+	if(status==true){
+		showNotification("error","Installment Date must be greater than admission date.");
+	}
+	return status;
+}
+*/function AddNewEnquiryStudent(){
 	function callback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("success",mes);

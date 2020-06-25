@@ -65,7 +65,7 @@ public class UserResource {
 			user_role=user.getRole();
 			user_branch=user.getBranch();
 			LoginHistory history=new LoginHistory();
-			logger.info("In User Login");
+			logger.error("In User Login");
 			history.setBranch(user.getBranch());
 			history.setEmployee(user.getName());
 			history.setIp(request.getRemoteAddr());
