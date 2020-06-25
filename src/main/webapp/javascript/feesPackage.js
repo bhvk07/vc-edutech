@@ -85,7 +85,7 @@ $(document)
 						}
 					});
 
-					$("#submit").click(function() {
+					$("#saveBtn").click(function() {
 						standardData = new Array();
 						branchData = new Array();
 						$('#standard input:checked').each(function() {
@@ -112,7 +112,7 @@ $(document)
 									loadBranch(std);
 							});
 					});
-					$("#edit").click(function(e) {
+					$("#editBtn").click(function(e) {
 						var table = $("#feespackage").DataTable();
 						$('table .cbCheck').each(function(i, chk) {
 							if (chk.checked) {
@@ -134,7 +134,7 @@ $(document)
 							document.getElementById("inputDisabledAmt").value = document.getElementById("grand-t").value;
 							$(this).closest('tr').remove();
 					})
-					$("#delete").click(function() {
+					$("#deleteBtn").click(function() {
 						var idarray = new Array();
 						$('table .cbCheck').each(function(i, chk) {
 							if (chk.checked) {
@@ -143,7 +143,7 @@ $(document)
 						});
 						deleteFeesPackage(idarray);
 					});
-					$("#cancel").click(function(e) {
+					$("#cancelBtn").click(function(e) {
 						clearModal();
 					});
 				});

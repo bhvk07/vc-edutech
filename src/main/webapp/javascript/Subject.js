@@ -50,7 +50,7 @@ $(document).ready(function(){
 	/*$("#subject").submit(function(){
 		createSubject();	
 	});*/
-	$("#edit").click(function(e){
+	$("#editBtn").click(function(e){
 		var table = $('#subjecttable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -61,7 +61,7 @@ $(document).ready(function(){
 			}
 		});	
 	});
-	$("#Delete").click(function() {
+	$("#deleteBtn").click(function() {
 		var idarray=new Array();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -70,7 +70,7 @@ $(document).ready(function(){
 		});
 		deleteSubject(idarray);
 	});
-	$("#cancel").click(function(){
+	$("#cancelBtn").click(function(){
 		clearModal();	
 	});
 	

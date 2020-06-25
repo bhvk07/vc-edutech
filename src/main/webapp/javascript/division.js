@@ -34,7 +34,7 @@ $(document).ready(function(){
 	});
 	
 
-	$("#edit").click(function(e){
+	$("#editBtn").click(function(e){
 		var table = $('#divisiontable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -44,7 +44,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$("#Delete").click(function() {
+	$("#deleteBtn").click(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
 			var idarray=new Array();
@@ -53,7 +53,7 @@ $(document).ready(function(){
 			deleteDivision(idarray);
 		});
 	});
-	$("#cancel").click(function(){
+	$("#cancelBtn").click(function(){
 		clearModal();
 	});
 	

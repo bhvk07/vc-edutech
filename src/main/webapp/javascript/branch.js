@@ -58,7 +58,7 @@ $(document).ready(function(){
 		  }
 	});
 	var table=$('#branchtable').DataTable();
-	$("#edit").click(function(e){
+	$("#editBtn").click(function(e){
 		request="Edit";
 		var code;
 		$('table .cbCheck').each(function(i, chk) {
@@ -68,7 +68,7 @@ $(document).ready(function(){
 		});
 		loadBranch(code,e,request);
 	});
-	$("#cancel").click(function(){
+	$("#cancelBtn").click(function(){
 		clearModal();
 	});
 });

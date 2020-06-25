@@ -172,15 +172,6 @@ table.table .avatar {
 	color: #666;
 }
 
-.pagination li.active a, .pagination li.active a.page-link {
-	background:   #435d7d;
-}
-
-.pagination li.active a:hover {
-	background: #435d7d;
-}
-
-
 .pagination li.disabled i {
 	color: #ccc;
 }
@@ -237,12 +228,6 @@ table.table .avatar {
 	z-index: 3;
 	transform: rotateZ(45deg);
 }
-
-.custom-checkbox input[type="checkbox"]:checked+label:before {
-	border-color:  #435d7d;
-	background:  #435d7d;
-}
-
 .custom-checkbox input[type="checkbox"]:checked+label:after {
 	border-color: #fff;
 }
@@ -335,19 +320,17 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							<b>Fees Type</b>
+							<b>Caste</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
 
-						<a href="#feestypeModal" data-toggle="modal"
-							data-target="#CasteModal" class="btn btn-success" id="addBtn"><i
-							class="fa fa-plus"></i> <span>Add New</span></a> <a
-							href="" class="btn btn-warning" id="editBtn"
-							data-toggle="modal" ><i class="fa fa-plus"></i>
-							<span>Edit</span></a><a href=""
-							class="btn btn-danger" id="deleteBtn" ><i
-							class="fa fa-minus"></i> <span>Delete</span></a>
+						<a href="#CasteModal" data-toggle="modal" data-target="#CasteModal" class="btn btn-success" id="addBtn">
+						<i class="fa fa-plus"></i> <span>Add New</span></a> 
+						<a href="" class="btn btn-warning" id="editBtn" data-toggle="modal" >
+						<i class="fa fa-plus"></i><span>Edit</span></a>
+						<a href="" class="btn btn-danger" id="deleteBtn" >
+						<i class="fa fa-minus"></i> <span>Delete</span></a>
 					</div>
 				</div>
 			</div>
@@ -404,7 +387,7 @@ table.table .avatar {
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancelBtn"
 							value="Cancel"> <input type="submit"
-							class="btn btn-success" value="Save"
+							class="btn btn-success" value="Save" id="saveBtn"
 							style="color: aliceblue">
 					</div>
 				</form>

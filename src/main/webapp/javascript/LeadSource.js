@@ -26,7 +26,7 @@ $(document).ready(function(){
 	$('#leadsourcetable').DataTable({
 		"pageLength" : 40
 	});
-	$("#edit").click(function(e) {		 
+	$("#editBtn").click(function(e) {		 
 		var table = $('#leadsourcetable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -36,7 +36,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$("#Delete").click(function() {
+	$("#deleteBtn").click(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
 			var idarray=new Array();
@@ -45,7 +45,7 @@ $(document).ready(function(){
 			deleteSource(idarray);
 		});
 	});
-	$("#cancel").click(function() {
+	$("#cancelBtn").click(function() {
 		clearModal()
 	});
 	

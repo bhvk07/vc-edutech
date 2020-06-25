@@ -57,7 +57,7 @@ $("#stdamt").focusout(function(){
 	$(".Amount").val(stdamt);
 
 });
-$("#delete").click(function() {
+$("#deleteBtn").click(function() {
 	$('table .cbCheck').each(function(i, chk) {
 		if(chk.checked){
 		var idarray=new Array();
@@ -67,7 +67,7 @@ $("#delete").click(function() {
 	});
 });
 
-  $("#edit").click(function(e){ 
+  $("#editBtn").click(function(e){ 
 	  var table = $("#stdtable").DataTable();
 	  $('table .cbCheck').each(function(i, chk) {
 		  if (chk.checked==true) {

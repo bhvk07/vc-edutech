@@ -152,13 +152,13 @@ $(document).ready(function(){
 	/*$("#academicYear").submit(function(){
 		InsertYear();
 	});*/
-	$("#edit").click(function(e){
+	$("#editBtn").click(function(e){
 		$("input:checkbox[name=type]:checked").each(function() {
 			requestid=$(this).val();
 			loadAcadData(requestid,e);
 		});
 	});
-	$("#delete").click(function() {
+	$("#deleteBtn").click(function() {
 		var idarray=new Array();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -167,7 +167,7 @@ $(document).ready(function(){
 		});
 		deleteAcadYear(idarray);
 	});
-	$("#cancel").click(function(){
+	$("#cancelBtn").click(function(){
 		clearModel();
 	});
 	

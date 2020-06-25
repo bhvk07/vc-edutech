@@ -29,7 +29,7 @@ $(document).ready(function() {
 		//		 
 
 	});*/
-	$("#edit").click(function(e) {		 
+	$("#editBtn").click(function(e) {		 
 		var table = $('#feestypetable').DataTable();
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
@@ -39,10 +39,10 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$("#cancel").click(function() {
+	$("#cancelBtn").click(function() {
 		clearModal()
 	});
-	$("#Delete").click(function() {
+	$("#deleteBtn").click(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if(chk.checked){
 			var idarray=new Array();
