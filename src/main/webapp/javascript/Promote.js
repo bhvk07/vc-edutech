@@ -95,9 +95,8 @@ function getPromoteData() {
 	var selectedStatus="";
 	for (var option of document.getElementById('multi_status_select').options) {
 	    if (option.selected==true) {
-	    	selectedStatus=option.value;}
-	    else{
-    		selectedStatus="null";}
+	    	selectedStatus=option.value;
+	    	}
 	}
 	function callback(responseData, textStatus, request) {
 		var table = $('#promotion_table').DataTable();
@@ -114,18 +113,15 @@ function getPromoteData() {
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var mes = responseData.responseJSON.message;
-		 * showNotification("error", mes);
-		 */
-		// var message=responseData.response.JSON.message;
-		// alert(message);
+		
+		  var mes = responseData.responseJSON.message;
+		  showNotification("error", mes);
 	}
 	var formData = $("#getPromoteData").serialize()+"&selectedStatus="+selectedStatus+
 	"&branch="+branchSession;
 	var httpMethod = "POST";
 	var relativeUrl = "/Admission/getPromotionData";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }

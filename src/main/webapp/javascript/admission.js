@@ -54,7 +54,6 @@ $(document).ready(function(){
 	select.addEventListener('change', function() {
 		var feespack=select.value.split("|");
 		getFeesPackageDetails(feespack[0]);
-		alert(select.value+" "+admitted_fees_pack);
 		if(admitted_fees_pack!=select.value){
 			document.getElementById("admission").disabled=false;
 		}
@@ -130,30 +129,16 @@ function SearchStudent(id){
 		var status=responseData.status;
 		var stud_details=id +" | "+name+ " | "+contact+ " | "+status;
 		document.getElementById('stud_details').value=stud_details;
-		enqData=new Array();
-		enqData.push(responseData.fname);
-		enqData.push(responseData.lname);
-		enqData.push(responseData.mname);
-		enqData.push(responseData.uid);
-		enqData.push(responseData.dob);
-		enqData.push(responseData.gender);
-		enqData.push(responseData.caste);
-		enqData.push(responseData.category);
-		enqData.push(responseData.lang);
-		enqData.push(responseData.father_cont);
-		enqData.push(responseData.mother_cont);
-		enqData.push(responseData.address);
-		enqData.push(responseData.pin);
-		enqData.push(responseData.email);
-		enqData.push(responseData.w_app_no);
-		enqData.push(responseData.sname);
-		enqData.push(responseData.stud_cont);
-		$("#fees").val(responseData.fees_pack);
+		enqData=responseData.fname+":"+responseData.lname+":"+responseData.mname+":"+responseData.uid+":"+responseData.dob+":"+
+		responseData.gender+":"+responseData.caste+":"+responseData.category+":"+responseData.lang+":"+responseData.father_cont+":"+
+		responseData.mother_cont+":"+responseData.address+":"+responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+
+		responseData.sname+":"+responseData.stud_cont+":"+responseData.branch;
+
 		var feespack=responseData.feesPack;
 		var feesdetails = feespack.fees_details;
 		
 		createFeesTypeRow(feesdetails,responseData.fees_pack);
-		if(status=="Admitted")
+		if(status.trim()=="Admitted")
 			{
 			admitted_fees_pack=responseData.fees_pack;
 			showNotification("error","Student Already Admitteed For This Course.");
@@ -194,7 +179,7 @@ function StudentAdmission(){
 	var table=document.getElementById("installment_table");
 	var rowCount=$('#installment_table tr').length;
 	var installment="installment details";
-	for (var i = 1; i < rowCount; i++) {
+	for (var i = 1; i < rowCount-1; i++) {
         var date = $(table.rows.item(i).cells[0]).find('input').val();
         var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
         var amt = $(table.rows.item(i).cells[2]).find('input').val();
@@ -229,9 +214,10 @@ function StudentAdmission(){
 //	var status=checkInstallmentData(installment,document.getElementById("admission_date").value);
 //	if(status==false){
 	var httpMethod = "POST";
-	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&feestypeDetails="+feestypeDetails+"&installment="+installment+"&newAmt="+newAmt+"&branch="+branchSession;
+	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&feestypeDetails="+feestypeDetails+"&installment="+installment+"&newAmt="+newAmt;
+	alert(installment);
 	var relativeUrl = "/Admission/StudentAdmission";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	//}
 	return false;
 }

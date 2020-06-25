@@ -46,8 +46,7 @@ public class AdmissionResource {
 			@FormParam("invoice_no") String invoice_no, @FormParam("admission_date") String admission_date,
 			@FormParam("acad_year") String acad_year, @FormParam("join_date") String join_date,
 			@FormParam("personalDetails") String personalDetails, @FormParam("feestypeDetails") String feestypeDetails,
-			@FormParam("installment") String installment, @FormParam("newAmt") String newAmt,
-			@FormParam("branch") String branch) {
+			@FormParam("installment") String installment, @FormParam("newAmt") String newAmt) {
 		String[] name = Util.symbolSeperatedString(student_name);
 		String[] f_pack = Util.symbolSeperatedString(adm_fees_pack);
 		String[] personal = Util.colanSeperatedString(personalDetails);
@@ -56,9 +55,10 @@ public class AdmissionResource {
 		AdmissionController controller = null;
 		AcademicYearController acadcontroller = null;
 		AttendanceController studcontroller = null;
+		String branch=personal[17];
 		try {
 			admission = new Admission();
-			// admission.setId(Integer.parseInt(name[0]));
+			//admission.setId(Integer.parseInt(name[0]));
 			admission.setStudent_name(personal[15]);
 			admission.setFname(personal[0]);
 			admission.setLname(personal[1]);
@@ -88,7 +88,9 @@ public class AdmissionResource {
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
 			admission.setBranch(branch);
-			admission.setStandard(getStandard(f_pack[0], branch));
+			String standard=getStandard(f_pack[0], branch);
+			String[] hyphenSeperatedStd=Util.hyphenSeperatedString(standard);
+			admission.setStandard(hyphenSeperatedStd[0]);
 			admission.setFeesDetails(feestypeDetails);
 
 			String[] symbolSeperated = Util.symbolSeperatedString(newAmt);
@@ -110,9 +112,9 @@ public class AdmissionResource {
 			acadcontroller.updateAcademicDetails(Rollno, invoice_no, regno, acad_year, branch);
 
 			eqcontroller = new EnquiryController();
-			eqcontroller.Admission(Long.parseLong(name[0]));
+			eqcontroller.Admission(Long.parseLong(name[0].trim()));
 
-			Util.generateErrorResponse(Status.ACCEPTED, "Student Successfully Admitted").build();
+			return Util.generateResponse(Status.ACCEPTED, "Student Successfully Admitted").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -282,9 +284,9 @@ public class AdmissionResource {
 				disc = disc + Integer.parseInt(getdiscount[2]);
 			}
 			String newamt = disc + "|" + symbolSeperatedFees[1];
-			StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice,
+			/*StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice,
 					admission_date, acad_year, admission_date, personalDetails, feesdetails, installment, newamt,
-					branch);
+					branch);*/
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
