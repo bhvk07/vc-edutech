@@ -24,8 +24,8 @@ public class AdmissionDAO {
 					+ "`contact`,`father_cont`,`mother_cont`,`address`,`pin`"
 					+ ",`email`,`w_app_no`,`enq_taken_by`,`adm_fees_pack`,"
 					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`standard`,`division`,`admission_date`,`acad_year`,`join_date`,`fees`,"
-					+ "`fees_type_details`,`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)";
+					+ "`fees_type_details`,`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`,`enq_no`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, admission.getStudent_name());
 			ps.setString(2, admission.getLname());
@@ -62,6 +62,7 @@ public class AdmissionDAO {
 			ps.setLong(33, admission.getFees());
 			ps.setString(34, Util.currentDate());
 			ps.setString(35, admission.getBranch());
+			ps.setLong(36, admission.getEnq_no());
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();

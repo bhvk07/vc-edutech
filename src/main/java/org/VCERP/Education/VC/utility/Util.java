@@ -58,8 +58,8 @@ public class Util {
 	}
 	public static ResponseBuilder generateResponse(Status status,String message)
 	{
-		ErrorMessage error=new ErrorMessage(status.getStatusCode(),message);
-		return Response.status(status).entity(error).type(MediaType.APPLICATION_JSON);
+		ErrorMessage success=new ErrorMessage(status.getStatusCode(),message);
+		return Response.status(status).entity(success).type(MediaType.APPLICATION_JSON);
 	}
 	
 	public static String randomStringGenerator(int length)

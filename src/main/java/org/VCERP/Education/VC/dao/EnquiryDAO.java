@@ -107,7 +107,7 @@ public class EnquiryDAO {
 		
 	}
 
-	public void DeleteEnquiryData(String id) {
+/*	public void DeleteEnquiryData(String id) {
 		Connection con=null;
 		PreparedStatement st=null;
 		try {
@@ -121,7 +121,7 @@ public class EnquiryDAO {
 			System.out.println(e);
 		}
 	}
-
+*/
 	public void DeleteMultipleEnquiryData(Long id, String branch) {
 		Connection con=null;
 		PreparedStatement st=null;
@@ -156,6 +156,7 @@ public class EnquiryDAO {
 	public void EditEnquiryData(Enquiry enquiry) {
 		Connection con=null;
 		PreparedStatement st=null;
+		String status="Admitted";
 		try {
 			con=Util.getDBConnection();
 			String query="update enquiry set sname=?,lname=?,fname=?,mname=?,uid=?,"
@@ -185,6 +186,12 @@ public class EnquiryDAO {
 			st.setString(20, enquiry.getRemark());
 			st.setString(21, enquiry.getEnq_no());
 			st.setString(22, enquiry.getBranch());
+			System.out.println("("+enquiry.getStatus().trim()+")"+"("+status.trim()+")");
+			if(enquiry.getStatus().trim()==status.trim())
+			{
+				System.out.println("here");
+				EditAdmissionPersonalDetails(enquiry);
+			}
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -194,6 +201,46 @@ public class EnquiryDAO {
 			Util.closeConnection(null, st, con);
 		}
 		
+	}
+
+	private void EditAdmissionPersonalDetails(Enquiry enquiry) {
+		System.out.println("here");
+		Connection con=null;
+		PreparedStatement st=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update admission set student_name=?,lname=?,fname=?,mname=?,uid=?,"
+					+ "dob=?,gender=?,caste=?,category=?,language=?,contact=?,father_cont=?,"
+					+ "mother_cont=?,address=?,pin=?,email=?,w_app_no=?"
+					+ " where enq_no=? and branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, enquiry.getSname());
+			st.setString(2, enquiry.getLname());
+			st.setString(3, enquiry.getFname());
+			st.setString(4, enquiry.getMname());
+			st.setString(5, enquiry.getUid());
+			st.setString(6, enquiry.getDob());
+			st.setString(7, enquiry.getGender());
+			st.setString(8, enquiry.getCaste());
+			st.setString(9, enquiry.getCategory());
+			st.setString(10, enquiry.getLang());
+			st.setString(11, enquiry.getStud_cont());
+			st.setString(12, enquiry.getFather_cont());
+			st.setString(13, enquiry.getMother_cont());
+			st.setString(14, enquiry.getAddress());
+			st.setString(15, enquiry.getPin());
+			st.setString(16, enquiry.getEmail());
+			st.setString(17, enquiry.getW_app_no());
+			st.setString(18, enquiry.getEnq_no());
+			st.setString(29, enquiry.getBranch());
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, st, con);
+		}
 	}
 
 	public ArrayList<Enquiry> EnquiryReport(Enquiry enquiry, ArrayList<Enquiry> enqData) {

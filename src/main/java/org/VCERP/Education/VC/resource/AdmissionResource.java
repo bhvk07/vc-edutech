@@ -87,6 +87,7 @@ public class AdmissionResource {
 			admission.setAdmission_date(admission_date);
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
+			admission.setEnq_no(Integer.parseInt(personal[18]));
 			admission.setBranch(branch);
 			String standard=getStandard(f_pack[0], branch);
 			String[] hyphenSeperatedStd=Util.hyphenSeperatedString(standard);

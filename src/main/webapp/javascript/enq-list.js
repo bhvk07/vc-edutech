@@ -109,7 +109,8 @@ function Admission(id, req) {
 		responseData.gender+":"+responseData.caste+":"+responseData.category+":"+responseData.lang+":"+responseData.father_cont+":"+
 		responseData.mother_cont+":"+responseData.address+":"+responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+
 		responseData.sname+":"+responseData.stud_cont+":"+responseData.enq_date+":"+responseData.enq_no+":"+
-		responseData.enq_taken_by+":"+responseData.lead_source+":"+responseData.remark+":"+responseData.fees_pack+":"+responseData.branch;
+		responseData.enq_taken_by+":"+responseData.lead_source+":"+responseData.remark+":"+responseData.fees_pack+":"+responseData.branch+
+		":"+responseData.status;
 		
 		if (req == "Edit") {
 			alert("here");

@@ -86,7 +86,9 @@ public class Enquiry {
 	@FormParam("remark")
 	private String remark;
 	
+	@FormParam("status")
 	private String status;
+	
 	@FormParam("branch")
 	private String branch;
 	

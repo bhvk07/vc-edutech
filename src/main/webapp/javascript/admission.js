@@ -132,7 +132,7 @@ function SearchStudent(id){
 		enqData=responseData.fname+":"+responseData.lname+":"+responseData.mname+":"+responseData.uid+":"+responseData.dob+":"+
 		responseData.gender+":"+responseData.caste+":"+responseData.category+":"+responseData.lang+":"+responseData.father_cont+":"+
 		responseData.mother_cont+":"+responseData.address+":"+responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+
-		responseData.sname+":"+responseData.stud_cont+":"+responseData.branch;
+		responseData.sname+":"+responseData.stud_cont+":"+responseData.branch+responseData.enq_no;
 
 		var feespack=responseData.feesPack;
 		var feesdetails = feespack.fees_details;

@@ -16,11 +16,11 @@ public class EnquiryController {
 		EnquiryDAO dao=new EnquiryDAO();
 		return dao.FetchAllEnquiryData(branch);
 	}
-
+/*
 	 public void DeleteEnquiryData(String id) {
 		  EnquiryDAO dao=new EnquiryDAO();
 		  dao.DeleteEnquiryData(id);
-	}
+	}*/
 
 	public void DeleteMultipleEnquiryData(Long id, String branch) {
 		EnquiryDAO dao=new EnquiryDAO();

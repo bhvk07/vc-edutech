@@ -98,7 +98,7 @@ public class EnquiryResource {
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Unable to delete data.please try again or contact with administrator.").build();
 	}
 	
-	@PUT
+/*	@PUT
 	@PermitAll
 	@JWTTokenNeeded
 	@Path("/Admission")
@@ -113,7 +113,7 @@ public class EnquiryResource {
 			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.BAD_REQUEST,"Admission not done.").build();
-	}
+	}*/
 	@POST
 	@PermitAll
 	@JWTTokenNeeded

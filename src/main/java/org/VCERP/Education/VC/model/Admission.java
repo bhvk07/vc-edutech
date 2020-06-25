@@ -39,6 +39,7 @@ public class Admission {
 	private String acad_year;
 	private String join_date;
 	private String feesDetails;
+	private long enq_no;
 	private long fees;
 	private long disccount;
 	private long paid_fees;
@@ -48,6 +49,13 @@ public class Admission {
 	private String to_date;
 	private String Branch;
 	private Installment installment;
+	
+	public long getEnq_no() {
+		return enq_no;
+	}
+	public void setEnq_no(long enq_no) {
+		this.enq_no = enq_no;
+	}
 	public long getId() {
 		return id;
 	}

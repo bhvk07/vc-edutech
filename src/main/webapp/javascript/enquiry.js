@@ -278,13 +278,17 @@ function EnquiryData() {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 	}
-	var formData = $('#EnquiryForm').serialize()+"&branch="+branchSession;
+	var formData ;
+	var relativeUrl ;
 	var httpMethod = "POST";
 	if(request==""){
-	var relativeUrl = "/Enquiry/EnquiryData";
+	formData = $('#EnquiryForm').serialize()+"&branch="+branchSession;
+	relativeUrl = "/Enquiry/EnquiryData";
 	}else
 		{
-		var relativeUrl = "/Enquiry/editEnquiryData";
+		var status=editData.split(":");
+		formData = $('#EnquiryForm').serialize()+"&status="+status[24]+"&branch="+branchSession;
+		relativeUrl = "/Enquiry/editEnquiryData";
 		}
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
