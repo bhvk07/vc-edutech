@@ -244,19 +244,18 @@ function loadAcadData(id,e)
 		document.getElementById("invoice").value=responseData.invoice;
 		document.getElementById("prefix_regno").value=responseData.reg_prefix;
 		document.getElementById("regno").value=responseData.registration;
-		e.preventDefault();
 		$('#academicModal').modal({
 		        show: true, 
 		        backdrop: 'static',
 		        keyboard: true
 		     })
+		e.preventDefault();
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 		
 	}
-	//var formData = $("#academicYear").serialize();
 	var httpMethod = "GET";
 	var relativeUrl = "/AcademicYear/SpecificAcademicData?id="+id+"&branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
