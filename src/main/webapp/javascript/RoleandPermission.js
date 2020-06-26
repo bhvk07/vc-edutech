@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	validateLogin();
-	$("#btnSubmit").click(function(){
+	$("#saveB").click(function(){
 		saveAllPermission();
 	});
 });
