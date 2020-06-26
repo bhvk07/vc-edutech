@@ -7,6 +7,277 @@ var date = today.getFullYear()+'-0'+(today.getMonth()+1)+'-0'+today.getDate();
 var admitted_fees_pack;
 
 $(document).ready(function(){
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z\s]+$/i.test(value);
+	}, "Only alphabetical characters");
+		jQuery.validator.addMethod("noSpace", function(value, element) { 
+			  return value.indexOf(" ") < 0 && value != ""; 
+			}, "No space please and don't leave it empty");
+		jQuery.validator.addMethod("futureDate", function(value, element) {
+			 var now = new Date();
+			 now.setHours(0,0,0,0);
+			 var myDate = new Date(value);
+			 return this.optional(element) || myDate < now;
+		});
+		$('form[id="admission-form"]').validate({
+			  rules: {
+				  enq_stud: {
+			    	required:true
+			    	//lettersonly:true
+			    },
+			    enq_taken:{
+			    	required:true,
+			    	noSpace:true
+			    },
+			    stud_details:{
+			    	required:true,
+			    	noSpace:true
+			    },
+			    fees:{
+			    	required:true
+			    },
+			    ID_no:{
+			    	required:true,
+			    	noSpace:true,
+			    	//lettersonly:true
+			    },
+			    reg_no:{
+			    	required:true,
+			    	//number:true,
+			    	noSpace:true
+			    },
+			    invoice_no:{
+			    	required:true,
+			    	//number:true,
+			    	noSpace:true
+			    },
+			    admission_date:{
+			    	futureDate:true,
+			    	date:true,
+			    	required:true
+			    },
+			    join_date:{
+			    	futureDate:true,
+			    	date:true,
+			    	required:true
+			    },
+			    amount:{
+			    	required:true,
+			    	number:true,
+			    	noSpace:true
+			    },
+			    discount:{
+			    	//required:true,
+			    	number:true,
+			    	noSpace:true
+			    },
+			    tax:{
+			    	//required:true,
+			    	number:true,
+			    	noSpace:true
+			    },
+			    
+			  },
+			  messages: {
+				  admission_date: {
+						futureDate:'future date not allowed'
+					},
+				 },
+			  submitHandler:function(form){
+				  event.preventDefault();
+				  
+			  }
+		});
+		//addstud validation
+		$('form[id="EnquiryForm"]').validate({
+			  rules: {
+			    sname: {
+			    	required:true,
+			    	lettersonly:true,
+			    	noSpace: true
+			    },
+			    lname: {
+			      required: true,
+			      lettersonly:true,
+			      noSpace: true
+			      
+			    },
+			    fname: {
+				      required: true,
+				      lettersonly:true,
+				      noSpace: true
+				},
+				mname: {
+				      required: true,
+				      lettersonly:true,
+				      noSpace: true
+				},
+				uid: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+				},
+				dob:{
+					required:true,
+					date:true,
+					futureDate:true
+				},
+				stud_cont: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+			        noSpace: true
+				},
+				father_cont: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+			        noSpace: true
+				},
+				mother_cont: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+			        noSpace: true
+				},
+				addr: {
+			        required: true
+				},
+				pin: {
+			        required: true,
+			        digits: true,
+			        minlength: 4,
+			        maxlength: 12,
+				},
+				email: {
+			        required: true,
+			        email: true
+				},
+				w_app_no: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+			        noSpace: true
+				},
+			  },
+			 messages: {
+				dob: {
+					futureDate:'future date not allowed'
+				},
+			 },
+				
+			  submitHandler:function(form){
+				  event.preventDefault();
+				  
+			  }
+		});
+		//add_employee validation
+		$('form[id="addEmployee"]').validate({
+			  rules: {
+				  emp_name: {
+			    	required:true,
+			    	lettersonly:true,
+			    	noSpace: true
+			    },
+			    emp_unq_code: {
+			      required: true,
+			      digits:true
+			    },
+			    email: {
+			        required: true,
+			        email: true
+			    },
+			    address: {
+			        required: true
+				},
+				contact: {
+			        required: true,
+			        digits: true,
+			        minlength: 10,
+			        maxlength: 10,
+			        noSpace: true
+				},
+				dob:{
+					required:true,
+					date:true,
+					futureDate:true
+				},
+				join_date:{
+					required:true,
+					date:true
+				},
+				design:{
+					required:true
+				},
+			  },
+			  messages: {
+					dob: {
+						futureDate:'future date not allowed'
+					},
+				 },
+			  submitHandler:function(form){
+				  event.preventDefault();
+				 
+			  }
+		});
+		//feespackage validation
+		$('form[id="feespackage-modal-form"]').validate({
+			  rules: {
+				fees_pack: {
+			    	required:true
+			    },
+			    searchforstand1: {
+			      required: true
+			    },
+			    searchforstand2: {
+				      required: true
+				    },
+				feestype: {
+			        required: true
+			    },
+			    amount: {
+			        required: true,
+			        number: true,
+			        noSpace: true
+				},
+				discount: {
+			        required: true,
+			        number: true,
+			        noSpace: true
+				},
+				tax: {
+					required: true,
+					noSpace: true
+				},
+			  },
+			
+			  submitHandler:function(form){
+				  event.preventDefault();
+				  
+			  }
+		});
+		//feestype validation
+		$('form[id="feestypeform"]').validate({
+			  rules: {
+			    
+				  feesTypeModal: {
+			        required: true,
+			        letterswithspace: true
+			   },
+				
+			  },
+			 
+			  submitHandler:function(form){
+				  event.preventDefault();
+				  
+			  }
+		});
+
 	
 	/*$("#admission_date").change(function(){
 		alert("admission date = "+document.getElementById("admission_date").value);

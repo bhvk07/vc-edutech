@@ -36,7 +36,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@POST
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@Path("/StudentAdmission")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response StudentAdmission(@FormParam("stud_details") String student_name,
@@ -162,7 +162,7 @@ public class AdmissionResource {
 
 	@Path("/SearchStudent")
 	@GET
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchStudent(@QueryParam("id") String enq_stud, @QueryParam("branch") String branch) {
@@ -186,7 +186,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@Path("/FetchAllAdmittedStudent")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response fetchAllAdmittedStudent(@QueryParam("branch") String branch) {
@@ -206,7 +206,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
-	@JWTTokenNeeded
+	//@JWTTokenNeeded
 	@Path("/getAutoIncrementedDetails")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAutoIncrementedDetails(@QueryParam("branch") String branch) {
