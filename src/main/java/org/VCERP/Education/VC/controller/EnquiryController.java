@@ -32,9 +32,9 @@ public class EnquiryController {
 		dao.Admission(id);	
 	}
 
-	public void EditEnquiryData(Enquiry enquiry) {
+	public int EditEnquiryData(Enquiry enquiry) {
 		EnquiryDAO dao=new EnquiryDAO();
-		dao.EditEnquiryData(enquiry);
+		return dao.EditEnquiryData(enquiry);
 	}
 
 	public  ArrayList<Enquiry> EnquiryReport(Enquiry enquiry, ArrayList<Enquiry> enq) {
@@ -45,6 +45,11 @@ public class EnquiryController {
 	public String IncrementedEnqNo(String branch) {
 		EnquiryDAO dao=new EnquiryDAO();
 		return dao.IncrementedEnqNo(branch);
+	}
+
+	public void EditAdmissionPersonalDetails(Enquiry enquiry) {
+		EnquiryDAO dao=new EnquiryDAO();
+		dao.EditAdmissionPersonalDetails(enquiry);
 	}
 
 }

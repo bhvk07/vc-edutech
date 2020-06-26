@@ -52,9 +52,19 @@ public class EnquiryResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response EditEnquiryData(@Valid @BeanParam Enquiry enquiry){
 		EnquiryController controller=new EnquiryController();
+		int count=0;
+		String adm_status="Admitted";
+		String enq_status;
 		try {
-			controller.EditEnquiryData(enquiry);
+			count=controller.EditEnquiryData(enquiry);
+			if(count!=0){
+				enq_status=enquiry.getStatus().trim();
+				if(adm_status.matches(enq_status))
+				{
+					controller.EditAdmissionPersonalDetails(enquiry);
+				}
 			return Util.generateResponse(Status.ACCEPTED,"Student Enquiry Data Successfully Updated.").build();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

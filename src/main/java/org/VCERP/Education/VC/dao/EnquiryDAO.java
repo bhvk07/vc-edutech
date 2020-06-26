@@ -153,10 +153,10 @@ public class EnquiryDAO {
 		}
 	}
 
-	public void EditEnquiryData(Enquiry enquiry) {
+	public int EditEnquiryData(Enquiry enquiry) {
 		Connection con=null;
 		PreparedStatement st=null;
-		String status="Admitted";
+		int count=0;
 		try {
 			con=Util.getDBConnection();
 			String query="update enquiry set sname=?,lname=?,fname=?,mname=?,uid=?,"
@@ -186,13 +186,7 @@ public class EnquiryDAO {
 			st.setString(20, enquiry.getRemark());
 			st.setString(21, enquiry.getEnq_no());
 			st.setString(22, enquiry.getBranch());
-			System.out.println("("+enquiry.getStatus().trim()+")"+"("+status.trim()+")");
-			if(enquiry.getStatus().trim()==status.trim())
-			{
-				System.out.println("here");
-				EditAdmissionPersonalDetails(enquiry);
-			}
-			st.executeUpdate();
+			count=st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -200,11 +194,10 @@ public class EnquiryDAO {
 		finally {
 			Util.closeConnection(null, st, con);
 		}
-		
+		return count;
 	}
 
-	private void EditAdmissionPersonalDetails(Enquiry enquiry) {
-		System.out.println("here");
+	public void EditAdmissionPersonalDetails(Enquiry enquiry) {
 		Connection con=null;
 		PreparedStatement st=null;
 		try {
@@ -232,7 +225,7 @@ public class EnquiryDAO {
 			st.setString(16, enquiry.getEmail());
 			st.setString(17, enquiry.getW_app_no());
 			st.setString(18, enquiry.getEnq_no());
-			st.setString(29, enquiry.getBranch());
+			st.setString(19, enquiry.getBranch());
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
