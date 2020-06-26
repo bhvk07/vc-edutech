@@ -2,11 +2,11 @@ var mes;
 requestid = 0;
 $(document).ready(function() {
 	validateLogin();
+	checkUserLevel();
 	fetchAllBranch();
+	fetchAllRole();
 	FetchAllEmployee();
 	EmployeeList();
-	$(".branch").val(branchSession);
-	$("#userid").val("");
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z]+$/i.test(value);
 	}, "Please enter letters only");
@@ -164,7 +164,9 @@ $(document).ready(function() {
 	});
 	$("#userid").focusout(function(){
 		var username=document.getElementById("userid").value;
+		if(username.trim()!=""){
 		checkUsernameExist(username);
+		}
 	})
 });
 
@@ -317,14 +319,49 @@ function checkAccountExist(emp_name,branch){
 }
 function checkUsernameExist(username){
 	function callback(responseData, textStatus, request) {
+		var mes=responseData.message;
+		showNotification("success",mes);
 		document.getElementById('btnSave').disabled = false;
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		  showNotification("error",mes);
+		  document.getElementById('btnSave').disabled = true;
 	}
 	var httpMethod = "GET";
 	var relativeUrl = "/user/checkUsernameExist?userid="+username+"&branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;
+}
+function checkUserLevel(){
+	if(emp_type=="Organizatoin Level Employee"){
+		document.getElementById("emp_type").disabled=false;
+		document.getElementById("ebranch").disabled=false;
+		$("#emp_type").val(emp_type);
+	}else{
+		document.getElementById("emp_type").disabled=true;
+		document.getElementById("ebranch").disabled=true;
+		$("#emp_type").val(emp_type);
+		$(".branch").val(branchSession);
+	}
+}
+function fetchAllRole(){
+	function callback(responseData, textStatus, request) {
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i] + '" >'
+					+ responseData[i] + '</option>';
+			$('#role').append(htmlCode);
+		}
+
+	}
+
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/user/getAllRole?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
 	return false;
 }

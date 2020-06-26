@@ -330,22 +330,7 @@ table.table .avatar {
 
 	<section class="body">
 
-		<!--    <div class="inner-wrapper">-->
 		<section role="main" class="content-body">
-
-			<!--
-            <header class="page-header">
-    <h2>User</h2>
-    <div class="right-wrapper pull-right">
-        <button id="btnNew" class="btn btn-primary" style type="button" onclick="ShowNew();">
-            <span class="label-xs hidden-xs hidden-sm p5">&nbsp;Add New</span>
-        </button>
-    </div>
-</header>
--->
-
-
-
 			<section class="panel" id="datatable-view">
 				<div class="table-wrapper" id="table-style">
 					<div class="table-title">
@@ -390,23 +375,11 @@ table.table .avatar {
 													<th>Username</th>
 													<th class="no-sort">Role Name</th>
 													<th class="no-sort">Branch Name</th>
-													<!--
-										<th>ID CARD number</th>
-										<th class="no-sort">PAYMENT MODE</th>
-										<th>AMOUNT</th>
-										<th class="no-sort">RECEIVED BY</th>
-										<th>CHEQUE DATE/CLEAR DATE</th>
-										<th class="no-sort">STATUS</th>
--->
-
 												</tr>
 											</thead>
 										</table>
 									</div>
-
 								</div>
-								<!-- </div> -->
-								<!--End Advanced Tables -->
 							</div>
 						</div>
 
@@ -432,10 +405,6 @@ table.table .avatar {
 					</div>
 					<div class="row">
 						<div class="col-md-7">
-							<!-- Advanced Tables -->
-							<!--				<div class="panel panel-default">-->
-							<!-- <div class="panel-heading">Advanced Tables</div> -->
-							<!--					<div class="panel-body">-->
 							<div class="tabs">
 								<ul class="nav nav-tabs tabs-primary">
 									<div class="nav nav-tabs tabs-primary">
@@ -443,22 +412,6 @@ table.table .avatar {
 									</div>
 								</ul>
 							</div>
-							<!--
-                    <div class="tab-content">
-                        <div id="overview" class="tab-pane">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered table-striped">
-                                        <tbody>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
--->
-
 							<div id="edit" class="tab-pane active">
 								<h4 class="mb-xlg">Personal Information</h4>
 								<form id="createAc" method="post">
@@ -469,6 +422,7 @@ table.table .avatar {
 												<div class="input-group" style="width: 100%;">
 													<select class="form-control" id="emp_type" name="emp_type"
 														disabled tabindex="-1" aria-hidden="true">
+														<option value="Organizatoin Level Employee">Organizatoin Level User</option>
 														<option value="Branch Level Employee">Branch Level User</option>
 													</select>
 
@@ -496,8 +450,7 @@ table.table .avatar {
 											<div class="col-md-8">
 												<div class="input-group" style="width: 100%;">
 													<select class="form-control" id="role" name="role">
-														<!-- <option value="">Select Role Name</option> -->
-														<option value="desk">Administrator</option>
+														<option value="">Select Role Name</option>
 													</select>
 
 												</div>
@@ -512,11 +465,6 @@ table.table .avatar {
 													<select class="form-control" id="enq_taken" name="emp_name">
 													<option value="">Select Employee Name</option> 
 													</select>
-													<!--
-                                    <span class="input-group-addon" id="bhvk"> <button type="button" id="add-btn" data-toggle="modal" data-target="#addEmployeeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;">
-                      +
-                          </button></span>
--->
 													<span class="input-group-btn">
 														<button class="btn btn-primary" id="add-btn" type="button"
 															data-toggle="modal" data-target="#addEmployeeModal">
@@ -559,14 +507,6 @@ table.table .avatar {
 									</div>
 								</form>
 							</div>
-
-
-
-
-							<!--					</div>-->
-							<!-- </div> -->
-							<!--End Advanced Tables -->
-							<!--			</div>-->
 						</div>
 
 						<div class="col-md-3">
@@ -710,8 +650,4 @@ table.table .avatar {
 		});
 	});
 </script>
-
-<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.js"></script> -->
 </html>

@@ -29,7 +29,8 @@ function attemptLogin(){
 	function callback(responseData,textStatus,request){
 		var token=request.getResponseHeader('X-Authorization');
 		sessionStorage.setItem("token", token);
-		sessionStorage.setItem("branch",responseData.Branch)
+		sessionStorage.setItem("branch",responseData.Branch);
+		sessionStorage.setItem("emp_type",responseData.emp_type);
 		alert(token);
 		var role = responseData.role;
 		var name = responseData.name;

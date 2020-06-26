@@ -54,4 +54,9 @@ public class UserController {
 		UserDAO dao=new UserDAO();
 		return dao.checkUsernameExist(user);
 	}
+
+	public ArrayList<String> getAllRole(String branch) {
+		UserDAO dao=new UserDAO();
+		return dao.getAllRole(branch);
+	}
 }

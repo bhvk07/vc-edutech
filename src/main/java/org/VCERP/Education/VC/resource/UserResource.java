@@ -43,8 +43,7 @@ public class UserResource {
 	
 	private static final Logger logger = LogManager.getLogger(UserResource.class.getName());
 	
-	public static String user_role="";
-	public static String user_branch="";
+	public static ArrayList<String> permission;
 	@Context 
 	HttpServletRequest request;
 	
@@ -62,8 +61,7 @@ public class UserResource {
 			
 			return Util.generateErrorResponse(Status.NOT_FOUND, "invalid username or password").build();
 		} else {
-			user_role=user.getRole();
-			user_branch=user.getBranch();
+			permission=user.getPermission();
 			LoginHistory history=new LoginHistory();
 			logger.error("In User Login");
 			history.setBranch(user.getBranch());
@@ -214,6 +212,22 @@ public class UserResource {
 		return Util.generateResponse(Status.ACCEPTED, "Username is available.").build();
 		}else{
 			return Util.generateErrorResponse(Status.BAD_REQUEST, "Username already Existed.").build();
+		}
+		
+	}
+	@GET
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/getAllRole")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllRole(@QueryParam("branch") String branch){
+		ArrayList<String> roles=new ArrayList<>();
+		UserController controller=new UserController();
+		roles=controller.getAllRole(branch);
+		if(roles!=null){
+		return Response.status(Status.ACCEPTED).entity(roles).build();
+		}else{
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Roles not Found").build();
 		}
 		
 	}

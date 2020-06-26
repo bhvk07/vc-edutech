@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" package="org.VCERP.Education.VC.configuration">
 	<Properties>
-		 <Property name="basePath">D:\\project\\vc-erp-logs 
+		 <Property name="basePath">D:\project\vc-erp-logs
 			</Property> 
 	</Properties>
 
@@ -10,7 +10,7 @@
 			<PatternLayout
 				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%X{ip}] [%X{url}] [%X{method}] [%X{user}] [%X{session}] [%X{tag}] %c{1} - %msg%n" />
 		</Console>
-		<RollingFile name="json_file_logger" fileName="${basePath}\\backend.log"
+		<RollingFile name="json_file_logger" fileName="${basePath}\backend.log"
 			filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
 			<JsonFileLayout complete="false" compact="true"
 				properties="true" eventEol="true" objectMessageAsJsonObject="true"

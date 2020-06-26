@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.VCERP.Education.VC.model.Employee;
 import org.VCERP.Education.VC.model.User;
+import org.VCERP.Education.VC.resource.UserResource;
 import org.VCERP.Education.VC.model.LoginHistory;
 import org.VCERP.Education.VC.utility.Util;
 
@@ -17,6 +18,7 @@ public class UserDAO {
 		PreparedStatement st=null;
 		ResultSet rs=null;
 		User user=null;
+		ArrayList<String> permission=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
 			String query="select * from user_db where username=? and password=password(?) and active='1'";
@@ -36,7 +38,8 @@ public class UserDAO {
 				user.setRole(rs.getString(7));			
 				user.setCreated_date(rs.getString(8));
 			}
-			
+			permission=getUserPermission(user);
+			user.setPermission(permission);
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
@@ -256,6 +259,54 @@ public class UserDAO {
 		}
 		return status;
 	}
+
+	public ArrayList<String> getAllRole(String branch) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs=null;
+		ArrayList<String> roles=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query = "select DISTINCT(`role`) from user_db where branch=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1,branch);
+			rs=ps.executeQuery();
+			while(rs.next()){
+				roles.add(rs.getString(1));
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return roles;
+	}
+	private ArrayList<String> getUserPermission(User user){
+   	 Connection con=null;
+   	 PreparedStatement st=null;
+   	 ResultSet rs=null;
+   	 ArrayList<String> permisison=new ArrayList<>();
+   	 try {
+			con=Util.getDBConnection();
+			String query="select permission from role_permission where role=? and branch=?";
+			st=con.prepareStatement(query);
+			st.setString(1, user.getRole());
+			st.setString(2, user.getBranch());
+			rs=st.executeQuery();
+			while(rs.next()){
+				permisison.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+   	 finally {
+			Util.closeConnection(rs, st, con);
+		}
+   	 return permisison;
+    }
 }
 
 

@@ -4,11 +4,9 @@
 var host="http://localhost";
 var port="8080";
 
-var DESK="desk";
-var ADMIN="ADMIN";
-
 var branchSession=sessionStorage.getItem("branch");
 var user=sessionStorage.getItem("user");
+var emp_type=sessionStorage.getItem("emp_type");
 function fetchBaseUrl(){
 	return host+":"+port;
 }

@@ -66,7 +66,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                  RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                  String[] roles=rolesAnnotation.value();
                  
-                 if( ! isUserAllowed(roles[0],getUserPermission()))
+                 if( ! isUserAllowed(roles[0]))
                  {
                      requestContext.abortWith(ACCESS_DENIED);
                      return;
@@ -74,38 +74,14 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
              }
          }
      }
-     private boolean isUserAllowed( final String roles, ArrayList<String> permission) 
+     private boolean isUserAllowed( final String roles) 
      {
          boolean isAllowed = false;
 
-         if(permission.contains(roles))
+         if(UserResource.permission.contains(roles))
          {
              isAllowed = true;
          }
          return isAllowed;
-     }
-     
-     private ArrayList<String> getUserPermission(){
-    	 Connection con=null;
-    	 PreparedStatement st=null;
-    	 ResultSet rs=null;
-    	 ArrayList<String> permisison=new ArrayList<>();
-    	 try {
-			con=Util.getDBConnection();
-			String query="select permission from role_permission where role=? and branch=?";
-			st=con.prepareStatement(query);
-			st.setString(1, UserResource.user_role);
-			st.setString(2, UserResource.user_branch);
-			rs=st.executeQuery();
-			while(rs.next()){
-				permisison.add(rs.getString(1));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	 finally {
-			Util.closeConnection(rs, st, con);
-		}
-    	 return permisison;
      }
 }

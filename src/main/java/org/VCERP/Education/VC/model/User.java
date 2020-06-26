@@ -1,5 +1,7 @@
 package org.VCERP.Education.VC.model;
 
+import java.util.ArrayList;
+
 public class User {
 	private long id;
 	
@@ -16,6 +18,8 @@ public class User {
 	private String role;
 	
 	private String created_date;
+	
+	private ArrayList<String> permission;
 
 	public long getId() {
 		return id;
@@ -79,6 +83,14 @@ public class User {
 
 	public void setCreated_date(String created_date) {
 		this.created_date = created_date;
+	}
+
+	public ArrayList<String> getPermission() {
+		return permission;
+	}
+
+	public void setPermission(ArrayList<String> permission) {
+		this.permission = permission;
 	}
 	
 }
