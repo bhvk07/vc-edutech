@@ -4,6 +4,59 @@ var htmlCode = new Array();
 var lecturers = new Array();
 var all_time_slot=new Array();
 $(document).ready(function() {
+	 jQuery.validator.addMethod("noSpace", function(value, element) { 
+		  return value.indexOf(" ") < 0 && value != ""; 
+		}, "No space please and don't leave it empty");
+	 $.validator.addMethod("time", function(value, element) {  
+		 return this.optional(element) || /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/i.test(value);  
+		 }, "Please enter a valid time.");
+	$('form[id="time-table"]').validate({
+		  rules: {
+			  acad_year:{
+				  required:true,
+			  },
+			  std:{
+				  required:true,
+			  },
+			  sub:{
+				  required:true,
+			  },
+			  div:{
+				  required:true,
+			  },
+			  title:{
+				  required:true,
+				  noSpace:true
+			  },
+			  
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			 
+		  }
+		  });
+	$('form[id="time_slot_new"]').validate({
+		  rules: {
+			  start_time:{
+				  required:true,
+				  digits:true,
+				  time:true
+			  },
+			  end_time:{
+	        	  required:true, 
+	        	  digits:true,
+	        	  time:true
+	          },
+	          time_slot:{
+	        	  required:true,
+	        	  noSpace:true
+	          },
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			 
+		  }
+	});
 	validateLogin();
 	TimeTableList();
 	getAcademicYear();

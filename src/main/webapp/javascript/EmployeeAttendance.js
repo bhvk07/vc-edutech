@@ -1,6 +1,59 @@
 var mes;
 var attendance;
 $(document).ready(function() {
+	jQuery.validator.addMethod("greaterThan", 
+			function(value, element, params) {
+
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) > new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) > Number($(params).val())); 
+     });
+     jQuery.validator.addMethod("lessThan", 
+			function(value, element, params) {
+
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) < new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) < Number($(params).val())); 
+    });
+     jQuery.validator.addMethod("futureDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate > now;
+	}, "must be a future date");
+	$('form[id="attendance_stat_form"]').validate({
+		rules:{
+			from_date:{
+				required:true,
+				futureDate:true,
+				lessThan:"#to_date"
+			},
+			to_date:{
+				required:true,
+				futureDate:true,
+				greaterThan:"#from_date"
+			},
+		},
+		messages : {
+
+			from_date: {
+					lessThan:'Start date should be less than end date'
+				},
+			to_date: {
+						greaterThan:'End date should be greater than start date'
+				},
+			},
+		submitHandler:function(form){
+			  event.preventDefault();
+			  
+		  }
+	});
 	validateLogin();
 	attendanceList();
 	$('#EmpAttendance_table').DataTable({
@@ -25,6 +78,7 @@ $(document).ready(function() {
 		var table = $("#EmpAttendance_stat_table").DataTable();
 		$("table .cbCheckAbs").each(function(i,chk){
 			if (chk.checked==true) {
+				
 			var rno=table.rows({selected : true}).column(2).data()[i];
 			getEmployeeAttendanceReport(rno,e);
 			}

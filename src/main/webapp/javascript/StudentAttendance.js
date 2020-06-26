@@ -10,6 +10,39 @@ $(document).ready(function() {
 	 jQuery.validator.addMethod("noSpace", function(value, element) { 
 		  return value.indexOf(" ") < 0 && value != ""; 
 		}, "No space please and don't leave it empty");
+	 jQuery.validator.addMethod("futureDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate > now;
+	}, "Must be a future date");
+	 jQuery.validator.addMethod("startDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate < now;
+	});
+	 jQuery.validator.addMethod("greaterThan", 
+				function(value, element, params) {
+
+				    if (!/Invalid|NaN/.test(new Date(value))) {
+				        return new Date(value) > new Date($(params).val());
+				    }
+
+				    return isNaN(value) && isNaN($(params).val()) 
+				        || (Number(value) > Number($(params).val())); 
+	});
+	 jQuery.validator.addMethod("lessThan", 
+				function(value, element, params) {
+
+				    if (!/Invalid|NaN/.test(new Date(value))) {
+				        return new Date(value) < new Date($(params).val());
+				    }
+
+				    return isNaN(value) && isNaN($(params).val()) 
+				        || (Number(value) < Number($(params).val())); 
+	});
+
 	$('form[id="attendance_stat_form"]').validate({
 		  rules: {
 			  standard_stat: {
@@ -28,16 +61,30 @@ $(document).ready(function() {
 			},
 			start_date:{
 				required: true,
-				date:true
+				date:true,
+				futureDate:true,
+				lessThan:"#end_date"
 			},
 			end_date:{
 				required: true,
-				date:true
+				date:true,
+				futureDate:true,
+				greaterThan:"#start_date"
 			},
 		  },
+		  messages : {
+
+			  start_date: {
+					lessThan:'Start date should be less than end date'
+				},
+			  end_date: {
+						greaterThan:'End date should be greater than start date'
+				},
+			},
+
 		  submitHandler:function(form){
 			  event.preventDefault();
-			  attendanceStat();
+			 
 		  }
 	});
 	
