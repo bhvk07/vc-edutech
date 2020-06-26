@@ -5,7 +5,14 @@ var branchData;
 var today = new Date();
 var date = today.getFullYear()+'-0'+(today.getMonth()+1)+'-0'+today.getDate();
 var admitted_fees_pack;
+
 $(document).ready(function(){
+	
+	/*$("#admission_date").change(function(){
+		alert("admission date = "+document.getElementById("admission_date").value);
+	});
+	*/
+	
 	//admissionDetails();
 	
 	getAcademicYear();
@@ -211,23 +218,31 @@ function StudentAdmission(){
 		var mes=responseData.responseJSON.message;
 		showNotification("error",mes);
 	}
-//	var status=checkInstallmentData(installment,document.getElementById("admission_date").value);
-//	if(status==false){
+	
+	
+	
+	
+	
+	
+	var status=checkInstallmentData(installment,document.getElementById("admission_date").value);
+	if(status==false){
 	var httpMethod = "POST";
 	var formData=$('#admission-form').serialize()+"&personalDetails="+enqData+"&feestypeDetails="+feestypeDetails+"&installment="+installment+"&newAmt="+newAmt;
 	alert(installment);
 	var relativeUrl = "/Admission/StudentAdmission";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
-	//}
+	}
 	return false;
 }
-/*function checkInstallmentData(installment,admission_date){
+function checkInstallmentData(installment,admission_date){
+	alert("success"+admission_date);
 	var status=false;
 	installment=installment.split(",");
 	for(var i=1;i<installment.length;i++){
 		var installmentDate=installment[i].split("|");
+		
 		if(installmentDate[0]<admission_date){
-			alert(installmentDate[0]+" "+admission_date)
+			alert("in"+installmentDate[0]+" "+admission_date)
 			status=true;
 		}
 	}
@@ -237,7 +252,7 @@ function StudentAdmission(){
 	}
 	return status;
 }
-*/function AddNewEnquiryStudent(){
+function AddNewEnquiryStudent(){
 	function callback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
 		showNotification("success",mes);
