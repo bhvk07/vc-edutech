@@ -4,19 +4,22 @@
 <head>
 <meta charset="ISO-8859-1">
 <script src="jquery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <!-- <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!--<link href="style.css" rel="stylesheet" type="text/css">-->
+ --><!--<link href="style.css" rel="stylesheet" type="text/css">-->
 <link rel="stylesheet" href="css/promote.css" type="text/css">
-
+<!-- 
 <link
 	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
-
+ -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -24,9 +27,9 @@
  -->
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
 
-<link rel="stylesheet" type="text/css"
+<!-- <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css" />
-
+ -->
 
 <link rel="stylesheet" href="css/bootstrap-multiselect.css">
 
@@ -38,13 +41,14 @@
 
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-<script src="core/popper.min.js"></script>
 <script src="assets/js/bootstrap-multiselect.js"></script>
+
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script src="javascript/Promote.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
-<script type="text/javascript" src="core/jquerysession.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
 
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
 <title>Promote</title>
 <style>
 .table-wrapper {
@@ -338,21 +342,6 @@ table.table .avatar {
 	<div class="inner-wrapper">
 	  	<div id="navbar">
 	</div>
-		<!--
-       <header class="page-header">
-               <h2>
-                   <label>Student Promotion</label>
-                   <span class="badge bg-danger"></span>
-               </h2>
-               <div class="right-wrapper pull-right">
-                   <div class="widget-menu">
-                       <button type="button" id="promote" class="btn btn-success ladda-button p_btn" data-style="zoom-in">
-                           <span class="label-xs hidden-xs hidden-sm p5">Promote</span>
-                       </button>
-                   </div>
-               </div>
-           </header>
--->
 		<div class="table-wrapper" id="table-style">
 			<div class="table-title">
 				<div class="row">
@@ -364,20 +353,9 @@ table.table .avatar {
 					<div class="col-sm-6">
 						<a href="" class="btn btn-success promote-b" id="promote_student"><i
 							class="material-icons">&#xE147;</i> <span>Promote</span> </a>
-						<!--
-						<a href="" class="btn btn-success" id="admission"><i
-						class="material-icons">&#xE147;</i> <span>Edit </span></a> 
-						<a href="#deleteEmployeeModal" class="btn btn-danger" id="btn-danger"
-						data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-					<a href="" class="btn btn-success" id="btn-view">
-					<i class="material-icons">&#xE15C;</i> <span>View</span>
-					</a>
--->
 					</div>
 				</div>
-				<!-- row div close -->
 			</div>
-			<!-- table title div close -->
 
 			<section role="main" class="content-body">
 
@@ -452,27 +430,15 @@ table.table .avatar {
 														</div>
 													</div>
 													<div class="col-md-2">
-
 														<div class="pull-right">
-															<button type="button" id="btnDisplay"
+															<input type="submit" id="btnDisplay"
 																data-style="zoom-in"
-																class="btn btn-warning margin-right-sm">
-																Display</button>
-
+																class="btn btn-warning margin-right-sm" value="Display">
 														</div>
 													</div>
 												</div>
 												</form>
 											</div>
-											<!-- <div class="panel-footer">
-                                           <div class="row">
-                                               <div class="pull-right">
-                                                   <button type="button" id="btnDisplay" data-style="zoom-in" class="btn btn-warning margin-right-sm">
-                                                       Display
-                                                   </button>
-                                               </div>
-                                           </div>
-                                       </div> -->
 										</div>
 									</div>
 								</section>
@@ -519,7 +485,7 @@ table.table .avatar {
 									</label>
 									<div class="input-group" style="width: 100%;">
 										<select name="acad_year" id="studacad_year" class="form-control">
-											<!-- <option>Select Acad Year</option> -->
+											<option>Select Acad Year</option>
 										</select>
 									</div>
 								</div>
@@ -529,8 +495,8 @@ table.table .avatar {
 										class="text-danger" style="color:red">*</span>
 									</label>
 									<div class="input-group" style="width: 100%;">
-										<select name="division" id="studdivision" class="form-control" placeholder="Select Division">
-											<!-- <option value="null">Select Division</option> -->
+										<select name="division" id="studdivision" class="form-control">
+											<option value="null">Select Division</option>
 										</select>
 									</div>
 								</div>
@@ -594,13 +560,5 @@ table.table .avatar {
 					<!-- col-md-12 div -->
 			<!-- section role-main -->
 		</div>
-		<!-- table wrapper div close -->
-	<!--        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>-->
-	<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
-	
-	<!-- <script type="text/javascript" src="javascript/bootstrap.min.js"></script> -->
 </body>
 </html>

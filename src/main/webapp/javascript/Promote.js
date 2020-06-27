@@ -1,10 +1,11 @@
 var ids=new Array();
 $(document).ready(function() {
-	
-	
-	
+	validateLogin();
+	getAcademicYear();
+	getAllStandard();
+	getAllDivision();
+	getFeesPackage();
 	$('form[id="getPromoteData"]').validate({
-		
 		
 		  rules: {
 		    
@@ -26,29 +27,22 @@ $(document).ready(function() {
 			 multi_status_select: {
 				required:'Please select status',		
 			},
-			
-			
-		
+				
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-			 
-			  
+			  getPromoteData();
 		  }
 	});
 	
 	
-	getAcademicYear();
-	getAllStandard();
-	getAllDivision();
-	getFeesPackage();
+
 	$('#multi_status_select').multiselect({
 		includeSelectAllOption : true,
 		enableFiltering : true
 	});
-	$("#btnDisplay").click(function(){
-		getPromoteData();
-	});
+/*	$("#btnDisplay").click(function(){
+	});*/
 	$("#promote_student").click(function(){
 		$("input:checkbox[name=type]:checked").each(function() {
 			ids.push($(this).val())
@@ -129,7 +123,9 @@ function getPromoteData() {
 function promoteStudent(id){
 	alert(id);
 	function callback(responseData, textStatus, request) {
-		var table = $('#promotion_table').DataTable();
+		var mes = responseData.message;
+		  showNotification("success", mes);
+		/*var table = $('#promotion_table').DataTable();
 		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
@@ -140,22 +136,19 @@ function promoteStudent(id){
 			var acad_year = responseData[i].acad_year;
 			table.row.add([ id, stud_name, standard, division, acad_year ]).draw();
 			document.getElementById("promotion").style.display="block";
-		}
+		}*/
 	}
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var mes = responseData.responseJSON.message;
-		 * showNotification("error", mes);
-		 */
-		// var message=responseData.response.JSON.message;
-		// alert(message);
+		
+		  var mes = responseData.responseJSON.message;
+		  showNotification("error", mes);
 	}
 	var formData = $("#PromoteDataForm").serialize()+"&id="+id+"&user="+user+
 	"&branch="+branchSession;
 	alert(formData);
 	var httpMethod = "POST";
 	var relativeUrl = "/Admission/StudentPromotion";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }

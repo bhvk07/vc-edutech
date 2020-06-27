@@ -218,22 +218,24 @@ public class AdmissionDAO {
 				admission.setEmail(rs.getString(17));
 				admission.setW_app_no(rs.getString(18));
 				admission.setEnq_taken_by(rs.getString(19));
-				admission.setAdm_fees_pack(rs.getString(20));
-				admission.setStatus(rs.getString(21));
-				admission.setDate(rs.getString(22));
-				admission.setRollno(rs.getString(23));
-				admission.setRegno(rs.getString(24));
-				admission.setInvoice_no(rs.getString(25));
-				admission.setStandard(rs.getString(26));
-				admission.setDivision(rs.getString(27));
-				admission.setAdmission_date(rs.getString(28));
-				admission.setAcad_year(rs.getString(29));
-				admission.setJoin_date(rs.getString(30));
-				admission.setFees(rs.getLong(31));
-				admission.setFeesDetails(rs.getString(32));
-				admission.setDisccount(rs.getLong(33));
-				admission.setPaid_fees(rs.getLong(34));
-				admission.setRemain_fees(rs.getLong(35));
+				admission.setEnq_no(rs.getLong(20));
+				admission.setAdm_fees_pack(rs.getString(21));
+				admission.setStatus(rs.getString(22));
+				admission.setDate(rs.getString(23));
+				admission.setRollno(rs.getString(24));
+				admission.setRegno(rs.getString(25));
+				admission.setInvoice_no(rs.getString(26));
+				admission.setStandard(rs.getString(27));
+				admission.setDivision(rs.getString(28));
+				admission.setAdmission_date(rs.getString(29));
+				admission.setAcad_year(rs.getString(30));
+				admission.setJoin_date(rs.getString(31));
+				admission.setFees(rs.getLong(32));
+				admission.setFeesDetails(rs.getString(33));
+				admission.setDisccount(rs.getLong(34));
+				admission.setPaid_fees(rs.getLong(35));
+				admission.setRemain_fees(rs.getLong(36));
+				admission.setBranch(rs.getString(38));
 			}
 			
 		}catch (Exception e) {
@@ -246,16 +248,17 @@ public class AdmissionDAO {
 		return admission;
 	}
 
-	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
+	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain,String branch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
 			con=Util.getDBConnection();
-			String query="update admission set paid_fees=? , remain_fees=? where Rollno=?";
+			String query="update admission set paid_fees=? , remain_fees=? where Rollno=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setLong(1, fees_paid);
 			ps.setLong(2, fees_remain);
 			ps.setString(3, rollno);
+			ps.setString(4, branch);
 			ps.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -302,10 +305,11 @@ public class AdmissionDAO {
 		ResultSet rs=null;
 		ArrayList<Admission> admissionList=new ArrayList<>();
 		Admission ad=new Admission();
-		
+		boolean installment_status=false;
 		try {
 			con=Util.getDBConnection();
-			String query="select `id`,`student_name`,`fname`,`lname`,`standard`,`division`,`acad_year` from admission where "
+			String query="select `id`,`student_name`,`fname`,`lname`,`standard`,`division`,`acad_year`,`Rollno`,`branch` "
+					+ "from admission where "
 					+ "acad_year=? and standard=? and division=? and status=? and branch=?";
 			ps=con.prepareStatement(query);
 			ps.setString(1,admission.getAcad_year());
@@ -324,7 +328,12 @@ public class AdmissionDAO {
 				ad.setStandard(rs.getString(5));
 				ad.setDivision(rs.getString(6));
 				ad.setAcad_year(rs.getString(7));
+				ad.setRollno(rs.getString(8));
+				ad.setBranch(rs.getString(9));
+				installment_status=CheckInstallmentRemain(ad.getRollno(),ad.getBranch());
+				if(installment_status!=true){
 				admissionList.add(ad);
+				}
 			}
 			
 		}catch (Exception e) {
@@ -335,6 +344,34 @@ public class AdmissionDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return admissionList;
+	}
+
+	private boolean CheckInstallmentRemain(String rollno, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		boolean install_status=false;
+		
+		try {
+			con=Util.getDBConnection();
+			String query="select * from installment where rollno=? and paid_status='0' and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1,rollno);
+			ps.setString(2,branch);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				install_status=true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return install_status;
+
 	}
 
 	public Installment getInstallment(String rollno, String branch) {
@@ -422,6 +459,25 @@ public class AdmissionDAO {
 		}
 		return admissionReportData;
 
+	}
+
+	public void updateOldAdmissionStatus(String id, String branch) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update admission set status='close' where id=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, id);
+			ps.setString(2, branch);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
 	}
 		
 }

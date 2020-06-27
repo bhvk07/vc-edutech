@@ -1,7 +1,6 @@
 package org.VCERP.Education.VC.resource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
@@ -27,7 +26,6 @@ import org.VCERP.Education.VC.model.Admission;
 import org.VCERP.Education.VC.model.Enquiry;
 import org.VCERP.Education.VC.model.FeesPackage;
 import org.VCERP.Education.VC.model.Installment;
-import org.VCERP.Education.VC.model.ReceiptDetails;
 import org.VCERP.Education.VC.utility.Util;
 
 @Path("Admission")
@@ -36,7 +34,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@POST
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/StudentAdmission")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response StudentAdmission(@FormParam("stud_details") String student_name,
@@ -162,7 +160,7 @@ public class AdmissionResource {
 
 	@Path("/SearchStudent")
 	@GET
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchStudent(@QueryParam("id") String enq_stud, @QueryParam("branch") String branch) {
@@ -186,7 +184,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/FetchAllAdmittedStudent")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response fetchAllAdmittedStudent(@QueryParam("branch") String branch) {
@@ -206,7 +204,7 @@ public class AdmissionResource {
 
 	@PermitAll
 	@GET
-	//@JWTTokenNeeded
+	@JWTTokenNeeded
 	@Path("/getAutoIncrementedDetails")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAutoIncrementedDetails(@QueryParam("branch") String branch) {
@@ -225,6 +223,7 @@ public class AdmissionResource {
 
 	@Path("/getPromotionData")
 	@POST
+	@JWTTokenNeeded
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response getPromotionData(@FormParam("acad_year") String acad_year, @FormParam("standard") String standard,
@@ -248,35 +247,47 @@ public class AdmissionResource {
 	@Path("/StudentPromotion")
 	@POST
 	@PermitAll
+	@JWTTokenNeeded
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response StudentPromotion(@FormParam("fees") String fees, @FormParam("student_status") String status,
 			@FormParam("acad_year") String acad_year, @FormParam("division") String division,
 			@FormParam("admission_date") String admission_date, @FormParam("id") String id,
 			@FormParam("user") String enq_taken, @FormParam("branch") String branch) {
 		Admission enq = new Admission();
+		AdmissionController admController=new AdmissionController();
+		AdmissionDAO dao = new AdmissionDAO();
+		
 		AcademicYear year = new AcademicYear();
 		AcademicYearController yearController = new AcademicYearController();
-		AdmissionDAO dao = new AdmissionDAO();
+		
 		FeesPackage pack = new FeesPackage();
 		FeesPackageController controller = new FeesPackageController();
+		try {
+			
 		String[] commaSeperatedId = Util.commaSeperatedString(id);
 		for (int i = 0; i < commaSeperatedId.length; i++) {
 			String[] symbolSeperatedFees = Util.symbolSeperatedString(fees);
 			pack = controller.getFeesPackage(symbolSeperatedFees[0], branch);
 			String feesdetails = pack.getFees_details();
 			enq = dao.searchStudentFromAdmission(commaSeperatedId[i], branch);
+			
 			String personalDetails = enq.getFname() + ":" + enq.getLname() + ":" + enq.getMname() + ":" + enq.getUid()
 					+ ":" + enq.getDob() + ":" + enq.getGender() + ":" + enq.getCaste() + ":" + enq.getCategory() + ":"
 					+ enq.getLanguage() + ":" + enq.getFather_cont() + ":" + enq.getMother_cont() + ":"
 					+ enq.getAddress() + ":" + enq.getPin() + ":" + enq.getEmail() + ":" + enq.getW_app_no() + ":"
-					+ enq.getStudent_name() + ":" + enq.getContact();
+					+ enq.getStudent_name() + ":" + enq.getContact()+ ":" + enq.getBranch()+ ":" + enq.getEnq_no();
+			
 			String stud_details = enq.getId() + "|" + enq.getStudent_name() + " " + enq.getFname() + " "
 					+ enq.getLname() + "|" + enq.getContact() + "|" + enq.getStatus();
+			
 			year = yearController.getCurrentAcademicYear(branch);
 			String studId = year.getId_prefix() + "-" + year.getId_no();
 			String regno = year.getReg_prefix() + "-" + year.getRegistration();
 			String invoice = year.getInvoice_prefix() + "-" + year.getInvoice();
 			yearController.updateAcademicDetails(studId, invoice, regno, acad_year, branch);
+			
+			admController.updateOldAdmissionStatus(commaSeperatedId[i],branch);
+			
 			String installment = "installment details";
 			int disc = 0;
 			String[] commaSeperatedFeesDetails = Util.commaSeperatedString(feesdetails);
@@ -285,9 +296,13 @@ public class AdmissionResource {
 				disc = disc + Integer.parseInt(getdiscount[2]);
 			}
 			String newamt = disc + "|" + symbolSeperatedFees[1];
-			/*StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice,
-					admission_date, acad_year, admission_date, personalDetails, feesdetails, installment, newamt,
-					branch);*/
+			
+			StudentAdmission(stud_details, enq_taken, fees, division, status, admission_date, studId, regno, invoice,
+					admission_date, acad_year, admission_date, personalDetails, feesdetails, installment, newamt);
+			}
+			return Util.generateResponse(Status.ACCEPTED, "Student Successfully Promoted.").build();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}

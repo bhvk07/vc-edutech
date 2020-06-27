@@ -139,7 +139,7 @@ public class ReceiptDetailsResource {
 			long fees_remain=details.getTotal_amt()-fees_paid;
 			
 			adcontroller=new AdmissionController();
-			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain);
+			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain,branch);
 			
 			controller.updateInstallment(stud_details[0],due_date,branch,received_amt,due_amt);
 			

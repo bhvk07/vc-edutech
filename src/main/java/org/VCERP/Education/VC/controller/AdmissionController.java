@@ -25,9 +25,9 @@ public class AdmissionController {
 		return dao.searchStudent(enq_stud,branch);
 		
 	}
-	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain) {
+	public void updateTotalFeesPaid(String rollno, long fees_paid, long fees_remain, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
-		dao.updateTotalFeesPaid(rollno,fees_paid,fees_remain);
+		dao.updateTotalFeesPaid(rollno,fees_paid,fees_remain,branch);
 	}
 	public Installment saveInstallment(Installment installment, String branch) {
 		AdmissionDAO dao=new AdmissionDAO();
@@ -49,5 +49,9 @@ public class AdmissionController {
 	public ArrayList<Admission> AdmissionReport(Admission admission, ArrayList<Admission> admissionReportData) {
 		AdmissionDAO dao=new AdmissionDAO();
 		return dao.AdmissionReport(admission,admissionReportData);
+	}
+	public void updateOldAdmissionStatus(String id, String branch) {
+		AdmissionDAO dao=new AdmissionDAO();
+		dao.updateOldAdmissionStatus(id,branch);
 	}
 }
