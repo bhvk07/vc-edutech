@@ -4,14 +4,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Masters</title>
+<title>Branch</title>
 
 <script src="jquery/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">                  
 
- <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
@@ -22,10 +21,12 @@
 
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/branch.js"></script>
+<script type="text/javascript" src="javascript/ButtonHideDisplay.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/noty.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css" />
 
 <style type="text/css">
 body {
@@ -170,14 +171,6 @@ table.table .avatar {
 	color: #666;
 }
 
-.pagination li.active a, .pagination li.active a.page-link {
-	background: #03A9F4;
-}
-
-.pagination li.active a:hover {
-	background: #0397d6;
-}
-
 .pagination li.disabled i {
 	color: #ccc;
 }
@@ -233,11 +226,6 @@ table.table .avatar {
 	transform: inherit;
 	z-index: 3;
 	transform: rotateZ(45deg);
-}
-
-.custom-checkbox input[type="checkbox"]:checked+label:before {
-	border-color: #03A9F4;
-	background: #03A9F4;
 }
 
 .custom-checkbox input[type="checkbox"]:checked+label:after {
@@ -335,24 +323,11 @@ table.table .avatar {
 						</h2>
 					</div>
 					<div class="col-sm-6">
-
-<!-- 						<button type="button" id="btnMarkDelete" onclick="DeleteData();"
-							data-style="zoom-out" title=""
-							class="btn btn-danger popconfirm  margin-right-sm ladda-button"
-							data-original-title="Delete This Fees Type">
-							<b><i class=" padding-right-sm fs14"></i></b><span
-								class="label-xs hidden-xs hidden-sm p5">edit</span>
-						</button> -->
-
-
-
-						<a href="" class="btn btn-success" id="edit"><i class="material-icons">&#xE147;</i> <span>Edit</span></a>
-						<a href="#branchModal" data-toggle="modal"
-							data-target="#branchModal" class="btn btn-success"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a>
-							 <!-- <a href="#deleteEmployeeModal" class="btn btn-danger"
-							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-							<span>Delete</span></a> -->
+						<a href="#branchModal" data-toggle="modal" data-target="#branchModal" class="btn btn-success" id="addBtn"> 
+						<i class="fa fa-plus"></i> <span>Add New</span></a> 
+						<a href="" data-toggle="modal" class="btn btn-warning" id="editBtn">
+						<i class="fa fa-plus"></i> <span>Edit</span></a>
+						<a href="" class="btn btn-danger" id="deleteBtn"  data-toggle="modal"><i class="fa fa-minus"></i> <span>Delete</span></a>
 					</div>
 				</div>
 			</div>
@@ -360,58 +335,27 @@ table.table .avatar {
 				<div class="col-md-12">
 					<!-- Advanced Tables -->
 					<div class="panel panel-default">
-						<!-- <div class="panel-heading">Advanced Tables</div> -->
 						<div class="panel-body">
 							<div class="table-responsive">
-								<table class="table table-striped table-bordered table-hover"
+								<table class="table table-striped table-bordered table-hover TableClass"
 									id="branchtable">
 									<thead>
 										<tr>
 											<th>CREATED DATE</th>
 											<th>BRANCH NAME</th>
-											<th>BRANCH CODE</th>
-											<!-- <th>SMS BALANCE</th>
-											<th>EMAIL BALANCE</th> -->
-											
+											<th>BRANCH CODE</th>											
 											<th class="no-sort"><span class="custom-checkbox">
-													<input type="checkbox" id="selectAll" name="options[]"
-													value="0"> <label for="checkbox1"></label>
+											<input type="checkbox" id="selectAll" name="options[]" value="0"> 
+											<label for="checkbox1"></label>
 											</span></th>
 										</tr>
 									</thead>
 								</table>
 							</div>
-
 						</div>
-						<!-- </div> -->
-						<!--End Advanced Tables -->
 					</div>
 				</div> 
-
 			</div>
-
-
-
-<!-- 
-			--code for selecting all check boxes--
-			<script type="text/javascript">
-				$('#selectall').click(
-						function(event) { //on click
-
-							var checkboxes = $(this).closest('#FeesTypeList')
-									.find(':checkbox');
-							if ($(this).is(':checked')) {
-								checkboxes.prop('checked', true);
-								CheckSelection();
-
-							} else {
-								checkboxes.prop('checked', false);
-								CheckSelection();
-							}
-						});
-			</script> -->
-
-
 		</div>
 	</div>
 
@@ -420,27 +364,24 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form id="branchForm" method="post">
-					<div class="modal-header"
-						style="background-color: #53b700; color: aliceblue">
+					<div class="modal-header headerClass">
 						<h4 class="modal-title">Branch</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Branch Name<font color="red">*</font></label>
 							<input type="text" class="form-control" id="branch_name" name="branch_name"required>
 						</div>
-
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Institute Type<font color="red">*</font></label>
 							<select name="instituteType" id="instituteType" class="form-control" required>
 							 <option value="Computer / Dance/ Music Training Institute">Computer / Dance/ Music Training Institute</option>
-							 <option value="Coaching / Tution Classes">Coaching / Tution Classes</option>
+							 <option value="Coaching / Tution Classes">Coaching / Tuition Classes</option>
 							 <option value="School Colleges">School Colleges</option>
-							 <option value="Preschool">Preschool</option>
+							 <option value="Preschool">Pre-school</option>
 							 </select>
 						</div>
 
@@ -454,17 +395,15 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Sub title(To be displayed on receipt and invice header)<font color="red">*</font></label>
+							<label>Sub title(To be displayed on receipt and invoice header)<font color="red">*</font></label>
 							<input type="text" class="form-control" id="subTitle" name="subTitle"required>
 						</div>
-
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Branch Code<font color="red">*</font></label>
 							<input type="text" class="form-control" id="branchCode" name="branchCode"required>
 						</div>
-
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
@@ -487,35 +426,13 @@ table.table .avatar {
 						</div>
 
 					</div>
-<!-- 					<div class="modal-body">
-						<div class="form-group">
-							<label>Country<font color="red">*</font></label>
-							<input type="text" class="form-control" id="country" name="country"required>
-						</div>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>State<font color="red">*</font></label>
-							<input type="text" class="form-control" id="state" name="state"required>
-						</div>
-
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Distinct<font color="red">*</font></label>
-							<input type="text" class="form-control" id="distinct" name="distinct"required>
-						</div>
-					</div> -->
 					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							id="cancel" value="Cancel"> 
-							<input type="submit" class="btn btn-success" value="Save"
-							style="background-color: #53b700; color: aliceblue">
+						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancelBtn" value="Cancel"> 
+							<input type="submit" class="btn btn-success" value="Save" id="saveBtn">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
