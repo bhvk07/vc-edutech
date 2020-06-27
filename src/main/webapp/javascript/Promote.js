@@ -104,6 +104,7 @@ function getPromoteData() {
 			var acad_year = responseData[i].acad_year;
 			table.row.add([ id, stud_name, standard, division, acad_year ]).draw();
 			document.getElementById("promotion").style.display="block";
+			CurrentAcadYear();
 		}
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -125,18 +126,6 @@ function promoteStudent(id){
 	function callback(responseData, textStatus, request) {
 		var mes = responseData.message;
 		  showNotification("success", mes);
-		/*var table = $('#promotion_table').DataTable();
-		var value = 0;
-		table.rows().remove().draw();
-		for ( var i in responseData) {
-			var id = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'+responseData[i].id+'"><label for="checkbox1"></label></span>';
-			var stud_name = responseData[i].student_name+" "+responseData[i].fname+" "+responseData[i].lname;
-			var standard = responseData[i].standard;
-			var division = responseData[i].division;
-			var acad_year = responseData[i].acad_year;
-			table.row.add([ id, stud_name, standard, division, acad_year ]).draw();
-			document.getElementById("promotion").style.display="block";
-		}*/
 	}
 	function errorCallback(responseData, textStatus, request) {
 		
@@ -149,6 +138,21 @@ function promoteStudent(id){
 	var httpMethod = "POST";
 	var relativeUrl = "/Admission/StudentPromotion";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+function CurrentAcadYear(){
+	function callback(responseData, textStatus, request) {
+		$("#studacad_year").val(responseData.aca_year);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		
+		  var mes = responseData.responseJSON.message;
+		  showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/AcademicYear/CurrenetAcadYear?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
 	return false;
 }

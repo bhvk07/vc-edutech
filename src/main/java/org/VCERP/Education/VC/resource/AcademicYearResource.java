@@ -152,5 +152,25 @@ public class AcademicYearResource{
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Unable to complete task.").build();
 	}
+	@GET
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/CurrenetAcadYear")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response CurrenetAcadYear(@QueryParam("branch") String branch){
+		AcademicYearController controller = null;
+		AcademicYear acad_year=new AcademicYear();
+		try{
+			controller = new AcademicYearController();
+			acad_year=controller.getCurrentAcademicYear(branch);
+			if(acad_year!=null){
+			return Response.status(Status.ACCEPTED).entity(acad_year).build();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.NOT_FOUND, "Academic Year Not Found.").build();
+	}
 
 }
