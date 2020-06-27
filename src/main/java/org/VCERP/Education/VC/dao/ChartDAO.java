@@ -169,4 +169,34 @@ public class ChartDAO {
 		}
 		return conv_chart;
 	}
+	
+	
+	
+	public ArrayList<Chart> getSalesCard() {
+		Connection con=null;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		ArrayList<Chart> chartData=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="SELECT SUM(fees) FROM `admission` WHERE branch=?";
+			//st.setString(1, );
+			st=con.prepareStatement(query);
+			rs=st.executeQuery();
+			while(rs.next())
+			{
+				Chart chart=new Chart();
+				chart.setDate(rs.getString(1));
+				chart.setPayment(rs.getString(2));
+				chartData.add(chart);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, st, con);
+		}
+		return chartData;
+	}
 }

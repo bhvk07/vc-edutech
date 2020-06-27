@@ -13,14 +13,46 @@ var dates;
 var splitted_start_date;
 var splitted_end_date;
 $(document).ready(function(){
+	 var start = moment().startOf('month');
+	    var end = moment().endOf('month');
+
+	    function cb(start, end) {
+	        $('#e2').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+	    }
+	    $('#e2').daterangepicker({
+	        startDate: start,
+	        endDate: end,
+	        ranges: {
+	           'Today': [moment(), moment()],
+	           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+	           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+	           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+	           'This Month': [moment().startOf('month'), moment().endOf('month')],
+	           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	        }
+	    }, cb);
+
+	    cb(start, end);
+
 	
-	$("#e2").daterangepicker({
+/*	$("#e2").daterangepicker({
 	     datepickerOptions : {
 	         numberOfMonths : 2
-	     }
-	 });
+	     },
+	     
+	    
+	     presetRanges: [{
+	         text: 'Today',
+	         dateStart: function() { return moment() },
+	         dateEnd: function() { return moment() }
+	     }]
+	    
+	 });*/
+	//getSalesCard();
+	
 	$('#e2').on('change', function()
 	{ 
+		alert("hie");
 		expDate = new Array();
 		exp_amt = new Array(); 
 		rec_date = new Array();
@@ -30,7 +62,7 @@ $(document).ready(function(){
 		
 		
 		var d_val = $(this).val().split(',');
-		//alert("date="+d_val);
+		alert("date="+d_val);
 		
 				const search = '"';
 				const replaceWith = '';
@@ -448,6 +480,39 @@ Highcharts.chart('container', {
 
 });
 }
+
+
+
+/*	Cards DATA */
+
+function getSalesCard(){
+	function callback(responseData, textStatus, request){
+		
+		alert("len"+responseData.length);
+		for ( var i in responseData) {
+			
+			alert("percentage = "+responseData[i].conv_percent);
+			conversion = parseInt(responseData[i].conv_percent);
+			alert("succ"+ typeof(conversion));
+			
+			
+		}
+		
+		
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/chart/getSalesCard?branch="+branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+
+/* END CARDS */
+
 
 /*function Expense_chart(){
 Highcharts.chart('Exp_chart', {

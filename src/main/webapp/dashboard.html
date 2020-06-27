@@ -42,10 +42,15 @@ Website: http://www.webthemez.com/
 <!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"> -->
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
 
-<script src="assets/js/jquery.comiseo.daterangepicker.js"></script>
+<script src="assets/js/jquery.comiseo.daterangepicker.js"></script> -->
 <!--  <script src="javascript/admission-list.js"></script>  -->
 
 <script src="javascript/Helper.js"></script>
@@ -238,8 +243,15 @@ Website: http://www.webthemez.com/
 						 <div class="input-group">
 						    <span class="input-group-addon" style="border-radius:0 !important"><i class="fa fa-calendar"></i></span>
 						     <input id="e2" name="e2" class="form-control" type="text" style="border-radius:0 !important">
-						  </div>
-						 
+						  </div> 
+						<!--   <div id="dtrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+    						<i class="fa fa-calendar"></i>&nbsp;
+    						<input id="e2" name="e2" type="text">
+    						<input id="e2" name="e2" class="form-control" type="text">
+    						 <span id="check"></span>
+    						<i class="fa fa-caret-down"></i>
+						</div>
+						  -->
 					</div>
 					
 					
@@ -281,7 +293,7 @@ Website: http://www.webthemez.com/
 							<div class="panel panel-primary">
 								<div class="number">
 									<h3>
-										<h3>44,023</h3>
+										<h3 id="sales_card"></h3>
 										<small>Sales</small>
 									</h3>
 								</div>

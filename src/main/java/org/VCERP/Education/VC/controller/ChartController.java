@@ -30,5 +30,10 @@ public class ChartController {
 		return dao.getConversionData(ch, conv_chart);
 	}
 	
+	
+	public ArrayList<Chart> getSalesCard() {
+		ChartDAO dao=new ChartDAO();
+		return dao.getSalesCard();
+	}
 
 }

@@ -4,6 +4,7 @@ package org.VCERP.Education.VC.resource;
 import java.util.ArrayList;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -115,6 +116,7 @@ return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 @POST
 @PermitAll
 //@JWTTokenNeeded
+@RolesAllowed("VIEW_ADMISSION_CHART")
 @Path("/getAdmissionChart")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.APPLICATION_JSON)
@@ -178,6 +180,23 @@ catch(Exception e){
 }
 return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 }
+
+@GET
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getSalesCard")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getSalesCard(){
+		ChartController controller=new ChartController();
+		ArrayList<Chart> sales_card=new ArrayList<>();
+		sales_card=controller.getSalesCard();
+		if(sales_card==null)
+		{
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
+		}
+		return Response.status(Status.ACCEPTED).entity(sales_card).build();
+}
+
 
 
 }
