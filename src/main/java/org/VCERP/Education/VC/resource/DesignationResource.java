@@ -17,10 +17,12 @@ import javax.ws.rs.core.Response.Status;
 
 import org.VCERP.Education.VC.controller.CasteController;
 import org.VCERP.Education.VC.controller.EmployeeController;
+import org.VCERP.Education.VC.controller.FeesTypeController;
 import org.VCERP.Education.VC.controller.SubjectController;
 import org.VCERP.Education.VC.controller.DesignationController;
 import org.VCERP.Education.VC.interfaces.JWTTokenNeeded;
 import org.VCERP.Education.VC.model.Employee;
+import org.VCERP.Education.VC.model.FeesType;
 import org.VCERP.Education.VC.model.Subject;
 import org.VCERP.Education.VC.model.Designation;
 import org.VCERP.Education.VC.utility.Util;
@@ -70,6 +72,46 @@ public class DesignationResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND,"Data Not Found.").build();
 	}
+	@POST
+	@PermitAll
+	@JWTTokenNeeded
+	@Path("/EditDesignation")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditDesignation(@FormParam("designation_name") String designation_name,
+			@FormParam("id") long id,@FormParam("branch") String branch)
+	{
+		Designation des=new Designation();
+		des.setDesg(designation_name);
+		des.setId(id);
+		des.setBranch(branch);
+		DesignationController controller=new DesignationController();
+		try{
+		controller.EditDesignation(des);
+		return Util.generateResponse(Status.ACCEPTED, "Designation Successfully Updated.").build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
+	}
+	@DELETE
+	@Path("/deleteDesignation")
+	@PermitAll
+	@JWTTokenNeeded
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteDesignation(@QueryParam("id") String id)
+	{
+		DesignationController controller=new DesignationController();
+		try{
+		controller.deleteDesignation(id);
+		return Util.generateResponse(Status.ACCEPTED, "Designation Successfully Deleted.").build();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to complete task.").build();
+	}
+	
 }
 
 

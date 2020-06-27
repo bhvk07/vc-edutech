@@ -6,6 +6,7 @@ $(document).ready(function() {
 	fetchAllBranch();
 	fetchAllRole();
 	FetchAllEmployee();
+	getDesignation();
 	EmployeeList();
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z]+$/i.test(value);
@@ -135,7 +136,7 @@ $(document).ready(function() {
 			$("#selectAll").prop("checked", false);
 		}
 	});
-	$("#edit").click(function(e) {
+	$("#editBtn").click(function(e) {
 		event.preventDefault();
 		$("table .cbCheck").each(function(i, chk) {
 			if (chk.checked) {
@@ -145,7 +146,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#deactivate").click(function(e) {
+	$("#deletBtn").click(function(e) {
 		event.preventDefault();
 		$("table .cbCheck").each(function(i, chk) {
 			if (chk.checked) {

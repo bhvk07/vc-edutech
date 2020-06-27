@@ -18,12 +18,15 @@ public class DesignationController {
 	  return dao.FetchAllDesignation(branch); 
 	  }
 	 
-
-	/*
-	 * public void EditSubject(Subject sub) { SubjectDAO dao=new SubjectDAO();
-	 * dao.EditSubject(sub); }
-	 * 
-	 * public void deleteSubject(String id) { SubjectDAO dao=new SubjectDAO();
-	 * dao.deleteSubject(id); }
-	 */
+	  public void EditDesignation(Designation des)
+	  { 
+		 DesignationDAO dao=new DesignationDAO();
+	  dao.EditDesignation(des); 
+	  }
+	  	     
+	  public void deleteDesignation(String id) {
+		  DesignationDAO dao=new DesignationDAO();
+	  dao.deleteDesignation(id);
+	  }
+	 
 }

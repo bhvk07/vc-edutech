@@ -1,11 +1,12 @@
 $(document).ready(function() {
-	/*
+	
 	validateLogin();
 	checkUserLevel();
 	fetchAllBranch();
 	fetchAllRole();
 	FetchAllEmployee();
-	EmployeeList();*/
+	getDesignation();
+	EmployeeList();
 	jQuery.validator.addMethod("letterswithspace", function(value, element) {
 	    return this.optional(element) || /^[a-z\s]+$/i.test(value);
 	}, "Please enter letters only");

@@ -63,4 +63,44 @@ public class DesignationDAO{
 		}
 		return des_list;
 	}
+	
+	public void EditDesignation(Designation des) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try{
+		con=Util.getDBConnection();
+		String query="update designation set desg=? where id=? and branch=?";
+		ps=con.prepareStatement(query);
+		ps.setString(1, des.getDesg());
+		ps.setLong(2, des.getId());
+		ps.setString(3, des.getBranch());
+		ps.executeUpdate();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	}
+	
+	public void deleteDesignation(String id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String[] commaSeperated=Util.commaSeperatedString(id);
+				
+		try {
+			con = Util.getDBConnection();
+			for(int i=0;i<commaSeperated.length;i++){
+			String query = "delete from designation where id=?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, commaSeperated[i]);
+			ps.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
+
