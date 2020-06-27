@@ -2,7 +2,7 @@
  * 
  */
 var host="http://localhost";
-var port="8080";
+var port="10080";
 
 var branchSession=sessionStorage.getItem("branch");
 var user=sessionStorage.getItem("user");
@@ -286,3 +286,32 @@ function getCaste() {
 			errorCallback);
 	return false;
 }
+
+function getDesignation(){
+	function callback(responseData, textStatus, request){
+		
+		for ( var i in responseData) {
+			
+			var htmlCode = '<option value="' + responseData[i].desg + '" >'
+			+ responseData[i].desg + '</option>';
+	$('.designation').append(htmlCode);
+			
+		}
+		
+	}
+	
+
+	function errorCallback(responseData, textStatus, request){
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		
+	}
+	
+	var httpMethod = "GET";
+	//var formData = ''
+	var relativeUrl = "/Designation/FetchAllDesignation?branch="+branchSession;
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
+			errorCallback);
+	return false;
+}
+
