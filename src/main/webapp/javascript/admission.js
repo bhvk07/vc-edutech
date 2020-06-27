@@ -6,7 +6,7 @@ var today = new Date();
 var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-0'
 		+ today.getDate();
 var admitted_fees_pack;
-
+var request;
 $(document)
 		.ready(
 				function() {
@@ -24,281 +24,89 @@ $(document)
 					$("#current_date").val(date);
 					$(".branch").val(branchSession);
 
-/*					jQuery.validator.addMethod("lettersonly", function(value,
-							element) {
-						return this.optional(element)
-								|| /^[a-z\s]+$/i.test(value);
-					}, "Only alphabetical characters");
-					jQuery.validator.addMethod("noSpace", function(value,
-							element) {
-						return value.indexOf(" ") < 0 && value != "";
-					}, "No space please and don't leave it empty");
-					jQuery.validator.addMethod("futureDate", function(value,
-							element) {
-						var now = new Date();
-						now.setHours(0, 0, 0, 0);
-						var myDate = new Date(value);
-						return this.optional(element) || myDate < now;
-					});
-					$('form[id="admission-form"]').validate({
-						rules : {
-							enq_stud : {
-								required : true
-							// lettersonly:true
-							},
-							enq_taken : {
-								required : true,
-								noSpace : true
-							},
-							stud_details : {
-								required : true,
-								noSpace : true
-							},
-							fees : {
-								required : true
-							},
-							ID_no : {
-								required : true,
-								noSpace : true,
-							// lettersonly:true
-							},
-							reg_no : {
-								required : true,
-								// number:true,
-								noSpace : true
-							},
-							invoice_no : {
-								required : true,
-								// number:true,
-								noSpace : true
-							},
-							admission_date : {
-								futureDate : true,
-								date : true,
-								required : true
-							},
-							join_date : {
-								futureDate : true,
-								date : true,
-								required : true
-							},
-							amount : {
-								required : true,
-								number : true,
-								noSpace : true
-							},
-							discount : {
-								// required:true,
-								number : true,
-								noSpace : true
-							},
-							tax : {
-								// required:true,
-								number : true,
-								noSpace : true
-							},
-
-						},
-						messages : {
-							admission_date : {
-								futureDate : 'future date not allowed'
-							},
-						},
-						submitHandler : function(form) {
-							event.preventDefault();
-
-						}
-					});
-					// addstud validation
-					$('form[id="EnquiryForm"]').validate({
-						rules : {
-							sname : {
-								required : true,
-								lettersonly : true,
-								noSpace : true
-							},
-							lname : {
-								required : true,
-								lettersonly : true,
-								noSpace : true
-
-							},
-							fname : {
-								required : true,
-								lettersonly : true,
-								noSpace : true
-							},
-							mname : {
-								required : true,
-								lettersonly : true,
-								noSpace : true
-							},
-							uid : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-							},
-							dob : {
-								required : true,
-								date : true,
-								futureDate : true
-							},
-							stud_cont : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-								noSpace : true
-							},
-							father_cont : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-								noSpace : true
-							},
-							mother_cont : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-								noSpace : true
-							},
-							addr : {
-								required : true
-							},
-							pin : {
-								required : true,
-								digits : true,
-								minlength : 4,
-								maxlength : 12,
-							},
-							email : {
-								required : true,
-								email : true
-							},
-							w_app_no : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-								noSpace : true
-							},
-						},
-						messages : {
-							dob : {
-								futureDate : 'future date not allowed'
-							},
-						},
-
-						submitHandler : function(form) {
-							event.preventDefault();
-
-						}
-					});
-					// add_employee validation
-					$('form[id="addEmployee"]').validate({
-						rules : {
-							emp_name : {
-								required : true,
-								lettersonly : true,
-								noSpace : true
-							},
-							emp_unq_code : {
-								required : true,
-								digits : true
-							},
-							email : {
-								required : true,
-								email : true
-							},
-							address : {
-								required : true
-							},
-							contact : {
-								required : true,
-								digits : true,
-								minlength : 10,
-								maxlength : 10,
-								noSpace : true
-							},
-							dob : {
-								required : true,
-								date : true,
-								futureDate : true
-							},
-							join_date : {
-								required : true,
-								date : true
-							},
-							design : {
-								required : true
-							},
-						},
-						messages : {
-							dob : {
-								futureDate : 'future date not allowed'
-							},
-						},
-						submitHandler : function(form) {
-							event.preventDefault();
-
-						}
-					});
-					// feespackage validation
-					$('form[id="feespackage-modal-form"]').validate({
-						rules : {
-							fees_pack : {
-								required : true
-							},
-							searchforstand1 : {
-								required : true
-							},
-							searchforstand2 : {
-								required : true
-							},
-							feestype : {
-								required : true
-							},
-							amount : {
-								required : true,
-								number : true,
-								noSpace : true
-							},
-							discount : {
-								required : true,
-								number : true,
-								noSpace : true
-							},
-							tax : {
-								required : true,
-								noSpace : true
-							},
-						},
-
-						submitHandler : function(form) {
-							event.preventDefault();
-
-						}
-					});
-					// feestype validation
-					$('form[id="feestypeform"]').validate({
-						rules : {
-
-							feesTypeModal : {
-								required : true,
-								letterswithspace : true
-							},
-
-						},
-
-						submitHandler : function(form) {
-							event.preventDefault();
-
-						}
-					});
-*/
+					/*
+					 * jQuery.validator.addMethod("lettersonly", function(value,
+					 * element) { return this.optional(element) ||
+					 * /^[a-z\s]+$/i.test(value); }, "Only alphabetical
+					 * characters"); jQuery.validator.addMethod("noSpace",
+					 * function(value, element) { return value.indexOf(" ") < 0 &&
+					 * value != ""; }, "No space please and don't leave it
+					 * empty"); jQuery.validator.addMethod("futureDate",
+					 * function(value, element) { var now = new Date();
+					 * now.setHours(0, 0, 0, 0); var myDate = new Date(value);
+					 * return this.optional(element) || myDate < now; });
+					 * $('form[id="admission-form"]').validate({ rules : {
+					 * enq_stud : { required : true // lettersonly:true },
+					 * enq_taken : { required : true, noSpace : true },
+					 * stud_details : { required : true, noSpace : true }, fees : {
+					 * required : true }, ID_no : { required : true, noSpace :
+					 * true, // lettersonly:true }, reg_no : { required : true, //
+					 * number:true, noSpace : true }, invoice_no : { required :
+					 * true, // number:true, noSpace : true }, admission_date : {
+					 * futureDate : true, date : true, required : true },
+					 * join_date : { futureDate : true, date : true, required :
+					 * true }, amount : { required : true, number : true,
+					 * noSpace : true }, discount : { // required:true, number :
+					 * true, noSpace : true }, tax : { // required:true, number :
+					 * true, noSpace : true },
+					 *  }, messages : { admission_date : { futureDate : 'future
+					 * date not allowed' }, }, submitHandler : function(form) {
+					 * event.preventDefault();
+					 *  } }); // addstud validation
+					 * $('form[id="EnquiryForm"]').validate({ rules : { sname : {
+					 * required : true, lettersonly : true, noSpace : true },
+					 * lname : { required : true, lettersonly : true, noSpace :
+					 * true
+					 *  }, fname : { required : true, lettersonly : true,
+					 * noSpace : true }, mname : { required : true, lettersonly :
+					 * true, noSpace : true }, uid : { required : true, digits :
+					 * true, minlength : 10, maxlength : 10, }, dob : { required :
+					 * true, date : true, futureDate : true }, stud_cont : {
+					 * required : true, digits : true, minlength : 10, maxlength :
+					 * 10, noSpace : true }, father_cont : { required : true,
+					 * digits : true, minlength : 10, maxlength : 10, noSpace :
+					 * true }, mother_cont : { required : true, digits : true,
+					 * minlength : 10, maxlength : 10, noSpace : true }, addr : {
+					 * required : true }, pin : { required : true, digits :
+					 * true, minlength : 4, maxlength : 12, }, email : {
+					 * required : true, email : true }, w_app_no : { required :
+					 * true, digits : true, minlength : 10, maxlength : 10,
+					 * noSpace : true }, }, messages : { dob : { futureDate :
+					 * 'future date not allowed' }, },
+					 * 
+					 * submitHandler : function(form) { event.preventDefault();
+					 *  } }); // add_employee validation
+					 * $('form[id="addEmployee"]').validate({ rules : { emp_name : {
+					 * required : true, lettersonly : true, noSpace : true },
+					 * emp_unq_code : { required : true, digits : true }, email : {
+					 * required : true, email : true }, address : { required :
+					 * true }, contact : { required : true, digits : true,
+					 * minlength : 10, maxlength : 10, noSpace : true }, dob : {
+					 * required : true, date : true, futureDate : true },
+					 * join_date : { required : true, date : true }, design : {
+					 * required : true }, }, messages : { dob : { futureDate :
+					 * 'future date not allowed' }, }, submitHandler :
+					 * function(form) { event.preventDefault();
+					 *  } }); // feespackage validation
+					 * $('form[id="feespackage-modal-form"]').validate({ rules : {
+					 * fees_pack : { required : true }, searchforstand1 : {
+					 * required : true }, searchforstand2 : { required : true },
+					 * feestype : { required : true }, amount : { required :
+					 * true, number : true, noSpace : true }, discount : {
+					 * required : true, number : true, noSpace : true }, tax : {
+					 * required : true, noSpace : true }, },
+					 * 
+					 * submitHandler : function(form) { event.preventDefault();
+					 *  } }); // feestype validation
+					 * $('form[id="feestypeform"]').validate({ rules : {
+					 * 
+					 * feesTypeModal : { required : true, letterswithspace :
+					 * true },
+					 *  },
+					 * 
+					 * submitHandler : function(form) { event.preventDefault();
+					 *  } });
+					 */
 					/*
 					 * $("#admission_date").change(function(){ alert("admission
 					 * date =
@@ -306,7 +114,13 @@ $(document)
 					 */
 
 					// admissionDetails();
+					$(".f-row").focusout(function() {
+						compareInstallAmtAndReceivedAmt();
+					});
 					if (sessionStorage.getItem("admission") != null) {
+						request="Edit";
+						document.getElementById('addrow').disabled=true;
+						document.getElementById('add_installment').disabled=true;
 						loadAdmissionData();
 					}
 
@@ -319,7 +133,10 @@ $(document)
 					});
 					$("#admission-form").submit(function() {
 						event.preventDefault();
-						StudentAdmission();
+						var status=compareInstallAmtAndReceivedAmt();
+						if(status==false){
+							StudentAdmission();	
+						}
 					});
 					$("#feestypeform").submit(function() {
 						event.preventDefault();
@@ -337,23 +154,18 @@ $(document)
 						event.preventDefault();
 						addFeesType();
 					});
-/*					var select = document.getElementById('fees');
-					select
-							.addEventListener(
-									'change',
-									function() {
-										var feespack = select.value.split("|");
-										getFeesPackageDetails(feespack[0]);
-										if (admitted_fees_pack != select.value) {
-											document
-													.getElementById("admission").disabled = false;
-										} else {
-											document
-													.getElementById("admission").disabled = true;
-											showNotification("error",
-													"Student Already Admitteed For This Course.");
-										}
-									});*/
+					var select = document.getElementById('fees');
+					select.addEventListener('change', function() {
+						var feespack = select.value.split("|");
+						getFeesPackageDetails(feespack[0]);
+						
+						  if (admitted_fees_pack != select.value) { 
+							  document.getElementById("admission").disabled = false; 
+							  } else {
+								  document .getElementById("admission").disabled =true; 
+								  showNotification("error", "Student Already Admitteed For This Course.");
+						  		}
+					});
 					$("#discount")
 							.focusout(
 									function() {
@@ -449,11 +261,25 @@ $(document)
 										});
 								addNewFeesPackage(standardData, branchData);
 							});
-					$("#cancel").click(function() {
-						clearSession();
-					})
 				});
 
+function compareInstallAmtAndReceivedAmt(){
+	var table = document.getElementById("installment_table");
+	var rowCount = $('#installment_table tr').length;
+	var installment = "installment details";
+	var status=false;
+	for (var i = 1; i < rowCount - 1; i++) {
+		var date = $(table.rows.item(i).cells[0]).find('input').val();
+		var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
+		var amt = $(table.rows.item(i).cells[2]).find('input').val();
+		var received = $(table.rows.item(i).cells[3]).find('input').val();
+		if(parseInt(received)>parseInt(amt)){
+			showNotification("error","Installment Amount must be greater than or equal to received amount");
+			status=true;
+		}
+	}
+	return status;
+}
 function SearchStudent(id) {
 	function callback(responseData, textStatus, request) {
 		var id = responseData.id;
@@ -478,12 +304,12 @@ function SearchStudent(id) {
 		var feesdetails = feespack.fees_details;
 
 		createFeesTypeRow(feesdetails, responseData.fees_pack);
-/*		if (status.trim() == "Admitted") {
-			admitted_fees_pack = responseData.fees_pack;
-			showNotification("error",
-					"Student Already Admitteed For This Course.");
-			document.getElementById("admission").disabled = true;
-		}*/
+		
+		  if (status.trim() == "Admitted") { 
+			  admitted_fees_pack = responseData.fees_pack; 
+			  showNotification("error", "Student AlreadyAdmitteed For This Course.");
+			  document.getElementById("admission").disabled = true; 
+		  }
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
@@ -527,6 +353,7 @@ function StudentAdmission() {
 		var date = $(table.rows.item(i).cells[0]).find('input').val();
 		var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
 		var amt = $(table.rows.item(i).cells[2]).find('input').val();
+		var received = $(table.rows.item(i).cells[3]).find('input').val();
 		installment = installment + "," + date + "|" + fees_title + "|" + amt;
 	}
 	var table = document.getElementById("feestypetable");
@@ -536,7 +363,6 @@ function StudentAdmission() {
 	var g_total = 0;
 	var newAmt;
 	for (var i = 1; i < rowCount; i++) {
-		// var date = $(table.rows.item(i).cells[0]).find('input').val();
 		var fees_title = $(table.rows.item(i).cells[0]).find('select').val();
 		var amt = $(table.rows.item(i).cells[1]).find('input').val();
 		var discount = $(table.rows.item(i).cells[2]).find('input').val();
@@ -548,29 +374,45 @@ function StudentAdmission() {
 	}
 	newAmt = disc + "|" + g_total;
 	function callback(responseData, textStatus, request) {
-		var mes = responseData.responseJSON.message;
+		var mes = responseData.message;
 		showNotification("success", mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
+		if(request="Edit"){
+			clearSession();
+		}
 	}
 
-	var status = checkInstallmentData(installment, document
+	var status = checkInstallmentDate(installment, document
 			.getElementById("admission_date").value);
 	if (status == false) {
 		var httpMethod = "POST";
-		var formData = $('#admission-form').serialize() + "&personalDetails="
+		var formData;
+		var relativeUrl;
+		if(request!="Edit"){	
+		formData = $('#admission-form').serialize() + "&personalDetails="
 				+ enqData + "&feestypeDetails=" + feestypeDetails
 				+ "&installment=" + installment + "&newAmt=" + newAmt;
-		alert(installment);
-		var relativeUrl = "/Admission/StudentAdmission";
+		relativeUrl = "/Admission/StudentAdmission";
+		}else{
+		/*	var any_install_status=checkAnyInstallmentPaid();
+			if(any_install_status==false){
+*/				formData = $('#admission-form').serialize()+"&branch="+branchSession /*+ "&personalDetails="
+				+ enqData + "&feestypeDetails=" + feestypeDetails
+				+ "&installment=" + installment + "&newAmt=" + newAmt*/;
+				relativeUrl = "/Admission/EditStudentAdmission";
+			}
+//		}
+		alert(formData);
 		ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 				errorCallback);
 	}
 	return false;
 }
-function checkInstallmentData(installment, admission_date) {
+
+function checkInstallmentDate(installment, admission_date) {
 	alert("success" + admission_date);
 	var status = false;
 	installment = installment.split(",");
@@ -582,14 +424,32 @@ function checkInstallmentData(installment, admission_date) {
 			status = true;
 		}
 	}
-	alert(status);
 	if (status == true) {
 		showNotification("error",
 				"Installment Date must be greater than admission date.");
 	}
 	return status;
 }
-function AddNewEnquiryStudent() {
+
+/*function checkAnyInstallmentPaid(){
+	var table = document.getElementById("installment_table");
+	var rowCount = $('#installment_table tr').length;
+	var installment = "installment details";
+	var status=false;
+	for (var i = 1; i < rowCount - 1; i++) {
+		var date = $(table.rows.item(i).cells[0]).find('input').val();
+		var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
+		var amt = $(table.rows.item(i).cells[2]).find('input').val();
+		var received = $(table.rows.item(i).cells[3]).find('input').val();
+		if(parseInt(received)!=0){
+			showNotification("error",
+			"Unable to Edit Installment Data.");
+			status=true;
+		}
+	}
+	return status;
+}
+*/function AddNewEnquiryStudent() {
 	function callback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
 		showNotification("success", mes);
@@ -662,6 +522,7 @@ function addFeesType() {
 	return false;
 }
 function getFeesPackageDetails(pack) {
+	alert(pack);
 	function callback(responseData, textStatus, request) {
 		var packdetails = responseData.fees_details;
 		deletefeesTypeTableRow();
@@ -867,28 +728,30 @@ function loadAdmissionData() {
 		}
 	}
 	document.getElementById('grand-t').value = admissionData[17];
-/*
-	if (admissionData[18] == null) {
-		document.getElementById('amt_installment').value = document
-				.getElementById('grand-t').value;
-	} else {*/
-		alert(admissionData[20]);
-		var html_Code = '<tr><td><div class="form-group"><div class="input-group date form_date" id="demo" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2"><input class="form-control" size="16" id="display" type="text" value="" readonly> <span class="input-group-addon"><span class="fa fa-remove"></span></span> <span class="input-group-addon"><span class="fa fa-calendar"></span></span></div><input type="hidden" id="dtp_input2" name="installlment_date" value="" /><br /></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
-				+ htmlCode
-				+ '</select> <span class="input-group-addon" id="bhvk"><button type="button" id="feestype" data-toggle="modal" data-target="#feestypeModal" style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">+</button></span></div></div></td><td><input type="text" class="form-control f-row" id="amt_installment" name="amt_installment"></td><td><input type="text" class="form-control"id="r_installment" name="r_installment" disabled></td></tr>';
-		var monthly = admissionData[18].split("-");
-		var due = admissionData[19].split("-");
-		var title = admissionData[20].split("-");
-		for (var i = 1; i < monthly.length-1; i++) {
-			$("table #i-details").append(html_Code);
-		}
-		var total_monthly_pay = 0;
-		var table = document.getElementById("installment_table");
-		for (var i = 2; i <= monthly.length; i++) {
-			$(table.rows.item(i-1).cells[0]).find('input').val(due[i - 1]);
-			$(table.rows.item(i-1).cells[1]).find('select').val(title[i - 1]);
-			$(table.rows.item(i-1).cells[2]).find('input').val(monthly[i - 1]);
-		}
+	/*
+	 * if (admissionData[18] == null) {
+	 * document.getElementById('amt_installment').value = document
+	 * .getElementById('grand-t').value; } else {
+	 */
+	var html_Code = '<tr><td><div class="form-group"><div class="input-group date form_date" id="demo" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2"><input class="form-control" size="16" id="display" type="text" value="" readonly> <span class="input-group-addon"><span class="fa fa-remove"></span></span> <span class="input-group-addon"><span class="fa fa-calendar"></span></span></div><input type="hidden" id="dtp_input2" name="installlment_date" value="" /><br /></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
+			+ htmlCode
+			+ '</select> <span class="input-group-addon" id="bhvk"><button type="button" id="feestype" data-toggle="modal" data-target="#feestypeModal" style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">+</button></span></div></div></td><td><input type="text" class="form-control f-row" id="amt_installment" name="amt_installment"></td><td><input type="text" class="form-control"id="r_installment" name="r_installment" disabled></td></tr>';
+	var monthly = admissionData[18].split("-");
+	var due = admissionData[19].split("-");
+	var title = admissionData[20].split("-");
+	alert(admissionData[21])
+	var remain = admissionData[21].split("-");
+	for (var i = 1; i < monthly.length - 1; i++) {
+		$("table #i-details").append(html_Code);
+	}
+	var total_monthly_pay = 0;
+	var table = document.getElementById("installment_table");
+	for (var i = 2; i <= monthly.length; i++) {
+		$(table.rows.item(i - 1).cells[0]).find('input').val(due[i - 1]);
+		$(table.rows.item(i - 1).cells[1]).find('select').val(title[i - 1]);
+		$(table.rows.item(i - 1).cells[2]).find('input').val(monthly[i - 1]);
+		$(table.rows.item(i - 1).cells[3]).find('input').val(remain[i - 1]);
+	}
 }
 
 function clearSession() {

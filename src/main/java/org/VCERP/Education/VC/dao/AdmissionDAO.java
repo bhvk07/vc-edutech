@@ -479,5 +479,34 @@ public class AdmissionDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+
+	public void EditStudentAdmission(Admission admission) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="update admission set enq_taken_by=?,division=?,status=?,date=?,admission_date=?,acad_year=?,join_date=?"
+					+ " where Rollno=? and regno=? and invoice_no=? and branch=?";
+			ps=con.prepareStatement(query);
+			ps.setString(1, admission.getEnq_taken_by());
+			ps.setString(2, admission.getDivision());
+			ps.setString(3, admission.getStatus());
+			ps.setString(4, admission.getDate());
+			ps.setString(5, admission.getAdmission_date());
+			ps.setString(6, admission.getAcad_year());
+			ps.setString(7, admission.getJoin_date());
+			ps.setString(8, admission.getRollno());
+			ps.setString(9, admission.getRegno());
+			ps.setString(10, admission.getInvoice_no());
+			ps.setString(11, admission.getBranch());
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	}
 		
 }

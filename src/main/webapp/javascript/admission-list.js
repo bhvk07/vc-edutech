@@ -163,6 +163,7 @@ function getAdmissionDetailsOfSpecificStudent(id) {
 		admissionData.push(responseData.acad_year);
 		admissionData.push(responseData.join_date);
 		var feesData = responseData.feesDetails.split(",");
+		
 		var feesDetails = "feesDetails";
 		for (var i = 0; i < feesData.length; i++) {
 			feesDetails += "-" + feesData[i];
@@ -188,9 +189,16 @@ function getAdmissionDetailsOfSpecificStudent(id) {
 		for (var i = 0; i < installment.fees_title.length; i++) {
 			fees_title += "-" + installment.fees_title[i];
 		}
+		
+		var paid_fees = "paid_fees";
+		for (var i = 0; i < installment.paid.length; i++) {
+			paid_fees += "-" + installment.paid[i];
+		}
+		
 		admissionData.push(monthlypay);
 		admissionData.push(due_date);
 		admissionData.push(fees_title);
+		admissionData.push(paid_fees);
 		sessionStorage.setItem("admission", admissionData);
 		window.location.href = "admission.html";
 	}

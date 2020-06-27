@@ -376,4 +376,41 @@ public class AdmissionResource {
 		}
 		return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 	}
+	@PermitAll
+	@POST
+	@JWTTokenNeeded
+	@Path("/EditStudentAdmission")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response EditStudentAdmission(@FormParam("enq_taken_by") String enq_taken_by, 
+			@FormParam("division") String division, @FormParam("status") String status, @FormParam("date") String date,
+			@FormParam("Rollno") String Rollno, @FormParam("regno") String regno,
+			@FormParam("invoice_no") String invoice_no,@FormParam("admission_date") String admission_date,
+			@FormParam("acad_year") String acad_year, @FormParam("join_date") String join_date,
+			@FormParam("branch") String branch) {
+		Admission admission = null;
+		AdmissionController controller = null;
+		try {
+			System.out.println(enq_taken_by+division+status+date+Rollno+regno+invoice_no+admission_date+acad_year+join_date+branch);
+			admission = new Admission();
+			admission.setEnq_taken_by(enq_taken_by);
+			admission.setDivision(division);
+			admission.setStatus(status);
+			admission.setDate(date);
+			admission.setRollno(Rollno);
+			admission.setRegno(regno);
+			admission.setInvoice_no(invoice_no);
+			admission.setAdmission_date(admission_date);
+			admission.setAcad_year(acad_year);
+			admission.setJoin_date(join_date);
+			admission.setBranch(branch);
+			controller = new AdmissionController();
+			controller.EditStudentAdmission(admission);
+			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Edited").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to completed the process.").build();
+	}
+
 }

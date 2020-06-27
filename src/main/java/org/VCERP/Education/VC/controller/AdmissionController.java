@@ -54,4 +54,8 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		dao.updateOldAdmissionStatus(id,branch);
 	}
+	public void EditStudentAdmission(Admission admission) {
+		AdmissionDAO dao=new AdmissionDAO();
+		dao.EditStudentAdmission(admission);
+	}
 }

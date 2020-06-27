@@ -404,8 +404,8 @@
 										<td><input type="text" class="form-control f-row"
 											id="amt_installment" name="amt_installment"></td>
 
-										<td><input type="text" class="form-control"
-											id="r_installment" name="r_installment" disabled></td>
+										<td><input type="text" class="form-control r_installment"
+											id="r_installment" name="r_installment" value="0" disabled></td>
 
 									</tr>
 
@@ -467,7 +467,7 @@
 							</table>
 							<input type="submit" id="admission" class="btn btn-success"
 								value="Submit">
-							<button id="cancel" class="btn btn-success"
+							<button id="cancel" class="btn btn-success" onclick="clearSession()"
 							>Cancel</button>
 						</div>
 					</section>
