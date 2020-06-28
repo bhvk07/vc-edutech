@@ -126,7 +126,7 @@ $(document).ready(function() {
 		division=document.getElementById("division").value;
 		attendanceList(std,acad_year,division,e);
 	});
-	$("#View").click(function(e) {
+	$("#btn-view").click(function(e) {
 		var table = $("#attendance_stat_table").DataTable();
 		$("table .cbCheck").each(function(i,chk){
 			if (chk.checked==true) {

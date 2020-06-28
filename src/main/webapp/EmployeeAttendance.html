@@ -21,10 +21,12 @@
 	
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/EmployeeAttendance.js"></script>
+<script type="text/javascript" src="javascript/ButtonHideDisplay.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/noty.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css"/>
 
 <style type="text/css">
 body {
@@ -37,9 +39,6 @@ body {
 .wickedpicker{
 width:160px;
 height:auto;
-}
-.wickedpicker__title{
-
 }
 
 .table-wrapper {
@@ -177,14 +176,6 @@ table.table .avatar {
 	color: #666;
 }
 
-.pagination li.active a, .pagination li.active a.page-link {
-	background: #03A9F4;
-}
-
-.pagination li.active a:hover {
-	background: #0397d6;
-}
-
 .pagination li.disabled i {
 	color: #ccc;
 }
@@ -240,11 +231,6 @@ table.table .avatar {
 	transform: inherit;
 	z-index: 3;
 	transform: rotateZ(45deg);
-}
-
-.custom-checkbox input[type="checkbox"]:checked+label:before {
-	border-color: #03A9F4;
-	background: #03A9F4;
 }
 
 .custom-checkbox input[type="checkbox"]:checked+label:after {
@@ -303,10 +289,7 @@ table.table .avatar {
 		$("#attendance").css("display", "none");
 		$("#attendance_report").css("display", "none");
 		$("#addnew").click(function(e) {
-			/* $("#attendancestat").style.display="none";
-			$("#attendance").style.display="block";
-			
-			 */e.preventDefault();
+				e.preventDefault();
 			 $("#attendance_stat").css("display", "none");
 			$("#attendance").css("display", "block");
 			$("#attendance_report").css("display", "none");
@@ -378,8 +361,8 @@ table.table .avatar {
 							<form id="attendance_stat_form" method="post">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label>From Date</label> <input type="date" id="from_date"
-												class="form-control from_date" name="from_date">
+											<label>From Date</label> 
+											<input type="date" id="from_date" class="form-control from_date" name="from_date">
 										</div>
 									</div>
 									<div class="col-md-4">
