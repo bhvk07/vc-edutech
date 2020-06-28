@@ -1,7 +1,8 @@
 var standardData;
 var branchData;
 var requestid = 0;
-var std = "";
+//var std = "";
+var db_std=new Array();
 $(document)
 		.ready(
 				function() {
@@ -109,6 +110,7 @@ $(document)
 									document.getElementById("total-amt").value = stdamt;
 									document.getElementById("grand-t").value = stdamt;
 									document.getElementById("inputDisabledAmt").value = stdamt;
+									alert(std);
 									loadBranch(std);
 							});
 					});
@@ -149,6 +151,7 @@ $(document)
 				});
 
 function addNewFeesPackage(standardData, branchData) {
+	standardData=standardData(",","-");
 	var table = document.getElementById("feestypetable");
 	var rowCount = $('#feestypetable tr').length;
 	var fees_details = new Array;
@@ -195,7 +198,6 @@ function addNewFeesPackage(standardData, branchData) {
 
 function loadBranchSpecificStandard() {
 	var table = document.getElementById("standard");
-	var db_std=new Array();
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
 
@@ -205,22 +207,15 @@ function loadBranchSpecificStandard() {
 			var stdamt = standardData[1];
 			var rowCount = table.rows.length;
 			var row = table.insertRow(rowCount);
-			if(requestid!=0){
-				var cell1 = row.insertCell(0);
-				cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck" checked>';
-				//db_std.push(standard);
-			}else{
-				var cell1 = row.insertCell(0);
-				cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck">';			
-			}
+			var cell1 = row.insertCell(0);
+			cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck">';			
 			var cell2 = row.insertCell(1);
 			cell2.innerHTML = standard;
 
 			var cell3 = row.insertCell(2);
 			cell3.innerHTML = stdamt;
-
+			db_std.push(standard+"|"+stdamt);
 		}
-		//loadStandardForEdit(db_std,std);
 
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -301,7 +296,7 @@ function loadFeesPackageData(pack, branch) {
 	function callback(responseData, textStatus, request) {
 		document.getElementById('fees_pack').value = responseData.feesPackage;
 		document.getElementById('inputDisabledAmt').value = responseData.total_amt;
-		std = responseData.standard;
+		var std = responseData.standard;
 		var table = document.getElementById("standard");
 		var rowCount = table.rows.length;
 		if (std != "") {
@@ -312,8 +307,7 @@ function loadFeesPackageData(pack, branch) {
 				rowCount = rowCount - 1;
 			}
 		}
-		loadBranchSpecificStandard();
-		loadBranch(std);
+		markStandard(std,db_std);
 		var table = document.getElementById("feestypetable");
 		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
 				+ htmlCode
@@ -355,6 +349,59 @@ function loadFeesPackageData(pack, branch) {
 	return false;
 }
 
+function markStandard(std,db_std){
+	var pack_std=new Array();
+	std=std.split("-");
+	
+	for(var i=0;i<std.length;i++){
+		pack_std.push(std[i]);	
+	}
+	    var a = [], diff = [],comm=[];
+
+	    for (var i = 0; i < pack_std.length; i++) {
+	        a[pack_std[i]] = true;
+	    }
+	    for(var j=0;j<db_std.length;j++){
+	    	var stdname=db_std[j].split("|");
+	        if (a[stdname[0]]) {
+	            comm.push(stdname[0]+"|"+stdname[1]);
+	            delete a[stdname[0]]; 
+	        } else {
+	            a[stdname[0]+"|"+stdname[1]] = true;
+	        }
+	    }
+	    for (var k in a) {
+	        diff.push(k);
+	    }
+	    var table = document.getElementById("standard");
+	    for(var i=0;i<comm.length;i++){
+	    	var standard=comm[i].split("|");
+	    	
+			var rowCount = table.rows.length;
+			var row = table.insertRow(rowCount);
+			var cell1 = row.insertCell(0);
+			cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck" checked>';			
+			var cell2 = row.insertCell(1);
+			cell2.innerHTML = standard[0];
+
+			var cell3 = row.insertCell(2);
+			cell3.innerHTML = standard[1];
+			loadBranch(standard[0]);
+	    }
+	    for(var i=0;i<diff.length;i++){
+	    	var standard=diff[i].split("|");
+	    	alert(standard)
+			var rowCount = table.rows.length;
+			var row = table.insertRow(rowCount);
+			var cell1 = row.insertCell(0);
+			cell1.innerHTML = '<input type="checkbox" class="form-check-input stdcheck" id="stdcheck">';			
+			var cell2 = row.insertCell(1);
+			cell2.innerHTML = standard[0];
+
+			var cell3 = row.insertCell(2);
+			cell3.innerHTML = standard[1];	
+	 }
+}
 function addFeesType() {
 	function callback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
