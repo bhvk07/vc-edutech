@@ -151,7 +151,6 @@ $(document)
 				});
 
 function addNewFeesPackage(standardData, branchData) {
-	standardData=standardData(",","-");
 	var table = document.getElementById("feestypetable");
 	var rowCount = $('#feestypetable tr').length;
 	var fees_details = new Array;
@@ -165,9 +164,10 @@ function addNewFeesPackage(standardData, branchData) {
 	}
 	document.getElementById("inputDisabledAmt").disabled = false;
 	function callback(responseData, textStatus, request) {
-		var mes = responseData.responseJSON.message;
+		var mes = responseData.message;
 		showNotification("success", mes);
 		document.getElementById("inputDisabledAmt").disabled = true;
+		location.reload(true);
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
@@ -351,7 +351,7 @@ function loadFeesPackageData(pack, branch) {
 
 function markStandard(std,db_std){
 	var pack_std=new Array();
-	std=std.split("-");
+	std=std.split(",");
 	
 	for(var i=0;i<std.length;i++){
 		pack_std.push(std[i]);	
