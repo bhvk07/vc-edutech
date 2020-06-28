@@ -443,7 +443,7 @@ public class AdmissionResource {
 			admission.setContact(colanSeperatedPersonalDetails[11]);
 			admission.setFather_cont(colanSeperatedPersonalDetails[12]);
 			admission.setMother_cont(colanSeperatedPersonalDetails[13]);
-			admission.setAddress(colanSeperatedPersonalDetails[14]);
+			admission.setAddress(colanSeperatedPersonalDetails[14]) ;
 			admission.setPin(colanSeperatedPersonalDetails[15]);
 			admission.setEmail(colanSeperatedPersonalDetails[16]);
 			admission.setW_app_no(colanSeperatedPersonalDetails[17]);
