@@ -77,36 +77,18 @@ $(document).ready(function(){
 		const search = '/';
 		const replaceWith = '-';
 		
-		var splitted_start_date = start.split(search).join(replaceWith);
-		alert("splitted_start_date"+splitted_start_date);
-		var splitted_end_date = end.split(search).join(replaceWith);
-		alert("splitted_end_date"+splitted_end_date);
-				/*const search = '"';
-				const replaceWith = '';*/
-			 // var start = d_val[0];
-			  //alert("start"+start);
-			  //var new_s_date = start.split(':');
-			 
-			  //var trimmed_start_date = new_s_date[1];
-			  
-			  //var splitted_start_date = trimmed_start_date.split(search).join(replaceWith);
-			  //alert(splitted_start_date);
-			  
-			  //var end = d_val[1];
-			  //var new_e_date = end.split(':');
-			 // var e_date = new_e_date[1];
-			  //var final_e_split = e_date.split('}');
-			  //var trimmed_end_date = final_e_split[0];
-			  //var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
-			  //alert(splitted_end_date);
-			 // getExpenseChart(splitted_start_date, splitted_end_date);
-			 //getReceiptChart(splitted_start_date, splitted_end_date);
-			 //getAdmissionChart(splitted_start_date, splitted_end_date);
-			 // getConversionChart(splitted_start_date,splitted_end_date);
-			  getSalesCard();
+				var splitted_start_date = start.split(search).join(replaceWith);
+				alert("splitted_start_date"+splitted_start_date);
+				var splitted_end_date = end.split(search).join(replaceWith);
+				alert("splitted_end_date"+splitted_end_date);
+				getExpenseChart(splitted_start_date, splitted_end_date);
+				getReceiptChart(splitted_start_date, splitted_end_date);
+				getAdmissionChart(splitted_start_date, splitted_end_date);
+				getConversionChart(splitted_start_date,splitted_end_date);
+				getSalesCard();
 	});
 	
-	//getChartData();
+	
 	
    
 });
@@ -285,7 +267,7 @@ function getAdmissionChart(splitted_start_date, splitted_end_date){
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			alert("date = "+responseData[i].date + responseData[i].amount);
+			//alert("date = "+responseData[i].date + responseData[i].amount);
 			adm_date.push(responseData[i].date);
 			adm_amt.push(responseData[i].amount);
 			
@@ -320,11 +302,9 @@ function getExpenseChart(splitted_start_date, splitted_end_date){
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
 			
-			alert("date = "+responseData[i].date + responseData[i].amount)
+			//alert("date = "+responseData[i].date + responseData[i].amount)
 		}
-		// $.each(exp_amt, function(key, value){
-	    //       exp_amt1.push(value);
-	     //   });
+		
 		 Expense_chart();
 	}
 	function errorCallback(responseData, textStatus, request){
@@ -350,7 +330,7 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
-			alert("date = "+responseData[i].date + responseData[i].amount);
+			//alert("date = "+responseData[i].date + responseData[i].amount);
 			rec_date.push(responseData[i].date);
 			rec_amt.push(responseData[i].amount);
 			
@@ -525,6 +505,36 @@ function getSalesCard(){
 	var httpMethod = "GET";
 	var relativeUrl = "/chart/getSalesCard?branch="+branchSession;
 	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
+
+function getReceivedCard(){
+	function callback(responseData, textStatus, request){
+		
+		alert("received"+responseData.length);
+		for ( var i in responseData) {
+			
+			//alert("sales = "+responseData[i].amount);
+			received = responseData[i].amount;
+			document.getElementById('received_card').innerHTML = received;
+			
+			
+		}
+		
+		
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	var relativeUrl = "/chart/getReceivedCard";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }

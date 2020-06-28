@@ -146,7 +146,7 @@ public class ChartDAO {
 			con=Util.getDBConnection();
 			String query="select SUM(status = 'Admitted' ) * 100 / (SELECT COUNT(*) from enquiry WHERE branch=?) from enquiry WHERE enq_date BETWEEN ? AND ? AND branch=?";
 			ps=con.prepareStatement(query);
-			System.out.println(ch.getBranch()+ch.getS_date()+ch.getE_date()+ch.getBranch());
+			
 			ps.setString(1, ch.getBranch());
 			
 			ps.setString(2, ch.getS_date());
@@ -197,5 +197,35 @@ public class ChartDAO {
 			Util.closeConnection(rs, ps, con);
 		}
 		return SalesData;
+	}
+	
+	public ArrayList<Chart> getReceivedCard(Chart ch, ArrayList<Chart> received_card) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<Chart> ReceivedData=new ArrayList<>();
+		try {
+			con=Util.getDBConnection();
+			String query="SELECT SUM(payment) FROM `receipt_details` WHERE trans_date BETWEEN ? AND ? AND branch=?;";
+			
+			ps=con.prepareStatement(query);
+			ps.setString(2, ch.getS_date());
+			ps.setString(3, ch.getE_date());
+			ps.setString(3,ch.getBranch());
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				Chart chart=new Chart();
+				chart.setAmount(rs.getString(1));
+				ReceivedData.add(chart);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(rs, ps, con);
+		}
+		return ReceivedData;
 	}
 }

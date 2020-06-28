@@ -200,6 +200,35 @@ public Response getSalesCard(@QueryParam("branch") String branch){
 		return Response.status(Status.ACCEPTED).entity(sales_card).build();
 }
 
+@POST
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getReceivedCard")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+public Response getReceivedCard(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch){
+		Chart ch = null;
+		ChartController controller=new ChartController();
+		ArrayList<Chart> received_card=new ArrayList<>();
+		//received_card=controller.getReceivedCard(branch);
+		try {
+			ch = new Chart(); 
+			ch.setS_date(start_date.trim());
+			ch.setE_date(end_date.trim());
+			ch.setBranch(branch.trim());
+			received_card = controller.getReceivedCard(ch, received_card);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		if(received_card==null)
+		{
+			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
+		}
+		return Response.status(Status.ACCEPTED).entity(received_card).build();
+}
+
 
 
 }

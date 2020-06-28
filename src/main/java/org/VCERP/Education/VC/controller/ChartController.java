@@ -35,5 +35,10 @@ public class ChartController {
 		ChartDAO dao=new ChartDAO();
 		return dao.getSalesCard(branch);
 	}
+	public ArrayList<Chart> getReceivedCard(Chart ch, ArrayList<Chart> received_card) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getReceivedCard(ch, received_card);
+	}
+	
 
 }
