@@ -1,11 +1,11 @@
 $(document).ready(function() {
 	
 	validateLogin();
-	checkUserLevel();
 	fetchAllBranch();
+	getDesignation();
 	fetchAllRole();
 	FetchAllEmployee();
-	getDesignation();
+	
 	EmployeeList();
 	jQuery.validator.addMethod("letterswithspace", function(value, element) {
 	    return this.optional(element) || /^[a-z\s]+$/i.test(value);

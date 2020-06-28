@@ -3,11 +3,11 @@
     content: " ";
 }
 
-@media (min-width: 992px)
+@media (min-width: 992px){
 .col-md-3 {
     width: 25%;
 }
-
+}
 .col-md-3{
     position: relative;
     min-height: 1px;
@@ -31,12 +31,12 @@
 #btnDisplay{
     margin-top: 21px;
     border-radius: 0px;
-    
 }
 .btn{
     border-radius: 0px !important;
     
 }
+
 
 .panel-heading{
     background: #f6f6f6;
@@ -95,13 +95,6 @@
     float: right !important;
     margin-right: 10px;
 }
-
-
-
-
-
-
-
 
 .content-body{
     padding: 20px;

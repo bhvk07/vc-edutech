@@ -15,12 +15,18 @@
 	background: #435d7d;
 }
 .custom-checkbox input[type="checkbox"]:checked+label:before {
-	border-color:  #435d7d;
-	background:  #435d7d;
+	border-color:  #435d7d !important;
+	background:  #435d7d !important;
 }
 
 /* button css */
-.btn-success , .headerClass , #saveBtn{
+/* #btnDisplay{
+	border-color:#435d7d !important;
+	background:  #435d7d !important;
+	color: white ! important
+} */
+
+.btn-success , .headerClass , #saveBtn {
 	color: white ! important;
 	background-color:#53b700 !important ;
 	border-color:#53b700 !important;
@@ -33,14 +39,11 @@ color:#fff !important;
 
 .btn-warning{
 	background-color:#ff793f !important ;
-	border-color:#ff793f !important;	
-	
+	border-color:#ff793f !important;		
 }
-
 .btn-danger{
 	background-color:#d43f3a !important ;
-	border-color:#d43f3a !important;
-	
+	border-color:#d43f3a !important;	
 }
 .btn-info{
 	background-color:#34ace0 !important ;
@@ -50,4 +53,8 @@ color:#fff !important;
 	background-color:#218c74 !important ;
 	border-color:#218c74 !important;		
 }
+/*   .btn-dark #btnDisplay{
+	border-color:  #435d7d !important;
+	background:  #435d7d !important;		
+}  */
 

@@ -5,6 +5,16 @@ $(document).ready(function() {
 	getAllStandard();
 	getAllDivision();
 	getFeesPackage();
+	
+	jQuery.validator.addMethod("minDate", function (value, element) {
+	    var now = new Date();
+	    now.setHours(0,0,0,0);
+	    var myDate = new Date(value);
+	    
+	    return this.optional(element) || myDate >= now;
+	 });
+	
+	
 	$('form[id="getPromoteData"]').validate({
 		
 		  rules: {
@@ -15,17 +25,53 @@ $(document).ready(function() {
 		   standard: {
 		        required: true,
 		      },
-		      division: {
-			        required: true,     
-			   },
-			   multi_status_select: {
-			        required: true,
-			      },
+		      multi_status_select:{
+		    	  required:true
+		    	  
+		      }
 				
 		  },
 		 messages: {
 			 multi_status_select: {
 				required:'Please select status',		
+			},
+				
+		  },
+		  submitHandler:function(form){
+			  event.preventDefault();
+			  getPromoteData();
+		  }
+	});
+	
+	$('form[id="PromoteDataForm"]').validate({
+		
+		  rules: {
+		    
+			  fees: {
+		        required: true,     
+		   },
+		   student_status: {
+		        required: true,
+		      },
+		      division: {
+			        required: true,     
+			   },
+			   studacad_year: {
+			        required: true,
+			      },
+			      studdivision: {
+				        required: true,     
+				   },
+				   admission_date: {
+				        required: true,     
+				        date:true,
+				        minDate:true
+				   }			   
+				
+		  },
+		 messages: {
+			 admission_date: {
+				 minDate:'Admission date should be current or future date',		
 			},
 				
 		  },
