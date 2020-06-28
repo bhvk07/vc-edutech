@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -56,9 +57,9 @@ public class ChartResource {
 	try{
 		ch = new Chart();
 		 
-		ch.setS_date(start_date);
-		ch.setE_date(end_date);
-		ch.setBranch(branch);
+		ch.setS_date(start_date.trim());
+		ch.setE_date(end_date.trim());
+		ch.setBranch(branch.trim());
 		exp_chart = controller.getExpenseData(ch, exp_chart);
 		//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
 	
@@ -93,9 +94,9 @@ public Response getReceiptData(@FormParam("start_date") String start_date,@FormP
 try{
 	ch = new Chart();
 	 
-	ch.setS_date(start_date);
-	ch.setE_date(end_date);
-	ch.setBranch(branch);
+	ch.setS_date(start_date.trim());
+	ch.setE_date(end_date.trim());
+	ch.setBranch(branch.trim());
 	rec_chart = controller.getReceiptData(ch, rec_chart);
 	//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
 
@@ -128,9 +129,9 @@ public Response getAdmissionData(@FormParam("start_date") String start_date,@For
 try{
 	ch = new Chart();
 	 
-	ch.setS_date(start_date);
-	ch.setE_date(end_date);
-	ch.setBranch(branch);
+	ch.setS_date(start_date.trim());
+	ch.setE_date(end_date.trim());
+	ch.setBranch(branch.trim());
 	adm_chart = controller.getAdmissionData(ch, adm_chart);
 	//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
 
@@ -162,9 +163,9 @@ public Response getConversionData(@FormParam("start_date") String start_date,@Fo
 try{
 	ch = new Chart();
 	 
-	ch.setS_date(start_date);
-	ch.setE_date(end_date);
-	ch.setBranch(branch);
+	ch.setS_date(start_date.trim());
+	ch.setE_date(end_date.trim());
+	ch.setBranch(branch.trim());
 	conv_chart = controller.getConversionData(ch, conv_chart);
 	//return Util.generateResponse(Status.ACCEPTED, "Data Successfully Fetched").build();
 
@@ -186,10 +187,12 @@ return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 //@JWTTokenNeeded
 @Path("/getSalesCard")
 @Produces(MediaType.APPLICATION_JSON)
-public Response getSalesCard(){
+public Response getSalesCard(@QueryParam("branch") String branch){
+		
 		ChartController controller=new ChartController();
 		ArrayList<Chart> sales_card=new ArrayList<>();
-		sales_card=controller.getSalesCard();
+		sales_card=controller.getSalesCard(branch);
+		
 		if(sales_card==null)
 		{
 			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();

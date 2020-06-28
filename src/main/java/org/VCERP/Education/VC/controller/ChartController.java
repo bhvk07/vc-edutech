@@ -31,9 +31,9 @@ public class ChartController {
 	}
 	
 	
-	public ArrayList<Chart> getSalesCard() {
+	public ArrayList<Chart> getSalesCard(String branch) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getSalesCard();
+		return dao.getSalesCard(branch);
 	}
 
 }

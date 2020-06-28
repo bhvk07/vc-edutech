@@ -99,10 +99,11 @@ $(document).ready(function(){
 			  //var trimmed_end_date = final_e_split[0];
 			  //var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
 			  //alert(splitted_end_date);
-			  getExpenseChart(splitted_start_date, splitted_end_date);
-			 getReceiptChart(splitted_start_date, splitted_end_date);
-			 getAdmissionChart(splitted_start_date, splitted_end_date);
-			  getConversionChart(splitted_start_date,splitted_end_date);
+			 // getExpenseChart(splitted_start_date, splitted_end_date);
+			 //getReceiptChart(splitted_start_date, splitted_end_date);
+			 //getAdmissionChart(splitted_start_date, splitted_end_date);
+			 // getConversionChart(splitted_start_date,splitted_end_date);
+			  getSalesCard();
 	});
 	
 	//getChartData();
@@ -506,12 +507,12 @@ Highcharts.chart('container', {
 function getSalesCard(){
 	function callback(responseData, textStatus, request){
 		
-		alert("len"+responseData.length);
+		alert("sales"+responseData.length);
 		for ( var i in responseData) {
 			
-			alert("percentage = "+responseData[i].conv_percent);
-			conversion = parseInt(responseData[i].conv_percent);
-			alert("succ"+ typeof(conversion));
+			alert("sales = "+responseData[i].amount);
+			sales = responseData[i].amount;
+			document.getElementById('sales_card').innerHTML = sales;
 			
 			
 		}

@@ -55,8 +55,6 @@ public class ChartDAO {
 				Chart chart=new Chart();
 				chart.setDate(rs.getString(1));
 				chart.setAmount(rs.getString(2));
-				
-				
 				exp_chart.add(chart);
 			}
 		}catch(Exception e){
@@ -112,6 +110,7 @@ public class ChartDAO {
 			con=Util.getDBConnection();
 			String query="select  admission_date, SUM(fees) from admission WHERE admission_date BETWEEN ? AND ? AND branch=? GROUP BY admission_date";
 			ps=con.prepareStatement(query);
+			System.out.println("data="+ch.getS_date()+ch.getE_date()+ch.getBranch());
 			ps.setString(1, ch.getS_date());
 			ps.setString(2, ch.getE_date());
 			ps.setString(3, ch.getBranch());
@@ -172,31 +171,31 @@ public class ChartDAO {
 	
 	
 	
-	public ArrayList<Chart> getSalesCard() {
+	public ArrayList<Chart> getSalesCard(String branch) {
 		Connection con=null;
-		PreparedStatement st=null;
+		PreparedStatement ps=null;
 		ResultSet rs=null;
-		ArrayList<Chart> chartData=new ArrayList<>();
+		ArrayList<Chart> SalesData=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
 			String query="SELECT SUM(fees) FROM `admission` WHERE branch=?";
-			//st.setString(1, );
-			st=con.prepareStatement(query);
-			rs=st.executeQuery();
+			
+			ps=con.prepareStatement(query);
+			ps.setString(1,branch);
+			rs=ps.executeQuery();
 			while(rs.next())
 			{
 				Chart chart=new Chart();
-				chart.setDate(rs.getString(1));
-				chart.setPayment(rs.getString(2));
-				chartData.add(chart);
+				chart.setAmount(rs.getString(1));
+				SalesData.add(chart);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println(e);
 		}
 		finally {
-			Util.closeConnection(rs, st, con);
+			Util.closeConnection(rs, ps, con);
 		}
-		return chartData;
+		return SalesData;
 	}
 }
