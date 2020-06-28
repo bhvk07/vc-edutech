@@ -10,7 +10,7 @@ $(document).ready(function() {
 		"pageLength" : 40
 	});
 	
-	$('#btn-danger').click(function() {
+	$('#deleteBtn').click(function() {
 		var selected=new Array();
 		$("input:checkbox[name=type]:checked").each(function() {
 			selected.push($(this).val());
@@ -28,7 +28,7 @@ $(document).ready(function() {
 		});
 		Admission(enq_no, request);
 	});
-	$("#Edit").click(function() {
+	$("#editBtn").click(function() {
 		request = "Edit";
 		var enq_no;
 		$('table .cbCheck').each(function(i, chk) {

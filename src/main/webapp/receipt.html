@@ -1,6 +1,5 @@
 <html>
 <meta charset="ISO-8859-1">
-<title>STUDENT INFO</title>
 <head>
 <meta charset="ISO-8859-1">
 
@@ -10,8 +9,7 @@
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="css/receipt-style.css" type="text/css">
 
@@ -21,7 +19,36 @@
 <script type="text/javascript" src="javascript/Helper.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
-<title>Admission</title>
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css" /> -->
+<title>Receipt</title>
+<style>
+/* only for this page */
+.panel{
+ background-color:#435d7d !important;
+ border-color:#435d7d;
+}
+.panel-heading{
+/* background-color:#435d7d !important;
+border-color:#435d7d */
+background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d5064, #435d75);
+}
+
+.rec{
+/* 	background-color:#435d7d !important ;
+	border-color: #435d7d !important; */
+	background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d5064, #435d75);
+}
+#receipt:hover{
+	background-color:#53b700 !important ;
+	border-color:#53b700 !important;
+}
+
+#cancel:hover{
+	background-color:#d43f3a !important ;
+	border-color:#d43f3a !important;
+}
+
+</style>
 	<script>
 	$(function() {
 		$("#navbar").load("nav-bar.html");
@@ -37,7 +64,7 @@
 				<div class="col-md-12">
 					<section class="panel">
 						<header class="panel-heading">
-							<h2 class="panel-title">Receipt</h2>
+							<h2 class="panel-title" style="color:#fff !important;">Receipt</h2>
 						</header>
 						<div class="panel-body">
 							<div class="form-group">
@@ -46,79 +73,59 @@
 								</label>
 								<div class="col-sm-6">
 									<div class="input-group">
-										<input type="text" class="form-control" name="search"
-											id="stud_id" placeholder="Search student by ID"> <a
-											class="input-group-addon"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-
-							</div>
-							<br>
-							<div class="form-group">
-
-								<label class="col-sm-3 control-label">Student Details<span
-									class="text-red">*</span>
-								</label>
-								<div class="col-sm-3">
-									<input type="text" id="stud_details" name="stud_details"
-										class="form-control" style="width: 500px;" readonly>
-
-								</div>
-							</div>
-							<br>
-							<div class="form-group">
-
-								<label class="col-sm-3 control-label">Net Receivable<span
-									class="text-red">*</span>
-								</label>
-								<div class="col-sm-3">
-									<input type="number" name="net_receive" id="net_receive" class="form-control"
-										style="width: 196px;" readonly>
-
-								</div>
-							</div>
-							<br>
-							<div class="form-group">
-
-								<label class="col-sm-3 control-label">Receipt Date<span
-									class="text-red">*</span>
-								</label>
-								<div class="col-sm-3">
-									<input type="date" name="receipt_date" id="receipt_date" class="form-control"
-										style="width: 196px;" readonly>
-
-								</div>
-							</div>
-							<br>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Receipt No.<span
-									class="text-red">*</span></label>
-								<div class="col-sm-3">
-									<div class="input-group">
-										<input type="text" name="receipt_no" id="receipt_no"
-											class="form-control" style="width: 196px;" readonly>
+										<input type="text" class="form-control" name="search" id="stud_id" placeholder="Search student by ID"> 
+										<a class="input-group-addon"><i class="fa fa-search"></i></a>
 									</div>
 								</div>
 							</div>
 							<br>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Received Amount<span
-									class="text-red">*</span></label>
+								<label class="col-sm-3 control-label">Student Details<span class="text-red">*</span>
+								</label>
+								<div class="col-sm-3">
+									<input type="text" id="stud_details" name="stud_details" class="form-control" style="width: 500px;" readonly>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Net Receivable<span class="text-red">*</span>
+								</label>
+								<div class="col-sm-3">
+									<input type="number" name="net_receive" id="net_receive" class="form-control" style="width: 196px;" readonly>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Receipt Date<span class="text-red">*</span>
+								</label>
+								<div class="col-sm-3">
+									<input type="date" name="receipt_date" id="receipt_date" class="form-control" style="width: 196px;" readonly>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Receipt No.<span class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<input type="number" id="received_amt" name="received_amt" class="form-control"
-											style="width: 196px;">
+										<input type="text" name="receipt_no" id="receipt_no" class="form-control" style="width: 196px;" readonly>
 									</div>
 								</div>
 							</div>
 							<br>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Received In<span
-									class="text-red">*</span></label>
+								<label class="col-sm-3 control-label">Received Amount<span class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<select name="pay_mode" class="form-control" id="received_in"
-											required style="width: 196px;">
+										<input type="number" id="received_amt" name="received_amt" class="form-control" style="width: 196px;">
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Received In<span class="text-red">*</span></label>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<select name="pay_mode" class="form-control" id="received_in" required style="width: 196px;">
 											<option value="Cheque">Cheque</option>
 											<option value="Cash">Cash</option>
 										</select>
@@ -127,8 +134,7 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Transaction/Cheque
-									Status<span class="text-red">*</span>
+								<label class="col-sm-3 control-label">Transaction/Cheque Status<span class="text-red">*</span>
 								</label>
 								<div class="col-sm-3">
 									<div class="input-group">
@@ -147,28 +153,22 @@
 								</label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<input type="date" id="trans_date" name="trans_date" class="form-control"
-											style="width: 196px;">
+										<input type="date" id="trans_date" name="trans_date" class="form-control" style="width: 196px;">
 									</div>
 								</div>
 							</div>
 							<br>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Received By<span
-									class="text-red">*</span></label>
+								<label class="col-sm-3 control-label">Received By<span class="text-red">*</span></label>
 								<div class="col-sm-3">
 									<div class="input-group">
-										<select name="received_by" class="form-control" id="enq_taken"
-											required style="width: 196px;">
-
+										<select name="received_by" class="form-control" id="enq_taken" required style="width: 196px;">
 										</select>
 									</div>
 								</div>
 							</div>
-							<br> <input type="submit" id="receipt"
-								class="btn btn-success" value="Submit">
-								<input type="button" id="cancel"
-								class="btn btn-success" value="Cancel">
+							<br> <input type="submit" id="receipt" class="btn btn-info rec" value="Submit">
+								<input type="button" id="cancel" class="btn btn-info rec" value="Cancel">
 						</div>
 					</section>
 				</div>
@@ -189,13 +189,6 @@
 				</thead>
 			</table>
 		</form>
-
 	</div>
-	
-	<!-- <script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>	
-	<script
-		src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> -->
-
 </body>
 </html>
