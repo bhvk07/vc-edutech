@@ -508,5 +508,65 @@ public class AdmissionDAO {
 			Util.closeConnection(null, ps, con);
 		}
 	}
+
+	public void PromoteStudentFromAdmission(Admission admission) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		try {
+			con=Util.getDBConnection();
+			String query="insert into admission(`student_name`,`lname`,`fname`,`mname`,`uid`,`dob`,`gender`,`caste`"
+					+ ",`category`,`language`,"
+					+ "`contact`,`father_cont`,`mother_cont`,`address`,`pin`"
+					+ ",`email`,`w_app_no`,`enq_taken_by`,`adm_fees_pack`,"
+					+ "`status`,`date`,`Rollno`,`regno`,`invoice_no`,`standard`,`division`,`admission_date`,`acad_year`,`join_date`,`fees`,"
+					+ "`fees_type_details`,`discount`,`paid_fees`,`remain_fees`,`created_date`,`branch`,`enq_no`)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			ps=con.prepareStatement(query);
+			ps.setString(1, admission.getStudent_name());
+			ps.setString(2, admission.getLname());
+			ps.setString(3, admission.getFname());
+			ps.setString(4, admission.getMname());
+			ps.setString(5, admission.getUid());
+			ps.setString(6, admission.getDob());
+			ps.setString(7, admission.getGender());
+			ps.setString(8, admission.getCaste());
+			ps.setString(9, admission.getCategory());
+			ps.setString(10, admission.getLanguage());
+			ps.setString(11, admission.getContact());
+			ps.setString(12, admission.getFather_cont());
+			ps.setString(13, admission.getMother_cont());
+			ps.setString(14, admission.getAddress());
+			ps.setString(15, admission.getPin());
+			ps.setString(16, admission.getEmail());
+			ps.setString(17, admission.getW_app_no());
+			ps.setString(18, admission.getEnq_taken_by());
+			ps.setString(19, admission.getAdm_fees_pack());
+			ps.setString(20, admission.getStatus());
+			ps.setString(21, admission.getDate());
+			ps.setString(22, admission.getRollno());
+			ps.setString(23, admission.getRegno());
+			ps.setString(24, admission.getInvoice_no());
+			ps.setString(25, admission.getStandard());
+			ps.setString(26, admission.getDivision());
+			ps.setString(27, admission.getAdmission_date());
+			ps.setString(28, admission.getAcad_year());
+			ps.setString(29, admission.getJoin_date());
+			ps.setLong(30, admission.getFees());
+			ps.setString(31, admission.getFeesDetails());
+			ps.setLong(32, admission.getDisccount());
+			ps.setLong(33, admission.getPaid_fees());
+			ps.setLong(34, admission.getRemain_fees());
+			ps.setString(35, Util.currentDate());
+			ps.setString(36, admission.getBranch());
+			ps.setLong(37, admission.getEnq_no());
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		finally {
+			Util.closeConnection(null, ps, con);
+		}
+	}
 		
 }

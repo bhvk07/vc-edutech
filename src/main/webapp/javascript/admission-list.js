@@ -46,6 +46,15 @@ $(document).ready(function() {
 			}
 		});
 	});
+	$('#ADD_NEW').click(function() {
+		$('table .cbCheck').each(function(i, chk) {
+			if (chk.checked) {
+				var id = $(this).val();
+				getAdmissionPromoteData(id)
+			}
+		});
+		window.location.href = "admission.html";
+	});
 	$('#Viewbtn').click(function(e) {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked) {
@@ -142,6 +151,70 @@ function getStudReceiptList(rno) {
 			errorCallback);
 	return false;
 }
+function getAdmissionPromoteData(id) {
+	var admissionPromoteData;
+	function callback(responseData, textStatus, request) {
+
+		var feesData = responseData.feesDetails.split(",");
+		
+		var feesDetails = "feesDetails";
+		for (var i = 0; i < feesData.length; i++) {
+			feesDetails += "-" + feesData[i];
+		}
+		var installment = responseData.installment;
+
+		// var monthly=installment.monthly_pay.split(",");
+		var monthlypay = "monthlypay";
+		for (var i = 0; i < installment.monthly_pay.length; i++) {
+			monthlypay += "-" + installment.monthly_pay[i];
+		}
+
+		// var due=installment.due_date.split(",");
+		var due_date = "due_date";
+		for (var i = 0; i < installment.due_date.length; i++) {
+			due_date += "|" + installment.due_date[i];
+		}
+
+		// var title=installment.fees_title.split(",");
+		var fees_title = "fees_title";
+		for (var i = 0; i < installment.fees_title.length; i++) {
+			fees_title += "-" + installment.fees_title[i];
+		}
+		
+		var paid_fees = "paid_fees";
+		for (var i = 0; i < installment.paid.length; i++) {
+			paid_fees += "-" + installment.paid[i];
+		}
+		
+		/*admissionPromoteData.push(monthlypay);
+		admissionPromoteData.push(due_date);
+		admissionPromoteData.push(fees_title);
+		admissionPromoteData.push(paid_fees);*/
+		admissionPromoteData=responseData.id+":"+responseData.student_name+":"+responseData.lname+":"+
+		responseData.fname+":"+responseData.mname+":"+responseData.uid+":"+responseData.dob+":"+responseData.gender+":"+
+		responseData.caste+":"+responseData.category+":"+responseData.language+":"+responseData.contact+":"+
+		responseData.father_cont+":"+responseData.mother_cont+":"+responseData.address+":"+
+		responseData.pin+":"+responseData.email+":"+responseData.w_app_no+":"+responseData.enq_taken_by+":"+
+		responseData.adm_fees_pack+":"+responseData.status+":"+responseData.date+":"+responseData.standard+":"+
+		responseData.division+":"+responseData.admission_date+":"+responseData.acad_year+":"+responseData.join_date+":"+
+		feesDetails+":"+responseData.fees+":"+responseData.enq_no+":"+responseData.disccount+":"+
+		responseData.paid_fees+":"+responseData.remain_fees+":"+responseData.Branch+":"+monthlypay+":"+due_date+":"+
+		fees_title+":"+paid_fees;
+
+		sessionStorage.setItem("admissionPromoteData", admissionPromoteData);
+		window.location.href = "admission.html";
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/Admission/getAdmissionDetailsOfSpecificStudent?id="
+			+ id + "&branch=" + branchSession;
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+			errorCallback);
+	return false;
+}
 function getAdmissionDetailsOfSpecificStudent(id) {
 	var admissionData;
 	function callback(responseData, textStatus, request) {
@@ -181,7 +254,7 @@ function getAdmissionDetailsOfSpecificStudent(id) {
 		// var due=installment.due_date.split(",");
 		var due_date = "due_date";
 		for (var i = 0; i < installment.due_date.length; i++) {
-			due_date += "-" + installment.due_date[i];
+			due_date += "|" + installment.due_date[i];
 		}
 
 		// var title=installment.fees_title.split(",");
@@ -199,6 +272,8 @@ function getAdmissionDetailsOfSpecificStudent(id) {
 		admissionData.push(due_date);
 		admissionData.push(fees_title);
 		admissionData.push(paid_fees);
+		admissionData.push(responseData.standard);
+		admissionData.push(responseData.enq_no);
 		sessionStorage.setItem("admission", admissionData);
 		window.location.href = "admission.html";
 	}

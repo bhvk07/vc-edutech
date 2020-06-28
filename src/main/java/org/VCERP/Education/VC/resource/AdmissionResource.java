@@ -88,7 +88,7 @@ public class AdmissionResource {
 			admission.setEnq_no(Integer.parseInt(personal[18]));
 			admission.setBranch(branch);
 			String standard=getStandard(f_pack[0], branch);
-			String[] hyphenSeperatedStd=Util.hyphenSeperatedString(standard);
+			String[] hyphenSeperatedStd=Util.commaSeperatedString(standard);
 			admission.setStandard(hyphenSeperatedStd[0]);
 			admission.setFeesDetails(feestypeDetails);
 
@@ -390,7 +390,6 @@ public class AdmissionResource {
 		Admission admission = null;
 		AdmissionController controller = null;
 		try {
-			System.out.println(enq_taken_by+division+status+date+Rollno+regno+invoice_no+admission_date+acad_year+join_date+branch);
 			admission = new Admission();
 			admission.setEnq_taken_by(enq_taken_by);
 			admission.setDivision(division);
@@ -406,6 +405,79 @@ public class AdmissionResource {
 			controller = new AdmissionController();
 			controller.EditStudentAdmission(admission);
 			return Util.generateResponse(Status.ACCEPTED, "Data Successfully Edited").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Unable to completed the process.").build();
+	}
+	@PermitAll
+	@POST
+	@JWTTokenNeeded
+	@Path("/PromoteStudent")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response PromoteStudent(@FormParam("stud_details") String student_name,
+			@FormParam("enq_taken_by") String enq_taken_by, @FormParam("adm_fees_pack") String adm_fees_pack,
+			@FormParam("division") String division, @FormParam("status") String status, @FormParam("date") String date,
+			@FormParam("Rollno") String Rollno, @FormParam("regno") String regno,
+			@FormParam("invoice_no") String invoice_no, @FormParam("admission_date") String admission_date,
+			@FormParam("acad_year") String acad_year, @FormParam("join_date") String join_date,
+			@FormParam("personalDetails") String personalDetails, 
+			@FormParam("installment") String installment) {
+		String[] colanSeperatedPersonalDetails=Util.colanSeperatedString(personalDetails);
+		String[] pipeSeperatedFeesPack=Util.symbolSeperatedString(adm_fees_pack);
+		Admission admission = null;
+		AdmissionController controller = null;
+		try {
+			admission = new Admission();
+			 admission.setStudent_name(colanSeperatedPersonalDetails[1]);
+			admission.setLname(colanSeperatedPersonalDetails[2]);
+			admission.setFname(colanSeperatedPersonalDetails[3]);
+			admission.setMname(colanSeperatedPersonalDetails[4]);
+			admission.setUid(colanSeperatedPersonalDetails[5]);
+			admission.setDob(colanSeperatedPersonalDetails[6]);
+			admission.setGender(colanSeperatedPersonalDetails[7]);
+			admission.setCaste(colanSeperatedPersonalDetails[8]);
+			admission.setCategory(colanSeperatedPersonalDetails[9]);
+			admission.setLanguage(colanSeperatedPersonalDetails[10]);
+			admission.setContact(colanSeperatedPersonalDetails[11]);
+			admission.setFather_cont(colanSeperatedPersonalDetails[12]);
+			admission.setMother_cont(colanSeperatedPersonalDetails[13]);
+			admission.setAddress(colanSeperatedPersonalDetails[14]);
+			admission.setPin(colanSeperatedPersonalDetails[15]);
+			admission.setEmail(colanSeperatedPersonalDetails[16]);
+			admission.setW_app_no(colanSeperatedPersonalDetails[17]);
+			admission.setEnq_taken_by(enq_taken_by);
+			admission.setAdm_fees_pack(pipeSeperatedFeesPack[0]);
+			admission.setStatus(status);
+			admission.setDate(date);
+			admission.setRollno(Rollno);
+			admission.setRegno(regno);
+			admission.setInvoice_no(invoice_no);
+			admission.setDivision(division);
+			admission.setAdmission_date(admission_date);
+			admission.setAcad_year(acad_year);
+			admission.setJoin_date(join_date);
+			admission.setFees(Integer.parseInt(colanSeperatedPersonalDetails[27].trim()));
+			admission.setFeesDetails(colanSeperatedPersonalDetails[26]);
+			admission.setDisccount(Integer.parseInt(colanSeperatedPersonalDetails[29].trim()));
+			admission.setPaid_fees(Integer.parseInt(colanSeperatedPersonalDetails[30].trim()));
+			admission.setRemain_fees(Integer.parseInt(colanSeperatedPersonalDetails[31].trim()));
+			admission.setBranch(colanSeperatedPersonalDetails[32]);
+			admission.setEnq_no(Integer.parseInt(colanSeperatedPersonalDetails[28].trim()));
+			
+			String standard=getStandard(pipeSeperatedFeesPack[0], colanSeperatedPersonalDetails[32]);
+			String currentStandard=colanSeperatedPersonalDetails[22];
+			String[] commaSepereatedStandard=Util.commaSeperatedString(standard);
+			for(int i=0;i<commaSepereatedStandard.length;i++){
+				if(commaSepereatedStandard[i].matches(currentStandard)){
+					admission.setStandard(commaSepereatedStandard[i+1]);
+				}
+			}
+
+			controller = new AdmissionController();
+			controller.PromoteStudentFromAdmission(admission);
+			return Util.generateResponse(Status.ACCEPTED, "Student Successfully Promoted.").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);

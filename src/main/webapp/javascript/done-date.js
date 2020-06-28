@@ -83,8 +83,7 @@ $(document)
 							//alert("formatted"+formatted_dt);
 							document.getElementsByClassName("display-date")[j - 1]
 									.setAttribute("value", formatted_dt);
-							var brk = document.getElementsByClassName("d-row")[j - 1]
-									.setAttribute("value", res);
+							var brk = document.getElementsByClassName("f-row")[j - 1].setAttribute("value", res);
 
 						}
 

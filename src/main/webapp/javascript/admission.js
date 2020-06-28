@@ -6,12 +6,11 @@ var today = new Date();
 var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-0'
 		+ today.getDate();
 var admitted_fees_pack;
-var request;
+var request="Save";
 $(document)
 		.ready(
 				function() {
 					validateLogin();
-					CurrentAcadYear();
 					getAcademicYear();
 					FetchAllEmployee();
 					getAutoIncrementedDetails();
@@ -23,7 +22,7 @@ $(document)
 					$("#enq_taken").val(user);
 					$("#current_date").val(date);
 					$(".branch").val(branchSession);
-
+					CurrentAcadYear();
 					/*
 					 * jQuery.validator.addMethod("lettersonly", function(value,
 					 * element) { return this.optional(element) ||
@@ -123,19 +122,29 @@ $(document)
 						document.getElementById('add_installment').disabled=true;
 						loadAdmissionData();
 					}
+					if (sessionStorage.getItem("admissionPromoteData") != null) {
+						request="Promote";
+						document.getElementById('addrow').disabled=true;
+						document.getElementById('add_installment').disabled=true;
+						loadPromoteData();
+					}
 
 					$("#enq_stud").focusout(function() {
 						deletefeesTypeTableRow();
 						var id = document.getElementById('enq_stud').value;
 						event.preventDefault();
-						console.log(id);
 						SearchStudent(id);
 					});
 					$("#admission-form").submit(function() {
 						event.preventDefault();
 						var status=compareInstallAmtAndReceivedAmt();
 						if(status==false){
-							StudentAdmission();	
+							if(request=="Save" || request=="Edit"){
+								StudentAdmission();	
+							}else{
+								promoteStudent();
+							}
+								
 						}
 					});
 					$("#feestypeform").submit(function() {
@@ -297,7 +306,7 @@ function SearchStudent(id) {
 				+ responseData.mother_cont + ":" + responseData.address + ":"
 				+ responseData.pin + ":" + responseData.email + ":"
 				+ responseData.w_app_no + ":" + responseData.sname + ":"
-				+ responseData.stud_cont + ":" + responseData.branch
+				+ responseData.stud_cont + ":" + responseData.branch+":"
 				+ responseData.enq_no;
 
 		var feespack = responseData.feesPack;
@@ -399,13 +408,10 @@ function StudentAdmission() {
 		}else{
 		/*	var any_install_status=checkAnyInstallmentPaid();
 			if(any_install_status==false){
-*/				formData = $('#admission-form').serialize()+"&branch="+branchSession /*+ "&personalDetails="
-				+ enqData + "&feestypeDetails=" + feestypeDetails
-				+ "&installment=" + installment + "&newAmt=" + newAmt*/;
+*/				formData = $('#admission-form').serialize()+"&branch="+branchSession ;
 				relativeUrl = "/Admission/EditStudentAdmission";
-			}
-//		}
-		alert(formData);
+		}
+//	}
 		ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 				errorCallback);
 	}
@@ -413,14 +419,12 @@ function StudentAdmission() {
 }
 
 function checkInstallmentDate(installment, admission_date) {
-	alert("success" + admission_date);
 	var status = false;
 	installment = installment.split(",");
 	for (var i = 1; i < installment.length; i++) {
 		var installmentDate = installment[i].split("|");
 
 		if (installmentDate[0] < admission_date) {
-			alert("in" + installmentDate[0] + " " + admission_date)
 			status = true;
 		}
 	}
@@ -582,7 +586,6 @@ function deletefeesTypeTableRow() {
 	}
 }
 function deleteRoWFeesPackage2() {
-	alert("hrtr");
 	var table = document.getElementById("feestypetable2");
 	var rowCount = table.rows.length - 1
 	var i = 1;
@@ -737,9 +740,8 @@ function loadAdmissionData() {
 			+ htmlCode
 			+ '</select> <span class="input-group-addon" id="bhvk"><button type="button" id="feestype" data-toggle="modal" data-target="#feestypeModal" style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">+</button></span></div></div></td><td><input type="text" class="form-control f-row" id="amt_installment" name="amt_installment"></td><td><input type="text" class="form-control"id="r_installment" name="r_installment" disabled></td></tr>';
 	var monthly = admissionData[18].split("-");
-	var due = admissionData[19].split("-");
+	var due = admissionData[19].split("|");
 	var title = admissionData[20].split("-");
-	alert(admissionData[21])
 	var remain = admissionData[21].split("-");
 	for (var i = 1; i < monthly.length - 1; i++) {
 		$("table #i-details").append(html_Code);
@@ -772,5 +774,115 @@ function CurrentAcadYear() {
 	var relativeUrl = "/AcademicYear/CurrenetAcadYear?branch=" + branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,
 			errorCallback);
+	return false;
+}
+function loadPromoteData(){
+	var admissionData = sessionStorage.getItem("admissionPromoteData");
+	console.log(admissionData);
+	admissionData = admissionData.split(":");
+	$("#stud_details").val(
+			admissionData[0] + "|" + admissionData[1] + " " + admissionData[3]
+					+ " " + admissionData[2] + "|" + admissionData[11] + "|"
+					+ "Admitted");
+	$("#enq_taken").val(admissionData[18]);
+	$(".fees_package").val(admissionData[19] + "|" + admissionData[32]);
+	$("#status").val(admissionData[20]);
+	$("#division").val(admissionData[23]);
+
+	feesdetails = admissionData[27].split("-");
+	for (var i = 1; i < feesdetails.length - 1; i++) {
+		$("table #fee-details").append(html);
+	}
+	var table = document.getElementById("feestypetable");
+	for (var i = 1; i < feesdetails.length; i++) {
+		feespipeseperated = feesdetails[i].split("|");
+		for (var j = 0; j < feespipeseperated.length; j++) {
+			$(table.rows.item(i).cells[0]).find('select').val(
+					feespipeseperated[0]);
+			$(table.rows.item(i).cells[1]).find('input').val(
+					feespipeseperated[1]);
+			$(table.rows.item(i).cells[2]).find('input').val(
+					feespipeseperated[2]);
+			$(table.rows.item(i).cells[5]).find('input').val(
+					feespipeseperated[3]);
+		}
+	}
+	document.getElementById('grand-t').value = admissionData[28];
+	/*
+	 * if (admissionData[18] == null) {
+	 * document.getElementById('amt_installment').value = document
+	 * .getElementById('grand-t').value; } else {
+	 */
+	var html_Code = '<tr><td><div class="form-group"><div class="input-group date form_date" id="demo" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"><input class="form-control display-date" size="16" id="display" type="text" value="" readonly><span class="input-group-addon"><span class="fa fa-remove"></span></span><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div><input type="hidden" id="dtp_input2" class="final" value="" /><br/></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"></span></div></div></td><td><input type="number" class="form-control f-row" id="amt_installment_'
+	+ i
+	+ '" name="amt_installment" ></td><td><input type="text" class="form-control r_installment" id="r_installment" name="r_installment" value="0" disabled></td></tr>';
+	var monthly = admissionData[34].split("-");
+	var due = admissionData[35].split("|");
+	var title = admissionData[36].split("-");
+	var remain = admissionData[37].split("-");
+	for (var i = 1; i < monthly.length - 1; i++) {
+		$("table #i-details").append(html_Code);
+	}
+	var total_monthly_pay = 0;
+	var table = document.getElementById("installment_table");
+	for (var i = 2; i <= monthly.length; i++) {
+		$(table.rows.item(i - 1).cells[0]).find('input').val(due[i - 1]);
+		$(table.rows.item(i - 1).cells[1]).find('select').val(title[i - 1]);
+		$(table.rows.item(i - 1).cells[2]).find('input').val(monthly[i - 1]);
+		$(table.rows.item(i - 1).cells[3]).find('input').val(remain[i - 1]);
+	}
+}
+function promoteStudent(){
+	var table = document.getElementById("installment_table");
+	var rowCount = $('#installment_table tr').length;
+	var installment = "installment details";
+	for (var i = 1; i < rowCount - 1; i++) {
+		var date = $(table.rows.item(i).cells[0]).find('input').val();
+		var fees_title = $(table.rows.item(i).cells[1]).find('select').val();
+		var amt = $(table.rows.item(i).cells[2]).find('input').val();
+		var received = $(table.rows.item(i).cells[3]).find('input').val();
+		if(parseInt(received)<parseInt(amt)){
+			installment = installment + "," + date + "|" + fees_title + "|" + amt;
+		}
+	}
+/*	var table = document.getElementById("feestypetable");
+	var rowCount = $('#feestypetable tr').length;
+	var feestypeDetails = new Array();*/
+/*	var disc = 0;
+	var g_total = 0;
+	var newAmt;
+*/	/*for (var i = 1; i < rowCount; i++) {
+		var fees_title = $(table.rows.item(i).cells[0]).find('select').val();
+		var amt = $(table.rows.item(i).cells[1]).find('input').val();
+		var discount = $(table.rows.item(i).cells[2]).find('input').val();
+		var total = $(table.rows.item(i).cells[5]).find('input').val();
+		feestypeDetails.push(fees_title + "|" + amt + "|" + discount + "|"
+				+ total);*/
+/*		disc = disc + parseInt(discount);
+		g_total = g_total + parseInt(total);*/
+//	}
+//	newAmt = disc + "|" + g_total;
+	function callback(responseData, textStatus, request) {
+		var mes = responseData.message;
+		showNotification("success", mes);
+	}
+	function errorCallback(responseData, textStatus, request) {
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
+		if(request="Edit"){
+			clearSession();
+		}
+	}
+	var personalDetails=sessionStorage.getItem("admissionPromoteData");
+	var status = checkInstallmentDate(installment, document
+			.getElementById("admission_date").value);
+	if (status == false) {
+		var httpMethod = "POST";
+		var formData = $('#admission-form').serialize() + "&personalDetails="
+				+ personalDetails + "&installment=" + installment ;
+		var relativeUrl = "/Admission/PromoteStudent";
+		ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+				errorCallback);
+	}
 	return false;
 }

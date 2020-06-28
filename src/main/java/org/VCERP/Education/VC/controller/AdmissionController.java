@@ -58,4 +58,8 @@ public class AdmissionController {
 		AdmissionDAO dao=new AdmissionDAO();
 		dao.EditStudentAdmission(admission);
 	}
+	public void PromoteStudentFromAdmission(Admission admission) {
+		AdmissionDAO dao=new AdmissionDAO();
+		dao.PromoteStudentFromAdmission(admission);
+	}
 }
