@@ -13,15 +13,22 @@ var dates;
 var splitted_start_date;
 var splitted_end_date;
 $(document).ready(function(){
-	 var start = moment().startOf('month');
+	 	var start = moment().startOf('month');
 	    var end = moment().endOf('month');
-
+	    /*const Yesterday = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
+	    alert("yes"+Yesterday);*/
 	    function cb(start, end) {
-	        $('#e2').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+	        $('#e2').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD')).trigger('change');
+	        
 	    }
 	    $('#e2').daterangepicker({
 	        startDate: start,
+	        
+	        
 	        endDate: end,
+	        locale: {
+                format: 'YYYY/MM/DD'
+              },
 	        ranges: {
 	           'Today': [moment(), moment()],
 	           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -32,7 +39,7 @@ $(document).ready(function(){
 	        }
 	    }, cb);
 
-	    cb(start, end);
+	    //cb(start, end);
 
 	
 /*	$("#e2").daterangepicker({
@@ -50,7 +57,7 @@ $(document).ready(function(){
 	 });*/
 	//getSalesCard();
 	
-	$('#e2').on('change', function()
+	$('#e2').change(function()
 	{ 
 		alert("hie");
 		expDate = new Array();
@@ -60,26 +67,37 @@ $(document).ready(function(){
 		adm_date = new Array();
 		adm_amt =  new Array();
 		
-		
-		var d_val = $(this).val().split(',');
+		var d_val = $(this).val().split('-');
+		//var d_val = $(this).val().split(',');
 		alert("date="+d_val);
+		var start = d_val[0];
+		alert("start"+start);
+		var end = d_val[1];
+		alert("end"+end);
+		const search = '/';
+		const replaceWith = '-';
 		
-				const search = '"';
-				const replaceWith = '';
-			  var start = d_val[0]; 
-			  var new_s_date = start.split(':');
+		var splitted_start_date = start.split(search).join(replaceWith);
+		alert("splitted_start_date"+splitted_start_date);
+		var splitted_end_date = end.split(search).join(replaceWith);
+		alert("splitted_end_date"+splitted_end_date);
+				/*const search = '"';
+				const replaceWith = '';*/
+			 // var start = d_val[0];
+			  //alert("start"+start);
+			  //var new_s_date = start.split(':');
 			 
-			  var trimmed_start_date = new_s_date[1];
+			  //var trimmed_start_date = new_s_date[1];
 			  
-			  var splitted_start_date = trimmed_start_date.split(search).join(replaceWith);
+			  //var splitted_start_date = trimmed_start_date.split(search).join(replaceWith);
 			  //alert(splitted_start_date);
 			  
-			  var end = d_val[1];
-			  var new_e_date = end.split(':');
-			  var e_date = new_e_date[1];
-			  var final_e_split = e_date.split('}');
-			  var trimmed_end_date = final_e_split[0];
-			  var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
+			  //var end = d_val[1];
+			  //var new_e_date = end.split(':');
+			 // var e_date = new_e_date[1];
+			  //var final_e_split = e_date.split('}');
+			  //var trimmed_end_date = final_e_split[0];
+			  //var splitted_end_date = trimmed_end_date.split(search).join(replaceWith);
 			  //alert(splitted_end_date);
 			  getExpenseChart(splitted_start_date, splitted_end_date);
 			 getReceiptChart(splitted_start_date, splitted_end_date);
