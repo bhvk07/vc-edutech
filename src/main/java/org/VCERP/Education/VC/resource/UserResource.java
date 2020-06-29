@@ -221,7 +221,7 @@ public class UserResource {
 	@Path("/getAllRole")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllRole(@QueryParam("branch") String branch){
-		ArrayList<String> roles=new ArrayList<>();
+		ArrayList<User> roles=new ArrayList<>();
 		UserController controller=new UserController();
 		roles=controller.getAllRole(branch);
 		if(roles!=null){

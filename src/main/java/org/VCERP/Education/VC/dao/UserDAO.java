@@ -260,19 +260,22 @@ public class UserDAO {
 		return status;
 	}
 
-	public ArrayList<String> getAllRole(String branch) {
+	public ArrayList<User> getAllRole(String branch) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
-		ArrayList<String> roles=new ArrayList<>();
+		User user=new User();
+		ArrayList<User> roles=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query = "select DISTINCT(`role`) from user_db where branch=?";
+			String query = "select DISTINCT(`role`),created_date from user_db where branch=?";
 			ps = con.prepareStatement(query);
 			ps.setString(1,branch);
 			rs=ps.executeQuery();
 			while(rs.next()){
-				roles.add(rs.getString(1));
+				user.setRole(rs.getString(1));
+				user.setCreated_date(rs.getString(2));
+				roles.add(user);
 			}
 		}
 		catch (Exception e) {

@@ -349,8 +349,8 @@ function checkUserLevel(){
 function fetchAllRole(){
 	function callback(responseData, textStatus, request) {
 		for ( var i in responseData) {
-			var htmlCode = '<option value="' + responseData[i] + '" >'
-					+ responseData[i] + '</option>';
+			var htmlCode = '<option value="' + responseData[i].role + '" >'
+					+ responseData[i].role + '</option>';
 			$('#role').append(htmlCode);
 		}
 
