@@ -28,15 +28,15 @@
  border-color:#435d7d;
 }
 .panel-heading{
-/* background-color:#435d7d !important;
-border-color:#435d7d */
-background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d5064, #435d75);
+ background-color:#435d7d !important;
+ border-color:#435d7d ;
+ border-radius: 0px !important;
 }
 
 .rec{
-/* 	background-color:#435d7d !important ;
-	border-color: #435d7d !important; */
-	background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d5064, #435d75);
+    background-color:#435d7d !important ;
+	border-color: #435d7d !important;
+
 }
 #receipt:hover{
 	background-color:#53b700 !important ;
@@ -47,7 +47,27 @@ background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d50
 	background-color:#d43f3a !important ;
 	border-color:#d43f3a !important;
 }
-
+ .panel{
+    border-radius: 0px !important;
+    }
+    
+    .btn{
+    	 border-radius: 0px !important;
+    	
+    }
+    .controls{
+    	 padding-right: 0px !important;
+    }
+    .input-group-addon{
+     border-radius: 0px !important;
+    }
+    .form-control{
+     border-radius: 0px !important;
+	}
+#InstallmentTable
+{
+width:screen-size;
+}
 </style>
 	<script>
 	$(function() {
@@ -173,6 +193,7 @@ background-image: linear-gradient(to right top, #292d33, #303843, #374453, #3d50
 					</section>
 				</div>
 			</div>
+			<div class="col-md-12">
 			<table id="InstallmentTable" style="display: none"
 				class="table table-bordered table-hover table-condensed table-lg">
 				<thead>

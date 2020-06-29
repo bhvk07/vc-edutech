@@ -103,10 +103,10 @@ $(document).ready(function() {
 		e.preventDefault();
 		 InsertTimeSlot();
 	});
-	$('#add').click(function() {
+	$('#addBtn').click(function() {
 		getTimeTableDetails();
 	});
-	$('#edit').click(function(e) {
+	$('#editBtn').click(function(e) {
 		removeTableRow();
 		var created_date,title;
 		var table = $("#timetable_table").DataTable();
@@ -120,7 +120,7 @@ $(document).ready(function() {
 		  e.preventDefault();
 		  loadTimeTable(created_date,title);
 	});
-	$('#delete').click(function(e) {
+	$('#deleteBtn').click(function(e) {
 		var created_date,title;
 		var table = $("#timetable_table").DataTable();
 		  $('table .cbCheck').each(function(i, chk) { 

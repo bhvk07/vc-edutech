@@ -74,7 +74,7 @@ $(document).ready(function() {
 	$("#attendance_stat_form").submit(function(e){
 		getEmployeeAttendanceStat(e);
 	})
-	$("#view").click(function(e){
+	$("#btn-view").click(function(e){
 		var table = $("#EmpAttendance_stat_table").DataTable();
 		$("table .cbCheckAbs").each(function(i,chk){
 			if (chk.checked==true) {
