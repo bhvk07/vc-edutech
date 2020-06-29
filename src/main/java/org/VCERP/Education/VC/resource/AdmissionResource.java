@@ -428,6 +428,8 @@ public class AdmissionResource {
 		String[] pipeSeperatedFeesPack=Util.symbolSeperatedString(adm_fees_pack);
 		Admission admission = null;
 		AdmissionController controller = null;
+		AcademicYearController acadcontroller = null;
+		AttendanceController studcontroller = null;
 		try {
 			admission = new Admission();
 			 admission.setStudent_name(colanSeperatedPersonalDetails[1]);
@@ -458,25 +460,42 @@ public class AdmissionResource {
 			admission.setAdmission_date(admission_date);
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
-			admission.setFees(Integer.parseInt(colanSeperatedPersonalDetails[27].trim()));
-			admission.setFeesDetails(colanSeperatedPersonalDetails[26]);
-			admission.setDisccount(Integer.parseInt(colanSeperatedPersonalDetails[29].trim()));
-			admission.setPaid_fees(Integer.parseInt(colanSeperatedPersonalDetails[30].trim()));
-			admission.setRemain_fees(Integer.parseInt(colanSeperatedPersonalDetails[31].trim()));
-			admission.setBranch(colanSeperatedPersonalDetails[32]);
-			admission.setEnq_no(Integer.parseInt(colanSeperatedPersonalDetails[28].trim()));
+			admission.setFees(Integer.parseInt(colanSeperatedPersonalDetails[28].trim()));
+			admission.setFeesDetails(colanSeperatedPersonalDetails[27]);
+			admission.setDisccount(Integer.parseInt(colanSeperatedPersonalDetails[30].trim()));
+			admission.setPaid_fees(Integer.parseInt(colanSeperatedPersonalDetails[31].trim()));
+			admission.setRemain_fees(Integer.parseInt(colanSeperatedPersonalDetails[32].trim()));
+			admission.setBranch(colanSeperatedPersonalDetails[33]);
+			admission.setEnq_no(Integer.parseInt(colanSeperatedPersonalDetails[29].trim()));
 			
-			String standard=getStandard(pipeSeperatedFeesPack[0], colanSeperatedPersonalDetails[32]);
+			String standard=getStandard(pipeSeperatedFeesPack[0], colanSeperatedPersonalDetails[33]);
 			String currentStandard=colanSeperatedPersonalDetails[22];
 			String[] commaSepereatedStandard=Util.commaSeperatedString(standard);
+			if(commaSepereatedStandard.length>1){
 			for(int i=0;i<commaSepereatedStandard.length;i++){
 				if(commaSepereatedStandard[i].matches(currentStandard)){
 					admission.setStandard(commaSepereatedStandard[i+1]);
+					}
 				}
+			}else{
+				admission.setStandard(commaSepereatedStandard[0]);
 			}
-
+			String[] commaSeperatedInstallment = Util.commaSeperatedString(installment);
+			if (commaSeperatedInstallment.length > 1) {
+				saveInstallment(commaSeperatedInstallment, colanSeperatedPersonalDetails[33],admission);
+			}
+			
 			controller = new AdmissionController();
 			controller.PromoteStudentFromAdmission(admission);
+			
+			controller.updateOldAdmissionStatus(colanSeperatedPersonalDetails[0].trim(), colanSeperatedPersonalDetails[33]);
+			
+			studcontroller=new AttendanceController();
+			studcontroller.addNewAttendanceColumn(Rollno);
+			
+			acadcontroller = new AcademicYearController();
+			acadcontroller.updateAcademicDetails(Rollno, invoice_no, regno, acad_year, colanSeperatedPersonalDetails[33]);
+			
 			return Util.generateResponse(Status.ACCEPTED, "Student Successfully Promoted.").build();
 		} catch (Exception e) {
 			e.printStackTrace();

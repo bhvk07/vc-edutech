@@ -3,8 +3,7 @@ var enqData;
 var standardData;
 var branchData;
 var today = new Date();
-var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-0'
-		+ today.getDate();
+var date = today.getFullYear()  + (today.getMonth() + 1) + today.getDate();
 var admitted_fees_pack;
 var request="Save";
 $(document)
@@ -124,8 +123,6 @@ $(document)
 					}
 					if (sessionStorage.getItem("admissionPromoteData") != null) {
 						request="Promote";
-						document.getElementById('addrow').disabled=true;
-						document.getElementById('add_installment').disabled=true;
 						loadPromoteData();
 					}
 
@@ -530,6 +527,7 @@ function getFeesPackageDetails(pack) {
 	function callback(responseData, textStatus, request) {
 		var packdetails = responseData.fees_details;
 		deletefeesTypeTableRow();
+		deleteInstallmentTableRow();
 		createFeesTypeRow(packdetails, responseData.feesPackage + "|"
 				+ responseData.total_amt);
 	}
@@ -585,6 +583,16 @@ function deletefeesTypeTableRow() {
 		rowCount = rowCount - 1;
 	}
 }
+function deleteInstallmentTableRow(){
+	var table = document.getElementById("installment_table");
+	var rowCount = table.rows.length - 1
+	var i = 2;
+	while (rowCount > i) {
+		document.getElementById("installment_table").deleteRow(rowCount-1);
+		rowCount = rowCount - 1;
+	}	
+}
+
 function deleteRoWFeesPackage2() {
 	var table = document.getElementById("feestypetable2");
 	var rowCount = table.rows.length - 1
@@ -757,7 +765,12 @@ function loadAdmissionData() {
 }
 
 function clearSession() {
-	sessionStorage.removeItem("admission");
+	if(request=="Edit"){
+		sessionStorage.removeItem("admission");
+	}else if(request=="Promote"){
+		sessionStorage.removeItem("admissionPromoteData");
+	}
+	request="Save";
 	window.location.href = "admission-list.html";
 }
 

@@ -72,7 +72,7 @@ $(document)
 
 						var day_res = output1.replace(/(\d+)(st|nd|rd|th)/,
 								"$1");
-
+						
 						for (j = 1; j <= no; j++) {
 
 							 dt.setMonth(dt.getMonth() + 1, day_res);
@@ -83,7 +83,8 @@ $(document)
 							//alert("formatted"+formatted_dt);
 							document.getElementsByClassName("display-date")[j - 1]
 									.setAttribute("value", formatted_dt);
-							var brk = document.getElementsByClassName("f-row")[j - 1].setAttribute("value", res);
+							
+							document.getElementsByClassName("f-row")[j - 1].setAttribute("value", res);
 
 						}
 
