@@ -8,10 +8,7 @@ import org.VCERP.Education.VC.model.Chart;
 
 public class ChartController {
 
-	public ArrayList<Chart> getChartData() {
-		ChartDAO dao=new ChartDAO();
-		return dao.getChartData();
-	}
+	
 	public ArrayList<Chart> getExpenseData(Chart ch, ArrayList<Chart> exp_chart) {
 		ChartDAO dao=new ChartDAO();
 		return dao.getExpenseData(ch, exp_chart);
@@ -31,14 +28,23 @@ public class ChartController {
 	}
 	
 	
-	public ArrayList<Chart> getSalesCard(String branch) {
+	public ArrayList<Chart> getSalesCard(Chart ch, ArrayList<Chart> sales_card) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getSalesCard(branch);
+		return dao.getSalesCard(ch, sales_card);
 	}
 	public ArrayList<Chart> getReceivedCard(Chart ch, ArrayList<Chart> received_card) {
 		ChartDAO dao=new ChartDAO();
 		return dao.getReceivedCard(ch, received_card);
 	}
 	
+	public ArrayList<Chart> getReceivableCard(Chart ch, ArrayList<Chart> receivable_card) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getReceivableCard(ch, receivable_card);
+	}
+	
+	public ArrayList<Chart> getNetIncomeCard(Chart ch, ArrayList<Chart> income_card) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getNetIncomeCard(ch, income_card);
+	}
 
 }

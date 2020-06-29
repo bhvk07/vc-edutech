@@ -15,8 +15,6 @@ var splitted_end_date;
 $(document).ready(function(){
 	 	var start = moment().startOf('month');
 	    var end = moment().endOf('month');
-	    /*const Yesterday = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
-	    alert("yes"+Yesterday);*/
 	    function cb(start, end) {
 	        $('#e2').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD')).trigger('change');
 	        
@@ -40,40 +38,47 @@ $(document).ready(function(){
 	    }, cb);
 
 	    //cb(start, end);
-
-	
-/*	$("#e2").daterangepicker({
-	     datepickerOptions : {
-	         numberOfMonths : 2
-	     },
-	     
 	    
-	     presetRanges: [{
-	         text: 'Today',
-	         dateStart: function() { return moment() },
-	         dateEnd: function() { return moment() }
-	     }]
-	    
-	 });*/
-	//getSalesCard();
+	    var curr_date = document.getElementById('e2').value;
+	    var curr_val = curr_date.split('-');
+	   
+	    var start = curr_val[0];
+	    var end = curr_val[1];
+	    const search = '/';
+		const replaceWith = '-';
+		var splitted_curr_sdate = start.split(search).join(replaceWith);
+		alert("splitted_curr_sdate"+splitted_curr_sdate);
+		var splitted_curr_edate = end.split(search).join(replaceWith);
+		alert("splitted_curr_edate"+splitted_curr_edate);
+		
+		
+		getExpenseChart(splitted_curr_sdate, splitted_curr_edate);
+		getConversionChart(splitted_curr_sdate,splitted_curr_edate);
+		getReceiptChart(splitted_curr_sdate, splitted_curr_edate);
+		getAdmissionChart(splitted_curr_sdate, splitted_curr_edate);
+		
+		getSalesCard(splitted_curr_sdate,splitted_curr_edate);
+		getReceivedCard(splitted_curr_sdate,splitted_curr_edate);
+		getReceivableCard(splitted_curr_sdate, splitted_curr_edate);
+		getNetIncomeCard(splitted_curr_sdate, splitted_curr_edate);
+		
+		
 	
 	$('#e2').change(function()
 	{ 
 		alert("hie");
-		expDate = new Array();
-		exp_amt = new Array(); 
-		rec_date = new Array();
-		rec_amt =  new Array();
-		adm_date = new Array();
-		adm_amt =  new Array();
+		//expDate = new Array();
+		//exp_amt = new Array();
+		//rec_date = new Array();
+		//rec_amt =  new Array();
+		//adm_date = new Array();
+		//adm_amt =  new Array();
 		
 		var d_val = $(this).val().split('-');
-		//var d_val = $(this).val().split(',');
+		
 		alert("date="+d_val);
 		var start = d_val[0];
-		alert("start"+start);
 		var end = d_val[1];
-		alert("end"+end);
 		const search = '/';
 		const replaceWith = '-';
 		
@@ -81,11 +86,17 @@ $(document).ready(function(){
 				alert("splitted_start_date"+splitted_start_date);
 				var splitted_end_date = end.split(search).join(replaceWith);
 				alert("splitted_end_date"+splitted_end_date);
+				
 				getExpenseChart(splitted_start_date, splitted_end_date);
+				getConversionChart(splitted_start_date,splitted_end_date);
 				getReceiptChart(splitted_start_date, splitted_end_date);
 				getAdmissionChart(splitted_start_date, splitted_end_date);
-				getConversionChart(splitted_start_date,splitted_end_date);
-				getSalesCard();
+				
+				getSalesCard(splitted_start_date,splitted_end_date);
+				getReceivedCard(splitted_start_date,splitted_end_date);
+				getReceivableCard(splitted_start_date, splitted_end_date);
+				getNetIncomeCard(splitted_start_date, splitted_end_date);
+					
 	});
 	
 	
@@ -234,6 +245,9 @@ function getConversionChart(splitted_start_date, splitted_end_date){
 		for ( var i in responseData) {
 			
 			alert("percentage = "+responseData[i].conv_percent);
+			if(responseData[i].conv_percent == 'undefined'){
+				conversion = parseInt(0);
+			}
 			conversion = parseInt(responseData[i].conv_percent);
 			alert("succ"+ typeof(conversion));
 			
@@ -263,7 +277,8 @@ function getConversionChart(splitted_start_date, splitted_end_date){
 
 function getAdmissionChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
+		adm_date = new Array();
+		adm_amt =  new Array();
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
@@ -294,15 +309,16 @@ function getAdmissionChart(splitted_start_date, splitted_end_date){
 }
 function getExpenseChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
-		alert("len"+responseData.length);
+		expDate = new Array();
+		exp_amt = new Array();
+		//alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
 			
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
 			
-			//alert("date = "+responseData[i].date + responseData[i].amount)
+			
 		}
 		
 		 Expense_chart();
@@ -326,7 +342,8 @@ function getExpenseChart(splitted_start_date, splitted_end_date){
 
 function getReceiptChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
+		rec_date = new Array();
+		rec_amt =  new Array();
 		alert("len"+responseData.length);
 		for ( var i in responseData) {
 			
@@ -363,17 +380,10 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 
 //		trying speedo
 function conversion_chart(){
-/*var arr = '11';
-var parr = parseInt(arr);
-alert("val"+typeof(parr));*/
 Highcharts.chart('container', {
 
     chart: {
         type: 'gauge',
-        /*plotBackgroundColor: null,
-        plotBackgroundImage: null,
-        plotBorderWidth: 0,
-        plotShadow: false*/
     },
 
     title: {
@@ -438,7 +448,7 @@ Highcharts.chart('container', {
             rotation: 'auto'
         },
         title: {
-            text: '%'
+            text: 'Enquiry-Admission Conversion'
         },
         plotBands: [{
             from: 0,
@@ -484,7 +494,7 @@ Highcharts.chart('container', {
 
 /*	Cards DATA */
 
-function getSalesCard(){
+function getSalesCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
 		
 		alert("sales"+responseData.length);
@@ -493,33 +503,41 @@ function getSalesCard(){
 			alert("sales = "+responseData[i].amount);
 			sales = responseData[i].amount;
 			document.getElementById('sales_card').innerHTML = sales;
-			
-			
 		}
-		
-		
 	}
 	function errorCallback(responseData, textStatus, request){
 		
 	}
-	var httpMethod = "GET";
-	var relativeUrl = "/chart/getSalesCard?branch="+branchSession;
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	var relativeUrl = "/chart/getSalesCard";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
-function getReceivedCard(){
+function getReceivedCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
+		var received;
 		alert("received"+responseData.length);
+		if(responseData.length == 0){
+			alert("in if");
+			received = 0;
+			document.getElementById('received_card').innerHTML = received;
+		}
+		else{
 		for ( var i in responseData) {
 			
-			//alert("sales = "+responseData[i].amount);
+			alert("received = "+responseData[i].amount);
 			received = responseData[i].amount;
 			document.getElementById('received_card').innerHTML = received;
 			
 			
+		}
 		}
 		
 		
@@ -539,77 +557,63 @@ function getReceivedCard(){
 	return false;
 }
 
-
-/* END CARDS */
-
-
-/*function Expense_chart(){
-Highcharts.chart('Exp_chart', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Expense'
-    },
-    subtitle: {
-        text: 'Source: WorldClimate.com'
-    },
-    xAxis: {
-        categories: expDate,
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Rainfall (mm)'
-        }
-    },
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [{
-        name: 'Expense',
-        data: exp_amt
-
-    }]
-});
-
-
-
-}
-*/
-
-
-/*function getChartData(){
+function getReceivableCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		for ( var i in responseData) {
-			payDate.push(responseData[i].date);
-			paymentValue.push(responseData[i].payment);
-		}
 		
-		mychart();
+		alert("receivable"+responseData.length);
+		for ( var i in responseData) {
+			//alert("sales = "+responseData[i].amount);
+			receivable = responseData[i].amount;
+			document.getElementById('receivable_card').innerHTML = receivable;
+		}	
 	}
 	function errorCallback(responseData, textStatus, request){
 		
 	}
-	var httpMethod = "GET";
-	var relativeUrl = "/chart/getChartData";
-
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, null, callback,
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	var relativeUrl = "/chart/getReceivableCard";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
-}*/
+}
+
+function getNetIncomeCard(splitted_start_date, splitted_end_date){
+	function callback(responseData, textStatus, request){
+		
+		alert("income"+responseData.length);
+		for ( var i in responseData) {
+			//alert("sales = "+responseData[i].amount);
+			income = responseData[i].amount;
+			document.getElementById('NetIncome_Card').innerHTML = income;
+		}	
+	}
+	function errorCallback(responseData, textStatus, request){
+		
+	}
+	var httpMethod = "POST";
+	var formData = {
+			start_date : splitted_start_date,
+			end_date :	splitted_end_date,
+			branch : branchSession
+	}
+	var relativeUrl = "/chart/getNetIncomeCard";
+	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+			errorCallback);
+	return false;
+}
+
+
+/* END CARDS */
+
+
+
+
+
 
 
 

@@ -26,23 +26,7 @@ import org.VCERP.Education.VC.utility.Util;
 @Path("chart")
 public class ChartResource {
 
-	@GET
-	@PermitAll
-	//@JWTTokenNeeded
-	@Path("/getChartData")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getChartData(){
-			ChartController controller=new ChartController();
-			ArrayList<Chart> chart=new ArrayList<>();
-			chart=controller.getChartData();
-			if(chart==null)
-			{
-				return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
-			}
-			return Response.status(Status.ACCEPTED).entity(chart).build();
-	}
-	
-	
+		
 	@POST
 	@PermitAll
 	//@JWTTokenNeeded
@@ -182,22 +166,36 @@ catch(Exception e){
 return Util.generateErrorResponse(Status.NOT_FOUND, "Data not found").build();
 }
 
-@GET
+@POST
 @PermitAll
 //@JWTTokenNeeded
 @Path("/getSalesCard")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.APPLICATION_JSON)
-public Response getSalesCard(@QueryParam("branch") String branch){
-		
+public Response getSalesCard(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch){
+		Chart ch = null;
 		ChartController controller=new ChartController();
 		ArrayList<Chart> sales_card=new ArrayList<>();
-		sales_card=controller.getSalesCard(branch);
 		
-		if(sales_card==null)
-		{
-			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
+		try {
+			ch = new Chart(); 
+			
+			ch.setS_date(start_date.trim());
+			ch.setE_date(end_date.trim());
+			ch.setBranch(branch.trim());
+			sales_card=controller.getSalesCard(ch, sales_card);
+		if(sales_card!=null)
+		{ 
+			
+			return Response.status(Status.ACCEPTED).entity(sales_card).build();
+			
 		}
-		return Response.status(Status.ACCEPTED).entity(sales_card).build();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
 }
 
 @POST
@@ -213,22 +211,93 @@ public Response getReceivedCard(@FormParam("start_date") String start_date,@Form
 		//received_card=controller.getReceivedCard(branch);
 		try {
 			ch = new Chart(); 
+			
 			ch.setS_date(start_date.trim());
 			ch.setE_date(end_date.trim());
 			ch.setBranch(branch.trim());
 			received_card = controller.getReceivedCard(ch, received_card);
+			if(received_card!=null)
+			{
+			
+				return Response.status(Status.ACCEPTED).entity(received_card).build();
+				
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		if(received_card==null)
-		{
-			return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
-		}
-		return Response.status(Status.ACCEPTED).entity(received_card).build();
+		
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
 }
 
+@POST
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getReceivableCard")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+public Response getReceivableCard(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch){
+		Chart ch = null;
+		ChartController controller=new ChartController();
+		ArrayList<Chart> receivable_card=new ArrayList<>();
+		
+		try {
+			ch = new Chart(); 
+			
+			ch.setS_date(start_date.trim());
+			ch.setE_date(end_date.trim());
+			ch.setBranch(branch.trim());
+			receivable_card = controller.getReceivableCard(ch, receivable_card);
+			if(receivable_card!=null)
+			{
+				
+				return Response.status(Status.ACCEPTED).entity(receivable_card).build();
+				
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
+}
+
+
+
+@POST
+@PermitAll
+//@JWTTokenNeeded
+@Path("/getNetIncomeCard")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.APPLICATION_JSON)
+public Response getNetIncomeCard(@FormParam("start_date") String start_date,@FormParam("end_date") String end_date,@FormParam("branch") String branch){
+		Chart ch = null;
+		ChartController controller=new ChartController();
+		ArrayList<Chart> income_card=new ArrayList<>();
+		
+		try {
+			ch = new Chart(); 
+			
+			ch.setS_date(start_date.trim());
+			ch.setE_date(end_date.trim());
+			ch.setBranch(branch.trim());
+			income_card = controller.getNetIncomeCard(ch, income_card);
+			if(income_card!=null)
+			{
+				
+				return Response.status(Status.ACCEPTED).entity(income_card).build();
+				
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		
+		return Util.generateErrorResponse(Status.BAD_REQUEST, "Data Not Found").build();
+}
 
 
 }
