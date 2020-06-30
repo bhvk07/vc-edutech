@@ -18,7 +18,7 @@ $(document).ready(function(){
 		    }
 		  },
 		  submitHandler:function(form){
-			  event.preventDefault();
+			 // event.preventDefault();
 			  attemptLogin();
 		  }
 	});

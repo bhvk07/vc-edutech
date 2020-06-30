@@ -1,5 +1,7 @@
 package org.VCERP.Education.VC.resource;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class UserResource {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateUser(@FormParam("userid") String userid, @FormParam("password") String password)
-			throws NoSuchAlgorithmException {
+			throws NoSuchAlgorithmException, UnknownHostException {
 		ThreadContext.put("tag", "LOGIN");
 		User user = new User();
 		UserController controller = new UserController();
@@ -63,7 +65,10 @@ public class UserResource {
 		} else {
 			permission=user.getPermission();
 			LoginHistory history=new LoginHistory();
-			logger.error("In User Login");
+			
+			
+			InetAddress ip=InetAddress.getLocalHost();
+			logger.error(ip.getHostAddress());
 			history.setBranch(user.getBranch());
 			history.setEmployee(user.getName());
 			history.setIp(request.getRemoteAddr());

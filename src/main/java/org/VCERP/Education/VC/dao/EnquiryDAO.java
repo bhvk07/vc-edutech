@@ -293,11 +293,11 @@ public class EnquiryDAO {
 		
 	}
 
-	public String IncrementedEnqNo(String branch) {
+	public int IncrementedEnqNo(String branch) {
 		Connection con=null;
 		PreparedStatement st=null;
 		ResultSet rs=null;
-		String count="";
+		int count=0;
 		try {
 			con=Util.getDBConnection();
 			String query="select enq_no from enquiry where branch=?";
@@ -305,7 +305,7 @@ public class EnquiryDAO {
 			st.setString(1, branch);
 			rs=st.executeQuery();
 			while(rs.next()){
-				count=rs.getString(1);
+				count=rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

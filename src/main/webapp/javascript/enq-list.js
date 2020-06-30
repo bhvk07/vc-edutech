@@ -5,11 +5,6 @@ $(document).ready(function() {
 	validateLogin();
 	table = $("#enq_table").DataTable();
 	showDashboard();
-	var selected = new Array();	
-	$('#enq_table').DataTable({
-		"pageLength" : 40
-	});
-	
 	$('#deleteBtn').click(function() {
 		var selected=new Array();
 		$("input:checkbox[name=type]:checked").each(function() {
@@ -42,8 +37,6 @@ $(document).ready(function() {
 });
 function showDashboard() {
 	function callback(responseData, textStatus, request) {
-		//var table = $("#enq_table").DataTable();
-		var value = 0;
 		table.rows().remove().draw();
 		for ( var i in responseData) {
 			var srno = '<span class="custom-checkbox"><input type="checkbox" id="checkbox" class="cbCheck" name="type" value="'
@@ -79,7 +72,7 @@ function showDashboard() {
 
 function deletemultiplerow(id) {
 	function callback(responseData, textStatus, request) {
-		var message=responseData.responseJSON.message;
+		var message=responseData.message;
 		showNotification("success",message);
 	}
 
@@ -111,7 +104,7 @@ function Admission(id, req) {
 		
 		if (req == "Edit") {
 			sessionStorage.setItem("EditData", enqData);
-			window.location.href = "enquiry.html";
+			window.location.href = "EnquiryForm.html";
 		}else{
 			sessionStorage.setItem("EnquiryAdmission", id);
 			window.location.href = "admission.html";

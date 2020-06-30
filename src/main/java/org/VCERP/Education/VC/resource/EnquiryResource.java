@@ -173,18 +173,17 @@ public class EnquiryResource {
 	@Path("/IncrementedEnqNo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response IncrementedEnqNo(@QueryParam("branch") String branch){
-		int id=0;
-		String enq_no="";
+		int enq_no;
+		EnquiryController controller=new EnquiryController();
 		try {
-			EnquiryController controller=new EnquiryController();
 			enq_no=controller.IncrementedEnqNo(branch);
-			if(enq_no==null){
-				id=1;
+			if(enq_no==0){
+				enq_no=1;
 			}
 			else{
-				id=Integer.parseInt(enq_no)+1;
+				enq_no=enq_no+1;
 			}
-			return Response.status(Status.ACCEPTED).entity(id).build();
+			return Response.status(Status.ACCEPTED).entity(enq_no).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

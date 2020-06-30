@@ -3,10 +3,10 @@
 <meta charset="ISO-8859-1">
 
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">                  
+<script src="jquery/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="css/bootstrap.min.css">                  
 
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+<script src="jquery/jquery.validate.min.js"></script>
 
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet"href="font-awesome-4.7.0/css/font-awesome.min.css">
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/enquiry.js"></script>
 <script type="text/javascript" src="core/noty.js"></script>
-<script type="text/javascript" src="javascript/feesPackage.js"></script>
+<!-- <script type="text/javascript" src="javascript/feesPackage.js"></script> -->
 <script type="text/javascript" src="javascript/Helper.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
@@ -246,7 +246,7 @@ input[type='radio']:after {
 							</select>
 							
 							<span class="input-group-addon" id="bhvk">
-								<button type="button" id="employee-modal"
+								<button type="button" id="employee-modal" data-toggle="modal" data-target="#addEmployeeModal"
 									style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">+</button>
 							</span>
 						</div>
@@ -257,7 +257,7 @@ input[type='radio']:after {
 							</select>
 							
 							<span class="input-group-addon" id="bhvk">
-								<button type="button" id="feespackage-modal"
+								<button type="button" id="feespackage-modal" data-toggle="modal" data-target="#myFeesPackageModal"
 									style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">+</button>
 							</span>
 						</div>
@@ -265,8 +265,7 @@ input[type='radio']:after {
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon">Lead source</span>
 							<select name="lead_source" class="form-control" id="lead" required>
-								<option value="test">VICE TEST</option>
-								<option value="pamplete">PAMLETE</option>
+
 							</select>
 						</div>
 
@@ -349,18 +348,8 @@ input[type='radio']:after {
 						</div>
 						<div class="form-group">
 							<label>Designation</label> <select name="design" id="design"
-								class="form-control" required>
-								<option value="emp-1">Admin Head</option>
-								<option value="emp-2">Admin Head and Finance</option>
-								<option value="emp-3">Administrator</option>
-								<option value="emp-4">Branch Co-ordinate</option>
-								<option value="emp-5">Clerk</option>
-								<option value="emp-6">Counsellor</option>
-								<option value="emp-7">Exam and Content Development</option>
-								<option value="emp-8">Principal</option>
-								<option value="emp-9">Staff</option>
-								<option value="emp-10">Supervisor</option>
-								<option value="emp-11">Teacher</option>
+								class="form-control designation" required>
+
 							</select>
 						</div>
 					</div>
@@ -472,7 +461,7 @@ input[type='radio']:after {
 												<div class="input-group">
 													<select name="feestype" class="form-control feestype" id="feestype">
 													</select> <span class="input-group-addon" id="bhvk">
-														<button type="button" id="fees-type-modal"
+														<button type="button" id="fees-type-modal" data-toggle="modal" data-target="#feestypeModal"
 															style="background-color: transparent; border: none; font-size: 18px; color: blue; position: relative;">
 															+</button>
 													</span>
@@ -547,7 +536,7 @@ input[type='radio']:after {
 			<div class="modal-content">
 				<form id="feestype-form">
 					<div class="modal-header headerClass">
-						<h4 class="modal-title">Add Employee</h4>
+						<h4 class="modal-title">Add Fees Type</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
@@ -579,7 +568,8 @@ input[type='radio']:after {
 			
 			
 			function errorCallback(responseData, textStatus, request) {
-
+				var mes=responseData.responseJSON.message;
+				showNotification("error",mes);
 			}
 
 			var httpMethod = "GET";
@@ -591,7 +581,7 @@ input[type='radio']:after {
 		//console.log(htmlCode);
 		var html = '<tr><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control feestype" id="feestype">'
 				+ htmlCode
-				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#addFeesTypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
+				+ '</select><span class="input-group-addon" id="bhvk"><button type="button" id="add-btn" data-toggle="modal" data-target="#feestypeModal" style="background-color:transparent; border:none; font-size:18px; color:blue; position:relative;"> +</button></span></div></div></td><td><input type="number" class="form-control amt" id="amount" name="amount" placeholder="0.00" ></td><td><input type="number" class="form-control discount" id="discount" name="discount" value="0"></td><td><div class="form-group"><select name="distype" class="form-control"><option value="INR">INR</option></select></div></td> <td><input type="text" class="form-control" placeholder="NONE" ></td><td> <input type="text" class="form-control totala" name="price" id="total-amt" readonly></td><td><div class="w3-padding w3-xlarge w3-teal"><button type="button" id="remove-row" class="remove-row"><i class="glyphicon glyphicon-trash"></i></button></div></td></tr>"'
 
 		$("#feestypetable").on('change', '.amt,.discount', function() {
 			//alert("1");

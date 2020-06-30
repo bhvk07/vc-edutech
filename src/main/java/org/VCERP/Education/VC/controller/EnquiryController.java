@@ -42,7 +42,7 @@ public class EnquiryController {
 		return dao.EnquiryReport(enquiry,enq);
 	}
 
-	public String IncrementedEnqNo(String branch) {
+	public int IncrementedEnqNo(String branch) {
 		EnquiryDAO dao=new EnquiryDAO();
 		return dao.IncrementedEnqNo(branch);
 	}

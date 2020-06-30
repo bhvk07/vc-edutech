@@ -1,12 +1,13 @@
 var mes;
 var editData=sessionStorage.getItem("EditData");
-alert(editData);
 var request="";
 $(document).ready(function() {
 	validateLogin();
 	getCaste();
+	getAutoIncreamentedEnquiryNo();
+	loadLeadSource();
 	FetchAllEmployee();
-	getAutoIncreamentedEnquiryNo()
+	getDesignation();
 	$("#branch").val(branchSession);
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z\s]+$/i.test(value);
@@ -55,11 +56,11 @@ $(document).ready(function() {
 				futureDate:true
 			},
 			stud_cont: {
-		        required: true,
+		        /*required: true,*/
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
-		        noSpace: true
+		      //  noSpace: true
 			},
 			father_cont: {
 		        required: true,
@@ -69,11 +70,11 @@ $(document).ready(function() {
 		        noSpace: true
 			},
 			mother_cont: {
-		        required: true,
+		       // required: true,
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
-		        noSpace: true
+		       // noSpace: true
 			},
 			addr: {
 		        required: true
@@ -85,20 +86,20 @@ $(document).ready(function() {
 		        maxlength: 12,
 			},
 			email: {
-		        required: true,
+		      //  required: true,
 		        email: true
 			},
 			w_app_no: {
-		        required: true,
+		     //   required: true,
 		        digits: true,
 		        minlength: 10,
 		        maxlength: 10,
-		        noSpace: true
+		       // noSpace: true
 			},
 		  },
 		 messages: {
 			dob: {
-				futureDate:'future date not allowed'
+				futureDate:'DOB should not be a future date.'
 			},
 		 },
 			/*lname: {
@@ -161,7 +162,7 @@ $(document).ready(function() {
 				},
 			 },
 		  submitHandler:function(form){
-			  event.preventDefault();
+			 // event.preventDefault();
 			  AddEmployee();
 		  }
 	});
@@ -213,48 +214,21 @@ $(document).ready(function() {
 		  },
 		 
 		  submitHandler:function(form){
-			  event.preventDefault();
-			  
+			  addFeesType();
 		  }
 	});
 	if(editData!=null){
-		alert("here");
 		loadEditData(editData);
 		request="Edit"
 	}
 	$("#cancel_submission").click(function() {
-		event.preventDefault();
 		sessionStorage.removeItem("EditData");
-		window.location.href = "enq-list.html";
+		window.location.href = "EnquiryList.html";
 	});
-	$("#feestype-form").submit(function() {
+/*	$("#feestype-form").submit(function() {
 		event.preventDefault();
 		addFeesType();
-	});
-	$("#employee-modal").click(function(e){
-		e.preventDefault();
-		$('#addEmployeeModal').modal({
-	        show: true, 
-	        backdrop: 'static',
-	        keyboard: true
-	     })
-	})
-	$("#feespackage-modal").click(function(e){
-		e.preventDefault();
-		$('#myFeesPackageModal').modal({
-	        show: true, 
-	        backdrop: 'static',
-	        keyboard: true
-	     });
-	});
-	$("#fees-type-modal").click(function(e){
-		e.preventDefault();
-		$('#feestypeModal').modal({
-	        show: true, 
-	        backdrop: 'static',
-	        keyboard: true
-	     });
-	});
+	});*/
 	$('#feestypetable').on('click','.remove-row',function(e) {
 		var val = $(this).closest('tr').find('#total-amt').val();
 		document.getElementById("grand-t").value = parseInt(document.getElementById("grand-t").value)- parseInt(val);
@@ -267,11 +241,12 @@ $(document).ready(function() {
 function EnquiryData() {
 
 	function callback(responseData, textStatus, request) {
-		if(editData!=null){
-			sessionStorage.removeItem("EditData");
-		}
 		var mes=responseData.message;
 		showNotification("success",mes);
+		if(editData!=null){
+			sessionStorage.removeItem("EditData");
+			window.location.href = "EnquiryList.html";
+		}
 	}
 
 	function errorCallback(responseData, textStatus, request) {
@@ -299,8 +274,8 @@ function AddEmployee() {
 	document.getElementById('emp_type').disabled = false;
 	document.getElementById('branch').disabled = false;
 	function callback(responseData, textStatus, request) {
-		 var message=responseData.responseJSON.message;
-		 showNotification("success",mes);
+		 var message=responseData.message;
+		 showNotification("success",message);
 		document.getElementById('emp_type').disabled = true;
 		document.getElementById('branch').disabled = true;
 	}
@@ -324,8 +299,7 @@ function loadEditData(Data){
 	document.getElementById("fname").value=data[0];
 	document.getElementById("mname").value=data[2];
 	document.getElementById("uid").value=data[3];
-	$("#dob").val(data[4]);
-	//document.getElementById("dob").value = data[4];	
+	$("#dob").val(data[4]);	
 	$("input[name=gender][value="+data[5]+"]").attr('checked', true);
 	$("#caste").val(data[6]);
 	$("#category").val(data[7]);
@@ -333,7 +307,6 @@ function loadEditData(Data){
 	document.getElementById("stud_cont").value=data[16];
 	document.getElementById("father_cont").value=data[9];
 	document.getElementById("mother_cont").value=data[10];
-	//$("#address").val(data[11]);
 	document.getElementById("addr").value=data[11];
 	document.getElementById("pin").value=data[12];	
 	document.getElementById("email").value=data[13];
@@ -349,18 +322,15 @@ function loadEditData(Data){
 function addFeesType() {
 	function callback(responseData,textStatus,request)
 	{
-//		var mes=responseData.responseJSON.message;
-//		showNotification("success",mes);
+		var mes=responseData.message;
+		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
-//		var mes=responseData.responseJSON.message;
-//		showNotification("error",mes);
-			// var message=responseData.response.JSON.message;
-			// alert(message);
-	}
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);
+		}
 	var httpMethod = "POST";
 	var formData =$("#feestype-form").serialize()+"&branch="+branchSession;
-	alert(formData);
 	var relativeUrl = "/feesType/addNewFeesType";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	return false;
@@ -378,5 +348,23 @@ function getAutoIncreamentedEnquiryNo(){
 	var httpMethod = "GET";
 	var relativeUrl = "/Enquiry/IncrementedEnqNo?branch="+branchSession;
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, null, callback,errorCallback);
+	return false;
+}
+function loadLeadSource(){
+	function callback(responseData, textStatus, request){
+		for ( var i in responseData) {
+			var htmlCode = '<option value="' + responseData[i].source + '" >'
+			+ responseData[i].source + '</option>';
+			$('#lead').append(htmlCode);	
+		}	
+	}
+	function errorCallback(responseData, textStatus, request){
+		var mes=responseData.responseJSON.message;
+		showNotification("error",mes);	
+	}
+	var httpMethod = "GET";
+	var relativeUrl = "/LeadSource/LeadSourceList";
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl,null, callback,
+			errorCallback);
 	return false;
 }
