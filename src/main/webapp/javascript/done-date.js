@@ -45,7 +45,7 @@ $(document)
 
 						var res = (fees- output4) / output2;
 
-						// alert(output4);
+						
 
 						for (i = 0; i < output2; i++) {
 
@@ -54,7 +54,7 @@ $(document)
 									.append(
 											'<tr><td><div class="form-group"><div class="input-group date form_date" id="demo" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"><input class="form-control display-date" size="16" id="display" type="text" value="" readonly><span class="input-group-addon"><span class="fa fa-remove"></span></span><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div><input type="hidden" id="dtp_input2" class="final" value="" /><br/></div></td><td><div class="form-group"><div class="input-group"><select name="feestype" class="form-control" id="feestype">'+htmlCode+'</select><span class="input-group-addon" id="bhvk"></span></div></div></td><td><input type="number" class="form-control f-row" id="amt_installment_'
 													+ i
-													+ '" name="amt_installment" ></td><td><input type="text" class="form-control r_installment" id="r_installment" name="r_installment" value="0" disabled></td></tr>');
+													+ '" name="amt_installment"></td><td><input type="text" class="form-control r_installment" id="r_installment" name="r_installment" value="0" disabled></td></tr>');
 
 						}
 
@@ -83,8 +83,8 @@ $(document)
 							//alert("formatted"+formatted_dt);
 							document.getElementsByClassName("display-date")[j - 1]
 									.setAttribute("value", formatted_dt);
-							
-							document.getElementsByClassName("f-row")[j - 1].setAttribute("value", res);
+							alert(res+"check");
+							document.getElementsByClassName("f-row")[j].setAttribute("value", res);
 
 						}
 
