@@ -141,13 +141,51 @@ data-toggle="dropdown">Reports <span class="caret"></span></a>
 
 </ul>
 
-                   
-
-
+  
 <ul class="nav navbar-nav navbar-right">
-<li><a id="profile"><span
-class="glyphicon glyphicon-user" id="user"></span></a></li>
+<li><a id="profile" class="dropdown-toggle"
+data-toggle="dropdown"><span
+class="glyphicon glyphicon-user" id="user"></span></a>
+<ul class="dropdown-menu">
+<li><a href="#ChangebranchModal" data-toggle="modal" data-target="#ChangebranchModal"  class="dropdown-submenu-toggle">Change Branch</a>
+</li>
 
+<li><a href="login.html">Logout</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- </div>-->
+<div id="ChangebranchModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="ChangeBranchForm" method="post">
+					<div class="modal-header headerClass">
+						<h4 class="modal-title">Change Branch</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon">Change Branch</span>
+							<select name="lead_source" class="form-control" id="lead" required>
+								<option value="test">VC KIDS</option>
+								<option value="pamplete">VC VASAI</option>
+							</select>
+						</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" id="cancelBtn" value="Cancel"> 
+						<input type="submit" class="btn btn-success" value="Save" id="saveBtn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </ul>
 </div>
 </div>
