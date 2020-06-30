@@ -36,7 +36,6 @@ function fetchAllRole(){
 	function callback(responseData, textStatus, request) {
 			var value = 0;
 			table.rows().remove().draw();
-			alert(responseData.length);
 			for ( var i in responseData) {
 				alert(responseData[i].role);
 				var created_date = responseData[i].created_date;

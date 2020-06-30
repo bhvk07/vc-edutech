@@ -6,26 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Roles and Permissions</title>
 <script src="jquery/jquery-3.3.1.min.js"></script>
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="jquery/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="jquery/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="css/bootstrap.min.css">                  
 
-<script type="text/javascript" src="core/noty.js"></script>
-<link rel="stylesheet" type="text/css" href="css/noty.css" />
+<link rel="stylesheet"href="font-awesome-4.7.0/css/font-awesome.min.css">
 
 <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet" href="css/um.css">
 <script src="assets/js/dataTables/jquery.dataTables.js"></script>
 <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+<script src="jquery/jquery.validate.min.js"></script>
 
 <script type="text/javascript" src="javascript/ValidateLogin.js"></script>
 <script type="text/javascript" src="javascript/RoleandPermission.js"></script>
 <script type="text/javascript" src="javascript/ButtonHideDisplay.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
+<script type="text/javascript" src="core/noty.js"></script>
 
+<link rel="stylesheet" type="text/css" href="css/noty.css" />
 <link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css" />
 
 <style type="text/css">
@@ -432,7 +431,7 @@ table.table .avatar {
 															<td colspan="2"><label class="panel-title">Edit</label></td>
 															<td colspan="2"><label class="panel-title">Delete</label></td>
 															<td colspan="2"><label class="panel-title">View
-																	Report</label></td>
+																	</label></td>
 														</tr>
 													</thead>
 													<tbody>
@@ -452,7 +451,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ENQUIRY"> <label
+																	value="VIEW_ENQUIRY"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -467,13 +466,13 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_ADMISSION"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_ADMISSION"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ADMISSION"> <label
+																	value="VIEW_ADMISSION"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -484,17 +483,17 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_RECEIPT"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_RECEIPT"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_RECEIPT"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_RECEIPT"> <label
+																	value="VIEW_RECEIPT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -504,14 +503,14 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_STUDENT_ATTENDANCE"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_STUDENT_ATTENDANCE"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_STUDENT_ATTENDANCE"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="VIEW_REPORT_STUDENT_ATTENDANCE"> <label
@@ -525,17 +524,17 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_EMPLOYEE_ATTENDANCE"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_EMPLOYEE_ATTENDANCE"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_EMPLOYEE_ATTENDANCE"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_EMPLOYEE_ATTENDANCE"> <label
+																	value="VIEW_EMPLOYEE_ATTENDANCE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -556,7 +555,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_TIMETABLE"> <label
+																	value="VIEW_TIMETABLE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -577,7 +576,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_FEES_TYPE"> <label
+																	value="VIEW_FEES_TYPE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -598,7 +597,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_SUBJECT"> <label
+																	value="VIEW_SUBJECT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -621,7 +620,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_STANDARD"> <label
+																	value="VIEW_STANDARD"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -642,7 +641,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_FEES_PACKAGE"> <label
+																	value="VIEW_FEES_PACKAGE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -663,7 +662,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_CASTE"> <label
+																	value="VIEW_CASTE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -684,7 +683,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_LEAD_SOURCE"> <label
+																	value="VIEW_LEAD_SOURCE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -705,7 +704,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_DESIGNATION"> <label
+																	value="VIEW_DESIGNATION"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -726,7 +725,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ACADEMIC_YEAR"> <label
+																	value="VIEW_ACADEMIC_YEAR"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -747,7 +746,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_EMPLOYEE"> <label
+																	value="VIEW_EMPLOYEE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -768,7 +767,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_DIVISION"> <label
+																	value="VIEW_DIVISION"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -779,17 +778,14 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_ROLES_AND_PERMISSION"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
-																	<input type="checkbox" id="permission" name="permission"
-																	value="EDIT_ROLES_AND_PERMISSION"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA</th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_ROLES_AND_PERMISSION"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ROLES_AND_PERMISSION"> <label
+																	value="VIEW_ROLES_AND_PERMISSION"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -810,7 +806,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_BRANCH"> <label
+																	value="VIEW_BRANCH"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -819,19 +815,19 @@ table.table .avatar {
 															<td colspan="4">User Management</td>
 															<th colspan="2" class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="ADD_NEW_USER_MANAGEMENT"> <label for="checkbox1"></label>
+																	value="CREATE_NEW_USER_ACCOUNT"> <label for="checkbox1"></label>
 															</span></th>
 															<th colspan="2" class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="EDIT_USER_MANAGEMENT"> <label for="checkbox1"></label>
+																	value="EDIT_USER_ACCOUNT"> <label for="checkbox1"></label>
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="DELETE_USER_MANAGEMENT"> <label for="checkbox1"></label>
+																	value="DELETE_USER_ACCOUNT"> <label for="checkbox1"></label>
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_USER_MANAGEMENT"> <label
+																	value="VIEW_USER_ACCOUNT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -842,17 +838,17 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_ORGANIZATION_PROFILE"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_ORGANIZATION_PROFILE"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_ORGANIZATION_PROFILE"> <label for="checkbox1"></label>
-															</span></th>
+															</span> --></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ORGANIZATION_PROFILE"> <label
+																	value="VIEW_ORGANIZATION_PROFILE"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -863,19 +859,19 @@ table.table .avatar {
 																	<input type="checkbox" id="permission" name="permission"
 																	value="ADD_NEW_PROMOTION"> <label for="checkbox1"></label>
 															</span></th>
-															<th colspan="2" class="no-sort"><span class="custom-checkbox">
+															<th colspan="2" class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="EDIT_PROMOTION"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="DELETE_PROMOTION"> <label for="checkbox1"></label>
-															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															</span> --></th>
+															<th colspan="2"class="no-sort">NA<!-- <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
 																	value="VIEW_REPORT_PROMOTION"> <label
-																	for="checkbox1"></label>
-															</span></th>
+																	for="checkbox1"> </label>
+															</span> --></th>
 														</tr>
 														
 														<tr>
@@ -910,7 +906,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_ADMISSION_REPORT"> <label
+																	value="VIEW_ADMISSION_REPORT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -928,7 +924,7 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_EMPLOYEE_REPORT"> <label
+																	value="VIEW_EMPLOYEE_REPORT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
@@ -946,12 +942,12 @@ table.table .avatar {
 															</span></th>
 															<th colspan="2"class="no-sort"><span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_RECEIPT_REPORT"> <label
+																	value="VIEW_RECEIPT_REPORT"> <label
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
 														
-														<tr>
+														<!-- <tr>
 															<td colspan="4">Receivable Report</td>
 															<th colspan="2" class="no-sort"><span class="Label">
 																	 <label >NA</label>
@@ -968,8 +964,8 @@ table.table .avatar {
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
-														
-															<tr>
+														 -->
+															<!-- <tr>
 															<td colspan="4">Fees Report</td>
 															<th colspan="2" class="no-sort"><span class="Label">
 																	 <label >NA</label>
@@ -986,7 +982,7 @@ table.table .avatar {
 																	for="checkbox1"></label>
 															</span></th>
 														</tr>
-														
+														 -->
 														<tr>
 															<td colspan="4">Installment due fees report </td>
 															<th colspan="2" class="no-sort"><span class="Label">
@@ -998,11 +994,28 @@ table.table .avatar {
 															<th colspan="2"class="no-sort"><span class="Label">
 																	 <label >NA</label>
 															</span></th>
-															<th colspan="2"class="no-sort"><span class="custom-checkbox">
+															<th colspan="2"class="no-sort"> <span class="custom-checkbox">
 																	<input type="checkbox" id="permission" name="permission"
-																	value="VIEW_REPORT_INSTALLMENT_DUE_FEES_REPORT"> <label
+																	value="VIEW_INSTALLMENT_DUE_FEES_REPORT"> <label
 																	for="checkbox1"></label>
+															</span> </th>
+														</tr>
+														<tr>
+															<td colspan="4">Dashboard </td>
+															<th colspan="2" class="no-sort"><span class="Label">
+																	 <label >NA</label>
 															</span></th>
+															<th colspan="2" class="no-sort"><span class="Label">
+																	 <label >NA</label>
+															</span></th>
+															<th colspan="2"class="no-sort"><span class="Label">
+																	 <label >NA</label>
+															</span></th>
+															<th colspan="2"class="no-sort"> <span class="custom-checkbox">
+																	<input type="checkbox" id="permission" name="permission"
+																	value="VIEW_DASHBOARD"> <label
+																	for="checkbox1"></label>
+															</span> </th>
 														</tr>		
 													</tbody>
 												</table>

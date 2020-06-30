@@ -264,15 +264,16 @@ public class UserDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
-		User user=new User();
+		User user=null;
 		ArrayList<User> roles=new ArrayList<>();
 		try {
 			con=Util.getDBConnection();
-			String query = "select DISTINCT(`role`),created_date from user_db where branch=?";
+			String query = "select DISTINCT(`role`),created_date from role_permission where branch=?";
 			ps = con.prepareStatement(query);
 			ps.setString(1,branch);
 			rs=ps.executeQuery();
 			while(rs.next()){
+				user=new User();
 				user.setRole(rs.getString(1));
 				user.setCreated_date(rs.getString(2));
 				roles.add(user);

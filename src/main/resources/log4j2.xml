@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" package="org.VCERP.Education.VC.configuration">
-	<Properties>
-		 <Property name="basePath">D:\project\vc-erp-logs
-			</Property> 
-	</Properties>
+<!-- <Properties>
+		<Property name="basePath">D:\\project\\vc-erp-logs</Property>
+		<Property name="basePath">/home/tepscetp/logs/backend</Property>
+
+	</Properties> -->
 
 	<Appenders>
+<!-- 		<RollingFile name="file_logger" fileName="${basePath}\\backend.log"
+			filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%X{IP}] [%X{userid}][%X{TAG}] [%c{1}] %msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile> -->
+
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%X{ip}] [%X{url}] [%X{method}] [%X{user}] [%X{session}] [%X{tag}] %c{1} - %msg%n" />
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%X{IP}] [%X{userid}] [%X{TAG}] %c{1} - %msg%n" />
 		</Console>
-		<RollingFile name="json_file_logger" fileName="${basePath}\backend.log"
-			filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
-			<JsonFileLayout complete="false" compact="true"
-				properties="true" eventEol="true" objectMessageAsJsonObject="true"
-				pattern="%t %-5p %c{2} - %m%n">
-			</JsonFileLayout>
+		<RollingFile name="json_file_logger" fileName="D:\\project\\vc-erp-logs\\backend.log"
+			filePattern="D:\\project\\vc-erp-logs\\app-info-%d{yyyy-MM-dd}.log">
+			<JsonLayout complete="false" compact="true" properties="true" eventEol="true" objectMessageAsJsonObject="True">
+				<KeyValuePair key="myCustomField" value="myCustomValue" />
+			</JsonLayout>
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1"
 					modulate="true" />
 			</Policies>
 		</RollingFile>
+
 	</Appenders>
 	<Loggers>
 		<Logger name="org.VCERP.Education.VC" level="info" additivity="true">
 			<appender-ref ref="json_file_logger" level="info" />
 		</Logger>
 		<Root level="info" additivity="false">
-			<appender-ref ref="console" level="info" />
+			<appender-ref ref="console" />
 		</Root>
 	</Loggers>
+
 </Configuration>

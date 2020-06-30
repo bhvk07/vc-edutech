@@ -60,7 +60,9 @@ public class LeadSourceResource {
 		try{
 			controller = new LeadSourceController();
 			sourceList = controller.FetchAllSource();
+			if(sourceList!=null){
 			return Response.status(Status.OK).entity(sourceList).build();
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
