@@ -22,29 +22,29 @@ public class ChartController {
 		ChartDAO dao=new ChartDAO();
 		return dao.getAdmissionData(ch, adm_chart);
 	}
-	public ArrayList<Chart> getConversionData(Chart ch, ArrayList<Chart> conv_chart) {
+	public Integer getConversionData(Chart ch) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getConversionData(ch, conv_chart);
+		return dao.getConversionData(ch);
 	}
 	
 	
-	public ArrayList<Chart> getSalesCard(Chart ch, ArrayList<Chart> sales_card) {
+	public Integer getSalesCard(Chart ch) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getSalesCard(ch, sales_card);
+		return dao.getSalesCard(ch);
 	}
-	public ArrayList<Chart> getReceivedCard(Chart ch, ArrayList<Chart> received_card) {
+	public Integer getReceivedCard(Chart ch) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getReceivedCard(ch, received_card);
-	}
-	
-	public ArrayList<Chart> getReceivableCard(Chart ch, ArrayList<Chart> receivable_card) {
-		ChartDAO dao=new ChartDAO();
-		return dao.getReceivableCard(ch, receivable_card);
+		return dao.getReceivedCard(ch);
 	}
 	
-	public ArrayList<Chart> getNetIncomeCard(Chart ch, ArrayList<Chart> income_card) {
+	public Integer getReceivableCard(Chart ch) {
 		ChartDAO dao=new ChartDAO();
-		return dao.getNetIncomeCard(ch, income_card);
+		return dao.getReceivableCard(ch);
+	}
+	
+	public Integer getNetIncomeCard(Chart ch) {
+		ChartDAO dao=new ChartDAO();
+		return dao.getNetIncomeCard(ch);
 	}
 
 }

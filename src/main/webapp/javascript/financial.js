@@ -1,17 +1,3 @@
-
-var payDate=new Array();
-var expDate;
-var exp_amt;
-var rec_date;
-var conversion;
-var rec_amt;
-var adm_date;
-var adm_amt;
-var paymentValue=new Array();
-var title="payment";
-var dates;
-var splitted_start_date;
-var splitted_end_date;
 $(document).ready(function(){
 	 	var start = moment().startOf('month');
 	    var end = moment().endOf('month');
@@ -36,8 +22,6 @@ $(document).ready(function(){
 	           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 	        }
 	    }, cb);
-
-	    //cb(start, end);
 	    
 	    var curr_date = document.getElementById('e2').value;
 	    var curr_val = curr_date.split('-');
@@ -66,17 +50,8 @@ $(document).ready(function(){
 	
 	$('#e2').change(function()
 	{ 
-		alert("hie");
-		//expDate = new Array();
-		//exp_amt = new Array();
-		//rec_date = new Array();
-		//rec_amt =  new Array();
-		//adm_date = new Array();
-		//adm_amt =  new Array();
-		
 		var d_val = $(this).val().split('-');
 		
-		alert("date="+d_val);
 		var start = d_val[0];
 		var end = d_val[1];
 		const search = '/';
@@ -104,7 +79,8 @@ $(document).ready(function(){
    
 });
 
-function Expense_chart() {
+function Expense_chart(expDate,exp_amt) {
+	alert(exp_amt);
 	  var ctx, data, myBarChart, option_bars;
 	  Chart.defaults.global.responsive = true;
 	  ctx = $('#Exp_chart').get(0).getContext('2d'); //done
@@ -148,7 +124,7 @@ function Expense_chart() {
 
 
 
-function Receipt_chart() {
+function Receipt_chart(rec_date,rec_amt) {
 	  var ctx, data, myBarChart, option_bars;
 	  Chart.defaults.global.responsive = true;
 	  ctx = $('#Rec_chart').get(0).getContext('2d'); //done
@@ -190,7 +166,7 @@ function Receipt_chart() {
 	  
 	}
 
-function Admission_chart() {
+function Admission_chart(adm_date,adm_amt) {
 	  var ctx, data, myBarChart, option_bars;
 	  Chart.defaults.global.responsive = true;
 	  ctx = $('#Adm_chart').get(0).getContext('2d'); //done
@@ -234,30 +210,13 @@ function Admission_chart() {
 
 
 
-
-
-
-
 function getConversionChart(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
-		alert("len"+responseData.length);
-		for ( var i in responseData) {
-			
-			alert("percentage = "+responseData[i].conv_percent);
-			if(responseData[i].conv_percent == 'undefined'){
-				conversion = parseInt(0);
-			}
-			conversion = parseInt(responseData[i].conv_percent);
-			alert("succ"+ typeof(conversion));
-			
-			
-		}
-		
-		conversion_chart();
+		conversion_chart(responseData);
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -268,7 +227,7 @@ function getConversionChart(splitted_start_date, splitted_end_date){
 	
 	var relativeUrl = "/chart/getConversionChart";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -276,23 +235,19 @@ function getConversionChart(splitted_start_date, splitted_end_date){
 
 
 function getAdmissionChart(splitted_start_date, splitted_end_date){
+	var adm_date = new Array();
+	var adm_amt =  new Array();
 	function callback(responseData, textStatus, request){
-		adm_date = new Array();
-		adm_amt =  new Array();
-		alert("len"+responseData.length);
 		for ( var i in responseData) {
-			
-			//alert("date = "+responseData[i].date + responseData[i].amount);
 			adm_date.push(responseData[i].date);
 			adm_amt.push(responseData[i].amount);
-			
-			
 		}
 		
-		Admission_chart();
+		Admission_chart(adm_date,adm_amt);
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -303,28 +258,25 @@ function getAdmissionChart(splitted_start_date, splitted_end_date){
 	
 	var relativeUrl = "/chart/getAdmissionChart";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 function getExpenseChart(splitted_start_date, splitted_end_date){
+	var expDate = new Array();
+	var exp_amt = new Array();
 	function callback(responseData, textStatus, request){
-		expDate = new Array();
-		exp_amt = new Array();
 		//alert("len"+responseData.length);
 		for ( var i in responseData) {
-			
-			
 			expDate.push(responseData[i].date);
 			exp_amt.push(responseData[i].amount);
-			
-			
 		}
 		
-		 Expense_chart();
+		 Expense_chart(expDate,exp_amt);
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -332,32 +284,27 @@ function getExpenseChart(splitted_start_date, splitted_end_date){
 			end_date :	splitted_end_date,
 			branch : branchSession
 	}
-	alert("data"+splitted_start_date+ splitted_end_date+branchSession);
 	var relativeUrl = "/chart/getExpenseChart";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
 function getReceiptChart(splitted_start_date, splitted_end_date){
+	var rec_date = new Array();
+	var rec_amt =  new Array();
 	function callback(responseData, textStatus, request){
-		rec_date = new Array();
-		rec_amt =  new Array();
-		alert("len"+responseData.length);
 		for ( var i in responseData) {
-			
-			//alert("date = "+responseData[i].date + responseData[i].amount);
 			rec_date.push(responseData[i].date);
 			rec_amt.push(responseData[i].amount);
-			
-			
 		}
 		
-		Receipt_chart();
+		Receipt_chart(rec_date,rec_amt);
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -368,7 +315,7 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 	
 	var relativeUrl = "/chart/getReceiptChart";
 
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
@@ -379,7 +326,8 @@ function getReceiptChart(splitted_start_date, splitted_end_date){
 
 
 //		trying speedo
-function conversion_chart(){
+function conversion_chart(percentage){
+	alert("per="+percentage)
 Highcharts.chart('container', {
 
     chart: {
@@ -481,7 +429,7 @@ Highcharts.chart('container', {
 
     series: [{
         name: 'Percentage Conversion',
-        data: [conversion]
+        data: [percentage]
         /*tooltip: {
             valueSuffix: '%'
         }*/
@@ -496,17 +444,11 @@ Highcharts.chart('container', {
 
 function getSalesCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
-		alert("sales"+responseData.length);
-		for ( var i in responseData) {
-			
-			alert("sales = "+responseData[i].amount);
-			sales = responseData[i].amount;
-			document.getElementById('sales_card').innerHTML = sales;
-		}
+			document.getElementById('sales_card').innerHTML = responseData;
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -515,35 +457,19 @@ function getSalesCard(splitted_start_date, splitted_end_date){
 			branch : branchSession
 	}
 	var relativeUrl = "/chart/getSalesCard";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
 function getReceivedCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		var received;
-		alert("received"+responseData.length);
-		if(responseData.length == 0){
-			alert("in if");
-			received = 0;
-			document.getElementById('received_card').innerHTML = received;
+			document.getElementById('received_card').innerHTML = responseData;
 		}
-		else{
-		for ( var i in responseData) {
-			
-			alert("received = "+responseData[i].amount);
-			received = responseData[i].amount;
-			document.getElementById('received_card').innerHTML = received;
-			
-			
-		}
-		}
-		
-		
-	}
+
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -552,23 +478,18 @@ function getReceivedCard(splitted_start_date, splitted_end_date){
 			branch : branchSession
 	}
 	var relativeUrl = "/chart/getReceivedCard";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
 function getReceivableCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
-		alert("receivable"+responseData.length);
-		for ( var i in responseData) {
-			//alert("sales = "+responseData[i].amount);
-			receivable = responseData[i].amount;
-			document.getElementById('receivable_card').innerHTML = receivable;
+			document.getElementById('receivable_card').innerHTML = responseData;
 		}	
-	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -577,23 +498,18 @@ function getReceivableCard(splitted_start_date, splitted_end_date){
 			branch : branchSession
 	}
 	var relativeUrl = "/chart/getReceivableCard";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }
 
 function getNetIncomeCard(splitted_start_date, splitted_end_date){
 	function callback(responseData, textStatus, request){
-		
-		alert("income"+responseData.length);
-		for ( var i in responseData) {
-			//alert("sales = "+responseData[i].amount);
-			income = responseData[i].amount;
-			document.getElementById('NetIncome_Card').innerHTML = income;
-		}	
+			document.getElementById('NetIncome_Card').innerHTML = responseData;
 	}
 	function errorCallback(responseData, textStatus, request){
-		
+		var mes = responseData.responseJSON.message;
+		showNotification("error", mes);
 	}
 	var httpMethod = "POST";
 	var formData = {
@@ -602,7 +518,7 @@ function getNetIncomeCard(splitted_start_date, splitted_end_date){
 			branch : branchSession
 	}
 	var relativeUrl = "/chart/getNetIncomeCard";
-	ajaxUnauthenticatedRequest(httpMethod, relativeUrl, formData, callback,
+	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,
 			errorCallback);
 	return false;
 }

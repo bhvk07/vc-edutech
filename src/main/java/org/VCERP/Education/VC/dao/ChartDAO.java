@@ -111,11 +111,11 @@ public class ChartDAO {
 	
 	
 	
-	public ArrayList<Chart> getConversionData(Chart ch, ArrayList<Chart> conv_chart) {
+	public Integer getConversionData(Chart ch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		
+		int value=0;
 		try {
 			con=Util.getDBConnection();
 			String query="select SUM(status = 'Admitted' ) * 100 / (SELECT COUNT(*) from enquiry WHERE branch=?) from enquiry WHERE enq_date BETWEEN ? AND ? AND branch=?";
@@ -129,9 +129,7 @@ public class ChartDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				Chart chart=new Chart();
-				chart.setConv_percent(rs.getString(1));
-				conv_chart.add(chart);
+				value=rs.getInt(1);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -140,16 +138,16 @@ public class ChartDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return conv_chart;
+		return value;
 	}
 	
 	
 	
-	public ArrayList<Chart> getSalesCard(Chart ch, ArrayList<Chart> sales_card) {
+	public Integer getSalesCard(Chart ch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		
+		int value=0;
 		try {
 			con=Util.getDBConnection();
 			String query="SELECT SUM(fees) FROM `admission` WHERE admission_date BETWEEN ? AND ? AND branch=?";
@@ -161,9 +159,7 @@ public class ChartDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				Chart chart=new Chart();
-				chart.setAmount(rs.getString(1));
-				sales_card.add(chart);
+				value=rs.getInt(1);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -172,13 +168,14 @@ public class ChartDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return sales_card;
+		return value;
 	}
 	
-	public ArrayList<Chart> getReceivedCard(Chart ch, ArrayList<Chart> received_card) {
+	public Integer getReceivedCard(Chart ch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
+		int value=0;
 		try {
 			con=Util.getDBConnection();
 			String query="SELECT SUM(payment) FROM `receipt_details` WHERE receipt_date BETWEEN ? AND ? AND branch=?";
@@ -191,9 +188,7 @@ public class ChartDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				Chart chart=new Chart();
-				chart.setAmount(rs.getString(1));
-				received_card.add(chart);
+				value=rs.getInt(1);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -202,17 +197,17 @@ public class ChartDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return received_card;
+		return value;
 	}
 	
 	
 	
 	
-	public ArrayList<Chart> getReceivableCard(Chart ch, ArrayList<Chart> receivable_card) {
+	public Integer getReceivableCard(Chart ch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		
+		int value=0;
 		try {
 			con=Util.getDBConnection();
 			String query="SELECT SUM(amount) FROM `receipt_details` WHERE receipt_date BETWEEN ? AND ? AND branch=?";
@@ -225,9 +220,7 @@ public class ChartDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				Chart chart=new Chart();
-				chart.setAmount(rs.getString(1));
-				receivable_card.add(chart);
+				value=rs.getInt(1);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -236,15 +229,15 @@ public class ChartDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return receivable_card;
+		return value;
 	}
 	
 	
-	public ArrayList<Chart> getNetIncomeCard(Chart ch, ArrayList<Chart> income_card) {
+	public Integer getNetIncomeCard(Chart ch) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		
+		int value=0;
 		try {
 			con=Util.getDBConnection();
 			String query="SELECT (SELECT SUM(payment) FROM `receipt_details` WHERE branch=? AND receipt_date BETWEEN ? AND ?)-(SELECT SUM(amount) FROM `expenses` WHERE branch=? AND exp_date BETWEEN ? AND ?)";
@@ -260,9 +253,7 @@ public class ChartDAO {
 			rs=ps.executeQuery();
 			while(rs.next())
 			{
-				Chart chart=new Chart();
-				chart.setAmount(rs.getString(1));
-				income_card.add(chart);
+				value=rs.getInt(1);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -271,7 +262,7 @@ public class ChartDAO {
 		finally {
 			Util.closeConnection(rs, ps, con);
 		}
-		return income_card;
+		return value;
 	}
 	
 	
