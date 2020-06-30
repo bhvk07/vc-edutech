@@ -2,6 +2,62 @@ var mes;
 var requestid=0;
 var vendors = new Array();
 $(document).ready(function(){
+
+	
+	jQuery.validator.addMethod("futureDate", function(value, element) {
+		 var now = new Date();
+		 now.setHours(0,0,0,0);
+		 var myDate = new Date(value);
+		 return this.optional(element) || myDate > now;
+	},"Must be a future date");
+	
+	jQuery.validator.addMethod("greaterThan", 
+			function(value, element, params) {
+
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) > new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) > Number($(params).val())); 
+			},'Must be greater than from date.');
+	jQuery.validator.addMethod("lessThan", 
+			function(value, element, params) {
+
+			    if (!/Invalid|NaN/.test(new Date(value))) {
+			        return new Date(value) < new Date($(params).val());
+			    }
+
+			    return isNaN(value) && isNaN($(params).val()) 
+			        || (Number(value) < Number($(params).val())); 
+    },"Must be less than till date.");
+
+
+	$('form[id="getExpenseData"]').validate({
+
+		rules : {
+			from_date:{
+				required:true,
+				futureDate:true,
+				lessThan:"#to_date"
+			},
+			to_date:{
+				required:true,
+				futureDate:true,
+				greaterThan:"#from_date"
+			},
+			pay_mode:{
+				required:true
+			},
+			branch:{
+				required:true
+			},
+		},
+		submitHandler : function(form) {
+			event.preventDefault();
+			
+		}
+	});
 	loadvendor();
 	fetchAllBranch();
 	$("#branch").val(branchSession);
@@ -18,6 +74,7 @@ $(document).ready(function(){
 		getExpenseReport(e);
 	});
 });
+
 function loadvendor() {
 	function callback(responseData, textStatus, request) {
 		alert("succ");
