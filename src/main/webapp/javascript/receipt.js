@@ -75,8 +75,12 @@ $(document).ready(function(){
 */	$("#received_amt").focusout(function() {
 		var table = document.getElementById("InstallmentTable");
 		var received_amt=$("#received_amt").val();
-		if(parseInt(received_amt)!=0){
+		var net_receive=$("#net_receive").val();
+		if(parseInt(received_amt)!=0 && parseInt(net_receive)>=parseInt(received_amt)){
 			placeReceiveAmountInInstallmentTable(parseInt(received_amt));
+		}else{
+			var message="Receive amount should be less than or equals to Net amount";
+			showNotification("error",message);
 		}
 	});
 });
@@ -159,7 +163,7 @@ function getIncrementedReceiptNumber(){
 function StudentReceipt(){
 	function callback(responseData,textStatus,request)
 	{
-		var mes=responseData.responseJSON.message;
+		var mes=responseData.message;
 		showNotification("success",mes);
 	}
 	function errorCallback(responseData, textStatus, request) {
@@ -171,12 +175,9 @@ function StudentReceipt(){
 	var net_amt=document.getElementById("net_receive").value;
 	
 	if(parseInt(receive_amt)<=parseInt(net_amt) && parseInt(net_amt)!=0){
-	var table = document.getElementById("InstallmentTable");
-	var due_amt=table.rows.item(1).cells[5].innerHTML;
-	var due_date=table.rows[1].cells[4].innerHTML;
-	
+	var installArray=getInstallmentTableDetails();
 	var httpMethod = "POST";
-	var formData=$("#receipt-form").serialize()+"&due_amt="+due_amt+"&due_date="+due_date+"&branch="+branchSession;
+	var formData=$("#receipt-form").serialize()+"&installmentDetails="+installArray+"&branch="+branchSession;
 	var relativeUrl = "/Receipt/ReceiptDetails";
 	ajaxAuthenticatedRequest(httpMethod, relativeUrl, formData, callback,errorCallback);
 	}else{
@@ -184,6 +185,24 @@ function StudentReceipt(){
 		showNotification("error",message);
 	}
 	return false;
+}
+function getInstallmentTableDetails(){
+	var installArray=new Array();
+	var table = document.getElementById("InstallmentTable");
+	var rowCount=table.rows.length;
+	for(var i=1;i<rowCount;i++){
+		var received=$(table.rows.item(i).cells[7]).find('input').val();
+		if(parseInt(received)!=0){
+			var due_amt=table.rows.item(i).cells[5].innerHTML;
+			var due_date=table.rows.item(i).cells[4].innerHTML;
+			installArray.push(due_amt+"|"+due_date+"|"+received);
+		}else{
+			i=rowCount;
+		}
+		
+	}
+	return installArray;
+	
 }
 function clearModal(){
 	$("#stud_details").val("");
@@ -204,5 +223,14 @@ function removeInstallmentTableRow(){
 function placeReceiveAmountInInstallmentTable(received_amt){
 	var table = document.getElementById("InstallmentTable");
 	var rowCount=table.rows.length;
-	$(table.rows.item(1).cells[7]).find('input').val(received_amt);
+	for(var i=1;i<rowCount;i++){
+		var due_amt=table.rows.item(i).cells[6].innerHTML;
+		if(parseInt(received_amt)>parseInt(due_amt)){
+			received_amt=parseInt(received_amt)-parseInt(due_amt);
+			$(table.rows.item(i).cells[7]).find('input').val(parseInt(due_amt));
+		}else{
+			$(table.rows.item(i).cells[7]).find('input').val(parseInt(received_amt));
+			i=rowCount;
+		}
+	}
 }

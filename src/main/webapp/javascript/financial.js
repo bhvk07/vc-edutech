@@ -120,7 +120,7 @@ function Expense_chart(expDate,exp_amt) {
 	 
 	  myBarChart = new Chart(ctx).Bar(data, option_bars);
 	  
-	}
+	} 
 
 
 

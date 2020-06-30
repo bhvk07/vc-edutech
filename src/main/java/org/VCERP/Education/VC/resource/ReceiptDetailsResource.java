@@ -100,10 +100,10 @@ public class ReceiptDetailsResource {
 			@FormParam("received_amt") long received_amt,@FormParam("pay_mode") String pay_mode
 			,@FormParam("trans_status") String trans_status,@FormParam("trans_date") String trans_date
 			,@FormParam("received_by") String received_by,
-			@FormParam("due_amt") long due_amt,@FormParam("due_date") String due_date,
-			@FormParam("branch") String branch)
+			@FormParam("installmentDetails") String installDetails,@FormParam("branch") String branch)
 	{
 		String[] stud_details=Util.symbolSeperatedString(stud_name);
+		String[] commaSeperatedInstallDetails=Util.commaSeperatedString(installDetails);
 		ReceiptDetails details=null;
 		ReceiptDetails r_amt=null;
 		AdmissionController adcontroller=null;
@@ -140,8 +140,13 @@ public class ReceiptDetailsResource {
 			
 			adcontroller=new AdmissionController();
 			adcontroller.updateTotalFeesPaid(details.getRollno(),fees_paid,fees_remain,branch);
-			
-			controller.updateInstallment(stud_details[0],due_date,branch,received_amt,due_amt);
+			for(int i=0;i<commaSeperatedInstallDetails.length;i++){
+				String[] pipeSeperatedInstallDetails=Util.symbolSeperatedString(commaSeperatedInstallDetails[i]);
+				long due_amt=Long.parseLong(pipeSeperatedInstallDetails[0]);
+				String due_date=pipeSeperatedInstallDetails[1];
+				long receivedAmt=Long.parseLong(pipeSeperatedInstallDetails[2]);
+				controller.updateInstallment(stud_details[0],due_date,branch,receivedAmt,due_amt);
+			}
 			
 			return Util.generateResponse(Status.ACCEPTED, "Receipt Details Successfully Inserted.").build();
 		} catch (Exception e) {
