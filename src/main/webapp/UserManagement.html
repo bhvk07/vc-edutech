@@ -277,6 +277,44 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }
+
+/* custom */
+#createAc .panel-footer{
+background-color:white !important;
+margin-top:20px;
+}
+
+.ladda-button{
+margin-right:25px;
+border-radius:0px !important;
+opacity:none !important;
+background: #53b700 !important;
+}
+
+.panel{
+ margin-bottom:0px !important;
+ border:0px !important;
+ border-radius : 0px !important;
+}
+
+.tab-pane .control-label{
+	color:#333333 !important;
+	font-family: "Helvetica Neue","Helvetica","Arial","sans-serif" !important;
+	font-weight:normal !important;
+	
+}
+.text-danger{
+ color:red !important;
+}
+
+.form-control{
+ border-radius:0px !important;
+}
+.input-group-addon{
+ border-radius:0px !important;
+}
+
+/* custom end */
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -442,9 +480,9 @@ table.table .avatar {
 											</div>
 										</div>
 									</fieldset>
-									<hr class="dotted tall">
-									<h4 class="mb-xlg">Login Info</h4>
-									<fieldset id="new-user-info">
+									<hr class="dotted tall" style="margin-top:20px !important;">
+									<h4 class="mb-xlg" >Login Info</h4>
+									<fieldset id="new-user-info" class="login-info">
 										<div class="form-group">
 											<label class="control-label col-md-4">Username <span
 												class="text-danger">*</span>
@@ -462,7 +500,7 @@ table.table .avatar {
 											</div>
 										</div>
 									</fieldset>
-									<div class="panel-footer">
+									<div class="panel-footer save_user">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="pull-right">
