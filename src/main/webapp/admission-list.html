@@ -5,8 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admission-List</title>
-<link rel="stylesheet"
-	href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">  -->
@@ -23,41 +22,33 @@
 
 <script type="text/javascript" src="core/noty.js"></script>
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
+
+
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/sp-1.0.1/datatables.min.css"/> -->
-<link
-	href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
-<script
-	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
-<script
-	src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
-<script
-	src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script
-	src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
-<script
-	src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
 
-<link
-	href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-<link href="assets/js/dataTables/dataTables.bootstrap.css"
-	rel="stylesheet" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap.js"></script>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+<link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap.js"></script>
 
 <link rel="stylesheet" href="css/invoice-style.css">
 
 <!-- <script type="text/javascript" src="javascript/ValidateLogin.js"></script>-->
 
 <script type="text/javascript" src="javascript/admission-list.js"></script>
+<script type="text/javascript" src="javascript/ButtonHideDisplay.js"></script>
 <script type="text/javascript" src="javascript/Helper.js"></script>
 <script type="text/javascript" src="core/jquerysession.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/ButtonStyle.css" />
 <style type="text/css">
 body {
 	color: #566787;
@@ -201,14 +192,6 @@ table.table .avatar {
 	color: #666;
 }
 
-.pagination li.active a, .pagination li.active a.page-link {
-	background: #03A9F4;
-}
-
-.pagination li.active a:hover {
-	background: #0397d6;
-}
-
 .pagination li.disabled i {
 	color: #ccc;
 }
@@ -265,12 +248,6 @@ table.table .avatar {
 	z-index: 3;
 	transform: rotateZ(45deg);
 }
-
-.custom-checkbox input[type="checkbox"]:checked+label:before {
-	border-color: #03A9F4;
-	background: #03A9F4;
-}
-
 .custom-checkbox input[type="checkbox"]:checked+label:after {
 	border-color: #fff;
 }
@@ -374,36 +351,31 @@ table.table {
 						</h2>
 					</div>
 					<div class="col-sm-6">
-						<a class="btn btn-success" id="ADD_NEW"><i
-							class="material-icons">&#xE147;</i> <span>Add New</span></a> <a
-							href="#deleteEmployeeModal" class="btn btn-danger"
-							id="btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i>
-							<span>Delete</span></a> <a href="" class="btn btn-danger" id="Edit"
-							data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Edit</span></a>
-						<a href="" class="btn btn-success" id="Viewbtn"><i
-							class="material-icons">&#xE147;</i> <span>View </span></a>
-						<button class="btn btn-info" id="pdf" onclick="invoice_pdf()"><i class="fa fa-file-pdf-o"></i> Inovice PDF</button>
-						<button class="btn btn-info" id="pdf" onclick="admission_pdf()"><i class="fa fa-file-pdf-o"></i> Admission PDF</button>
-						<button class="btn btn-info" id="pdf" onclick="invoice_print()"><i class="fa fa-file-print-o"></i> Print Invoice</button>
-						<button class="btn btn-info" id="pdf" onclick="admission_print()"><i class="fa fa-file-print-o"></i> Print Admission</button>
+						<a href="admission.html" class="btn btn-success" id="addBtn"><i class="fa fa-plus"></i> <span>Add New</span></a> 
+						<a href="" class="btn btn-warning" id="editBtn" data-toggle="modal"><i class="fa fa-plus"></i> <span>Edit</span></a>
+						<a href="#deleteEmployeeModal" class="btn btn-danger" id="deleteBtn" data-toggle="modal"><i class="fa fa-minus"></i>
+							<span>Delete</span></a> 
+						<a href="" class="btn btn-info" id="btn-view"><i class="fa fa-eye"></i> <span>View </span></a>
+						<button class="btn btn-secondary" id="pdf" onclick="invoice_pdf()"><i class="fa fa-file-pdf-o"></i> Inovice PDF</button>
+						<button class="btn btn-secondary" id="pdf" onclick="admission_pdf()"><i class="fa fa-file-pdf-o"></i> Admission PDF</button>
+						<button class="btn btn-secondary" id="pdf" onclick="invoice_print()"><i class="fa fa-file-print-o"></i> Print Invoice</button>
+						<button class="btn btn-secondary" id="pdf" onclick="admission_print()"><i class="fa fa-file-print-o"></i> Print Admission</button>
 					</div>
 				</div>
 			</div>
 			<div class="row panel-1">
 				<div class="col-md-12">
-					<!-- Advanced Tables -->
 					<div class="panel panel-default">
-						<div class="panel-heading">Advanced Tables</div>
 						<div class="panel-body">
 							<div class="table-responsive">
-								<table class="table table-striped table-bordered table-hover"
+								<table class="table table-striped table-bordered table-hover TableClass"
 									id="admission_table">
 									<thead>
 										<tr>
-											<th>Check <!-- <span class="custom-checkbox"> <input
-												type="checkbox" id="selectAll" name="options[]" value="0">
+											<th> <!--Check --> 
+											 <span class="custom-checkbox"> <input type="checkbox" id="selectAll" name="options[]" value="0">
 												<label for="checkbox1"></label>
-										</span> -->
+										</span>
 											</th>
 											<th>DATE</th>
 											<th>STUDENT</th>
@@ -418,23 +390,16 @@ table.table {
 											<th>TOTAL FEES</th>
 											<th>PAYMENT</th>
 											<th>BALANCE</th>
-
 										</tr>
 									</thead>
 								</table>
 							</div>
-
 						</div>
 					</div>
-					<!--End Advanced Tables -->
 				</div>
 			</div>
-
 		</div>
-
-		<!-- View Tab -->
 		<section class="panel panel-2" id="datatable-view-2">
-			<!-- <button onclick="generation()">PDF</button> -->
 
 			<div class="panel">
 				<div class="panel-heading panel-visible">
@@ -444,43 +409,15 @@ table.table {
 				</div>
 			</div>
 			<div class="table-wrapper">
-				<!--	<div class=col-sm-12>-->
-				<!-- <div class="table-title">
-						<div class="row">
-							<div class="col-sm-6">
-								<h2>
-									<b>Organization</b>
-								</h2>
-							</div>
-
-						</div>
-					</div> -->
 				<div class="row">
 					<div class="col-md-12">
-						<!-- <div class="tabs"> -->
 						<ul class="nav nav-tabs">
-							<!-- <div class="nav nav-tabs"> -->
 							<li class="active"><a href="#invoice" data-toggle="tab">Invoice/Overview</a></li>
 							<li><a href="#edit" data-toggle="tab">Receipt</a></li>
-							<li><a href="#admission_details" data-toggle="tab">Admission
-									Details</a></li>
-							<!-- </div> -->
+							<li><a href="#admission_details" data-toggle="tab">Admission Details</a></li>
 						</ul>
-						<!-- </div> -->
 						<div class="tab-content">
-
-
-							<!-- Invice start -->
-
 							<div id="invoice" class="tab-pane active">
-
-								<!-- <div class="toolbar hidden-print">
-        <div class="text-right">
-            <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
-            <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
-        </div>
-        <hr>
-    </div> -->
 								<div class="invoice overflow-auto" id="inv">
 									<div style="min-width: 600px">
 										<header>
@@ -499,15 +436,13 @@ table.table {
 										<div class="row contacts">
 											<div class="col invoice-to">
 												<div class="text-gray-light" id="invoice_to"></div>
-
 											</div>
 											<div class="col invoice-details">
 												<h1 class="invoice-id" id="invoice_no">INVOICE 3-2-1</h1>
 												<div class="date">Date of Invoice:</div>
 											</div>
 										</div>
-										<table id="invoice_table" border="0" cellspacing="0"
-											cellpadding="0">
+										<table id="invoice_table" border="0" cellspacing="0" cellpadding="0">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -545,7 +480,7 @@ table.table {
 							<!-- receipt tab start -->
 
 							<div id="edit" class="tab-pane">
-								<!--								<h4 class="mb-xlg">Personal Information</h4>-->
+								<!--<h4 class="mb-xlg">Personal Information</h4>-->
 								<div class="table-wrapper" id="table-style">
 									<div class="row">
 										<div class="col-md-12">
@@ -553,8 +488,7 @@ table.table {
 											<div class="panel panel-default">
 												<div class="panel-body">
 													<div class="table-responsive">
-														<table
-															class="table table-striped table-bordered table-hover"
+														<table class="table table-striped table-bordered table-hover"
 															id="StudReceiptList_table">
 															<thead>
 																<tr>
@@ -646,8 +580,7 @@ table.table {
 													<table class="table table-hover table-bordered mb-none">
 														<thead>
 															<tr class="bg-default">
-																<td colspan="2"><label class="panel-title">Parents
-																		Details</label></td>
+																<td colspan="2"><label class="panel-title">Parents Details</label></td>
 															</tr>
 														</thead>
 														<tbody>
@@ -669,13 +602,6 @@ table.table {
 											</div>
 										</div>
 										<div class="col-md-7">
-											<!--
-                                     <div class="col-md-4">
-                                         <div id="stud_pic">
-                                             
-                                         </div>
--->
-
 											<div class="form-group">
 												<div class="col-md-8">
 													<table class="table table-hover table-bordered mb-none" id="install-table">
@@ -684,7 +610,6 @@ table.table {
 																<td colspan="5"><label class="panel-title">Installment</label>
 																</td>
 															</tr>
-
 															<tr>
 																<th>#</th>
 																<th>Due Date</th>
@@ -692,7 +617,6 @@ table.table {
 																<th>Paid</th>
 																<th>Balance</th>
 															</tr>
-
 														</thead>
 														<tbody>
 
@@ -730,67 +654,17 @@ table.table {
 													</div>
 												</div>
 											</div>
-											<!--                                      </div>-->
-											<!--                                        </div>-->
 										</div>
-
 									</div>
 								</div>
 							</div>
-
-							<!-- end  -->
-
-
 						</div>
-						<!-- end of tab-content div -->
-
-
-
-
 					</div>
 				</div>
 
 			</div>
 		</section>
 
-
-		<!-- Edit Modal HTML -->
-		<div id="editEmployeeModal" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form>
-						<div class="modal-header">
-							<h4 class="modal-title">Edit Employee</h4>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<label>Name</label> <input type="text" class="form-control"
-									required>
-							</div>
-							<div class="form-group">
-								<label>Email</label> <input type="email" class="form-control"
-									required>
-							</div>
-							<div class="form-group">
-								<label>Address</label>
-								<textarea class="form-control" required></textarea>
-							</div>
-							<div class="form-group">
-								<label>Phone</label> <input type="text" class="form-control"
-									required>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<input type="button" class="btn btn-default" data-dismiss="modal"
-								value="Cancel"> <input type="submit"
-								class="btn btn-info" value="Save">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 		<!-- Delete Modal HTML -->
 		<div id="deleteEmployeeModal" class="modal fade">
 			<div class="modal-dialog">
@@ -798,8 +672,7 @@ table.table {
 					<form>
 						<div class="modal-header">
 							<h4 class="modal-title">Delete Employee</h4>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						</div>
 						<div class="modal-body">
 							<p>Are you sure you want to delete these Records?</p>
@@ -808,9 +681,7 @@ table.table {
 							</p>
 						</div>
 						<div class="modal-footer">
-							<input type="button" class="btn btn-default" data-dismiss="modal"
-								value="Cancel"> <input type="submit"
-								class="btn btn-danger" value="Delete">
+							<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"> <input type="submit" class="btn btn-danger" value="Delete">
 						</div>
 					</form>
 				</div>

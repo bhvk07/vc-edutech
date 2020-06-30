@@ -23,6 +23,44 @@
 
 <link rel="stylesheet" type="text/css" href="css/noty.css" />
 <title>Admission</title>
+<style>
+
+ /* required only for this page */
+.panel-heading {
+ background-color:#435d7d ! important;
+ border-color:#435d7d ! important;
+ color: white ! important;
+} 
+#addrow
+{
+ background-color:#435d7d ! important;
+ border-color:#435d7d ! important;
+ color: white ! important;
+}
+ #admission 
+ {
+ background-color:#435d7d ! important;
+ border-color:#435d7d ! important;
+ color: white ! important ;
+}
+ #cancel
+ {
+ background-color:#435d7d ! important;
+ border-color:#435d7d ! important;
+ color: white ! important;
+}
+#admission:hover
+{
+	background-color:#53b700 !important ;
+	border-color:#53b700 !important;
+
+}
+#cancel:hover
+{
+	background-color:#d43f3a !important ;
+	border-color:#d43f3a !important;	
+}
+</style>
 <script>
 	$(function() {
 		$("#navbar").load("nav-bar.html");
@@ -123,7 +161,7 @@
 
 							<div class="form-group">
 
-								<label class="col-sm-5 control-label"> Division <!--                  <span class="text-red">*</span>-->
+								<label class="col-sm-5 control-label"> Division <!--<span class="text-red">*</span>-->
 									<font color="red">*</font>
 								</label>
 								<div class="col-sm-7">
@@ -306,7 +344,7 @@
 									</div>
 								</div>
 							</div>
-							<button type="button" id="addrow">Add new line</button>
+							<button class="btn btn-dark" id="addrow">Add new line</button>
 						</div>
 					</section>
 				</div>
@@ -453,9 +491,6 @@
 			</div>
 		</form>
 	</div>
-
-
-
 
 	<!-- modal-start -->
 	<div id="addStudentModal" class="modal fade">

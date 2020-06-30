@@ -1,5 +1,4 @@
 .panel-title {
-    color: #33353F;
     font-size: 20px;
     font-weight: 400;
     line-height: 20px;
@@ -13,7 +12,7 @@
 }
 
 .panel-heading{
-    background: #f6f6f6;
+ color: white ! important;
     border-radius: 5px 5px 0 0;
     border-bottom: 1px solid #DADADA;
     padding: 18px;
@@ -21,8 +20,8 @@
 }
 
 .panel-body{
-    background: #fdfdfd;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+   background: #fdfdfd;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); 
     padding: 15px;
     display: block;
     line-height: 2.3;

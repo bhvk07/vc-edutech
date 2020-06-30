@@ -38,7 +38,7 @@ $(document).ready(function() {
 			getStudReceiptList(rno);
 		}
 	});
-	$('#Edit').click(function() {
+	$('#editBtn').click(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked) {
 				var id = $(this).val();
@@ -46,7 +46,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$('#ADD_NEW').click(function() {
+	$('#addBtn').click(function() {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked) {
 				var id = $(this).val();
@@ -55,7 +55,7 @@ $(document).ready(function() {
 		});
 		window.location.href = "admission.html";
 	});
-	$('#Viewbtn').click(function(e) {
+	$('#btn-view').click(function(e) {
 		$('table .cbCheck').each(function(i, chk) {
 			if (chk.checked) {
 				var id = $(this).val();
