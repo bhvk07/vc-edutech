@@ -461,7 +461,8 @@ public class AdmissionResource {
 			admission.setAcad_year(acad_year);
 			admission.setJoin_date(join_date);
 			admission.setFees(Integer.parseInt(colanSeperatedPersonalDetails[28].trim()));
-			admission.setFeesDetails(colanSeperatedPersonalDetails[27]);
+			String[] hyphenSeperatedFeesDetails=Util.hyphenSeperatedString(colanSeperatedPersonalDetails[27]);
+			admission.setFeesDetails(hyphenSeperatedFeesDetails[1]);
 			admission.setDisccount(Integer.parseInt(colanSeperatedPersonalDetails[30].trim()));
 			admission.setPaid_fees(Integer.parseInt(colanSeperatedPersonalDetails[31].trim()));
 			admission.setRemain_fees(Integer.parseInt(colanSeperatedPersonalDetails[32].trim()));
