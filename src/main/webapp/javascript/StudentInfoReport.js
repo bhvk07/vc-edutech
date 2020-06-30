@@ -34,7 +34,7 @@ $(document).ready(function() {
 	*/
 	$('form[id="StudentInfoForm"]').validate({
 		
-		 /* rules: {
+		 rules: {
 		    
 			  admission_from_date: {
 		        required: true,
@@ -60,7 +60,7 @@ $(document).ready(function() {
 		  },
 		  submitHandler:function(form){
 			  event.preventDefault();
-		  }*/
+		  }
 	});
 	$("#btnDisplay").click(function(e){
 		StudentInfoReport(e);

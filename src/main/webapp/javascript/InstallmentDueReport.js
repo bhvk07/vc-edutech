@@ -14,7 +14,7 @@ $(document).ready(function() {
 		enableFiltering : true
 	});
 	
-/*	jQuery.validator.addMethod("minDate", function (value, element) {
+	jQuery.validator.addMethod("minDate", function (value, element) {
 	    var now = new Date();
 	    now.setHours(0,0,0,0);
 	    var myDate = new Date(value);
@@ -33,8 +33,8 @@ $(document).ready(function() {
 			        || (Number(value) > Number($(params).val())); 
 			},'Must be greater than from date.');
 	
-	*/
-	/*
+	
+	
 	$('form[id="AdmReportForm"]').validate({
 		
 		  rules: {
@@ -63,7 +63,7 @@ $(document).ready(function() {
 			  InsertDivision();
 		  }
 	});
-	*/
+	
 	$("#btnDisplay").click(function(){
 		viewInstallmentReport();
 	});
