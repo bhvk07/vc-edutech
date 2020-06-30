@@ -66,10 +66,6 @@ function showDashboard() {
 	}
 
 	function errorCallback(responseData, textStatus, request) {
-		/*
-		 * var message=responseData.responseJSON.message;
-		 * showNotification("error",message);
-		 */
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
 	}
@@ -99,6 +95,7 @@ function deletemultiplerow(id) {
 }
 
 function Admission(id, req) {
+	
 	var enqData="";
 	function callback(responseData, textStatus, request) {
 		var today = new Date();
@@ -113,10 +110,13 @@ function Admission(id, req) {
 		":"+responseData.status;
 		
 		if (req == "Edit") {
-			alert("here");
 			sessionStorage.setItem("EditData", enqData);
 			window.location.href = "enquiry.html";
-		} else {
+		}else{
+			sessionStorage.setItem("EnquiryAdmission", id);
+			window.location.href = "admission.html";
+		}
+		/* else {
 			var feespack = responseData.fees_pack;
 			var fees=feespack.split("|");
 			var installment = "installment details";
@@ -134,8 +134,8 @@ function Admission(id, req) {
 			var newAmt = disc+"|"+fees[1];
 			var enq_taken = localStorage.getItem("user");
 			var date= new Date(today.getTime() - (today.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
-			/*var date = today.getFullYear() + "-" + today.getMonth() + "-"
-					+ today.getDate();*/
+			var date = today.getFullYear() + "-" + today.getMonth() + "-"
+					+ today.getDate();
 			var status = "active";
 			var division="null";
 			var acad_data = getIncrementalData();
@@ -146,7 +146,7 @@ function Admission(id, req) {
 			StudentAdmission(studentDetails, enq_taken, feespack,division, status, date,
 					id_no, reg_no, invoice_no, date, acad_year, date, enqData,
 					feespackdetails,installment, newAmt, branchSession);
-		}
+		}*/
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes=responseData.responseJSON.message;
@@ -159,7 +159,7 @@ function Admission(id, req) {
 			errorCallback);
 	return false;
 }
-function feespackagedetails(pack){
+/*function feespackagedetails(pack){
 	var packdetails="";
 	function callback(responseData,textStatus,request)
 	{
@@ -227,3 +227,4 @@ function StudentAdmission(studentDetails, enq_taken, feespack, division ,status,
 			errorCallback);
 	return false;
 }
+*/

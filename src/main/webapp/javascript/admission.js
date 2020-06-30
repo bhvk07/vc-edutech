@@ -125,7 +125,13 @@ $(document)
 						request="Promote";
 						loadPromoteData();
 					}
-
+					if(sessionStorage.getItem("EnquiryAdmission") != null){
+						request="Admission";
+						deletefeesTypeTableRow();
+						var id=sessionStorage.getItem("EnquiryAdmission");
+						alert(id);
+						SearchStudent(id);
+					}
 					$("#enq_stud").focusout(function() {
 						deletefeesTypeTableRow();
 						var id = document.getElementById('enq_stud').value;
@@ -769,6 +775,8 @@ function clearSession() {
 		sessionStorage.removeItem("admission");
 	}else if(request=="Promote"){
 		sessionStorage.removeItem("admissionPromoteData");
+	}else if(request=="Admission"){
+		sessionStorage.removeItem("EnquiryAdmission");
 	}
 	request="Save";
 	window.location.href = "admission-list.html";
@@ -858,33 +866,17 @@ function promoteStudent(){
 			installment = installment + "," + date + "|" + fees_title + "|" + amt;
 		}
 	}
-/*	var table = document.getElementById("feestypetable");
-	var rowCount = $('#feestypetable tr').length;
-	var feestypeDetails = new Array();*/
-/*	var disc = 0;
-	var g_total = 0;
-	var newAmt;
-*/	/*for (var i = 1; i < rowCount; i++) {
-		var fees_title = $(table.rows.item(i).cells[0]).find('select').val();
-		var amt = $(table.rows.item(i).cells[1]).find('input').val();
-		var discount = $(table.rows.item(i).cells[2]).find('input').val();
-		var total = $(table.rows.item(i).cells[5]).find('input').val();
-		feestypeDetails.push(fees_title + "|" + amt + "|" + discount + "|"
-				+ total);*/
-/*		disc = disc + parseInt(discount);
-		g_total = g_total + parseInt(total);*/
-//	}
-//	newAmt = disc + "|" + g_total;
 	function callback(responseData, textStatus, request) {
 		var mes = responseData.message;
 		showNotification("success", mes);
+		if(request=="Promote"){
+			clearSession();
+		}
 	}
 	function errorCallback(responseData, textStatus, request) {
 		var mes = responseData.responseJSON.message;
 		showNotification("error", mes);
-		if(request="Edit"){
-			clearSession();
-		}
+
 	}
 	var personalDetails=sessionStorage.getItem("admissionPromoteData");
 	var status = checkInstallmentDate(installment, document
